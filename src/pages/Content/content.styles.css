@@ -1,0 +1,40 @@
+.BandcampPitchSlider_range {
+  appearance: none;
+  display: inline-block;
+  vertical-align: middle;
+  height: 4px;
+  width: 85px;
+  outline: none;
+  background: rgba(255, 255, 255, 0.3);
+  border-width: 1px;
+  border-style: solid;
+  border-image: initial;
+  border-color: rgba(0, 0, 0, 0.15);
+  border-radius: 1px;
+}
+
+.BandcampPitchSlider_button {
+  background: none;
+	color: inherit;
+	border: none;
+	padding: 0;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
+}
+
+/***** Chrome, Safari, Opera, and Edge Chromium *****/
+input[type="range"].BandcampPitchSlider_range::-webkit-slider-thumb {
+  -webkit-appearance: none; /* Override default look */
+  appearance: none;
+  background: rgb(255,255,255);
+  border: 1px solid rgba(0,0,0,.25);
+  height: 10px;
+  width: 17px;
+}
+
+/******** Firefox ********/
+input[type="range"].BandcampPitchSlider_range::-moz-range-thumb {
+  background: #053a5f;
+  height: 0.5rem;
+}
