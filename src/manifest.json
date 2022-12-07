@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
-  "name": "Audio Pitch Slider",
-  "description": "A chrome extension to adjust audio pitch",
+  "name": "Bandcamp DJ Tools",
+  "description": "A chrome extension to adjust audio pitch on bandcamp",
   "options_page": "options.html",
   "action": {
     "default_popup": "popup.html",

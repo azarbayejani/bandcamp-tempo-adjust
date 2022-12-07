@@ -1,7 +1,7 @@
 {
-  "name": "audio-pitch-slider",
+  "name": "bandcamp-dj-tools",
   "version": "0.1",
-  "description": "A chrome extension to adjust audio tempo",
+  "description": "A chrome extension to adjust audio pitch on bandcamp",
   "license": "MIT",
   "repository": {
     "type": "git",
