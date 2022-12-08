@@ -21,6 +21,7 @@
 	font: inherit;
 	cursor: pointer;
 	outline: inherit;
+  margin-right: 0;
 }
 
 /***** Chrome, Safari, Opera, and Edge Chromium *****/
