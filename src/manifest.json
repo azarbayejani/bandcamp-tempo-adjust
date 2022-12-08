@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "Bandcamp DJ Tools",
+  "name": "Bandcamp Tempo Slider",
   "description": "A chrome extension to adjust audio pitch on bandcamp",
   "options_page": "options.html",
   "icons": {
