@@ -1,4 +1,4 @@
-# Bandcamp DJ Tools
+# Bandcamp Tempo Adjust
 
 ![black](https://user-images.githubusercontent.com/241079/206376971-0f0bf648-40db-4489-a1a3-f44833a73736.png)
 
