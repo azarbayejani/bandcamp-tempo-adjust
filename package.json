@@ -1,11 +1,11 @@
 {
-  "name": "bandcamp-dj-tools",
+  "name": "bandcamp-tempo-adjust",
   "version": "0.1",
   "description": "A chrome extension to adjust audio pitch on bandcamp",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/lxieyang/chrome-extension-boilerplate-react.git"
+    "url": "https://github.com/azarbayejani/bandcamp-tempo-adjust.git"
   },
   "scripts": {
     "build": "node utils/build.js",
