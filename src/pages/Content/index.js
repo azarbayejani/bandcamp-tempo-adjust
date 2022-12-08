@@ -4,8 +4,7 @@ import PitchAdjust from './PitchAdjust';
 
 const appDiv = document.createElement('div');
 appDiv.id = 'pitchSliderApp';
-document.querySelector('.inline_player').append(appDiv);
-
+const player = document.querySelector('.inline_player');
 
 const App = () => {
   return (
@@ -15,4 +14,7 @@ const App = () => {
   );
 }
 
-ReactDOM.render(<App />, document.querySelector('#pitchSliderApp'))
+if (player) {
+  player.append(appDiv);
+  ReactDOM.render(<App />, document.querySelector('#pitchSliderApp'))
+}
