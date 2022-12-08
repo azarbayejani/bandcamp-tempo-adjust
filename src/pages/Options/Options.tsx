@@ -8,9 +8,9 @@ interface Props {
 const Options: React.FC<Props> = ({ title }: Props) => {
   return (
     <div>
-      <h1>Thanks for using Bandcamp DJ Tools!</h1>
+      <h1>Thanks for using Bandcamp Tempo Adjust!</h1>
       <p>
-        Bandcamp DJ tools is a free, open source project. Please consider
+        Bandcamp Tempo Adjust is a free, open source project. Please consider
         donating:
       </p>
       <p>
@@ -24,7 +24,9 @@ const Options: React.FC<Props> = ({ title }: Props) => {
       <hr></hr>
       <p>
         Report bugs and contribute on{' '}
-        <a href="https://github.com/azarbayejani/bandcamp-dj-tools">Github</a>
+        <a href="https://github.com/azarbayejani/bandcamp-tempo-adjust">
+          Github
+        </a>
       </p>
     </div>
   );
