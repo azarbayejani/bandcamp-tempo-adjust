@@ -8,7 +8,7 @@
 
 ## Installation
 
-🔗[Grab Bandcamp Tempo Adjust from the Chrome WebStore](https://chrome.google.com/webstore/detail/bandcamp-tempo-slider/iniomjoihcjgakkfaebmcbnhmiobppel)
+🔗[Bandcamp Tempo Adjust from the Chrome WebStore](https://chrome.google.com/webstore/detail/bandcamp-tempo-slider/iniomjoihcjgakkfaebmcbnhmiobppel)
 
 ## Development 
 
