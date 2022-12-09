@@ -41,7 +41,13 @@ const PitchAdjust = () => {
   useAudioElement('audio', { playbackRate: 1 + (sliderValue - 1000) / 1000 });
   const [tempoRange, nextTempoRange] = useTempoRange();
 
-  const percentage = (((sliderValue - 1000) / 1000) * 100).toPrecision(3);
+  const percentage = String(
+    (((sliderValue - 1000) / 1000) * 100).toPrecision(3)
+  );
+  const percentageAsString =
+    percentage < 0
+      ? String(percentage).slice(0, 4)
+      : `+${String(percentage).slice(0, 3)}`;
 
   const handleSliderChange = (event) => {
     const value = event.target.value;
@@ -72,8 +78,7 @@ const PitchAdjust = () => {
         className="BandcampPitchSlider_button"
         onClick={() => setSliderValue(1000)}
       >
-        {percentage >= 0 ? '+' : ''}
-        {percentage}%
+        {percentageAsString}%
       </button>
       <button
         title="Range adjust"
