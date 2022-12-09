@@ -6,7 +6,11 @@
 
 - Pitch Adjust Knob
 
-## Installing and Running
+## Installation
+
+🔗[Grab Bandcamp Tempo Adjust from the Chrome WebStore](https://chrome.google.com/webstore/detail/bandcamp-tempo-slider/iniomjoihcjgakkfaebmcbnhmiobppel)
+
+## Development 
 
 This package is based off of [lxieyang/chrome-extension-boilerplate-react](https://github.com/lxieyang/chrome-extension-boilerplate-react)
 
