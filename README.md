@@ -1,6 +1,6 @@
 # Bandcamp Tempo Adjust
 
-![black](https://user-images.githubusercontent.com/241079/206376971-0f0bf648-40db-4489-a1a3-f44833a73736.png)
+https://user-images.githubusercontent.com/241079/207227186-d3f913aa-ea38-4fab-a735-57bb3d71b8fb.mp4
 
 ## Features
 
