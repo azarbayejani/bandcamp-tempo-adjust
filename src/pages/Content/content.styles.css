@@ -36,6 +36,10 @@ input[type="range"].BandcampPitchSlider_range::-webkit-slider-thumb {
 
 /******** Firefox ********/
 input[type="range"].BandcampPitchSlider_range::-moz-range-thumb {
-  background: #053a5f;
-  height: 0.5rem;
+  appearance: none;
+  background: rgb(255,255,255);
+  border: 1px solid rgba(0,0,0,.25);
+  border-radius: 0;
+  height: 10px;
+  width: 17px;
 }
