@@ -9,6 +9,7 @@ https://user-images.githubusercontent.com/241079/207227186-d3f913aa-ea38-4fab-a7
 ## Installation
 
 🔗 [Chrome Web Store](https://chrome.google.com/webstore/detail/bandcamp-tempo-slider/iniomjoihcjgakkfaebmcbnhmiobppel)
+🔗 [Firefox Add-On](https://addons.mozilla.org/en-US/firefox/addon/bandcamp-tempo-adjust/)
 
 ## Development 
 
