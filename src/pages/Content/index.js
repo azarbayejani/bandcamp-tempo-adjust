@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { AudioProvider } from './AudioContext';
 import PitchAdjust from './PitchAdjust';
 
 const appDiv = document.createElement('div');
@@ -8,13 +9,15 @@ const player = document.querySelector('.inline_player');
 
 const App = () => {
   return (
-    <div style={{ marginTop: 4 }}>
-      <PitchAdjust />
-    </div>
+    <AudioProvider selector={'audio'}>
+      <div style={{ marginTop: 4 }}>
+        <PitchAdjust />
+      </div>
+    </AudioProvider>
   );
-}
+};
 
 if (player) {
   player.append(appDiv);
-  ReactDOM.render(<App />, document.querySelector('#pitchSliderApp'))
+  ReactDOM.render(<App />, document.querySelector('#pitchSliderApp'));
 }

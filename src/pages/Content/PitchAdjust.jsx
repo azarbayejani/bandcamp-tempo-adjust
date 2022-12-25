@@ -1,27 +1,28 @@
 import React from 'react';
 import { useCallback } from 'react';
-import useAudioElement from './useAudioElement';
+import { useAudio } from './AudioContext';
 
 const tempoRanges = [
   {
     label: '±6',
-    min: 940,
-    max: 1060,
+    min: 1 - 0.06,
+    max: 1 + 0.06,
   },
   {
     label: '±10',
-    min: 900,
-    max: 1100,
+    min: 1 - 0.1,
+    max: 1 + 0.1,
   },
   {
     label: '±16',
-    min: 840,
-    max: 1160,
+    min: 1 - 0.16,
+    max: 1 + 0.16,
   },
   {
     label: 'WIDE',
-    min: 100,
-    max: 2000,
+    // TODO: make this based on the browser
+    min: 0.1,
+    max: 2.0,
   },
 ];
 
@@ -37,21 +38,17 @@ const useTempoRange = () => {
 };
 
 const PitchAdjust = () => {
-  const [sliderValue, setSliderValue] = React.useState(1000);
-  useAudioElement('audio', { playbackRate: 1 + (sliderValue - 1000) / 1000 });
+  const { playbackRate, setPlaybackRate } = useAudio();
   const [tempoRange, nextTempoRange] = useTempoRange();
 
-  const percentage = String(
-    (((sliderValue - 1000) / 1000) * 100).toPrecision(3)
-  );
+  const percentage = String(((playbackRate - 1) * 100).toPrecision(3));
   const percentageAsString =
     percentage < 0
       ? String(percentage).slice(0, 4)
       : `+${String(percentage).slice(0, 3)}`;
 
   const handleSliderChange = (event) => {
-    const value = event.target.value;
-    setSliderValue(value);
+    setPlaybackRate(event.target.value);
   };
 
   return (
@@ -70,13 +67,14 @@ const PitchAdjust = () => {
         onInput={handleSliderChange}
         min={tempoRange.min}
         max={tempoRange.max}
-        value={sliderValue}
+        step={0.001}
+        value={playbackRate}
         style={{ width: 88 }}
       />
       <button
         title="Reset"
         className="BandcampPitchSlider_button"
-        onClick={() => setSliderValue(1000)}
+        onClick={() => setPlaybackRate(1)}
       >
         {percentageAsString}%
       </button>
