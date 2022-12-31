@@ -12,5 +12,6 @@
       "js": ["contentScript.bundle.js"],
       "css": ["content.styles.css"]
     }
-  ]
+  ],
+  "permissions": ["https://*.bcbits.com/*"]
 }
