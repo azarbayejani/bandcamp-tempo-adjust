@@ -5,11 +5,19 @@ import { toOneDecimal } from '../../services/toOneDecimal';
 
 type AlbumTrackBpmProps = TrackInfo;
 
-function AlbumTrackBpm({ trackNumber, bpm }: AlbumTrackBpmProps) {
+function AlbumTrackBpm({ trackNumber, bpm, loading }: AlbumTrackBpmProps) {
   const portalTarget = document.querySelector(
     `#BandcampPitchAdjust_bpm_${trackNumber}`
   );
   if (!portalTarget) {
+    return null;
+  }
+
+  if (loading) {
+    return ReactDOM.createPortal(<>(loading...)</>, portalTarget);
+  }
+
+  if (!bpm) {
     return null;
   }
 
