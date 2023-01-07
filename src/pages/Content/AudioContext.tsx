@@ -1,4 +1,11 @@
-import React, { createContext, useEffect, useRef, useState } from 'react';
+import produce from 'immer';
+import React, {
+  createContext,
+  useEffect,
+  useReducer,
+  useRef,
+  useState,
+} from 'react';
 import { analyzeAudio } from '../../services/analyzeAudio';
 
 type AudioRef = React.RefObject<HTMLAudioElement | null>;
@@ -10,9 +17,8 @@ type AudioStateContext = {
   setVolume: React.Dispatch<React.SetStateAction<number>>;
   preservesPitch: boolean;
   setPreservesPitch: React.Dispatch<React.SetStateAction<boolean>>;
-  currTrackUrl?: string;
   loadBpms: () => void;
-  trackInfoByUrl?: TrackInfoByUrl;
+  trackInfoState: TrackInfoState;
 };
 
 type AudioProviderProps = {
@@ -54,76 +60,109 @@ const useAudioRef = (selector: string) => {
   return audioRef;
 };
 
+interface BpmLoadedAction {
+  type: 'BPM_LOADED';
+  url: string;
+  bpm: number;
+}
+
+interface ChangeTrackAction {
+  type: 'CHANGE_TRACK';
+  url?: string;
+}
+
+interface LoadingStartedAction {
+  type: 'LOADING_STARTED';
+}
+
+type TrackReducerAction =
+  | BpmLoadedAction
+  | ChangeTrackAction
+  | LoadingStartedAction;
+
+interface TrackInfoState {
+  currTrackUrl?: string;
+  trackInfoByUrl: TrackInfoByUrl;
+  loadingStarted: boolean;
+}
+
+const trackStateReducer = produce(
+  (state: TrackInfoState, action: TrackReducerAction) => {
+    const type = action.type;
+    switch (type) {
+      case 'LOADING_STARTED': {
+        state.loadingStarted = true;
+        break;
+      }
+      case 'BPM_LOADED': {
+        const { url, bpm } = action;
+        if (!state.trackInfoByUrl) {
+          throw new Error(
+            'Tried to load a bpm before initializing trackInfoByUrl state'
+          );
+        }
+        state.trackInfoByUrl[url].bpm = bpm;
+        state.trackInfoByUrl[url].loading = false;
+        break;
+      }
+      case 'CHANGE_TRACK': {
+        const { url } = action;
+        state.currTrackUrl = url;
+        break;
+      }
+    }
+  }
+);
+
 const getCurrTrackUrl = () =>
   document.querySelector('.title_link')?.getAttribute('href') || undefined;
+
+const tralbumJson = (document.querySelector('[data-tralbum]') as HTMLElement)
+  .dataset.tralbum;
+
+const tralbum: BandcampTralbum = tralbumJson
+  ? JSON.parse(tralbumJson)
+  : { trackinfo: [] };
+
+const initialTrackInfoByUrl: TrackInfoByUrl = tralbum.trackinfo.reduce(
+  (acc, track) => {
+    const fullUrl = Object.values(track.file).find((possibleUrl) =>
+      /https:\/\/\w+.bcbits.com/g.test(possibleUrl)
+    );
+    if (fullUrl) {
+      acc[track.title_link] = {
+        audioPath: fullUrl,
+        trackNumber: track.track_num,
+        url: track.title_link,
+        loading: true,
+      };
+    }
+    return acc;
+  },
+  {} as TrackInfoByUrl
+);
 
 function AudioProvider({ children, selector }: AudioProviderProps) {
   const audioRef = useAudioRef(selector);
 
-  const [currTrackUrl, setCurrTrackUrl] = useState<string>();
   const [playbackRate, setPlaybackRate] = useState(1);
   const [preservesPitch, setPreservesPitch] = useState(false);
   const [volume, setVolume] = useState(1);
 
-  const [trackInfoByUrl, setTrackInfoByUrl] = useState<TrackInfoByUrl>();
+  const [trackInfoState, dispatch] = useReducer(trackStateReducer, {
+    currTrackUrl: getCurrTrackUrl(),
+    trackInfoByUrl: initialTrackInfoByUrl,
+    loadingStarted: false,
+  });
 
-  // TODO: this should probably use a reducer!
   const loadBpms = React.useCallback(() => {
-    if (trackInfoByUrl) {
-      return;
-    }
-    setCurrTrackUrl(getCurrTrackUrl());
-    const tralbumJson = (
-      document.querySelector('[data-tralbum]') as HTMLElement
-    ).dataset.tralbum;
-    const tralbum: BandcampTralbum = tralbumJson
-      ? JSON.parse(tralbumJson)
-      : { trackinfo: [] };
-
-    const tmpTrackInfoByUrl: TrackInfoByUrl = tralbum.trackinfo.reduce(
-      (acc, track) => {
-        const fullUrl = Object.values(track.file).find((possibleUrl) =>
-          /https:\/\/\w+.bcbits.com/g.test(possibleUrl)
-        );
-        if (fullUrl) {
-          acc[track.title_link] = {
-            audioPath: fullUrl,
-            trackNumber: track.track_num,
-            url: track.title_link,
-            loading: true,
-          };
-        }
-        return acc;
-      },
-      {} as TrackInfoByUrl
-    );
-
-    setTrackInfoByUrl(tmpTrackInfoByUrl);
-    Object.values(tmpTrackInfoByUrl).forEach((track) => {
+    dispatch({ type: 'LOADING_STARTED' });
+    Object.values(trackInfoState.trackInfoByUrl).forEach((track) => {
       analyzeAudio(track.audioPath).then((resolvedBpm) => {
-        tmpTrackInfoByUrl[track.url] = {
-          ...track,
-          bpm: resolvedBpm,
-          loading: false,
-        };
-        setTrackInfoByUrl({
-          ...tmpTrackInfoByUrl,
-          [track.url]: {
-            ...track,
-            bpm: resolvedBpm,
-            loading: false,
-          },
-        });
-
-        const href = document
-          .querySelector('.title_link')
-          ?.getAttribute('href');
-        if (href) {
-          setCurrTrackUrl(href);
-        }
+        dispatch({ type: 'BPM_LOADED', url: track.url, bpm: resolvedBpm });
       });
     });
-  }, [trackInfoByUrl]);
+  }, [trackInfoState.trackInfoByUrl]);
 
   useEffect(() => {
     const setFields = () => {
@@ -135,11 +174,8 @@ function AudioProvider({ children, selector }: AudioProviderProps) {
     };
 
     const loadBpm = async () => {
-      if (trackInfoByUrl) {
-        const href = getCurrTrackUrl();
-        if (href) {
-          setCurrTrackUrl(href);
-        }
+      if (trackInfoState.trackInfoByUrl) {
+        dispatch({ type: 'CHANGE_TRACK', url: getCurrTrackUrl() });
       }
     };
 
@@ -149,7 +185,7 @@ function AudioProvider({ children, selector }: AudioProviderProps) {
     audioRef.current && audioRef.current.addEventListener('play', loadBpm);
     audioRef.current &&
       audioRef.current.addEventListener('play', () =>
-        setCurrTrackUrl(getCurrTrackUrl())
+        dispatch({ type: 'CHANGE_TRACK', url: getCurrTrackUrl() })
       );
     const audio = audioRef.current;
     return () => {
@@ -161,21 +197,19 @@ function AudioProvider({ children, selector }: AudioProviderProps) {
     playbackRate,
     volume,
     audioRef,
-    currTrackUrl,
-    trackInfoByUrl,
+    trackInfoState.trackInfoByUrl,
     loadBpms,
   ]);
 
   const value = {
     audioRef,
-    currTrackUrl,
     playbackRate,
     setPlaybackRate,
     preservesPitch,
     setPreservesPitch,
     volume,
     setVolume,
-    trackInfoByUrl,
+    trackInfoState,
     loadBpms,
   };
 

@@ -25,13 +25,14 @@ function AlbumTrackBpm({ trackNumber, bpm, loading }: AlbumTrackBpmProps) {
 }
 
 export default function AlbumTrackBpms() {
-  const { trackInfoByUrl } = useAudio();
-  if (!trackInfoByUrl) {
+  const { trackInfoState } = useAudio();
+  if (!trackInfoState.loadingStarted) {
     return null;
   }
+
   return (
     <>
-      {Object.entries(trackInfoByUrl).map(([_, trackInfo]) => (
+      {Object.entries(trackInfoState.trackInfoByUrl).map(([_, trackInfo]) => (
         <AlbumTrackBpm {...trackInfo} key={trackInfo.trackNumber} />
       ))}
     </>

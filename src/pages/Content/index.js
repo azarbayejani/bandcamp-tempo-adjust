@@ -11,7 +11,7 @@ const player = document.querySelector('.inline_player');
 
 const App = () => {
   return (
-    <AudioProvider selector={'audio'}>
+    <AudioProvider selector="audio">
       <AlbumTrackBpms />
       <div style={{ marginTop: 4 }}>
         <PitchAdjust />
@@ -39,8 +39,11 @@ if (player) {
   timeNodes.forEach((node, i) => {
     const portal = document.createElement('span');
     portal.id = `BandcampPitchAdjust_bpm_${i + 1}`;
-    if (!document.getElementById(portal.id)) {
+    const existingPortal = document.getElementById(portal.id);
+    if (!existingPortal) {
       node.after(portal);
+    } else {
+      existingPortal.innerHTML = '';
     }
   });
   ReactDOM.render(<App />, document.querySelector('#pitchSliderApp'));

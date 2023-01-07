@@ -9,13 +9,14 @@ const DetectBpmButton = ({ loadBpms }: { loadBpms: () => void }) => (
 );
 
 export default function CurrentTrackBpm() {
-  const { currTrackUrl, playbackRate, trackInfoByUrl, loadBpms } = useAudio();
+  const { trackInfoState, playbackRate, loadBpms } = useAudio();
 
-  if (!currTrackUrl) {
+  if (!trackInfoState.loadingStarted || !trackInfoState.currTrackUrl) {
     return <DetectBpmButton loadBpms={loadBpms} />;
   }
 
-  const trackInfo = trackInfoByUrl?.[currTrackUrl];
+  const trackInfo =
+    trackInfoState.trackInfoByUrl?.[trackInfoState.currTrackUrl];
 
   if (!trackInfo) {
     return <DetectBpmButton loadBpms={loadBpms} />;
