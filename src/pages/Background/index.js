@@ -10,7 +10,6 @@ browser.runtime.onConnect.addListener((port) => {
   fetch(url)
     .then((r) => r.arrayBuffer())
     .then((buffer) => {
-      console.log(buffer.byteLength);
       ports[port.name].postMessage({ type: 'START' });
       for (let i = 0; i < buffer.byteLength; i += CHUNK_SIZE) {
         const chunk = buffer.slice(i, i + CHUNK_SIZE);
