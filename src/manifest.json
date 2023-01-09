@@ -14,7 +14,10 @@
       "css": ["content.styles.css"]
     }
   ],
-  "host_permissions": ["https://*.bcbits.com/*"],
+  "background": {
+    "service_worker": "background.bundle.js"
+  },
+  "host_permissions": ["https://*.bcbits.com/stream/*"],
   "web_accessible_resources": [
     {
       "resources": ["content.styles.css", "icon-128.png", "icon-34.png"],

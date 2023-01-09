@@ -13,5 +13,8 @@
       "css": ["content.styles.css"]
     }
   ],
+  "background": {
+    "scripts": ["background.bundle.js"]
+  },
   "permissions": ["https://*.bcbits.com/*"]
 }

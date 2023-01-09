@@ -1455,6 +1455,11 @@
   dependencies:
     "@types/node" "*"
 
+"@types/webextension-polyfill@^0.9.2":
+  version "0.9.2"
+  resolved "https://registry.yarnpkg.com/@types/webextension-polyfill/-/webextension-polyfill-0.9.2.tgz#4459174d25e83b38fd6d2b2cacb0fc87ad99dfa4"
+  integrity sha512-op8YeoK60K6/GIx3snWs3JowBZ+/aeSnZzZuuwynA7VARWfzr3st9aQNk9RWfoBx5xqlNZjAsh2QttPUZnabCw==
+
 "@types/ws@^8.5.1":
   version "8.5.3"
   resolved "https://registry.yarnpkg.com/@types/ws/-/ws-8.5.3.tgz#7d25a1ffbecd3c4f2d35068d0b283c037003274d"
@@ -6198,6 +6203,11 @@ web-audio-beat-detector@^8.1.40:
     tslib "^2.4.1"
     web-audio-beat-detector-broker "^4.0.77"
     web-audio-beat-detector-worker "^5.2.30"
+
+webextension-polyfill@^0.10.0:
+  version "0.10.0"
+  resolved "https://registry.yarnpkg.com/webextension-polyfill/-/webextension-polyfill-0.10.0.tgz#ccb28101c910ba8cf955f7e6a263e662d744dbb8"
+  integrity sha512-c5s35LgVa5tFaHhrZDnr3FpQpjj1BB+RXhLTYUxGqBVN460HkbM8TBtEqdXWbpTKfzwCcjAZVF7zXCYSKtcp9g==
 
 webpack-cli@^4.10.0:
   version "4.10.0"

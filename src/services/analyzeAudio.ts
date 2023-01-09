@@ -1,11 +1,11 @@
 import { analyze } from 'web-audio-beat-detector';
-
-// fallback for cross-browser Web Audio API BaseAudioContext
-let audioContext = new AudioContext();
+import browser from 'webextension-polyfill';
 
 // note that this function must be initiated from a user action!
 export async function analyzeAudio(url: string) {
-  const buffer = await fetch(url).then((r) => r.arrayBuffer());
+  let audioContext = new AudioContext();
+  const response = JSON.parse(await browser.runtime.sendMessage({ url }));
+  const buffer = new Uint8Array(response.data).buffer;
   const decodedAudio = await audioContext.decodeAudioData(buffer);
 
   const bpm = await analyze(decodedAudio);

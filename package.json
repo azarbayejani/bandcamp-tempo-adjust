@@ -21,7 +21,8 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-hot-loader": "^4.13.1",
-    "web-audio-beat-detector": "^8.1.40"
+    "web-audio-beat-detector": "^8.1.40",
+    "webextension-polyfill": "^0.10.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.2",
@@ -31,6 +32,7 @@
     "@types/chrome": "^0.0.202",
     "@types/react": "^17.0.52",
     "@types/react-dom": "^17.0.11",
+    "@types/webextension-polyfill": "^0.9.2",
     "babel-eslint": "^10.1.0",
     "babel-loader": "^8.3.0",
     "babel-preset-react-app": "^10.0.1",
