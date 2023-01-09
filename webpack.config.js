@@ -16,10 +16,9 @@ const getManifestJsonPath = () => {
   } else {
     return 'src/manifest.json';
   }
-}
+};
 
 const manifestJsonPath = getManifestJsonPath();
-
 
 var alias = {
   'react-dom': '@hot-loader/react-dom',
@@ -50,7 +49,7 @@ var options = {
   entry: {
     options: path.join(__dirname, 'src', 'pages', 'Options', 'index.jsx'),
     background: path.join(__dirname, 'src', 'pages', 'Background', 'index.js'),
-    contentScript: path.join(__dirname, 'src', 'pages', 'Content', 'index.js'),
+    contentScript: path.join(__dirname, 'src', 'pages', 'Content', 'index.tsx'),
   },
   chromeExtensionBoilerplate: {
     notHotReload: ['background', 'contentScript', 'devtools'],

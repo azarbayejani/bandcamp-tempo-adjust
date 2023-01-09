@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { TrackInfo, useAudio } from './AudioContext';
+import { useAudio } from './AudioContext';
 import { toOneDecimal } from '../../services/toOneDecimal';
+import { TrackInfo } from '../../types';
 
 type AlbumTrackBpmProps = TrackInfo;
 
@@ -26,13 +27,10 @@ function AlbumTrackBpm({ trackNumber, bpm, loading }: AlbumTrackBpmProps) {
 
 export default function AlbumTrackBpms() {
   const { trackInfoState } = useAudio();
-  if (!trackInfoState.loadingStarted) {
-    return null;
-  }
 
   return (
     <>
-      {Object.entries(trackInfoState.trackInfoByUrl).map(([_, trackInfo]) => (
+      {Object.entries(trackInfoState.trackInfoStore).map(([_, trackInfo]) => (
         <AlbumTrackBpm {...trackInfo} key={trackInfo.trackNumber} />
       ))}
     </>

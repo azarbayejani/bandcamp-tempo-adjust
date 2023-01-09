@@ -7,6 +7,8 @@ import React, {
   useState,
 } from 'react';
 import { analyzeAudio } from '../../services/analyzeAudio';
+import browser from 'webextension-polyfill';
+import { TrackInfoByUrl as TrackInfoStore } from '../../types';
 
 type AudioRef = React.RefObject<HTMLAudioElement | null>;
 type AudioStateContext = {
@@ -18,35 +20,14 @@ type AudioStateContext = {
   preservesPitch: boolean;
   setPreservesPitch: React.Dispatch<React.SetStateAction<boolean>>;
   loadBpms: () => void;
-  trackInfoState: TrackInfoState;
+  trackInfoState: PageState;
 };
 
 type AudioProviderProps = {
   children: React.ReactNode;
   selector: string;
+  initialTrackInfoStore: TrackInfoStore;
 };
-
-export type TrackInfo = {
-  bpm?: number;
-  trackNumber: number;
-  audioPath: string;
-  url: string;
-  loading: boolean;
-};
-type TrackInfoByUrl = {
-  [key: string]: TrackInfo;
-};
-
-// this is bandcamp's data representation
-interface BandcampTralbum {
-  trackinfo: {
-    file: {
-      [key: string]: string;
-    };
-    track_num: number;
-    title_link: string;
-  }[];
-}
 
 const AudioContext = createContext<AudioStateContext | undefined>(undefined);
 
@@ -60,8 +41,13 @@ const useAudioRef = (selector: string) => {
   return audioRef;
 };
 
-interface BpmLoadedAction {
-  type: 'BPM_LOADED';
+interface BpmLoadStartAction {
+  type: 'BPM_LOAD_START';
+  url: string;
+}
+
+interface BpmLoadSuccessAction {
+  type: 'BPM_LOAD_SUCCESS';
   url: string;
   bpm: number;
 }
@@ -71,38 +57,42 @@ interface ChangeTrackAction {
   url?: string;
 }
 
-interface LoadingStartedAction {
-  type: 'LOADING_STARTED';
-}
-
 type TrackReducerAction =
-  | BpmLoadedAction
+  | BpmLoadSuccessAction
   | ChangeTrackAction
-  | LoadingStartedAction;
+  | BpmLoadStartAction;
 
-interface TrackInfoState {
+interface PageState {
   currTrackUrl?: string;
-  trackInfoByUrl: TrackInfoByUrl;
-  loadingStarted: boolean;
+  trackInfoStore: TrackInfoStore;
 }
 
 const trackStateReducer = produce(
-  (state: TrackInfoState, action: TrackReducerAction) => {
+  (state: PageState, action: TrackReducerAction) => {
     const type = action.type;
     switch (type) {
-      case 'LOADING_STARTED': {
-        state.loadingStarted = true;
-        break;
-      }
-      case 'BPM_LOADED': {
-        const { url, bpm } = action;
-        if (!state.trackInfoByUrl) {
+      case 'BPM_LOAD_START': {
+        const { url } = action;
+        if (!state.trackInfoStore) {
           throw new Error(
             'Tried to load a bpm before initializing trackInfoByUrl state'
           );
         }
-        state.trackInfoByUrl[url].bpm = bpm;
-        state.trackInfoByUrl[url].loading = false;
+
+        state.trackInfoStore[url].loading = true;
+        break;
+      }
+      case 'BPM_LOAD_SUCCESS': {
+        const { url, bpm } = action;
+        if (!state.trackInfoStore) {
+          throw new Error(
+            'Tried to load a bpm before initializing trackInfoByUrl state'
+          );
+        }
+
+        state.trackInfoStore[url].bpm = bpm;
+        state.trackInfoStore[url].loading = false;
+        browser.storage.local.set({ [url]: { bpm } });
         break;
       }
       case 'CHANGE_TRACK': {
@@ -115,34 +105,13 @@ const trackStateReducer = produce(
 );
 
 const getCurrTrackUrl = () =>
-  document.querySelector('.title_link')?.getAttribute('href') || undefined;
+  document.querySelector('.title_link')?.getAttribute('href')?.trim();
 
-const tralbumJson = (document.querySelector('[data-tralbum]') as HTMLElement)
-  .dataset.tralbum;
-
-const tralbum: BandcampTralbum = tralbumJson
-  ? JSON.parse(tralbumJson)
-  : { trackinfo: [] };
-
-const initialTrackInfoByUrl: TrackInfoByUrl = tralbum.trackinfo.reduce(
-  (acc, track) => {
-    const fullUrl = Object.values(track.file).find((possibleUrl) =>
-      /https:\/\/\w+.bcbits.com/g.test(possibleUrl)
-    );
-    if (fullUrl) {
-      acc[track.title_link] = {
-        audioPath: fullUrl,
-        trackNumber: track.track_num,
-        url: track.title_link,
-        loading: true,
-      };
-    }
-    return acc;
-  },
-  {} as TrackInfoByUrl
-);
-
-function AudioProvider({ children, selector }: AudioProviderProps) {
+function AudioProvider({
+  children,
+  selector,
+  initialTrackInfoStore,
+}: AudioProviderProps) {
   const audioRef = useAudioRef(selector);
 
   const [playbackRate, setPlaybackRate] = useState(1);
@@ -151,18 +120,26 @@ function AudioProvider({ children, selector }: AudioProviderProps) {
 
   const [trackInfoState, dispatch] = useReducer(trackStateReducer, {
     currTrackUrl: getCurrTrackUrl(),
-    trackInfoByUrl: initialTrackInfoByUrl,
-    loadingStarted: false,
+    trackInfoStore: initialTrackInfoStore,
   });
 
   const loadBpms = React.useCallback(() => {
-    dispatch({ type: 'LOADING_STARTED' });
-    Object.values(trackInfoState.trackInfoByUrl).forEach((track) => {
-      analyzeAudio(track.audioPath).then((resolvedBpm) => {
-        dispatch({ type: 'BPM_LOADED', url: track.url, bpm: resolvedBpm });
-      });
+    Object.values(trackInfoState.trackInfoStore).forEach((track) =>
+      dispatch({ type: 'BPM_LOAD_START', url: track.url })
+    );
+
+    Object.values(trackInfoState.trackInfoStore).forEach((track) => {
+      if (!track.bpm) {
+        analyzeAudio(track.audioPath).then((resolvedBpm) => {
+          dispatch({
+            type: 'BPM_LOAD_SUCCESS',
+            url: track.url,
+            bpm: resolvedBpm,
+          });
+        });
+      }
     });
-  }, [trackInfoState.trackInfoByUrl]);
+  }, [trackInfoState.trackInfoStore]);
 
   useEffect(() => {
     const setFields = () => {
@@ -174,7 +151,7 @@ function AudioProvider({ children, selector }: AudioProviderProps) {
     };
 
     const loadBpm = async () => {
-      if (trackInfoState.trackInfoByUrl) {
+      if (trackInfoState.trackInfoStore) {
         dispatch({ type: 'CHANGE_TRACK', url: getCurrTrackUrl() });
       }
     };
@@ -197,7 +174,7 @@ function AudioProvider({ children, selector }: AudioProviderProps) {
     playbackRate,
     volume,
     audioRef,
-    trackInfoState.trackInfoByUrl,
+    trackInfoState.trackInfoStore,
     loadBpms,
   ]);
 

@@ -28,27 +28,31 @@ const tempoRanges = [
 
 const useTempoRange = () => {
   const [tempoRangeIndex, setTempoRangeIndex] = React.useState(1);
-  return [
-    tempoRanges[tempoRangeIndex % tempoRanges.length],
-    useCallback(
+  return {
+    tempoRange: tempoRanges[tempoRangeIndex % tempoRanges.length],
+    advanceToNextTempoRange: useCallback(
       () => setTempoRangeIndex(tempoRangeIndex + 1),
       [tempoRangeIndex]
     ),
-  ];
+  };
 };
 
 const PitchAdjust = () => {
   const { playbackRate, setPlaybackRate } = useAudio();
-  const [tempoRange, nextTempoRange] = useTempoRange();
+  const { tempoRange, advanceToNextTempoRange } = useTempoRange();
 
   const percentage = String(((playbackRate - 1) * 100).toPrecision(3));
   const percentageAsString =
-    percentage < 0
+    playbackRate < 1
       ? String(percentage).slice(0, 4)
       : `+${String(percentage).slice(0, 3)}`;
 
-  const handleSliderChange = (event) => {
-    setPlaybackRate(event.target.value);
+  const handleSliderChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setPlaybackRate(event.target.valueAsNumber);
+  };
+
+  const handleClickTempoRange = () => {
+    advanceToNextTempoRange();
   };
 
   return (
@@ -81,7 +85,7 @@ const PitchAdjust = () => {
       <button
         title="Range adjust"
         className="BandcampPitchSlider_button"
-        onClick={nextTempoRange}
+        onClick={handleClickTempoRange}
       >
         ({tempoRange.label})
       </button>

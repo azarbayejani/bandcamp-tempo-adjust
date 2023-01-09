@@ -16,5 +16,5 @@
   "background": {
     "scripts": ["background.bundle.js"]
   },
-  "permissions": ["https://*.bcbits.com/*"]
+  "permissions": ["https://*.bcbits.com/*", "storage"]
 }

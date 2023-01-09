@@ -1,17 +1,29 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { AudioProvider } from './AudioContext';
 import PitchAdjust from './PitchAdjust';
 import CurrentTrackBpm from './CurrentTrackBpm';
 import AlbumTrackBpms from './AlbumTrackBpms';
+import { fetchBandcampTrackInfoStore } from '../../services/fetchBandcampTrackInfoStore';
+import { TrackInfoByUrl } from '../../types';
 
 const appDiv = document.createElement('div');
 appDiv.id = 'pitchSliderApp';
 const player = document.querySelector('.inline_player');
 
 const App = () => {
+  const [trackInfoStore, setTrackInfoStore] = useState<TrackInfoByUrl>();
+
+  useEffect(() => {
+    fetchBandcampTrackInfoStore().then((store) => setTrackInfoStore(store));
+  }, []);
+
+  if (!trackInfoStore) {
+    return null;
+  }
+
   return (
-    <AudioProvider selector="audio">
+    <AudioProvider selector="audio" initialTrackInfoStore={trackInfoStore}>
       <AlbumTrackBpms />
       <div style={{ marginTop: 4 }}>
         <PitchAdjust />
