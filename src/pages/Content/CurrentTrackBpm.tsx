@@ -28,7 +28,7 @@ export default function CurrentTrackBpm() {
   }
 
   if (trackInfo.loading) {
-    return <>(loading...)</>;
+    return <>(loading BPM...)</>;
   }
 
   return <DetectBpmButton loadBpms={loadBpms} />;

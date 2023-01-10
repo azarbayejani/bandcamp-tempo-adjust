@@ -15,7 +15,7 @@ function AlbumTrackBpm({ trackNumber, bpm, loading }: AlbumTrackBpmProps) {
   }
 
   if (loading) {
-    return ReactDOM.createPortal(<>(loading...)</>, portalTarget);
+    return ReactDOM.createPortal(<>(loading BPM...)</>, portalTarget);
   }
 
   if (!bpm) {
