@@ -22,7 +22,7 @@ function AlbumTrackBpm({ trackNumber, bpm, loading }: AlbumTrackBpmProps) {
     return null;
   }
 
-  return ReactDOM.createPortal(`(${toOneDecimal(bpm)})`, portalTarget);
+  return ReactDOM.createPortal(`(${toOneDecimal(bpm)} BPM)`, portalTarget);
 }
 
 export default function AlbumTrackBpms() {
