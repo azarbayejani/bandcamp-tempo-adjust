@@ -124,8 +124,9 @@ function AudioProvider({
   });
 
   const loadBpms = React.useCallback(() => {
-    Object.values(trackInfoState.trackInfoStore).forEach((track) =>
-      dispatch({ type: 'BPM_LOAD_START', url: track.url })
+    Object.values(trackInfoState.trackInfoStore).forEach(
+      (track) =>
+        !track.bpm && dispatch({ type: 'BPM_LOAD_START', url: track.url })
     );
 
     Object.values(trackInfoState.trackInfoStore).forEach((track) => {
