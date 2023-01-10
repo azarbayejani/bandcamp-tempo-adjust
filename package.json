@@ -1,7 +1,7 @@
 {
   "name": "bandcamp-tempo-adjust",
   "version": "0.1",
-  "description": "A chrome extension to adjust audio pitch on bandcamp",
+  "description": "A browser extension to detect and adjust track tempo on Bandcamp",
   "license": "MIT",
   "repository": {
     "type": "git",

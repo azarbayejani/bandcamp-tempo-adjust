@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "version": "0.2.0",
   "name": "Bandcamp Tempo Adjust",
-  "description": "A browser extension to adjust audio pitch on bandcamp",
+  "description": "A browser extension to detect and adjust track tempo on Bandcamp",
   "options_page": "options.html",
   "icons": {
     "128": "icon-128.png"
