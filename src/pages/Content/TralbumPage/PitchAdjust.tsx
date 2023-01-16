@@ -1,6 +1,6 @@
 import React from 'react';
 import { useCallback } from 'react';
-import { useAudio } from './AudioContext';
+import { useAudio } from '../AudioContext';
 
 const tempoRanges = [
   {

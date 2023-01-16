@@ -25,6 +25,7 @@ type AudioStateContext = {
 
 type AudioProviderProps = {
   children: React.ReactNode;
+  getCurrTrackUrl: () => string | undefined;
   selector: string;
   initialTrackInfoStore: TrackInfoStore;
 };
@@ -104,12 +105,10 @@ const trackStateReducer = produce(
   }
 );
 
-const getCurrTrackUrl = () =>
-  document.querySelector('.title_link')?.getAttribute('href')?.trim();
-
 function AudioProvider({
   children,
   selector,
+  getCurrTrackUrl,
   initialTrackInfoStore,
 }: AudioProviderProps) {
   const audioRef = useAudioRef(selector);
@@ -176,6 +175,7 @@ function AudioProvider({
     volume,
     audioRef,
     trackInfoState.trackInfoStore,
+    getCurrTrackUrl,
     loadBpms,
   ]);
 
