@@ -1,6 +1,6 @@
 import React from 'react';
-import { useAudio } from './AudioContext';
-import { toOneDecimal } from '../../services/toOneDecimal';
+import { useAudio } from '../AudioContext';
+import { toOneDecimal } from '../../../services/toOneDecimal';
 
 const DetectBpmButton = ({ loadBpms }: { loadBpms: () => void }) => (
   <button className="BandcampPitchSlider_button" onClick={loadBpms}>
