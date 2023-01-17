@@ -5,7 +5,7 @@ import { TrackInfoByUrl } from '../../../types';
 import AlbumTrackBpms from './AlbumTrackBpms';
 import { AudioProvider } from '../AudioContext';
 import CurrentTrackBpm from './CurrentTrackBpm';
-import PitchAdjust from './PitchAdjust';
+import PitchAdjust from '../PitchAdjust';
 
 const getCurrTrackUrl = () =>
   document.querySelector('.title_link')?.getAttribute('href')?.trim();

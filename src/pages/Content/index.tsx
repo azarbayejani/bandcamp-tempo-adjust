@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import CollectionPage from './CollectionPage';
 import TralbumPage from './TralbumPage';
 
 const appDiv = document.createElement('div');
@@ -26,11 +27,22 @@ const renderTralbumPage = () => {
   }
 };
 
+const renderCollectionPage = () => {
+  console.log('hello');
+  const volumeControl = document.querySelector('.vol');
+  if (volumeControl) {
+    if (!document.getElementById(appDiv.id)) {
+      volumeControl.prepend(appDiv);
+    }
+    ReactDOM.render(<CollectionPage />, appDiv);
+  }
+};
+
 const getPage = () => {
   if (document.querySelector('.inline_player')) {
     return 'tralbum';
   }
-  if (document.querySelector('.collection-player')) {
+  if (document.querySelector('#collection-player')) {
     return 'fan-collection';
   }
 };
@@ -40,5 +52,6 @@ switch (getPage()) {
     renderTralbumPage();
     break;
   case 'fan-collection':
+    renderCollectionPage();
     break;
 }

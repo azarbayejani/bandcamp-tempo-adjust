@@ -9,8 +9,7 @@
   "content_scripts": [
     {
       "matches": ["*://*.bandcamp.com/*"],
-      "js": ["contentScript.bundle.js"],
-      "css": ["content.styles.css"]
+      "js": ["contentScript.bundle.js"]
     }
   ],
   "background": {
