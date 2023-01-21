@@ -28,11 +28,22 @@ const renderTralbumPage = () => {
 };
 
 const renderCollectionPage = () => {
-  console.log('hello');
-  const volumeControl = document.querySelector('.vol');
-  if (volumeControl) {
+  const controlsExtra = document.querySelector<HTMLElement>('.controls-extra');
+  const volumeControl = document.querySelector<HTMLElement>('.vol');
+
+  if (volumeControl && controlsExtra) {
+    const newVolumeContainer = document.createElement('div');
+
+    newVolumeContainer.style.display = 'flex';
+    newVolumeContainer.style.flexDirection = 'column';
+    newVolumeContainer.style.overflow = 'hidden';
+
+    controlsExtra.style.marginTop = '12px';
+
+    newVolumeContainer.appendChild(volumeControl);
+    controlsExtra.appendChild(newVolumeContainer);
     if (!document.getElementById(appDiv.id)) {
-      volumeControl.prepend(appDiv);
+      newVolumeContainer.appendChild(appDiv);
     }
     ReactDOM.render(<CollectionPage />, appDiv);
   }

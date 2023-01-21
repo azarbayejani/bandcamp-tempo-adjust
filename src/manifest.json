@@ -10,8 +10,7 @@
   "content_scripts": [
     {
       "matches": ["http://*.bandcamp.com/*", "https://*.bandcamp.com/*"],
-      "js": ["contentScript.bundle.js"],
-      "css": ["content.styles.css"]
+      "js": ["contentScript.bundle.js"]
     }
   ],
   "background": {

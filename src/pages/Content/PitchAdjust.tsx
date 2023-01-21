@@ -63,16 +63,10 @@ const PitchAdjust = ({ variant = 'tralbum' }: PitchAdjustProps) => {
 
   return (
     <div
-      className={`BandcampTempoAdjustSlider BandcampTempoAdjustSlider--${variant}`}
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        gap: 2,
-        justifyContent: 'flex-end',
-      }}
+      className={`BandcampTempoAdjust__slider BandcampTempoAdjust__slider--${variant}`}
     >
       <input
-        className={`BandcampTempoAdjustSlider_range BandcampTempoAdjustSlider_range--${variant}`}
+        className={`BandcampTempoAdjust__slider_range BandcampTempoAdjust__slider_range--${variant}`}
         type="range"
         onChange={handleSliderChange}
         onInput={handleSliderChange}
@@ -80,22 +74,23 @@ const PitchAdjust = ({ variant = 'tralbum' }: PitchAdjustProps) => {
         max={tempoRange.max}
         step={0.001}
         value={playbackRate}
-        style={{ width: 88 }}
       />
-      <button
-        title="Reset"
-        className={`BandcampTempoAdjustSlider_button BandcampTempoAdjustSlider_button--${variant}`}
-        onClick={() => setPlaybackRate(1)}
-      >
-        {percentageAsString}%
-      </button>
-      <button
-        title="Range adjust"
-        className={`BandcampTempoAdjustSlider_button BandcampTempoAdjustSlider_button--${variant}`}
-        onClick={handleClickTempoRange}
-      >
-        ({tempoRange.label})
-      </button>
+      <div style={{ display: 'flex' }}>
+        <button
+          title="Reset"
+          className={`BandcampTempoAdjust__button BandcampTempoAdjust__button--${variant}`}
+          onClick={() => setPlaybackRate(1)}
+        >
+          {percentageAsString}%
+        </button>
+        <button
+          title="Range adjust"
+          className={`BandcampTempoAdjust__button BandcampTempoAdjust_button--${variant}`}
+          onClick={handleClickTempoRange}
+        >
+          ({tempoRange.label})
+        </button>
+      </div>
     </div>
   );
 };
