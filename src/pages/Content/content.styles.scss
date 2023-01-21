@@ -1,54 +1,79 @@
-.BandcampTempoAdjustSlider {
-  &_range {
-    appearance: none;
-    display: inline-block;
-    vertical-align: middle;
-    height: 4px;
-    width: 85px;
-    outline: none;
-    background: rgba(255, 255, 255, 0.3);
-    border-width: 1px;
-    border-style: solid;
-    border-image: initial;
-    border-color: rgba(0, 0, 0, 0.15);
-    border-radius: 1px;
-
-    &::-webkit-slider-thumb {
-      -webkit-appearance: none; /* Override default look */
-      appearance: none;
-      background: rgb(255, 255, 255);
-      border: 1px solid rgba(0, 0, 0, 0.25);
-      height: 10px;
-      width: 17px;
-    }
-
-    &::-moz-range-thumb {
-      appearance: none;
-      background: rgb(255, 255, 255);
-      border: 1px solid rgba(0, 0, 0, 0.25);
-      border-radius: 0;
-      height: 10px;
-      width: 17px;
-    }
+.BandcampTempoAdjust {
+  &__slider {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    justify-content: flex-end;
 
     &--collection {
-      height: 3px;
-      background: rgba(50, 50, 50, 0.4);
-      border: none;
-      margin-top: 3px;
+      margin-left: 32px;
+      flex-direction: column;
+    }
+
+    &_range {
+      appearance: none;
+      display: inline-block;
+      vertical-align: middle;
+      height: 4px;
+      width: 85px;
+      outline: none;
+      background: rgba(255, 255, 255, 0.3);
+      border-width: 1px;
+      border-style: solid;
+      border-image: initial;
+      border-color: rgba(0, 0, 0, 0.15);
+      border-radius: 1px;
+      width: 88px;
+
+      &--collection {
+        width: 60px;
+      }
+
+      &::-webkit-slider-thumb {
+        -webkit-appearance: none; /* Override default look */
+        appearance: none;
+        background: rgb(255, 255, 255);
+        border: 1px solid rgba(0, 0, 0, 0.25);
+        height: 10px;
+        width: 17px;
+      }
 
       &::-moz-range-thumb {
         appearance: none;
-        background: #333;
-        // border: 1px solid rgba(0, 0, 0, 0.25);
-        border-radius: 50%;
-        height: 9px;
-        width: 9px;
+        background: rgb(255, 255, 255);
+        border: 1px solid rgba(0, 0, 0, 0.25);
+        border-radius: 0;
+        height: 10px;
+        width: 17px;
+      }
+
+      &--collection {
+        height: 3px;
+        background: rgba(50, 50, 50, 0.4);
+        border: none;
+        margin-top: 3px;
+
+        &::-moz-range-thumb {
+          appearance: none;
+          background: #333;
+          border-radius: 50%;
+          height: 9px;
+          width: 9px;
+        }
+
+        &::-webkit-slider-thumb {
+          -webkit-appearance: none; /* Override default look */
+          appearance: none;
+          background: #333;
+          border-radius: 50%;
+          height: 9px;
+          width: 9px;
+        }
       }
     }
   }
 
-  &_button {
+  &__button {
     background: none;
     color: inherit;
     border: none;
