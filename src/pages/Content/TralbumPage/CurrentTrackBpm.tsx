@@ -31,5 +31,9 @@ export default function CurrentTrackBpm() {
     return <>(loading BPM...)</>;
   }
 
+  if (trackInfo.error) {
+    return <div style={{ color: '#ff0f0f' }}>(Error loading BPM)</div>;
+  }
+
   return <DetectBpmButton loadBpms={loadBpms} />;
 }

@@ -18,7 +18,7 @@ function mergeChunks(chunks: Uint8Array[]) {
 export async function analyzeAudio(url: string) {
   let audioContext = new AudioContext();
 
-  return new Promise<number>((resolve) => {
+  return new Promise<number>((resolve, reject) => {
     const port = browser.runtime.connect({ name: url });
     const chunks: Uint8Array[] = [];
     port.onMessage.addListener(
@@ -42,6 +42,10 @@ export async function analyzeAudio(url: string) {
             const { data } = message;
             chunks.push(new Uint8Array(data));
             break;
+          }
+          case 'ERROR': {
+            const { reason } = message;
+            reject(reason);
           }
         }
       }

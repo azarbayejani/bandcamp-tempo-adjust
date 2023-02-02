@@ -2,7 +2,7 @@ import { TrackInfoByUrl } from '../types';
 import browser from 'webextension-polyfill';
 
 // this is bandcamp's data representation
-interface BandcampTralbum {
+export interface BandcampTralbum {
   trackinfo: {
     file: {
       [key: string]: string;
@@ -35,6 +35,7 @@ export function fetchBandcampTrackInfoStore() {
           trackNumber: track.track_num,
           url: track.title_link,
           loading: false,
+          error: false,
           bpm: storageGet[track.title_link]?.bpm,
         };
       }

@@ -20,5 +20,8 @@ browser.runtime.onConnect.addListener((port) => {
         });
       }
       ports[port.name].postMessage({ type: 'END' });
+    })
+    .catch((reason) => {
+      ports[port.name].postMessage({ type: 'ERROR', reason });
     });
 });
