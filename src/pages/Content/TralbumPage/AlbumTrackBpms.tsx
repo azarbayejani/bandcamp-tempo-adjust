@@ -6,23 +6,36 @@ import { TrackInfo } from '../../../types';
 
 type AlbumTrackBpmProps = TrackInfo;
 
-function AlbumTrackBpm({ trackNumber, bpm, loading }: AlbumTrackBpmProps) {
+function AlbumTrackBpmPortal(props: AlbumTrackBpmProps) {
   const portalTarget = document.querySelector(
-    `#BandcampPitchAdjust_bpm_${trackNumber}`
+    `#BandcampPitchAdjust_bpm_${props.trackNumber}`
   );
   if (!portalTarget) {
     return null;
   }
 
+  return ReactDOM.createPortal(<AlbumTrackBpm {...props} />, portalTarget);
+}
+
+function AlbumTrackBpm({
+  trackNumber,
+  bpm,
+  loading,
+  error,
+}: AlbumTrackBpmProps) {
   if (loading) {
-    return ReactDOM.createPortal(<>(loading BPM...)</>, portalTarget);
+    return <>(loading BPM...)</>;
+  }
+
+  if (error) {
+    return <span style={{ color: '#ff0f0f' }}>(Error loading BPM)</span>;
   }
 
   if (!bpm) {
     return null;
   }
 
-  return ReactDOM.createPortal(`(${toOneDecimal(bpm)} BPM)`, portalTarget);
+  return <>({toOneDecimal(bpm)} BPM)</>;
 }
 
 export default function AlbumTrackBpms() {
@@ -31,7 +44,7 @@ export default function AlbumTrackBpms() {
   return (
     <>
       {Object.entries(trackInfoState.trackInfoStore).map(([_, trackInfo]) => (
-        <AlbumTrackBpm {...trackInfo} key={trackInfo.trackNumber} />
+        <AlbumTrackBpmPortal {...trackInfo} key={trackInfo.trackNumber} />
       ))}
     </>
   );

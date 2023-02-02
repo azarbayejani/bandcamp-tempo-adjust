@@ -12,9 +12,15 @@ interface FetchAudioBufferFromUrlEndMessage {
   type: 'END';
 }
 
+interface FetchAudioBufferFromUrlErrorMessage {
+  type: 'ERROR';
+  reason?: any;
+}
+
 export type FetchAudioBufferFromUrlMessage =
   | FetchAudioBufferFromUrlDataMessage
   | FetchAudioBufferFromUrlStartMessage
+  | FetchAudioBufferFromUrlErrorMessage
   | FetchAudioBufferFromUrlEndMessage;
 
 export type TrackInfo = {
@@ -23,6 +29,7 @@ export type TrackInfo = {
   audioPath: string;
   url: string;
   loading: boolean;
+  error: boolean;
 };
 export type TrackInfoByUrl = {
   [key: string]: TrackInfo;

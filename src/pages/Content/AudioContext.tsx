@@ -47,6 +47,11 @@ interface BpmLoadStartAction {
   url: string;
 }
 
+interface BpmLoadErrorAction {
+  type: 'BPM_LOAD_ERROR';
+  url: string;
+}
+
 interface BpmLoadSuccessAction {
   type: 'BPM_LOAD_SUCCESS';
   url: string;
@@ -61,6 +66,7 @@ interface ChangeTrackAction {
 type TrackReducerAction =
   | BpmLoadSuccessAction
   | ChangeTrackAction
+  | BpmLoadErrorAction
   | BpmLoadStartAction;
 
 interface PageState {
@@ -81,19 +87,35 @@ const trackStateReducer = produce(
         }
 
         state.trackInfoStore[url].loading = true;
+        state.trackInfoStore[url].error = false;
         break;
       }
       case 'BPM_LOAD_SUCCESS': {
         const { url, bpm } = action;
-        if (!state.trackInfoStore) {
-          throw new Error(
-            'Tried to load a bpm before initializing trackInfoByUrl state'
+        if (!state.trackInfoStore || !state.trackInfoStore[url]) {
+          console.log(
+            'Ignoring BPM_LOAD_SUCCESS - Tried to load a bpm before initializing trackInfoByUrl state'
           );
+          return;
         }
 
         state.trackInfoStore[url].bpm = bpm;
         state.trackInfoStore[url].loading = false;
+        state.trackInfoStore[url].error = false;
         browser.storage.local.set({ [url]: { bpm } });
+        break;
+      }
+      case 'BPM_LOAD_ERROR': {
+        const { url } = action;
+        if (!state.trackInfoStore || !state.trackInfoStore[url]) {
+          console.log(
+            'Ignoring BPM_LOAD_ERROR - Tried to load a bpm before initializing trackInfoByUrl state'
+          );
+          return;
+        }
+
+        state.trackInfoStore[url].error = true;
+        state.trackInfoStore[url].loading = false;
         break;
       }
       case 'CHANGE_TRACK': {
@@ -129,14 +151,18 @@ function AudioProvider({
     );
 
     Object.values(trackInfoState.trackInfoStore).forEach((track) => {
+      const onError = () =>
+        dispatch({ type: 'BPM_LOAD_ERROR', url: track.url });
       if (!track.bpm) {
-        analyzeAudio(track.audioPath).then((resolvedBpm) => {
-          dispatch({
-            type: 'BPM_LOAD_SUCCESS',
-            url: track.url,
-            bpm: resolvedBpm,
-          });
-        });
+        analyzeAudio(track.audioPath)
+          .then((resolvedBpm) => {
+            dispatch({
+              type: 'BPM_LOAD_SUCCESS',
+              url: track.url,
+              bpm: resolvedBpm,
+            });
+          })
+          .catch(onError);
       }
     });
   }, [trackInfoState.trackInfoStore]);
