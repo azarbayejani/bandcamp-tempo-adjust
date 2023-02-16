@@ -29,7 +29,9 @@ export async function fetchBandcampTrackInfoStore() {
   const getFromStorage =
     browser.storage?.local.get || (() => Promise.resolve({}));
 
-  const storageGet = await getFromStorage(Object.keys(titleLinks));
+  const storageGet = await getFromStorage(
+    titleLinks.map(({ title_link }) => title_link)
+  );
   return titleLinks.reduce((acc, track) => {
     const fullUrl = Object.values(track.file).find((possibleUrl) =>
       /https:\/\/\w+.bcbits.com/g.test(possibleUrl)
