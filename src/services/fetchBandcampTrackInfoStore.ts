@@ -12,7 +12,7 @@ export interface BandcampTralbum {
   }[];
 }
 
-export function fetchBandcampTrackInfoStore() {
+export async function fetchBandcampTrackInfoStore() {
   const tralbumJson = (document.querySelector('[data-tralbum]') as HTMLElement)
     .dataset.tralbum;
 
@@ -20,26 +20,30 @@ export function fetchBandcampTrackInfoStore() {
     ? JSON.parse(tralbumJson)
     : { trackinfo: [] };
 
-  const titleLinks = tralbum.trackinfo.map(({ title_link }) => title_link);
+  const titleLinks = tralbum.trackinfo.reduce((acc, track) => {
+    if (track.title_link) {
+      acc.push(track);
+    }
+    return acc;
+  }, [] as BandcampTralbum['trackinfo'][0][]);
   const getFromStorage =
     browser.storage?.local.get || (() => Promise.resolve({}));
 
-  return getFromStorage(titleLinks).then((storageGet) =>
-    tralbum.trackinfo.reduce((acc, track) => {
-      const fullUrl = Object.values(track.file).find((possibleUrl) =>
-        /https:\/\/\w+.bcbits.com/g.test(possibleUrl)
-      );
-      if (fullUrl) {
-        acc[track.title_link] = {
-          audioPath: fullUrl,
-          trackNumber: track.track_num,
-          url: track.title_link,
-          loading: false,
-          error: false,
-          bpm: storageGet[track.title_link]?.bpm,
-        };
-      }
-      return acc;
-    }, {} as TrackInfoByUrl)
-  );
+  const storageGet = await getFromStorage(Object.keys(titleLinks));
+  return titleLinks.reduce((acc, track) => {
+    const fullUrl = Object.values(track.file).find((possibleUrl) =>
+      /https:\/\/\w+.bcbits.com/g.test(possibleUrl)
+    );
+    if (fullUrl) {
+      acc[track.title_link] = {
+        audioPath: fullUrl,
+        trackNumber: track.track_num,
+        url: track.title_link,
+        loading: false,
+        error: false,
+        bpm: storageGet[track.title_link]?.bpm,
+      };
+    }
+    return acc;
+  }, {} as TrackInfoByUrl);
 }

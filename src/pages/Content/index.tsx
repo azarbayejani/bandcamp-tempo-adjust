@@ -12,15 +12,20 @@ const renderTralbumPage = () => {
     if (!document.getElementById(appDiv.id)) {
       player.append(appDiv);
     }
-    const timeNodes = document.querySelectorAll('.title-col .title .time');
-    timeNodes.forEach((node, i) => {
-      const portal = document.createElement('span');
-      portal.id = `BandcampPitchAdjust_bpm_${i + 1}`;
-      const existingPortal = document.getElementById(portal.id);
-      if (!existingPortal) {
-        node.after(portal);
-      } else {
-        existingPortal.innerHTML = '';
+
+    // BUG: this assumes that all of these are playable tracks!
+    const trackNodes = document.querySelectorAll('.title-col .title');
+    trackNodes.forEach((trackNode, i) => {
+      const timeNode = trackNode.querySelector('.time');
+      if (timeNode) {
+        const portal = document.createElement('span');
+        portal.id = `BandcampPitchAdjust_bpm_${i + 1}`;
+        const existingPortal = document.getElementById(portal.id);
+        if (!existingPortal) {
+          timeNode.after(portal);
+        } else {
+          existingPortal.innerHTML = '';
+        }
       }
     });
     ReactDOM.render(<TralbumPage />, document.querySelector('#pitchSliderApp'));
