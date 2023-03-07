@@ -1,10 +1,13 @@
 # Bandcamp Tempo Adjust
+[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)]([YOUR_EMAIL_CODE](https://www.paypal.com/donate/?business=8PMHBGHW49248&no_recurring=0&item_name=Your+donation+will+contribute+to+the+continued+development+of+Bandcamp+Tempo+Adjust+and+other+free+tools+for+DJs&currency_code=USD))
+
 
 https://user-images.githubusercontent.com/241079/211879993-bf036e16-253f-450c-a950-51a9d3b20b34.mp4
 
 ## Features
 
-- Pitch Adjust Knob
+- Tempo Adjust Slider
+- BPM Detection
 
 ## Installation
 
@@ -12,24 +15,53 @@ https://user-images.githubusercontent.com/241079/211879993-bf036e16-253f-450c-a9
 
 🔗 [Firefox Add-On](https://addons.mozilla.org/en-US/firefox/addon/bandcamp-tempo-adjust/)
 
-## Development 
+## Donation
 
-This package is based off of [lxieyang/chrome-extension-boilerplate-react](https://github.com/lxieyang/chrome-extension-boilerplate-react)
+If this project has helped you, please consider donating:
 
-### Procedures:
+[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/donate/?business=8PMHBGHW49248&no_recurring=0&item_name=Your+donation+will+contribute+to+the+continued+development+of+Bandcamp+Tempo+Adjust+and+other+free+tools+for+DJs&currency_code=USD)
 
-1. Check if your [Node.js](https://nodejs.org/) version is >= **14**.
-2. Clone this repository.
-3. Change the package's `name`, `description`, and `repository` fields in `package.json`.
-4. Change the name of your extension on `src/manifest.json`.
-5. Run `npm install` to install the dependencies.
-6. Run `npm start`
-7. Load your extension on Chrome following:
-   1. Access `chrome://extensions/`
-   2. Check `Developer mode`
-   3. Click on `Load unpacked extension`
-   4. Select the `build` folder.
-8. Happy hacking.
+## Development
+
+### Prerequisites
+
+Using `web-ext` makes installing and developing more straightforward:
+
+```
+npm install --global web-ext
+```
+
+Install all dependencies
+
+```
+yarn
+```
+
+### Chrome
+
+```
+yarn
+yarn start
+```
+
+In another terminal, use web-ext to run
+
+```
+web-ext run -s build/ --target chromium
+```
+
+### Firefox
+
+```
+yarn
+yarn start-firefox
+```
+
+In another terminal, use web-ext to run
+
+```
+web-ext run -s build/ --target firefox
+```
 
 ## Deployment
 
@@ -46,26 +78,5 @@ Now, the content of `build` folder will be the extension ready to be submitted t
 This extension needs to know to use manifest v2 to target Firefox:
 
 ```
-$ BROWSER_TARGET=firefox yarn build
-$ cd build/
-$ web-ext build # or web-ext run if you want to preview it
-```
-
-## Secrets (there are none at the moment)
-
-:point_right: The files with name `secrets.*.js` already are ignored on the repository.
-
-You can add `./secrets.<THE-NODE_ENV>.js` and it can be imported as `secrets`, so you can do things like this:
-
-_./secrets.development.js_
-
-```js
-export default { key: '123' };
-```
-
-_./src/popup.js_
-
-```js
-import secrets from 'secrets';
-ApiCall({ key: secrets.key });
+$ yarn build-firefox
 ```
