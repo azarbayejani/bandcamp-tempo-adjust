@@ -86,5 +86,33 @@
     &--collection {
       color: #505958;
     }
+
+    &--purchases {
+      color: #00a1c6
+    }
+  }
+
+  &__purchases {
+    &_container {
+      background-color: #fff;
+      border: 1px solid #E8E8E8;
+      width: 100%;
+      margin-top: 40px;
+    }
+
+    &_row {
+      display: flex;
+      padding: 16px;
+      gap: 8px;
+      border-top: 1px solid #E8E8E8;
+
+      &:first-of-type {
+        border-top: none;
+      }
+
+      &--controls {
+        align-items: center;
+      }
+    }
   }
 }
