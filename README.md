@@ -8,6 +8,7 @@ https://user-images.githubusercontent.com/241079/211879993-bf036e16-253f-450c-a9
 
 - Tempo Adjust Slider
 - BPM Detection
+- Purchase Export
 
 ## Installation
 
