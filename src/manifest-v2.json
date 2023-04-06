@@ -15,5 +15,9 @@
   "background": {
     "scripts": ["background.bundle.js"]
   },
-  "permissions": ["https://*.bcbits.com/*", "storage"]
+  "permissions": [
+    "https://*.bcbits.com/*",
+    "https://api.frankfurter.app/*",
+    "storage"
+  ]
 }
