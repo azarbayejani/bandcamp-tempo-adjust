@@ -1,0 +1,44 @@
+name: Release
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  commitlint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 18
+          registry-url: https://registry.npmjs.org
+          cache: 'npm'
+      - name: Install Dependencies
+        run: yarn
+      - run: |
+          git log -1 --pretty=format:"%s" | $(npm bin)/commitlint
+  release:
+    needs: commitlint
+    environment: release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 18
+          registry-url: https://registry.npmjs.org
+          cache: 'npm'
+      - name: Install Dependencies
+        run: yarn
+      - name: Build
+        run: yarn production
+      - run: $(npm bin)/semantic-release
+        env:
+          GITHUB_TOKEN: ${{secrets.RELEASE_GITHUB_TOKEN}}
+          GOOGLE_CLIENT_ID: ${{secrets.GOOGLE_CLIENT_ID}}
+          GOOGLE_CLIENT_SECRET: ${{secrets.GOOGLE_CLIENT_SECRET}}
+          GOOGLE_REFRESH_TOKEN: ${{secrets.GOOGLE_REFRESH_TOKEN}}

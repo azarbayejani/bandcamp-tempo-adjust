@@ -1,0 +1,25 @@
+{
+  "branches": ["main"],
+  "plugins": [
+    "@semantic-release/commit-analyzer",
+    "@semantic-release/release-notes-generator",
+    "@semantic-release/changelog",
+    "@semantic-release/git",
+    [
+      "semantic-release-chrome",
+      {
+        "extensionId": "TK",
+        "asset": "bandcamp-tempo-adjust.zip",
+        "distFolder": "build"
+      }
+    ],
+    [
+      "semantic-release-firefox-add-on",
+      {
+        "extensionId": "TK",
+        "targetXpi": "bandcamp-tempo-adjust.zip",
+        "sourceFolder": "build"
+      }
+    ]
+  ]
+}
