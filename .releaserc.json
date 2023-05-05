@@ -18,7 +18,7 @@
       {
         "extensionId": "TK",
         "targetXpi": "bandcamp-tempo-adjust.zip",
-        "distFolder": "build"
+        "sourceFolder": "build"
       }
     ]
   ]
