@@ -8,7 +8,7 @@
     [
       "semantic-release-chrome",
       {
-        "extensionId": "TK",
+        "extensionId": "iniomjoihcjgakkfaebmcbnhmiobppel",
         "asset": "bandcamp-tempo-adjust.zip",
         "distFolder": "build"
       }
@@ -16,7 +16,7 @@
     [
       "semantic-release-firefox-add-on",
       {
-        "extensionId": "TK",
+        "extensionId": "{e7517334-00b5-4560-a933-4c4cffbeaa05}",
         "targetXpi": "bandcamp-tempo-adjust.zip",
         "sourceFolder": "build"
       }
