@@ -19,6 +19,7 @@ type AudioStateContext = {
   setVolume: React.Dispatch<React.SetStateAction<number>>;
   preservesPitch: boolean;
   setPreservesPitch: React.Dispatch<React.SetStateAction<boolean>>;
+  reloadCurrentBpm: () => void;
   loadBpms: () => void;
   setTrackBpm: (options: { bpm: number; url: string }) => void;
   trackInfoState: PageState;
@@ -103,6 +104,7 @@ const trackStateReducer = produce(
         state.trackInfoStore[url].bpm = bpm;
         state.trackInfoStore[url].loading = false;
         state.trackInfoStore[url].error = false;
+
         browser.storage.local.set({ [url]: { bpm } });
         break;
       }
@@ -168,6 +170,20 @@ function AudioProvider({
     });
   }, [trackInfoState.trackInfoStore]);
 
+  const loadBpm = (url: string) => {
+    dispatch({ type: 'BPM_LOAD_START', url });
+    const onError = () => dispatch({ type: 'BPM_LOAD_ERROR', url: url });
+    analyzeAudio(trackInfoState.trackInfoStore[url].audioPath)
+      .then((resolvedBpm) => {
+        dispatch({
+          type: 'BPM_LOAD_SUCCESS',
+          url,
+          bpm: resolvedBpm,
+        });
+      })
+      .catch(onError);
+  };
+
   useEffect(() => {
     const setFields = () => {
       if (audioRef.current) {
@@ -177,7 +193,7 @@ function AudioProvider({
       }
     };
 
-    const loadBpm = async () => {
+    const changeTrack = async () => {
       if (trackInfoState.trackInfoStore) {
         dispatch({ type: 'CHANGE_TRACK', url: getCurrTrackUrl() });
       }
@@ -186,7 +202,7 @@ function AudioProvider({
     setFields();
 
     audioRef.current && audioRef.current.addEventListener('play', setFields);
-    audioRef.current && audioRef.current.addEventListener('play', loadBpm);
+    audioRef.current && audioRef.current.addEventListener('play', changeTrack);
     audioRef.current &&
       audioRef.current.addEventListener('play', () =>
         dispatch({ type: 'CHANGE_TRACK', url: getCurrTrackUrl() })
@@ -194,7 +210,7 @@ function AudioProvider({
     const audio = audioRef.current;
     return () => {
       audio && audio.removeEventListener('play', setFields);
-      audio && audio.removeEventListener('play', loadBpm);
+      audio && audio.removeEventListener('play', changeTrack);
     };
   }, [
     preservesPitch,
@@ -215,6 +231,12 @@ function AudioProvider({
     volume,
     setVolume,
     trackInfoState,
+    reloadCurrentBpm: () => {
+      const url = getCurrTrackUrl();
+      if (url) {
+        loadBpm(url);
+      }
+    },
     loadBpms,
     setTrackBpm: ({ bpm, url }) => {
       if (!bpm || !url) {

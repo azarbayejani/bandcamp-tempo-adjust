@@ -12,18 +12,11 @@ export default function CurrentTrackTapBpm({ onSave, onCancel }) {
 
   return (
     <>
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'end',
-          alignItems: 'end',
-          gap: 5,
-        }}
-      >
+      <div className="BandcampTempoAdjust__tapBpm_controlRow">
         <input
           type="text"
           value={text || ''}
-          style={{ maxWidth: 50, height: 8 }}
+          className="BandcampTempoAdjust__tapBpm_input"
           onKeyDown={(e) => {
             if (e.key.match(/[\d.]/)) {
               return;
@@ -33,6 +26,9 @@ export default function CurrentTrackTapBpm({ onSave, onCancel }) {
               onSave(text);
             } else if (e.key === 'Escape') {
               onCancel();
+            } else if (e.key.length !== 1 || e.metaKey) {
+              // assume it's a control character or something like Cmd+A
+              return;
             }
             e.preventDefault();
           }}
