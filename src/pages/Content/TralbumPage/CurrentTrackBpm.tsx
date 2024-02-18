@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useAudio } from '../AudioContext';
 import { toOneDecimal } from '../../../services/toOneDecimal';
 import useTapper from './useTapper';
+import CurrentTrackTapBpm from './CurrentTrackTapBpm';
 
 const DetectBpmButton = ({ loadBpms }: { loadBpms: () => void }) => (
   <button className="BandcampTempoAdjust__button" onClick={loadBpms}>
@@ -11,18 +12,10 @@ const DetectBpmButton = ({ loadBpms }: { loadBpms: () => void }) => (
 
 export default function CurrentTrackBpm() {
   const { trackInfoState, playbackRate, loadBpms, setTrackBpm } = useAudio();
-  const { bpm, tap } = useTapper();
-  const inputRef = useRef<HTMLInputElement>(null);
 
   const [editing, setEditing] = useState(false);
 
   const { currTrackUrl, trackInfoStore } = trackInfoState;
-
-  useEffect(() => {
-    if (editing) {
-      inputRef.current?.focus();
-    }
-  }, [inputRef, editing]);
 
   if (!currTrackUrl) {
     return null;
@@ -34,34 +27,26 @@ export default function CurrentTrackBpm() {
     return <DetectBpmButton loadBpms={loadBpms} />;
   }
 
+  const handleSaveBpm = (bpm?: number) => {
+    setEditing(false);
+    if (bpm) {
+      setTrackBpm({ bpm, url: currTrackUrl });
+    }
+  };
+
+  const handleCancelEditing = () => {
+    setEditing(false);
+  };
+
   if (trackInfo.bpm) {
     return (
       <div>
         <div>
           {editing ? (
-            <>
-              <input
-                type="text"
-                value={bpm || 'TAP'}
-                style={{ maxWidth: 50, marginRight: 5, height: 8 }}
-                onChange={(e) => {
-                  e.preventDefault();
-                  tap();
-                }}
-                ref={inputRef}
-              />
-              <button
-                className="BandcampTempoAdjust__button"
-                onClick={() => {
-                  setEditing(false);
-                  if (bpm) {
-                    setTrackBpm({ bpm, url: currTrackUrl });
-                  }
-                }}
-              >
-                (SAVE)
-              </button>
-            </>
+            <CurrentTrackTapBpm
+              onSave={handleSaveBpm}
+              onCancel={handleCancelEditing}
+            />
           ) : (
             <>
               {toOneDecimal(trackInfo.bpm * playbackRate)} BPM{' '}
