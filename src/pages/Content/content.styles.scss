@@ -117,4 +117,18 @@
       }
     }
   }
+
+  &__tapBpm {
+    &_controlRow {
+      display: flex;
+      justify-content: end;
+      align-items: end;
+      gap: 5px;
+    }
+
+    &_input {
+      max-width: 50px;
+      height: 8px;
+    }
+  }
 }

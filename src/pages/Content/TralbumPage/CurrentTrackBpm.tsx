@@ -1,7 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { useAudio } from '../AudioContext';
 import { toOneDecimal } from '../../../services/toOneDecimal';
-import useTapper from './useTapper';
 import CurrentTrackTapBpm from './CurrentTrackTapBpm';
 
 const DetectBpmButton = ({ loadBpms }: { loadBpms: () => void }) => (
@@ -11,7 +10,13 @@ const DetectBpmButton = ({ loadBpms }: { loadBpms: () => void }) => (
 );
 
 export default function CurrentTrackBpm() {
-  const { trackInfoState, playbackRate, loadBpms, setTrackBpm } = useAudio();
+  const {
+    trackInfoState,
+    playbackRate,
+    loadBpms,
+    reloadCurrentBpm,
+    setTrackBpm,
+  } = useAudio();
 
   const [editing, setEditing] = useState(false);
 
@@ -49,7 +54,16 @@ export default function CurrentTrackBpm() {
             />
           ) : (
             <>
-              {toOneDecimal(trackInfo.bpm * playbackRate)} BPM{' '}
+              {trackInfo.loading
+                ? 'loading BPM... '
+                : `${toOneDecimal(trackInfo.bpm * playbackRate)} BPM `}
+              <button
+                className="BandcampTempoAdjust__button"
+                onClick={reloadCurrentBpm}
+                title="Re-analyze"
+              >
+                (↻)
+              </button>{' '}
               <button
                 className="BandcampTempoAdjust__button"
                 onClick={() => {
