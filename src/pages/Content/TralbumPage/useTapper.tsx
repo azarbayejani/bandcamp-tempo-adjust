@@ -1,22 +1,54 @@
-import { useState } from 'react';
+import { Reducer, useReducer } from 'react';
+
+interface TapperState {
+  tapCount: number;
+  sum: number;
+  bpm?: number;
+  lastTap?: number;
+}
+
+const tapperReducer: Reducer<TapperState, 'TAP' | 'RESET'> = (prev, action) => {
+  switch (action) {
+    case 'TAP':
+      const now = Date.now();
+      const distance = prev.lastTap && now - prev.lastTap;
+
+      if (distance && distance > 2000) {
+        return {
+          tapCount: 1,
+          sum: 0,
+          lastTap: now,
+        };
+      }
+
+      const newBpmDatapoint = distance && 60000 / distance;
+      const newTotalSum = newBpmDatapoint && prev.sum + newBpmDatapoint;
+      const tapCount = prev.tapCount + 1;
+
+      return {
+        tapCount: tapCount,
+        sum: newTotalSum ?? 0,
+        bpm: newTotalSum
+          ? Math.round((newTotalSum / prev.tapCount) * 10) / 10
+          : undefined,
+        lastTap: now,
+      };
+    case 'RESET':
+      return {
+        tapCount: 0,
+        sum: 0,
+      };
+  }
+};
 
 const useTapper = () => {
-  const [bpm, setBpm] = useState(0);
-  const cue = useState<number[]>([])[0];
+  const [{ bpm }, dispatch] = useReducer(tapperReducer, {
+    tapCount: 0,
+    sum: 0,
+  } as TapperState);
 
-  const tap = () => {
-    const now = Date.now();
-    cue.push(now);
-    cue.length > 1 && setBpm(calculateBpm());
-    cue.length > 1 && now - cue[0] > 2000 && reset();
-  };
-
-  const reset = () => (cue.length = 0);
-
-  const calculateBpm = () => {
-    const duration = cue[cue.length - 1] - cue[0];
-    return Math.round(((60000 * (cue.length - 1)) / duration) * 10) / 10;
-  };
+  const tap = () => dispatch('TAP');
+  const reset = () => dispatch('RESET');
 
   return { bpm, tap, reset };
 };

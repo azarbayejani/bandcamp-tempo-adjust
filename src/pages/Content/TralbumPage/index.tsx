@@ -6,7 +6,6 @@ import AlbumTrackBpms from './AlbumTrackBpms';
 import { AudioProvider } from '../AudioContext';
 import CurrentTrackBpm from './CurrentTrackBpm';
 import PitchAdjust from '../PitchAdjust';
-import CurrentTrackTapBpm from './CurrentTrackTapBpm';
 
 const getCurrTrackUrl = () =>
   document.querySelector('.title_link')?.getAttribute('href')?.trim();
@@ -40,9 +39,7 @@ const TralbumPage = () => {
             justifyContent: 'flex-end',
           }}
         >
-          <CurrentTrackBpm  />
-          <span>or </span>
-          <CurrentTrackTapBpm />
+          <CurrentTrackBpm />
         </div>
       </div>
     </AudioProvider>
