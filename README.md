@@ -26,12 +26,6 @@ If this project has helped you, please consider donating:
 
 ### Prerequisites
 
-Using `web-ext` makes installing and developing more straightforward:
-
-```
-npm install --global web-ext
-```
-
 Install all dependencies
 
 ```
@@ -41,27 +35,15 @@ yarn
 ### Chrome
 
 ```
-yarn
-yarn start
-```
-
-In another terminal, use web-ext to run
-
-```
-web-ext run -s build/ --target chromium
+yarn start:chrome
 ```
 
 ### Firefox
 
 ```
-yarn
-yarn start-firefox
+yarn start:firefox
 ```
 
-In another terminal, use web-ext to run
-
-```
-web-ext run -s build/ --target firefox
 ```
 
 ## Deployment
