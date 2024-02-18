@@ -4,9 +4,15 @@ interface TapperState {
   tapCount: number;
   sum: number;
   bpm?: number;
-  text?: string;
+  text: string;
   lastTap?: number;
 }
+
+const defaultTapperState = {
+  tapCount: 0,
+  sum: 0,
+  text: '',
+};
 
 const tapperReducer: Reducer<
   TapperState,
@@ -19,9 +25,8 @@ const tapperReducer: Reducer<
 
       if (distance && distance > 2000) {
         return {
+          ...defaultTapperState,
           tapCount: 1,
-          sum: 0,
-          text: 0,
           lastTap: now,
         };
       }
@@ -37,15 +42,11 @@ const tapperReducer: Reducer<
         tapCount: tapCount,
         sum: newTotalSum ?? 0,
         bpm,
-        text: bpm?.toString(),
+        text: bpm?.toString() || '',
         lastTap: now,
       };
     case 'RESET':
-      return {
-        tapCount: 0,
-        sum: 0,
-        text: 0,
-      };
+      return defaultTapperState;
     case 'CHANGE':
       const newTextAsNumber = +action.newText;
 
@@ -57,8 +58,7 @@ const tapperReducer: Reducer<
       }
 
       return {
-        tapCount: 0,
-        sum: 0,
+        ...defaultTapperState,
         bpm: newTextAsNumber,
         text: action.newText,
       };
