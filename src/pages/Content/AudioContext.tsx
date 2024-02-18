@@ -20,6 +20,7 @@ type AudioStateContext = {
   preservesPitch: boolean;
   setPreservesPitch: React.Dispatch<React.SetStateAction<boolean>>;
   loadBpms: () => void;
+  setTrackBpm: (options: { bpm: number; url: string }) => void;
   trackInfoState: PageState;
 };
 
@@ -205,7 +206,7 @@ function AudioProvider({
     loadBpms,
   ]);
 
-  const value = {
+  const value: AudioStateContext = {
     audioRef,
     playbackRate,
     setPlaybackRate,
@@ -215,6 +216,12 @@ function AudioProvider({
     setVolume,
     trackInfoState,
     loadBpms,
+    setTrackBpm: ({ bpm, url }) => {
+      if (!bpm || !url) {
+        return;
+      }
+      dispatch({ type: 'BPM_LOAD_SUCCESS', url, bpm });
+    },
   };
 
   return (
