@@ -44,8 +44,6 @@ yarn start:chrome
 yarn start:firefox
 ```
 
-```
-
 ## Deployment
 
 Run the command
