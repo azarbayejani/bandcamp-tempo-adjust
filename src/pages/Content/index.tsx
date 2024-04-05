@@ -9,6 +9,8 @@ import TralbumPage from './TralbumPage';
 const appDiv = document.createElement('div');
 appDiv.id = 'pitchSliderApp';
 
+const disablePurchasesPage = true;
+
 const queryClient = new QueryClient({
   defaultOptions: { queries: { refetchOnWindowFocus: false } },
 });
@@ -62,6 +64,10 @@ const renderCollectionPage = () => {
 };
 
 const renderPurchasesPage = () => {
+  if (disablePurchasesPage) {
+    return;
+  }
+
   const purchasesDiv = document.querySelector<HTMLElement>('.purchases');
   const pageDataDiv = document.getElementById('pagedata');
 
