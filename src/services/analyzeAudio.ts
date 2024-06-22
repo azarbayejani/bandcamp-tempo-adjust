@@ -19,36 +19,36 @@ export async function analyzeAudio(url: string) {
   let audioContext = new AudioContext();
 
   return new Promise<number>((resolve, reject) => {
-    const port = browser.runtime.connect({ name: url });
+    const port = browser.runtime.connect({ name: 'AnalyzeAudio#' + url });
     const chunks: Uint8Array[] = [];
-    port.onMessage.addListener(
-      async (message: FetchAudioBufferFromUrlMessage) => {
-        // if data, add the data
-        // if end, disconnect
-        switch (message.type) {
-          case 'START':
-            break;
-          case 'END':
-            port.disconnect();
-            const mergedArray = mergeChunks(chunks);
-            const decodedAudio = await audioContext.decodeAudioData(
-              mergedArray.buffer
-            );
+    const onMessage = async (message: FetchAudioBufferFromUrlMessage) => {
+      // if data, add the data
+      // if end, disconnect
+      switch (message.type) {
+        case 'START':
+          break;
+        case 'END':
+          port.disconnect();
+          port.onMessage.removeListener(onMessage);
+          const mergedArray = mergeChunks(chunks);
+          const decodedAudio = await audioContext.decodeAudioData(
+            mergedArray.buffer
+          );
 
-            const bpm = await analyze(decodedAudio);
-            resolve(bpm);
-            break;
-          case 'DATA': {
-            const { data } = message;
-            chunks.push(new Uint8Array(data));
-            break;
-          }
-          case 'ERROR': {
-            const { reason } = message;
-            reject(reason);
-          }
+          const bpm = await analyze(decodedAudio);
+          resolve(bpm);
+          break;
+        case 'DATA': {
+          const { data } = message;
+          chunks.push(new Uint8Array(data));
+          break;
+        }
+        case 'ERROR': {
+          const { reason } = message;
+          reject(reason);
         }
       }
-    );
+    };
+    port.onMessage.addListener(onMessage);
   });
 }
