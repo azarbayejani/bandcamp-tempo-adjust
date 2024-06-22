@@ -8,7 +8,7 @@ var webpack = require('webpack'),
 var { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 const ASSET_PATH = process.env.ASSET_PATH || '/';
-const BROWSER_TARGET = process.env.BROWSER_TARGET;
+const BROWSER_TARGET = '';
 
 const getManifestJsonPath = () => {
   if (BROWSER_TARGET === 'firefox') {

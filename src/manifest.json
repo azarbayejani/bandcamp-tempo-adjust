@@ -14,7 +14,8 @@
     }
   ],
   "background": {
-    "service_worker": "background.bundle.js"
+    "service_worker": "background.bundle.js",
+    "scripts": ["background.bundle.js"]
   },
   "host_permissions": ["https://*.bcbits.com/stream/*"],
   "permissions": ["storage"],

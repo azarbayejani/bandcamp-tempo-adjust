@@ -1,8 +1,20 @@
 import browser from 'webextension-polyfill';
+import hasAllPermissions from '../../services/hasCorrectOrigins';
 
 const CHUNK_SIZE = 1024 * 1024 * 16;
 
 const ports = {};
+
+browser.runtime.onInstalled.addListener(async (details) => {
+  if (details.reason === 'update' || details.reason === 'install') {
+    const needsPermissions = !(await hasAllPermissions());
+    if (needsPermissions) {
+      browser.tabs.create({
+        url: '/options.html',
+      });
+    }
+  }
+});
 
 browser.runtime.onConnect.addListener((port) => {
   ports[port.name] = port;

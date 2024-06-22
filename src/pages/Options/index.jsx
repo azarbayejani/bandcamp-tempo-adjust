@@ -3,7 +3,19 @@ import { render } from 'react-dom';
 
 import Options from './Options';
 import './index.css';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
-render(<Options />, window.document.querySelector('#app-container'));
+const queryClient = new QueryClient({
+  defaultOptions: { queries: { refetchOnWindowFocus: false } },
+});
+
+render(
+  <QueryClientProvider client={queryClient}>
+    <Options />
+    <ReactQueryDevtools />
+  </QueryClientProvider>,
+  window.document.querySelector('#app-container')
+);
 
 if (module.hot) module.hot.accept();
