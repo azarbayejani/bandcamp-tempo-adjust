@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import './Options.css';
 import browser from 'webextension-polyfill';
-import hasAllPermissions from '../../services/hasCorrectOrigins';
+import hasAllPermissions from '../../services/hasAllPermissions';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 
 interface Props {
@@ -35,46 +35,50 @@ const Options: React.FC<Props> = ({ title }: Props) => {
     };
   }, [queryClient]);
 
-  return (
+  return !isLoading && !hasPermissions ? (
     <div className="OptionsContainer">
-      {!isLoading && !hasPermissions ? (
-        <>
-          <p>
-            Bandcamp Tempo Adjust needs your permission to access bandcamp.com
-            in order to work correctly
-          </p>
-          <button onClick={handleRequestPermissions}>Allow</button>
-        </>
-      ) : (
-        <>
+      <div className="Options">
+        <img src="/icon-128.png" alt="Bandcamp Tempo Adjust logo" />
+        <p style={{ textAlign: 'center' }}>
+          Bandcamp Tempo Adjust needs your permission to access bandcamp.com in
+          order to work correctly
+        </p>
+        <button className="button" onClick={handleRequestPermissions}>
+          Allow
+        </button>
+      </div>
+    </div>
+  ) : (
+    <div className="OptionsContainer">
+      <div className="Options Options--withFooter">
+        <img src="/icon-128.png" alt="Bandcamp Tempo Adjust logo" />
+        <div className="center">
           <h1>Thanks for installing Bandcamp Tempo Adjust!</h1>
-
+        </div>
+        <div className="center">
           <div>
             Please consider donating to continue development of the extension.
           </div>
+        </div>
 
-          <div className="actionContainer">
-            <div>
-              <a
-                href="https://www.paypal.com/donate/?business=8PMHBGHW49248&no_recurring=0&item_name=Your+generosity+goes+towards+me+drinking+a+fancy+cocktail+every+once+and+a+while.&currency_code=USD"
-                role="button"
-                className="button"
-              >
-                Donate
-              </a>
-            </div>
-            <div>
-              <a
-                href="https://github.com/azarbayejani/bandcamp-tempo-adjust"
-                className="button"
-                role="button"
-              >
-                Report a bug
-              </a>
-            </div>
-          </div>
-        </>
-      )}
+        <div className="actionContainer">
+          <a
+            href="https://www.paypal.com/donate/?business=8PMHBGHW49248&no_recurring=0&item_name=Your+generosity+helps+guarantee+the+continued+development+of+Bandcamp+Tempo+Adjust.&currency_code=USD&amount=5"
+            role="button"
+            className="button"
+          >
+            Donate
+          </a>
+        </div>
+        <div className="center footer">
+          <a
+            href="https://github.com/azarbayejani/bandcamp-tempo-adjust"
+            role="button"
+          >
+            report a bug
+          </a>
+        </div>
+      </div>
     </div>
   );
 };
