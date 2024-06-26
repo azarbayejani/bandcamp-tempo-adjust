@@ -3,6 +3,7 @@ import { useAudio } from '../AudioContext';
 import { toOneDecimal } from '../../../services/toOneDecimal';
 import CurrentTrackTapBpm from './CurrentTrackTapBpm';
 import browser from 'webextension-polyfill';
+import { hasAllPermissions } from '../../../services/hasAllPermissions';
 
 const DetectBpmButton = ({ onClick }: { onClick: () => void }) => (
   <button className="BandcampTempoAdjust__button" onClick={onClick}>
@@ -10,20 +11,8 @@ const DetectBpmButton = ({ onClick }: { onClick: () => void }) => (
   </button>
 );
 
-const hasAllPermissions = () => {
-  const port = browser.runtime.connect({ name: 'HasAllPermissions' });
-  return new Promise<boolean>((resolve, reject) => {
-    const onMessage = (message: boolean) => {
-      port.disconnect();
-      port.onMessage.removeListener(onMessage);
-      return resolve(message);
-    };
-    port.onMessage.addListener(onMessage);
-  });
-};
-
 const openOptions = () => {
-  browser.runtime.sendMessage('openOptions');
+  browser.runtime.sendMessage({ action: 'openOptions' });
 };
 
 export default function CurrentTrackBpm() {
@@ -46,6 +35,7 @@ export default function CurrentTrackBpm() {
   const trackInfo = trackInfoStore[currTrackUrl];
 
   const handleLoadBpms = async () => {
+    console.log('hasAllPermissions', await hasAllPermissions());
     const needsPermissions = !(await hasAllPermissions());
 
     if (needsPermissions) {

@@ -17,6 +17,11 @@
     "service_worker": "background.bundle.js",
     "scripts": ["background.bundle.js"]
   },
+  "action": {
+    "default_icon": "icon-34.png",
+    "default_popup": "options.html",
+    "default_title": "Bandcamp Tempo Adjust"
+  },
   "host_permissions": ["https://*.bcbits.com/stream/*"],
   "permissions": ["storage"],
   "web_accessible_resources": [

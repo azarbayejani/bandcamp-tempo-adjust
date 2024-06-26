@@ -1,5 +1,5 @@
-import browser from 'webextension-polyfill';
-import hasAllPermissions from '../../services/hasAllPermissions';
+import browser, { browserAction } from 'webextension-polyfill';
+import { hasAllPermissions } from '../../services/background/hasAllPermissions';
 
 const CHUNK_SIZE = 1024 * 1024 * 16;
 
@@ -16,9 +16,22 @@ browser.runtime.onInstalled.addListener(async (details) => {
   }
 });
 
-browser.runtime.onMessage.addListener((message) => {
-  if (message === 'openOptions') {
-    browser.tabs.create({ url: '/options.html' });
+interface OpenOptionsMessage {
+  action: 'openOptions';
+}
+browser.runtime.onMessage.addListener(
+  (message: OpenOptionsMessage, _sender) => {
+    if (message.action === 'openOptions') {
+      browser.tabs.create({ url: '/options.html' });
+    }
+  }
+);
+
+// You can't return true from listener or else firefox will expect 'sendResponse' to be called
+// https://github.com/mozilla/webextension-polyfill/issues/16#issuecomment-371355255
+browser.runtime.onMessage.addListener(async (message, _sender) => {
+  if (message.action === 'hasAllPermissions') {
+    return { hasAllPermissions: await hasAllPermissions() };
   }
 });
 
@@ -45,7 +58,5 @@ browser.runtime.onConnect.addListener(async (port) => {
       .catch((reason) => {
         ports[port.name].postMessage({ type: 'ERROR', reason });
       });
-  } else if (name === 'HasAllPermissions') {
-    ports[name].postMessage(await hasAllPermissions());
   }
 });

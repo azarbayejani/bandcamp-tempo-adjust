@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import './Options.css';
 import browser from 'webextension-polyfill';
-import hasAllPermissions from '../../services/hasAllPermissions';
+import { hasAllPermissions } from '../../services/background/hasAllPermissions';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 
 interface Props {
@@ -55,10 +55,9 @@ const Options: React.FC<Props> = ({ title }: Props) => {
         <div className="center">
           <h1>Thanks for installing Bandcamp Tempo Adjust!</h1>
         </div>
-        <div className="center">
-          <div>
-            Please consider donating to continue development of the extension.
-          </div>
+        <div className="center" style={{ padding: '0 20px' }}>
+          Please consider donating to support continued development of the
+          extension.
         </div>
 
         <div className="actionContainer">
