@@ -1,9 +1,13 @@
-import browser, { browserAction } from 'webextension-polyfill';
+import browser from 'webextension-polyfill';
 import { hasAllPermissions } from '../../services/background/hasAllPermissions';
 
 const CHUNK_SIZE = 1024 * 1024 * 16;
 
 const ports = {};
+
+browser.action.onClicked.addListener(() => {
+  browser.tabs.create({ url: '/options.html' });
+});
 
 browser.runtime.onInstalled.addListener(async (details) => {
   if (details.reason === 'update' || details.reason === 'install') {
