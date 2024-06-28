@@ -1,7 +1,10 @@
 import React, { useEffect } from 'react';
 import './Options.css';
 import browser from 'webextension-polyfill';
-import { hasAllPermissions } from '../../services/background/hasAllPermissions';
+import {
+  REQUIRED_PERMISSIONS,
+  hasAllPermissions,
+} from '../../services/background/hasAllPermissions';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 
 interface Props {
@@ -15,13 +18,7 @@ const Options: React.FC<Props> = ({ title }: Props) => {
   const queryClient = useQueryClient();
 
   const handleRequestPermissions = () => {
-    browser.permissions.request({
-      origins: [
-        'https://*.bandcamp.com/*',
-        'http://*.bandcamp.com/*',
-        'https://*.bcbits.com/stream/*',
-      ],
-    });
+    browser.permissions.request(REQUIRED_PERMISSIONS);
   };
 
   useEffect(() => {
