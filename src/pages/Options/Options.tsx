@@ -40,8 +40,8 @@ const Options: React.FC<Props> = ({ title }: Props) => {
       <div className="Options">
         <img src="/icon-128.png" alt="Bandcamp Tempo Adjust logo" />
         <p style={{ textAlign: 'center' }}>
-          Bandcamp Tempo Adjust needs your permission to access bandcamp.com in
-          order to work correctly.
+          Bandcamp Tempo Adjust needs your permission to access bandcamp.com and
+          bcbits.com in order to work correctly.
         </p>
         <button className="button" onClick={handleRequestPermissions}>
           Allow
