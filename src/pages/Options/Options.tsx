@@ -1,33 +1,80 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './Options.css';
+import browser from 'webextension-polyfill';
+import {
+  REQUIRED_PERMISSIONS,
+  hasAllPermissions,
+} from '../../services/background/hasAllPermissions';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 
 interface Props {
   title: string;
 }
 
 const Options: React.FC<Props> = ({ title }: Props) => {
-  return (
-    <div>
-      <h1>Thanks for using Bandcamp Tempo Adjust!</h1>
-      <p>
-        Bandcamp Tempo Adjust is a free, open source project. Please consider
-        donating:
-      </p>
-      <p>
-        <a
-          href="https://www.paypal.com/donate/?business=8PMHBGHW49248&no_recurring=0&item_name=Your+generosity+goes+towards+me+drinking+a+fancy+cocktail+every+once+and+a+while.&currency_code=USD"
-          role="button"
-        >
-          Donate
-        </a>
-      </p>
-      <hr></hr>
-      <p>
-        Report bugs and contribute on{' '}
-        <a href="https://github.com/azarbayejani/bandcamp-tempo-adjust">
-          Github
-        </a>
-      </p>
+  const { data: hasPermissions, isLoading } = useQuery(['permissions'], {
+    queryFn: hasAllPermissions,
+  });
+  const queryClient = useQueryClient();
+
+  const handleRequestPermissions = () => {
+    browser.permissions.request(REQUIRED_PERMISSIONS);
+  };
+
+  useEffect(() => {
+    const listener = () => {
+      queryClient.invalidateQueries(['permissions']);
+    };
+    browser.permissions.onAdded.addListener(listener);
+
+    return () => {
+      browser.permissions.onAdded.removeListener(listener);
+    };
+  }, [queryClient]);
+
+  return !isLoading && !hasPermissions ? (
+    <div className="OptionsContainer">
+      <div className="Options">
+        <img src="/icon-128.png" alt="Bandcamp Tempo Adjust logo" />
+        <p style={{ textAlign: 'center' }}>
+          Bandcamp Tempo Adjust needs your permission to access bandcamp.com and
+          bcbits.com in order to work correctly.
+        </p>
+        <button className="button" onClick={handleRequestPermissions}>
+          Allow
+        </button>
+      </div>
+    </div>
+  ) : (
+    <div className="OptionsContainer">
+      <div className="Options Options--withFooter">
+        <img src="/icon-128.png" alt="Bandcamp Tempo Adjust logo" />
+        <div className="center">
+          <h1>Thanks for installing Bandcamp Tempo Adjust!</h1>
+        </div>
+        <div className="center" style={{ padding: '0 20px' }}>
+          Please consider donating to support continued development of the
+          extension.
+        </div>
+
+        <div className="actionContainer">
+          <a
+            href="https://www.paypal.com/donate/?business=8PMHBGHW49248&no_recurring=0&item_name=Your+generosity+helps+guarantee+the+continued+development+of+Bandcamp+Tempo+Adjust.&currency_code=USD&amount=5"
+            role="button"
+            className="button"
+          >
+            Donate
+          </a>
+        </div>
+        <div className="center footer">
+          <a
+            href="https://github.com/azarbayejani/bandcamp-tempo-adjust"
+            role="button"
+          >
+            report a bug
+          </a>
+        </div>
+      </div>
     </div>
   );
 };

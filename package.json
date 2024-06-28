@@ -8,14 +8,12 @@
     "url": "https://github.com/azarbayejani/bandcamp-tempo-adjust.git"
   },
   "scripts": {
-    "build-firefox": "rm -f web-ext-artifacts/*.zip; BROWSER_TARGET=firefox yarn build; web-ext build --source-dir build/; git archive --format zip --output web-ext-artifacts/bandcamp-tempo-adjust-source.zip HEAD",
-    "build": "node utils/build.js",
+    "build": "rm -f web-ext-artifacts/*.zip; web-ext build --source-dir build/; git archive --format zip --output web-ext-artifacts/bandcamp-tempo-adjust-source.zip HEAD",
     "watch": "node utils/webserver.js",
     "launch:chrome": "web-ext run -s build/ --target chromium",
     "start:chrome": "concurrently \"yarn watch\" \"yarn launch:chrome\"",
-    "watch:firefox": "BROWSER_TARGET=firefox node utils/webserver.js",
     "launch:firefox": "web-ext run -s build/ --target firefox-desktop",
-    "start:firefox": "concurrently \"yarn watch:firefox\" \"yarn launch:firefox\"",
+    "start:firefox": "concurrently \"yarn watch\" \"yarn launch:firefox\"",
     "prettier": "prettier --write '**/*.{js,jsx,ts,tsx,json,css,scss,md}'",
     "production": "NODE_ENV=production yarn build"
   },

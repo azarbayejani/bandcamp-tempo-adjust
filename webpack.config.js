@@ -8,14 +8,9 @@ var webpack = require('webpack'),
 var { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 const ASSET_PATH = process.env.ASSET_PATH || '/';
-const BROWSER_TARGET = process.env.BROWSER_TARGET;
 
 const getManifestJsonPath = () => {
-  if (BROWSER_TARGET === 'firefox') {
-    return 'src/manifest-v2.json';
-  } else {
-    return 'src/manifest.json';
-  }
+  return 'src/manifest.json';
 };
 
 const manifestJsonPath = getManifestJsonPath();
@@ -48,7 +43,7 @@ var options = {
   mode: process.env.NODE_ENV || 'development',
   entry: {
     options: path.join(__dirname, 'src', 'pages', 'Options', 'index.jsx'),
-    background: path.join(__dirname, 'src', 'pages', 'Background', 'index.js'),
+    background: path.join(__dirname, 'src', 'pages', 'Background', 'index.ts'),
     contentScript: path.join(__dirname, 'src', 'pages', 'Content', 'index.tsx'),
   },
   chromeExtensionBoilerplate: {

@@ -2,12 +2,18 @@ import React, { useState } from 'react';
 import { useAudio } from '../AudioContext';
 import { toOneDecimal } from '../../../services/toOneDecimal';
 import CurrentTrackTapBpm from './CurrentTrackTapBpm';
+import browser from 'webextension-polyfill';
+import { hasAllPermissions } from '../../../services/hasAllPermissions';
 
-const DetectBpmButton = ({ loadBpms }: { loadBpms: () => void }) => (
-  <button className="BandcampTempoAdjust__button" onClick={loadBpms}>
+const DetectBpmButton = ({ onClick }: { onClick: () => void }) => (
+  <button className="BandcampTempoAdjust__button" onClick={onClick}>
     Detect BPM
   </button>
 );
+
+const openOptions = () => {
+  browser.runtime.sendMessage({ action: 'openOptions' });
+};
 
 export default function CurrentTrackBpm() {
   const {
@@ -28,8 +34,19 @@ export default function CurrentTrackBpm() {
 
   const trackInfo = trackInfoStore[currTrackUrl];
 
+  const handleLoadBpms = async () => {
+    console.log('hasAllPermissions', await hasAllPermissions());
+    const needsPermissions = !(await hasAllPermissions());
+
+    if (needsPermissions) {
+      openOptions();
+    } else {
+      loadBpms();
+    }
+  };
+
   if (!trackInfo) {
-    return <DetectBpmButton loadBpms={loadBpms} />;
+    return <DetectBpmButton onClick={handleLoadBpms} />;
   }
 
   const handleSaveBpm = (bpm?: number) => {
@@ -87,5 +104,5 @@ export default function CurrentTrackBpm() {
     return <div style={{ color: '#ff0f0f' }}>(Error loading BPM)</div>;
   }
 
-  return <DetectBpmButton loadBpms={loadBpms} />;
+  return <DetectBpmButton onClick={handleLoadBpms} />;
 }
