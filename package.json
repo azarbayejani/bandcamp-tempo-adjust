@@ -8,7 +8,8 @@
     "url": "https://github.com/azarbayejani/bandcamp-tempo-adjust.git"
   },
   "scripts": {
-    "build": "rm -f web-ext-artifacts/*.zip; web-ext build --source-dir build/; git archive --format zip --output web-ext-artifacts/bandcamp-tempo-adjust-source.zip HEAD",
+    "package": "yarn build; rm -f web-ext-artifacts/*.zip; web-ext build --source-dir build/; git archive --format zip --output web-ext-artifacts/bandcamp-tempo-adjust-source.zip HEAD",
+    "build": "node utils/build.js",
     "watch": "node utils/webserver.js",
     "launch:chrome": "web-ext run -s build/ --target chromium",
     "start:chrome": "concurrently \"yarn watch\" \"yarn launch:chrome\"",
