@@ -1,3 +1,4 @@
+import PQueue from 'p-queue';
 import { formatDate } from './formatDate';
 
 interface ApiPurchase {
@@ -135,20 +136,48 @@ export class PurchasesAPI {
   async getAllItems() {
     let lastToken: string | undefined = undefined;
     const purchases: Purchase[] = [];
+    const queue = new PQueue({
+      concurrency: 1,
+      interval: 1000,
+      intervalCap: 1,
+    });
+    let crumbErrorCount = 0;
     while (true) {
-      const response = await this.getItems({ lastToken });
-      if (!response.purchases || !response.purchases.length) {
-        break;
+      try {
+        let currLastToken = lastToken;
+        const response = await queue.add(() =>
+          this.getItems({ lastToken: currLastToken })
+        );
+
+        if (!response || !response.purchases || !response.purchases.length) {
+          break;
+        }
+        lastToken = response.lastToken;
+        purchases.push(...response.purchases);
+      } catch (e) {
+        if (e instanceof InvalidCrumbError) {
+          if (crumbErrorCount > 5) {
+            console.error('Too many crumb errors. Assuming you got banned.');
+            throw e;
+          }
+
+          this.crumb = e.crumb;
+          crumbErrorCount++;
+        } else {
+          throw e;
+        }
       }
-      lastToken = response.lastToken;
-      purchases.push(...response.purchases);
     }
 
     return purchases;
   }
 
   async getItems({ lastToken }: { lastToken?: string }) {
-    const response = await this.doRequest(lastToken);
+    const response = await PurchasesAPI.getItems({
+      username: this.username,
+      lastToken,
+      crumb: this.crumb,
+    });
 
     return {
       lastToken: response.last_token,
@@ -156,9 +185,15 @@ export class PurchasesAPI {
     };
   }
 
-  private async doRequest(
-    lastToken?: string | null
-  ): Promise<GetItemsAPISuccessfulResponse> {
+  private static async getItems({
+    username,
+    lastToken,
+    crumb,
+  }: {
+    username: string;
+    lastToken?: string | null;
+    crumb?: string;
+  }) {
     const response = await fetch(
       'https://bandcamp.com/api/orderhistory/1/get_items',
       {
@@ -167,10 +202,10 @@ export class PurchasesAPI {
           'content-type': 'application/json',
         },
         body: JSON.stringify({
-          username: this.username,
+          username: username,
           last_token: lastToken,
           platform: 'Mac',
-          crumb: this.crumb,
+          crumb: crumb,
         }),
         method: 'POST',
         mode: 'cors',
@@ -186,10 +221,21 @@ export class PurchasesAPI {
           "Didn't get a crumb back from failed getItems API call"
         );
       }
-      this.crumb = responseJSON.crumb;
-      return this.doRequest(lastToken);
+
+      throw new InvalidCrumbError('Invalid crumb', responseJSON.crumb);
     }
 
     return responseJSON;
+  }
+}
+
+class InvalidCrumbError extends Error {
+  crumb: string;
+
+  constructor(message: string, crumb: string) {
+    super(message);
+    this.crumb = crumb;
+
+    Object.setPrototypeOf(this, InvalidCrumbError.prototype);
   }
 }

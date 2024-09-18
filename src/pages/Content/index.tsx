@@ -9,8 +9,6 @@ import TralbumPage from './TralbumPage';
 const appDiv = document.createElement('div');
 appDiv.id = 'pitchSliderApp';
 
-const disablePurchasesPage = true;
-
 const queryClient = new QueryClient({
   defaultOptions: { queries: { refetchOnWindowFocus: false } },
 });
@@ -55,19 +53,19 @@ const renderCollectionPage = () => {
     controlsExtra.style.marginTop = '12px';
 
     newVolumeContainer.appendChild(volumeControl);
-    controlsExtra.appendChild(newVolumeContainer);
-    if (!document.getElementById(appDiv.id)) {
-      newVolumeContainer.appendChild(appDiv);
+    newVolumeContainer.appendChild(appDiv);
+    if (document.getElementById(appDiv.id)) {
+      document
+        .getElementById(appDiv.id)
+        ?.parentElement?.replaceWith(newVolumeContainer);
+    } else {
+      controlsExtra.appendChild(newVolumeContainer);
     }
     ReactDOM.render(<CollectionPage />, appDiv);
   }
 };
 
 const renderPurchasesPage = () => {
-  if (disablePurchasesPage) {
-    return;
-  }
-
   const purchasesDiv = document.querySelector<HTMLElement>('.purchases');
   const pageDataDiv = document.getElementById('pagedata');
 
@@ -109,6 +107,7 @@ const renderPurchasesPage = () => {
         <ReactQueryDevtools initialIsOpen={false} />
         <PurchasesPage
           username={username}
+          totalItems={pageData?.orderhistory?.total_items || 0}
           crumb={crumbsData['api/orderhistory/1/get_items']}
         />
       </QueryClientProvider>,

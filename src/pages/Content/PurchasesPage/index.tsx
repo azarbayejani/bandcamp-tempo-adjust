@@ -9,6 +9,7 @@ import { PurchaseWithLocalCurrency, usePurchases } from './usePurchases';
 
 interface PurchasesPageProps {
   username: string;
+  totalItems: number;
   crumb?: string;
 }
 
@@ -176,7 +177,7 @@ export default function PurchasesPage({ username, crumb }: PurchasesPageProps) {
       )}
       {startedFirstFetch && purchasesQuery.isLoading && (
         <div className="BandcampTempoAdjust__purchases_row">
-          <span>Loading...</span>
+          <span>Loading... (this could take a while)</span>
         </div>
       )}
       {purchasesQuery.data && (
