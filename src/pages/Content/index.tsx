@@ -16,7 +16,9 @@ const queryClient = new QueryClient({
 const renderTralbumPage = () => {
   const player = document.querySelector('.inline_player');
   if (player) {
-    if (!document.getElementById(appDiv.id)) {
+    if (document.getElementById(appDiv.id)) {
+      document.getElementById(appDiv.id)?.replaceWith(appDiv);
+    } else {
       player.append(appDiv);
     }
 
@@ -100,8 +102,11 @@ const renderPurchasesPage = () => {
   }
 
   if (purchasesDiv) {
-    const purchasesAppDiv = document.createElement('div');
-    purchasesDiv.before(purchasesAppDiv);
+    if (document.getElementById(appDiv.id)) {
+      document.getElementById(appDiv.id)?.replaceWith(appDiv);
+    } else {
+      purchasesDiv.before(appDiv);
+    }
     ReactDOM.render(
       <QueryClientProvider client={queryClient}>
         <ReactQueryDevtools initialIsOpen={false} />
@@ -111,7 +116,7 @@ const renderPurchasesPage = () => {
           crumb={crumbsData['api/orderhistory/1/get_items']}
         />
       </QueryClientProvider>,
-      purchasesAppDiv
+      appDiv
     );
   }
 };
