@@ -83,6 +83,39 @@ function PurchaseTotals({
             Export CSV
           </button>
         )}
+        <div
+          style={{
+            paddingLeft: 8,
+            borderLeft: '1px solid #ccc',
+          }}
+        >
+          Did this help you do your taxes? Consider donating to support future
+          development:
+        </div>
+        <a
+          className="BandcampTempoAdjust__button BandcampTempoAdjust__button--purchases"
+          href="https://www.paypal.com/donate/?business=8PMHBGHW49248&no_recurring=0&item_name=Your+generosity+helps+guarantee+the+continued+development+of+Bandcamp+Tempo+Adjust.&currency_code=USD&amount=5"
+          target="_blank"
+          rel="noreferrer"
+        >
+          $5
+        </a>
+        <a
+          className="BandcampTempoAdjust__button BandcampTempoAdjust__button--purchases"
+          href="https://www.paypal.com/donate/?business=8PMHBGHW49248&no_recurring=0&item_name=Your+generosity+helps+guarantee+the+continued+development+of+Bandcamp+Tempo+Adjust.&currency_code=USD&amount=10"
+          target="_blank"
+          rel="noreferrer"
+        >
+          $10
+        </a>
+        <a
+          className="BandcampTempoAdjust__button BandcampTempoAdjust__button--purchases"
+          href="https://www.paypal.com/donate/?business=8PMHBGHW49248&no_recurring=0&item_name=Your+generosity+helps+guarantee+the+continued+development+of+Bandcamp+Tempo+Adjust.&currency_code=USD&amount=20"
+          target="_blank"
+          rel="noreferrer"
+        >
+          $20
+        </a>
       </div>
     </>
   );
