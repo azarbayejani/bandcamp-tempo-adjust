@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "version": "0.7.0",
+  "version": "0.8.0",
   "name": "Bandcamp Tempo Adjust",
   "description": "A browser extension to detect and adjust track tempo on Bandcamp",
   "options_page": "options.html",
