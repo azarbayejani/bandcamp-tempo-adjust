@@ -45,8 +45,11 @@ function PurchaseTotals({
 
   return (
     <>
-      <div className="BandcampTempoAdjust__purchases_row">
-        <div style={{ width: 300 }}>
+      <div
+        className="BandcampTempoAdjust__purchases_row"
+        style={{ justifyContent: 'space-between', alignItems: 'center' }}
+      >
+        <div style={{ width: 320 }}>
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <strong>Total: </strong>
             <strong>
@@ -62,8 +65,6 @@ function PurchaseTotals({
             <span>{totals.purchaseCount} purchases</span>
           </div>
         </div>
-      </div>
-      <div className="BandcampTempoAdjust__purchases_row">
         {generating ? (
           <span>Exporting...</span>
         ) : (
@@ -83,14 +84,14 @@ function PurchaseTotals({
             Export CSV
           </button>
         )}
-        <div
-          style={{
-            paddingLeft: 8,
-            borderLeft: '1px solid #ccc',
-          }}
-        >
-          Did this help you do your taxes? Consider donating to support future
-          development:
+      </div>
+      <div
+        className="BandcampTempoAdjust__purchases_row"
+        // style={{ justifyContent: 'flex-end' }}
+      >
+        <div>
+          <strong>Did this help you do your taxes?</strong> Consider donating to
+          support future development:
         </div>
         <a
           className="BandcampTempoAdjust__button BandcampTempoAdjust__button--purchases"
@@ -156,39 +157,64 @@ export default function PurchasesPage({ username, crumb }: PurchasesPageProps) {
 
   return (
     <div className="BandcampTempoAdjust__purchases_container">
-      <div className="BandcampTempoAdjust__purchases_row BandcampTempoAdjust__purchases_row--controls">
-        <label htmlFor="currency">Currency:</label>
-        <Select
-          id="currency"
-          options={Object.keys(currenciesQuery.data).map((currencyCode) => ({
-            value: currencyCode,
-            label: currencyCode,
-          }))}
-          defaultValue={{ value: 'USD', label: 'USD' }}
-          isClearable={false}
-          onChange={(event) => {
-            if (event) {
-              setCurrency(event.value);
-            }
+      <div
+        className="BandcampTempoAdjust__purchases_row"
+        style={{ justifyContent: 'space-between' }}
+      >
+        <div
+          style={{
+            justifyContent: 'space-between',
+            display: 'flex',
+            alignItems: 'center',
+            gap: 16,
           }}
-        />
-        <label htmlFor="year">Year:</label>
-        <Select
-          id="year"
-          onChange={(event) => {
-            if (event) {
-              setPurchasesFilter(event.value);
-            }
+        >
+          <label htmlFor="currency">Currency:</label>
+          <Select
+            inputId="currency"
+            options={Object.keys(currenciesQuery.data).map((currencyCode) => ({
+              value: currencyCode,
+              label: currencyCode,
+            }))}
+            defaultValue={{ value: 'USD', label: 'USD' }}
+            isClearable={false}
+            onChange={(event) => {
+              if (event) {
+                setCurrency(event.value);
+              }
+            }}
+          />
+          <label htmlFor="year">Year:</label>
+          <Select
+            inputId="year"
+            onChange={(event) => {
+              if (event) {
+                setPurchasesFilter(event.value);
+              }
+            }}
+            options={[
+              { value: 'ALL', label: 'All time' },
+              ...years.map((year) => ({
+                value: year,
+                label: year,
+              })),
+            ]}
+            defaultValue={{ value: 'ALL', label: 'All time' }}
+          />
+        </div>
+        <div
+          style={{
+            width: 300,
+            textAlign: 'right',
           }}
-          options={[
-            { value: 'ALL', label: 'All time' },
-            ...years.map((year) => ({
-              value: year,
-              label: year,
-            })),
-          ]}
-          defaultValue={{ value: 'ALL', label: 'All time' }}
-        />
+        >
+          <small>
+            <strong>Note:</strong> Calculated totals are only an approximation
+            due to currency conversions. Currency exchange rates for each
+            purchase are based on historical data from{' '}
+            <a href="https://frankfurter.app">frankfurter.app</a>.
+          </small>
+        </div>
       </div>
 
       {!startedFirstFetch && (
