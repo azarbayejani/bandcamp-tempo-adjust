@@ -112,6 +112,7 @@ const withFormattedPaymentDate: (purchase: ApiPurchase) => Purchase = (
 ) => {
   return {
     paymentDate: formatDate(purchase.payment_date),
+    itemTitle: purchase.item_title,
     currency: purchase.currency,
     unitPrice: purchase.unit_price,
     quantity: purchase.quantity,
