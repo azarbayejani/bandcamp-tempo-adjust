@@ -59,7 +59,7 @@ const Options: React.FC<Props> = ({ title }: Props) => {
 
         <div className="actionContainer">
           <a
-            href="https://www.paypal.com/donate/?business=8PMHBGHW49248&no_recurring=0&item_name=Your+generosity+helps+guarantee+the+continued+development+of+Bandcamp+Tempo+Adjust.&currency_code=USD&amount=5"
+            href="https://buymeacoffee.com/miseryconfusion"
             role="button"
             className="button"
           >

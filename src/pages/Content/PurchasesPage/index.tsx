@@ -85,38 +85,18 @@ function PurchaseTotals({
           </button>
         )}
       </div>
-      <div
-        className="BandcampTempoAdjust__purchases_row"
-        // style={{ justifyContent: 'flex-end' }}
-      >
+      <div className="BandcampTempoAdjust__purchases_row">
         <div>
-          <strong>Did this help you do your taxes?</strong> Consider donating to
-          support future development:
+          <strong>Did this help you do your taxes?</strong>{' '}
+          <a
+            href="https://buymeacoffee.com/miseryconfusion"
+            target="_blank"
+            rel="noreferrer"
+            className="BandcampTempoAdjust__button BandcampTempoAdjust__button--purchases"
+          >
+            Consider donating to support future development!
+          </a>
         </div>
-        <a
-          className="BandcampTempoAdjust__button BandcampTempoAdjust__button--purchases"
-          href="https://www.paypal.com/donate/?business=8PMHBGHW49248&no_recurring=0&item_name=Your+generosity+helps+guarantee+the+continued+development+of+Bandcamp+Tempo+Adjust.&currency_code=USD&amount=5"
-          target="_blank"
-          rel="noreferrer"
-        >
-          $5
-        </a>
-        <a
-          className="BandcampTempoAdjust__button BandcampTempoAdjust__button--purchases"
-          href="https://www.paypal.com/donate/?business=8PMHBGHW49248&no_recurring=0&item_name=Your+generosity+helps+guarantee+the+continued+development+of+Bandcamp+Tempo+Adjust.&currency_code=USD&amount=10"
-          target="_blank"
-          rel="noreferrer"
-        >
-          $10
-        </a>
-        <a
-          className="BandcampTempoAdjust__button BandcampTempoAdjust__button--purchases"
-          href="https://www.paypal.com/donate/?business=8PMHBGHW49248&no_recurring=0&item_name=Your+generosity+helps+guarantee+the+continued+development+of+Bandcamp+Tempo+Adjust.&currency_code=USD&amount=20"
-          target="_blank"
-          rel="noreferrer"
-        >
-          $20
-        </a>
       </div>
     </>
   );
