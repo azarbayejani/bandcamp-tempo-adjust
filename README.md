@@ -1,6 +1,6 @@
 # Bandcamp Tempo Adjust
 
-[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](<[YOUR_EMAIL_CODE](https://www.paypal.com/donate/?business=8PMHBGHW49248&no_recurring=0&item_name=Your+donation+will+contribute+to+the+continued+development+of+Bandcamp+Tempo+Adjust+and+other+free+tools+for+DJs&currency_code=USD)>)
+<a href="https://buymeacoffee.com/miseryconfusion"><img src="https://cdn.buymeacoffee.com/buttons/v2/arial-orange.png" height="36px" alt="Donate" /></a>
 
 https://user-images.githubusercontent.com/241079/211879993-bf036e16-253f-450c-a950-51a9d3b20b34.mp4
 
@@ -20,7 +20,7 @@ https://user-images.githubusercontent.com/241079/211879993-bf036e16-253f-450c-a9
 
 If this project has helped you, please consider donating:
 
-[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/donate/?business=8PMHBGHW49248&no_recurring=0&item_name=Your+donation+will+contribute+to+the+continued+development+of+Bandcamp+Tempo+Adjust+and+other+free+tools+for+DJs&currency_code=USD)
+<a href="https://buymeacoffee.com/miseryconfusion"><img src="https://cdn.buymeacoffee.com/buttons/v2/arial-orange.png" height="36px" alt="Donate" /></a>
 
 ## Development
 
