@@ -3,7 +3,7 @@ import browser from 'webextension-polyfill';
 import {
   requestAllPermissions,
   hasAllPermissions,
-} from '../../services/background/permissions';
+} from '@tempo-adjust/permissions';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 
 // @ts-expect-error

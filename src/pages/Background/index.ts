@@ -1,5 +1,5 @@
 import browser from 'webextension-polyfill';
-import { hasAllPermissions } from '../../services/background/permissions';
+import { hasAllPermissions } from '@tempo-adjust/permissions';
 
 // This only works because this page is marked as a web_accessible_resource in manifest.json
 // We cannot use the normal way of referencing this by importing from 'url:./pages/Options/index.html'
