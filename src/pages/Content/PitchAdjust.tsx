@@ -2,8 +2,6 @@ import React from 'react';
 import { useCallback } from 'react';
 import { useAudio } from './AudioContext';
 
-import './content.styles.scss';
-
 const tempoRanges = [
   {
     label: '±6',

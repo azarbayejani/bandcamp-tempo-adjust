@@ -1,11 +1,16 @@
 import React, { useEffect } from 'react';
-import './Options.css';
 import browser from 'webextension-polyfill';
 import {
   REQUIRED_PERMISSIONS,
   hasAllPermissions,
 } from '../../services/background/hasAllPermissions';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
+
+// @ts-expect-error
+import * as css from './Options.module.css';
+
+// @ts-expect-error
+import bandcampTempoAdjustLogo from 'url:../../assets/img/icon-128.png';
 
 interface Props {
   title: string;
@@ -34,39 +39,39 @@ const Options: React.FC<Props> = ({ title }: Props) => {
 
   return !isLoading && !hasPermissions ? (
     <div className="OptionsContainer">
-      <div className="Options">
-        <img src="/icon-128.png" alt="Bandcamp Tempo Adjust logo" />
+      <div className={css.options}>
+        <img src={bandcampTempoAdjustLogo} alt="Bandcamp Tempo Adjust logo" />
         <p style={{ textAlign: 'center' }}>
           Bandcamp Tempo Adjust needs your permission to access bandcamp.com and
           bcbits.com in order to work correctly.
         </p>
-        <button className="button" onClick={handleRequestPermissions}>
+        <button className={css.button} onClick={handleRequestPermissions}>
           Allow
         </button>
       </div>
     </div>
   ) : (
     <div className="OptionsContainer">
-      <div className="Options Options--withFooter">
-        <img src="/icon-128.png" alt="Bandcamp Tempo Adjust logo" />
-        <div className="center">
+      <div className={`${css.options} ${css.optionsWithFooter}`}>
+        <img src={bandcampTempoAdjustLogo} alt="Bandcamp Tempo Adjust logo" />
+        <div className={css.center}>
           <h1>Thanks for installing Bandcamp Tempo Adjust!</h1>
         </div>
-        <div className="center" style={{ padding: '0 20px' }}>
+        <div className={css.center} style={{ padding: '0 20px' }}>
           Please consider donating to support continued development of the
           extension.
         </div>
 
-        <div className="actionContainer">
+        <div className={css.actionContainer}>
           <a
             href="https://buymeacoffee.com/miseryconfusion"
             role="button"
-            className="button"
+            className={css.button}
           >
             Donate
           </a>
         </div>
-        <div className="center footer">
+        <div className={`${css.center} ${css.footer}`}>
           <a
             href="https://github.com/azarbayejani/bandcamp-tempo-adjust"
             role="button"

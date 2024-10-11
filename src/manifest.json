@@ -3,29 +3,32 @@
   "version": "0.8.0",
   "name": "Bandcamp Tempo Adjust",
   "description": "A browser extension to detect and adjust track tempo on Bandcamp",
-  "options_page": "options.html",
+  "options_ui": {
+    "page": "./pages/Options/index.html"
+  },
   "icons": {
-    "128": "icon-128.png"
+    "128": "./assets/img/icon-128.png"
   },
   "content_scripts": [
     {
       "matches": ["http://*.bandcamp.com/*", "https://*.bandcamp.com/*"],
-      "js": ["contentScript.bundle.js"]
+      "js": ["./pages/Content/index.tsx"]
     }
   ],
   "background": {
-    "service_worker": "background.bundle.js",
-    "scripts": ["background.bundle.js"]
+    "service_worker": "./pages/Background/index.ts",
+    "scripts": ["./pages/Background/index.ts"],
+    "type": "module"
   },
   "action": {
-    "default_icon": "icon-34.png"
+    "default_icon": "./assets/img/icon-34.png"
   },
   "host_permissions": ["https://*.bcbits.com/stream/*"],
   "permissions": ["storage"],
   "web_accessible_resources": [
     {
-      "resources": ["content.styles.css", "icon-128.png", "icon-34.png"],
-      "matches": []
+      "resources": ["./pages/Options/index.html"],
+      "matches": ["<all_urls>"]
     }
   ],
   "browser_specific_settings": {

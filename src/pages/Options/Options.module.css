@@ -1,5 +1,5 @@
 
-.Options {
+.options {
   width: 100%;
   margin-top: 36px;
   margin-left: auto;
@@ -15,7 +15,7 @@
   padding: 48px 0;
 }
 
-.Options--withFooter {
+.optionsWithFooter {
   padding: 48px 0 0 0;
 }
 

@@ -6,6 +6,8 @@ import CollectionPage from './CollectionPage';
 import PurchasesPage from './PurchasesPage';
 import TralbumPage from './TralbumPage';
 
+import './content.styles.scss';
+
 const appDiv = document.createElement('div');
 appDiv.id = 'pitchSliderApp';
 

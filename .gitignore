@@ -9,6 +9,7 @@
 
 # production
 /build
+/dist
 /web-ext-artifacts
 
 # misc
@@ -18,6 +19,7 @@
 .env.test.local
 .env.production.local
 .history
+.parcel-cache
 
 # secrets
 secrets.*.js

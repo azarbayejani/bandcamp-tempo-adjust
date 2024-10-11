@@ -1,12 +1,17 @@
 import browser from 'webextension-polyfill';
 import { hasAllPermissions } from '../../services/background/hasAllPermissions';
 
+// This only works because this page is marked as a web_accessible_resource in manifest.json
+// We cannot use the normal way of referencing this by importing from 'url:./pages/Options/index.html'
+// because Parcel would create a special URL for use from the background script, which breaks in Chrome.
+const optionsPageUrl = '/pages/Options/index.html';
+
 const CHUNK_SIZE = 1024 * 1024 * 16;
 
 const ports = {};
 
 browser.action.onClicked.addListener(() => {
-  browser.tabs.create({ url: '/options.html' });
+  browser.tabs.create({ url: optionsPageUrl.toString() });
 });
 
 browser.runtime.onInstalled.addListener(async (details) => {
@@ -14,7 +19,7 @@ browser.runtime.onInstalled.addListener(async (details) => {
     const needsPermissions = !(await hasAllPermissions());
     if (needsPermissions) {
       browser.tabs.create({
-        url: '/options.html',
+        url: optionsPageUrl.toString(),
       });
     }
   }
@@ -26,7 +31,7 @@ interface OpenOptionsMessage {
 browser.runtime.onMessage.addListener(
   (message: OpenOptionsMessage, _sender) => {
     if (message.action === 'openOptions') {
-      browser.tabs.create({ url: '/options.html' });
+      browser.tabs.create({ url: optionsPageUrl.toString() });
     }
   }
 );
