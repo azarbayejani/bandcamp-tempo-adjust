@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import browser from 'webextension-polyfill';
 import {
-  REQUIRED_PERMISSIONS,
+  requestAllPermissions,
   hasAllPermissions,
-} from '../../services/background/hasAllPermissions';
+} from '../../services/background/permissions';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 
 // @ts-expect-error
@@ -23,7 +23,7 @@ const Options: React.FC<Props> = ({ title }: Props) => {
   const queryClient = useQueryClient();
 
   const handleRequestPermissions = () => {
-    browser.permissions.request(REQUIRED_PERMISSIONS);
+    requestAllPermissions();
   };
 
   useEffect(() => {
