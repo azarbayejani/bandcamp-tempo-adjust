@@ -1,6 +1,6 @@
 import React from 'react';
 import { useCallback } from 'react';
-import { useAudio } from './AudioContext';
+import { useAudio } from '../AudioContext';
 
 const tempoRanges = [
   {
@@ -37,11 +37,7 @@ const useTempoRange = () => {
   };
 };
 
-interface PitchAdjustProps {
-  variant?: 'tralbum' | 'collection';
-}
-
-const PitchAdjust = ({ variant = 'tralbum' }: PitchAdjustProps) => {
+const PitchAdjust = () => {
   const { playbackRate, setPlaybackRate } = useAudio();
   const { tempoRange, advanceToNextTempoRange } = useTempoRange();
 
@@ -60,11 +56,9 @@ const PitchAdjust = ({ variant = 'tralbum' }: PitchAdjustProps) => {
   };
 
   return (
-    <div
-      className={`BandcampTempoAdjust__slider BandcampTempoAdjust__slider--${variant}`}
-    >
+    <div className="BandcampTempoAdjust__slider BandcampTempoAdjust__slider--collection">
       <input
-        className={`BandcampTempoAdjust__slider_range BandcampTempoAdjust__slider_range--${variant}`}
+        className="BandcampTempoAdjust__slider_range BandcampTempoAdjust__slider_range--collection"
         type="range"
         onChange={handleSliderChange}
         onInput={handleSliderChange}
@@ -76,14 +70,14 @@ const PitchAdjust = ({ variant = 'tralbum' }: PitchAdjustProps) => {
       <div style={{ display: 'flex' }}>
         <button
           title="Reset"
-          className={`BandcampTempoAdjust__button BandcampTempoAdjust__button--${variant}`}
+          className="BandcampTempoAdjust__button BandcampTempoAdjust__button--collection"
           onClick={() => setPlaybackRate(1)}
         >
           {percentageAsString}%
         </button>
         <button
           title="Range adjust"
-          className={`BandcampTempoAdjust__button BandcampTempoAdjust_button--${variant}`}
+          className="BandcampTempoAdjust__button BandcampTempoAdjust_button--collection"
           onClick={handleClickTempoRange}
         >
           ({tempoRange.label})

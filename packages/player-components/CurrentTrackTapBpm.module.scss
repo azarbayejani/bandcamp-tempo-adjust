@@ -1,0 +1,39 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  margin-top: 2px;
+  gap: 8px;
+  align-items: flex-start;
+  max-width: 100%;
+  width: 110px;
+}
+
+.tapBpmContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.tapBpmRow {
+  align-items: center;
+  justify-content: space-between;
+  flex-grow: 1;
+  display: flex;
+}
+
+.input {
+  height: 24px;
+  width: 8ch;
+}
+
+// this mirrors .otherControlsRow in PitchAdjust.module.scss
+.otherControlsRow {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+}
+
+.helperText {
+  white-space: normal;
+  line-height: 1;
+}

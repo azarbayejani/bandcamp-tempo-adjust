@@ -9,6 +9,7 @@ import React, {
 import { analyzeAudio } from '../../services/analyzeAudio';
 import browser from 'webextension-polyfill';
 import { TrackInfoByUrl as TrackInfoStore } from '../../types';
+import { hasAllPermissions } from '../../services/hasAllPermissions';
 
 type AudioRef = React.RefObject<HTMLAudioElement | null>;
 type AudioStateContext = {
@@ -147,7 +148,13 @@ function AudioProvider({
     trackInfoStore: initialTrackInfoStore,
   });
 
-  const loadBpms = React.useCallback(() => {
+  const loadBpms = React.useCallback(async () => {
+    const hasAllPermissionsResponse = await hasAllPermissions();
+    if (!hasAllPermissionsResponse) {
+      browser.runtime.sendMessage({ action: 'openOptions' });
+      return;
+    }
+
     Object.values(trackInfoState.trackInfoStore).forEach(
       (track) =>
         !track.bpm && dispatch({ type: 'BPM_LOAD_START', url: track.url })

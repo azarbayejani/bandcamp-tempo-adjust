@@ -1,0 +1,9 @@
+{
+  "name": "@tempo-adjust/player-components",
+  "packageManager": "yarn@4.5.0",
+  "type": "module",
+  "main": "index.ts",
+  "dependencies": {
+    "classnames": "^2.5.1"
+  }
+}

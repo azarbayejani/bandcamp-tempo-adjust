@@ -4,7 +4,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import CollectionPage from './CollectionPage';
 import PurchasesPage from './PurchasesPage';
-import TralbumPage from './TralbumPage';
+import ProvidedTralbumPage from './TralbumPage';
 
 import './content.styles.scss';
 
@@ -39,7 +39,10 @@ const renderTralbumPage = () => {
         }
       }
     });
-    ReactDOM.render(<TralbumPage />, document.querySelector('#pitchSliderApp'));
+    ReactDOM.render(
+      <ProvidedTralbumPage />,
+      document.querySelector('#pitchSliderApp')
+    );
   }
 };
 

@@ -1,7 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+
+import { toOneDecimal } from '@tempo-adjust/to-one-decimal';
+
 import { useAudio } from '../AudioContext';
-import { toOneDecimal } from '../../../services/toOneDecimal';
 import { TrackInfo } from '../../../types';
 
 type AlbumTrackBpmProps = TrackInfo;

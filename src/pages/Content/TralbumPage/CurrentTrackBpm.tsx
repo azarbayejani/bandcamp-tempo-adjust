@@ -1,19 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
+
+import { BpmDetection } from '@tempo-adjust/player-components';
+
 import { useAudio } from '../AudioContext';
-import { toOneDecimal } from '../../../services/toOneDecimal';
-import CurrentTrackTapBpm from './CurrentTrackTapBpm';
-import browser from 'webextension-polyfill';
-import { hasAllPermissions } from '../../../services/hasAllPermissions';
-
-const DetectBpmButton = ({ onClick }: { onClick: () => void }) => (
-  <button className="BandcampTempoAdjust__button" onClick={onClick}>
-    Detect BPM
-  </button>
-);
-
-const openOptions = () => {
-  browser.runtime.sendMessage({ action: 'openOptions' });
-};
 
 export default function CurrentTrackBpm() {
   const {
@@ -24,8 +13,6 @@ export default function CurrentTrackBpm() {
     setTrackBpm,
   } = useAudio();
 
-  const [editing, setEditing] = useState(false);
-
   const { currTrackUrl, trackInfoStore } = trackInfoState;
 
   if (!currTrackUrl) {
@@ -34,75 +21,15 @@ export default function CurrentTrackBpm() {
 
   const trackInfo = trackInfoStore[currTrackUrl];
 
-  const handleLoadBpms = async () => {
-    console.log('hasAllPermissions', await hasAllPermissions());
-    const needsPermissions = !(await hasAllPermissions());
-
-    if (needsPermissions) {
-      openOptions();
-    } else {
-      loadBpms();
-    }
-  };
-
-  if (!trackInfo) {
-    return <DetectBpmButton onClick={handleLoadBpms} />;
-  }
-
-  const handleSaveBpm = (bpm?: number) => {
-    setEditing(false);
-    if (bpm) {
-      setTrackBpm({ bpm, url: currTrackUrl });
-    }
-  };
-
-  const handleCancelEditing = () => {
-    setEditing(false);
-  };
-
-  if (trackInfo.bpm) {
-    return (
-      <div>
-        <div>
-          {editing ? (
-            <CurrentTrackTapBpm
-              onSave={handleSaveBpm}
-              onCancel={handleCancelEditing}
-            />
-          ) : (
-            <>
-              {trackInfo.loading
-                ? 'loading BPM... '
-                : `${toOneDecimal(trackInfo.bpm * playbackRate)} BPM `}
-              <button
-                className="BandcampTempoAdjust__button"
-                onClick={reloadCurrentBpm}
-                title="Re-analyze"
-              >
-                (↻)
-              </button>{' '}
-              <button
-                className="BandcampTempoAdjust__button"
-                onClick={() => {
-                  setEditing(true);
-                }}
-              >
-                (edit)
-              </button>
-            </>
-          )}
-        </div>
-      </div>
-    );
-  }
-
-  if (trackInfo.loading) {
-    return <>(loading BPM...)</>;
-  }
-
-  if (trackInfo.error) {
-    return <div style={{ color: '#ff0f0f' }}>(Error loading BPM)</div>;
-  }
-
-  return <DetectBpmButton onClick={handleLoadBpms} />;
+  return (
+    <BpmDetection
+      bpm={trackInfo.bpm}
+      loading={trackInfo.loading}
+      error={trackInfo.error}
+      playbackRate={playbackRate}
+      onClickLoadBpms={loadBpms}
+      onClickReloadBpm={reloadCurrentBpm}
+      onClickSaveBpm={(bpm) => setTrackBpm({ url: currTrackUrl, bpm })}
+    />
+  );
 }

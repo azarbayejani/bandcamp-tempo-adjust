@@ -16,6 +16,6 @@
     "jsx": "react",
     "noImplicitAny": false,
   },
-  "include": ["src", "test_setup.ts"],
+  "include": ["src", "test_setup.ts", "packages/"],
   "exclude": ["build", "node_modules"]
 }

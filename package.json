@@ -8,7 +8,7 @@
     "url": "https://github.com/azarbayejani/bandcamp-tempo-adjust.git"
   },
   "scripts": {
-    "watch": "parcel watch src/manifest.json --host localhost --no-hmr",
+    "watch": "parcel watch src/manifest.json --host localhost",
     "launch:chrome": "web-ext run -s dist/ --target chromium",
     "start:chrome": "concurrently \"yarn watch\" \"yarn launch:chrome\"",
     "launch:firefox": "web-ext run -s dist/ --target firefox-desktop",
@@ -19,23 +19,21 @@
     "package": "web-ext build --source-dir dist && git archive --format zip --output web-ext-artifacts/bandcamp-tempo-adjust-source.zip HEAD"
   },
   "dependencies": {
-    "@hot-loader/react-dom": "^17.0.2",
     "@json2csv/plainjs": "^7.0.6",
-    "@parcel/config-webextension": "2.12.1-canary.3345",
-    "@parcel/transformer-sass": "2.0.0-canary.1722",
     "@tanstack/react-query": "^4.28.0",
     "@tanstack/react-query-devtools": "^4.28.0",
     "immer": "^9.0.17",
     "p-queue": "^8.0.1",
-    "parcel": "2.0.0-canary.1728",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-hot-loader": "^4.13.1",
     "react-select": "^5.7.2",
     "web-audio-beat-detector": "^8.1.40",
     "webextension-polyfill": "^0.10.0"
   },
   "devDependencies": {
+    "@parcel/config-webextension": "2.12.1-canary.3345",
+    "@parcel/transformer-sass": "2.0.0-canary.1722",
+    "@parcel/validator-typescript": "^2.12.0",
     "@testing-library/jest-dom": "^6.4.2",
     "@testing-library/react": "12",
     "@testing-library/user-event": "^14.5.2",
@@ -56,6 +54,7 @@
     "html-loader": "^3.1.0",
     "html-webpack-plugin": "^5.5.0",
     "jsdom": "^24.0.0",
+    "parcel": "2.0.0-canary.1728",
     "prettier": "^2.7.1",
     "rimraf": "^6.0.1",
     "sass": "^1.71.0",

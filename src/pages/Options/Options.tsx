@@ -6,7 +6,6 @@ import {
 } from '@tempo-adjust/permissions';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 
-// @ts-expect-error
 import * as css from './Options.module.css';
 
 // @ts-expect-error
