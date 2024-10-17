@@ -9,7 +9,7 @@ const CollectionPage = () => {
       initialTrackInfoStore={{}}
       getCurrTrackUrl={() => ''}
     >
-      <PitchAdjust variant="collection" />
+      <PitchAdjust />
     </AudioProvider>
   );
 };

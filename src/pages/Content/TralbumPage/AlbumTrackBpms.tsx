@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createPortal } from 'react-dom';
 
 import { toOneDecimal } from '@tempo-adjust/to-one-decimal';
 
@@ -12,11 +12,12 @@ function AlbumTrackBpmPortal(props: AlbumTrackBpmProps) {
   const portalTarget = document.querySelector(
     `#BandcampPitchAdjust_bpm_${props.trackNumber}`
   );
+
   if (!portalTarget) {
     return null;
   }
 
-  return ReactDOM.createPortal(<AlbumTrackBpm {...props} />, portalTarget);
+  return createPortal(<AlbumTrackBpm {...props} />, portalTarget);
 }
 
 function AlbumTrackBpm({

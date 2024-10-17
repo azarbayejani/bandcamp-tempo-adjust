@@ -1,7 +1,7 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import CollectionPage from './CollectionPage';
 import PurchasesPage from './PurchasesPage';
 import ProvidedTralbumPage from './TralbumPage';
@@ -10,6 +10,8 @@ import './content.styles.scss';
 
 const appDiv = document.createElement('div');
 appDiv.id = 'pitchSliderApp';
+
+const root = createRoot(appDiv);
 
 const queryClient = new QueryClient({
   defaultOptions: { queries: { refetchOnWindowFocus: false } },
@@ -39,10 +41,7 @@ const renderTralbumPage = () => {
         }
       }
     });
-    ReactDOM.render(
-      <ProvidedTralbumPage />,
-      document.querySelector('#pitchSliderApp')
-    );
+    root.render(<ProvidedTralbumPage />);
   }
 };
 
@@ -68,7 +67,7 @@ const renderCollectionPage = () => {
     } else {
       controlsExtra.appendChild(newVolumeContainer);
     }
-    ReactDOM.render(<CollectionPage />, appDiv);
+    root.render(<CollectionPage />);
   }
 };
 
@@ -112,7 +111,7 @@ const renderPurchasesPage = () => {
     } else {
       purchasesDiv.before(appDiv);
     }
-    ReactDOM.render(
+    root.render(
       <QueryClientProvider client={queryClient}>
         <ReactQueryDevtools initialIsOpen={false} />
         <PurchasesPage
@@ -120,8 +119,7 @@ const renderPurchasesPage = () => {
           totalItems={pageData?.orderhistory?.total_items || 0}
           crumb={crumbsData['api/orderhistory/1/get_items']}
         />
-      </QueryClientProvider>,
-      appDiv
+      </QueryClientProvider>
     );
   }
 };

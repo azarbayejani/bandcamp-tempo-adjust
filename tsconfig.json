@@ -12,10 +12,10 @@
     "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    "noEmit": false,
+    "noEmit": true,
     "jsx": "react",
     "noImplicitAny": false,
   },
   "include": ["src", "test_setup.ts", "packages/"],
-  "exclude": ["build", "node_modules"]
+  "exclude": ["build", "node_modules/"]
 }
