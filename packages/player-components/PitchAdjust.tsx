@@ -102,9 +102,9 @@ const PitchAdjust = ({
       </div>
       <div className={css.otherControlsRow}>
         <Button onClick={handlePreservesPitchChange} active={preservesPitch}>
-          Preserve pitch
+          Master Tempo
         </Button>
-        <Button onClick={handleClickReset}>Reset Tempo</Button>
+        <Button onClick={handleClickReset}>Reset</Button>
       </div>
     </div>
   );
