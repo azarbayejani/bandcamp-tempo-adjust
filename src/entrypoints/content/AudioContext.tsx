@@ -6,10 +6,10 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { analyzeAudio } from '../../services/analyzeAudio';
+import { analyzeAudio } from '~/utils/analyzeAudio';
 import browser from 'webextension-polyfill';
-import { TrackInfoByUrl as TrackInfoStore } from '../../types';
-import { hasAllPermissions } from '../../services/hasAllPermissions';
+import { TrackInfoByUrl as TrackInfoStore } from '~/types';
+import { hasAllPermissions } from '~/utils/hasAllPermissions';
 
 type AudioRef = React.RefObject<HTMLAudioElement | null>;
 type AudioStateContext = {

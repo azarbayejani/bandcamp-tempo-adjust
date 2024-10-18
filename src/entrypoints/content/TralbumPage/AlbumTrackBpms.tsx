@@ -4,7 +4,7 @@ import { createPortal } from 'react-dom';
 import { toOneDecimal } from '@tempo-adjust/to-one-decimal';
 
 import { useAudio } from '../AudioContext';
-import { TrackInfo } from '../../../types';
+import { TrackInfo } from '@/types';
 
 type AlbumTrackBpmProps = TrackInfo;
 

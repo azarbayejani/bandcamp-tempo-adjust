@@ -11,6 +11,10 @@
 !.yarn/versions
 .yarn-error.log
 
+# WXT
+.wxt/
+.output/
+
 # testing
 /coverage
 /profiles

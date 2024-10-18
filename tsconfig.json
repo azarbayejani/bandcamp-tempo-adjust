@@ -1,21 +1,7 @@
 {
+  "extends": "./.wxt/tsconfig.json",
   "compilerOptions": {
-    "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": false,
-    "skipLibCheck": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "noFallthroughCasesInSwitch": true,
-    "module": "esnext",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "noEmit": true,
-    "jsx": "react",
-    "noImplicitAny": false,
-  },
-  "include": ["src", "test_setup.ts", "packages/"],
-  "exclude": ["build", "node_modules/"]
+    "allowImportingTsExtensions": true,
+    "jsx": "react-jsx"
+  }
 }

@@ -6,10 +6,9 @@ import {
 } from '@tempo-adjust/permissions';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 
-import * as css from './Options.module.css';
+import * as css from './OptionsPage.module.css';
 
-// @ts-expect-error
-import bandcampTempoAdjustLogo from 'url:../../assets/img/icon-128.png';
+const bandcampTempoAdjustLogo = '/icon-128.png';
 
 interface Props {
   title: string;

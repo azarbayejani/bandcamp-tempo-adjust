@@ -1,7 +1,7 @@
 import React from 'react';
-import { render } from 'react-dom';
+import { createRoot } from 'react-dom/client';
 
-import Options from './Options';
+import Options from './OptionsPage';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
@@ -9,10 +9,9 @@ const queryClient = new QueryClient({
   defaultOptions: { queries: { refetchOnWindowFocus: false } },
 });
 
-render(
+createRoot(window.document.getElementById('app-container')).render(
   <QueryClientProvider client={queryClient}>
     <Options />
     <ReactQueryDevtools />
-  </QueryClientProvider>,
-  window.document.querySelector('#app-container')
+  </QueryClientProvider>
 );

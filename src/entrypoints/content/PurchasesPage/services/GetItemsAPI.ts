@@ -1,4 +1,4 @@
-import PQueue from 'p-queue/dist';
+import PQueue from 'p-queue';
 import { formatDate } from './formatDate';
 
 interface ApiPurchase {
