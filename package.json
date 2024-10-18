@@ -1,14 +1,22 @@
 {
   "name": "@tempo-adjust/monorepo",
   "version": "0.1",
-  "description": "A browser extension to detect and adjust track tempo on Bandcamp",
+  "description": "A browser extension to detect and adjust track tempo on the web",
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/azarbayejani/bandcamp-tempo-adjust.git"
   },
   "scripts": {
-    "check": "yarn workspaces foreach -A run tsc"
+    "check": "yarn workspaces foreach -A run tsc",
+    "dev:bandcamp": "yarn workspace bandcamp-tempo-adjust dev",
+    "dev:discogs": "yarn workspace discogs-tempo-adjust dev",
+    "build": "yarn build-chrome && yarn build-firefox",
+    "build-chrome": "yarn workspaces foreach -Ap --include '{bandcamp-tempo-adjust,discogs-tempo-adjust}' run build",
+    "build-firefox": "yarn workspaces foreach -Ap --include '{bandcamp-tempo-adjust,discogs-tempo-adjust}' run build -b firefox --mv3",
+    "zip": "yarn zip-chrome && yarn zip-firefox",
+    "zip-chrome": "yarn workspaces foreach -Ap --include '{bandcamp-tempo-adjust,discogs-tempo-adjust}' run zip",
+    "zip-firefox": "yarn workspaces foreach -Ap --include '{bandcamp-tempo-adjust,discogs-tempo-adjust}' run zip -b firefox --mv3"
   },
   "dependencies": {
     "@json2csv/plainjs": "^7.0.6",

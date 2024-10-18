@@ -1,4 +1,4 @@
-# Bandcamp Tempo Adjust
+# Bandcamp Tempo Adjust + Discogs Tempo Adjust
 
 <a href="https://buymeacoffee.com/miseryconfusion"><img src="https://cdn.buymeacoffee.com/buttons/v2/arial-orange.png" height="36px" alt="Donate" /></a>
 
@@ -7,14 +7,20 @@ https://user-images.githubusercontent.com/241079/211879993-bf036e16-253f-450c-a9
 ## Features
 
 - Tempo Adjust Slider
-- BPM Detection
-- Purchase Export (temporarily disabled)
+- BPM Detection (only on Bandcamp)
+- Purchase Export
 
 ## Installation
+
+### Bandcamp Tempo Adjust
 
 🔗 [Chrome Web Store](https://chrome.google.com/webstore/detail/bandcamp-tempo-slider/iniomjoihcjgakkfaebmcbnhmiobppel)
 
 🔗 [Firefox Add-On](https://addons.mozilla.org/en-US/firefox/addon/bandcamp-tempo-adjust/)
+
+### Discogs Tempo Adjust
+
+Coming to Chrome / Firefox soon!
 
 ## Donation
 
@@ -35,29 +41,20 @@ yarn
 ### Chrome
 
 ```
-yarn start:chrome
+yarn dev
 ```
 
 ### Firefox
 
-```
-yarn start:firefox
-```
+wxt's dev mode doesn't work with Firefox, so you need to manually rebuild and install the extension for Firefox using `wxt build`
 
-## Deployment
+## Building for release
 
 Run the command
 
 ```
-$ NODE_ENV=production npm run build
+yarn workspace bandcamp-tempo-adjust zip
+yarn workspace discogs-tempo-adjust zip
 ```
 
-Now, the content of `build` folder will be the extension ready to be submitted to the Chrome Web Store. Just take a look at the [official guide](https://developer.chrome.com/webstore/publish) to more infos about publishing.
-
-### Building for Firefox
-
-This extension needs to know to use manifest v2 to target Firefox:
-
-```
-$ yarn build-firefox
-```
+Now, the content of the `.output` folder in `apps/bandcamp-tempo-adjust` and `apps/discogs-tempo-adjust` will be the extension ready to be submitted to the Chrome and Firefox web stores.
