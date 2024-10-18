@@ -5,7 +5,13 @@ import Button from './Button';
 
 import * as css from './CurrentTrackTapBpm.module.scss';
 
-export default function CurrentTrackTapBpm({ onSave, onCancel }) {
+export default function CurrentTrackTapBpm({
+  onSave,
+  onCancel,
+}: {
+  onSave: (bpm?: string) => void;
+  onCancel: () => void;
+}) {
   const { text, tap, setBpm } = useTapper();
 
   const inputRef = useRef<HTMLInputElement>(null);

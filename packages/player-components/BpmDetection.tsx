@@ -6,13 +6,22 @@ import * as css from './BpmDetection.module.scss';
 
 import CurrentTrackTapBpm from './CurrentTrackTapBpm';
 import Button from './Button';
+import Spinner from './spinner';
 
 const Container = ({ children }: { children: React.ReactNode }) => (
   <div className={css.container}>{children}</div>
 );
 
-const DetectBpmButton = ({ onClick }: { onClick: () => void }) => (
-  <Button onClick={onClick}>Detect BPM</Button>
+const DetectBpmButton = ({
+  onClick,
+  disabled,
+}: {
+  onClick: () => void;
+  disabled?: boolean;
+}) => (
+  <Button onClick={onClick} disabled={disabled}>
+    Detect BPM
+  </Button>
 );
 
 // Some alternate ideas for what this could be named:
@@ -47,14 +56,6 @@ const BpmDetection: React.FC<{
     setEditing(false);
   };
 
-  if (loading) {
-    return (
-      <Container>
-        <div className={css.loading}>loading...</div>
-      </Container>
-    );
-  }
-
   if (error) {
     return (
       <Container>
@@ -65,53 +66,46 @@ const BpmDetection: React.FC<{
     );
   }
 
-  if (bpm) {
-    if (editing) {
-      return (
-        <CurrentTrackTapBpm
-          onSave={handleSaveBpm}
-          onCancel={handleCancelEditing}
-        />
-      );
-    } else {
-      return (
-        <Container>
-          <div className={css.bpmDisplayContainer}>
-            <div className={css.bpmDisplay}>
-              {loading ? (
-                'loading...'
-              ) : (
-                <>
-                  <div>{toOneDecimal(bpm * playbackRate)}</div>
-                  <div className={css.bpmLabel}>
-                    <div>BPM</div>
-                  </div>
-                </>
-              )}
-            </div>
-          </div>
-          <div className={css.otherControlsRow}>
-            <Button onClick={onClickReloadBpm}>Re-analyze</Button>
-            <Button onClick={() => setEditing(true)}>Edit</Button>
-          </div>
-        </Container>
-      );
-    }
+  const bpmOrDefault = loading ? (
+    <Spinner />
+  ) : (
+    (bpm && toOneDecimal(bpm * playbackRate)) || '--'
+  );
+
+  if (editing) {
+    return (
+      <CurrentTrackTapBpm
+        onSave={handleSaveBpm}
+        onCancel={handleCancelEditing}
+      />
+    );
   }
 
   return (
-    <div
-      style={{
-        width: 110,
-        display: 'flex',
-        placeContent: 'center',
-        marginTop: 31,
-      }}
-    >
-      <div>
-        <DetectBpmButton onClick={onClickLoadBpms} />
+    <Container>
+      <div className={css.bpmDisplayContainer}>
+        <div className={css.bpmDisplay}>
+          <div className={css.bpmDisplayValue}>{bpmOrDefault}</div>
+          <div className={css.bpmLabel}>
+            <div>BPM</div>
+          </div>
+        </div>
       </div>
-    </div>
+      <div className={css.otherControlsRow}>
+        {bpm ? (
+          <>
+            <Button onClick={onClickReloadBpm} disabled={loading}>
+              Re-analyze
+            </Button>
+            <Button onClick={() => setEditing(true)}>Edit</Button>
+          </>
+        ) : (
+          <>
+            <DetectBpmButton onClick={onClickLoadBpms} disabled={loading} />
+          </>
+        )}
+      </div>
+    </Container>
   );
 };
 

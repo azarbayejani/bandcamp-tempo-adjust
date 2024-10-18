@@ -25,6 +25,11 @@
   justify-content: space-between;
 }
 
+.bpmDisplayValue {
+  display: flex;
+  align-items: center;
+}
+
 .bpmLabel {
   font-size: 12px;
   margin-right: 2px;

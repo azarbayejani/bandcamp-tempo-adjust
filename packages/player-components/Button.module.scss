@@ -23,6 +23,10 @@
       background: rgba(0, 0, 0, 0.2);
       text-decoration: none;
     }
+
+    &:disabled {
+      opacity: 0.3;
+    }
   }
 
   .active {

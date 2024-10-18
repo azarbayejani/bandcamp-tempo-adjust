@@ -9,19 +9,21 @@ const Button = ({
   children,
   onClick,
   active,
+  disabled,
 }: {
   children: React.ReactNode;
   onClick: () => void;
   active?: boolean;
+  disabled?: boolean;
 }) => {
   return (
-    <div
-      role="button"
+    <button
       className={classnames(css.button, { [css.active]: active })}
       onClick={onClick}
+      disabled={disabled}
     >
       {children}
-    </div>
+    </button>
   );
 };
 
