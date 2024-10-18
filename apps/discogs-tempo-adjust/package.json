@@ -1,0 +1,35 @@
+{
+  "name": "discogs-tempo-adjust",
+  "version": "0.1",
+  "description": "A browser extension to detect and adjust track tempo on Discogs",
+  "author": "Bobby Azarbayejani <bobby@azarbayejani.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "rimraf": "^6.0.1",
+    "typescript": "^5.6.3",
+    "typescript-plugin-css-modules": "^5.1.0",
+    "wxt": "^0.19.11"
+  },
+  "scripts": {
+    "dev": "wxt",
+    "dev:firefox": "wxt --target firefox --mv3",
+    "build": "wxt build",
+    "build:firefox": "wxt build --browser firefox --mv3",
+    "zip": "wxt zip",
+    "zip:firefox": "wxt zip --browser firefox",
+    "postinstall": "wxt prepare"
+  },
+  "dependencies": {
+    "@tempo-adjust/player-components": "0.0.0",
+    "@types/react": "^18.3.1",
+    "@types/react-dom": "^18.3.1",
+    "classnames": "^2.5.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-error-overlay": "^6.0.11",
+    "react-query": "^3.39.3",
+    "webextension-polyfill": "^0.10.0",
+    "zustand": "^5.0.0-rc.2"
+  },
+  "type": "module"
+}

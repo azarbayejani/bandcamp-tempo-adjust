@@ -1,0 +1,22 @@
+# dependencies
+/node_modules
+
+# testing
+/coverage
+/profiles
+
+# production
+/dist
+/web-ext-artifacts
+
+# misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.history
+.parcel-cache
+
+# secrets
+secrets.*.js

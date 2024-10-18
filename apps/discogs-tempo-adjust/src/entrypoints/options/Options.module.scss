@@ -1,0 +1,69 @@
+.options {
+  width: 100%;
+  margin-top: 36px;
+  margin-left: auto;
+  margin-right: auto;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid #dbdbdb;
+  border-radius: 0.75rem;
+  padding: 48px 0;
+}
+
+.optionsWithFooter {
+  padding: 48px 0 0 0;
+}
+
+.footer {
+  border-top: 1px solid #dbdbdb;
+  width: 100%;
+  margin-top: 8px;
+  padding: 8px 0;
+  font-size: 0.75rem;
+}
+
+.button {
+  display: inline-flex;
+  text-decoration: none;
+  background: black;
+  color: #fff;
+  width: 200px;
+  height: 36px;
+  padding: 0 1em;
+  text-align: center;
+  border: none;
+  line-height: 1.2;
+  font-size: 16px;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.actionContainer {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+  border-radius: 0.75rem;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+.donationText {
+  padding: 0 20px;
+}
+
+.logo {
+  width: 128px;
+}
+
+a {
+  text-decoration: none;
+}
