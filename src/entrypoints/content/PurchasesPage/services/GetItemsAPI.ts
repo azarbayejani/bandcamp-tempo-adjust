@@ -145,8 +145,12 @@ export class PurchasesAPI {
     let crumbErrorCount = 0;
     while (true) {
       try {
-        let currLastToken = lastToken;
-        const response = await queue.add(() =>
+        // I really don't know why these types need to be explicitly defined...
+        let currLastToken: string | undefined = lastToken;
+        const response: {
+          lastToken: string | undefined;
+          purchases: Purchase[];
+        } | void = await queue.add(() =>
           this.getItems({ lastToken: currLastToken })
         );
 
@@ -181,8 +185,8 @@ export class PurchasesAPI {
     });
 
     return {
-      lastToken: response.last_token,
-      purchases: response.items.map(withFormattedPaymentDate),
+      lastToken: response.last_token as string | undefined,
+      purchases: response.items.map(withFormattedPaymentDate) as Purchase[],
     };
   }
 

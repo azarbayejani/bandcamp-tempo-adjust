@@ -39,7 +39,7 @@ export function usePurchases({
       ).reduce((acc, { date, rates }) => {
         acc[date] = rates;
         return acc;
-      }, {});
+      }, {} as { [key: string]: { [key: string]: number } });
 
       const purchasesWithLocalCurrency = purchases.map((purchase) => {
         const conversionRate =

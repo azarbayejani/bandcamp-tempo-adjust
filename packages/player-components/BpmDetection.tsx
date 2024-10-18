@@ -45,10 +45,11 @@ const BpmDetection: React.FC<{
 }) => {
   const [editing, setEditing] = useState(false);
 
-  const handleSaveBpm = (bpm?: number) => {
+  const handleSaveBpm = (bpm?: string) => {
     setEditing(false);
-    if (bpm) {
-      onClickSaveBpm(bpm);
+    const bpmNumber = Number(bpm);
+    if (bpmNumber && !Number.isNaN(bpmNumber)) {
+      onClickSaveBpm(bpmNumber);
     }
   };
 
