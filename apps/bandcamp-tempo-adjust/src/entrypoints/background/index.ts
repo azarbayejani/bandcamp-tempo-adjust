@@ -1,9 +1,6 @@
 import browser from 'webextension-polyfill';
 import { hasAllPermissions } from '@tempo-adjust/permissions';
 
-// This only works because this page is marked as a web_accessible_resource in manifest.json
-// We cannot use the normal way of referencing this by importing from 'url:./pages/Options/index.html'
-// because Parcel would create a special URL for use from the background script, which breaks in Chrome.
 const optionsPageUrl = '/options.html';
 
 export default defineBackground({

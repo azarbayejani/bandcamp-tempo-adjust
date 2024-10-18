@@ -1,5 +1,5 @@
 {
-  "name": "@tempo-adjust/monorepo",
+  "name": "bandcamp-tempo-adjust",
   "version": "0.1",
   "description": "A browser extension to detect and adjust track tempo on Bandcamp",
   "license": "MIT",
@@ -8,7 +8,13 @@
     "url": "https://github.com/azarbayejani/bandcamp-tempo-adjust.git"
   },
   "scripts": {
-    "check": "yarn workspaces foreach -A run tsc"
+    "dev": "wxt",
+    "dev:firefox": "wxt --target firefox --mv3",
+    "build": "wxt build",
+    "build:firefox": "wxt build --browser firefox --mv3",
+    "zip": "wxt zip",
+    "zip:firefox": "wxt zip --browser firefox",
+    "postinstall": "wxt prepare"
   },
   "dependencies": {
     "@json2csv/plainjs": "^7.0.6",
@@ -34,13 +40,6 @@
     "@types/react-dom": "^18.3.1",
     "@types/webextension-polyfill": "^0.9.2",
     "@wxt-dev/module-react": "^1.1.1",
-    "eslint": "^8.27.0",
-    "eslint-config-react-app": "^7.0.1",
-    "eslint-plugin-flowtype": "^8.0.3",
-    "eslint-plugin-import": "^2.26.0",
-    "eslint-plugin-jsx-a11y": "^6.6.1",
-    "eslint-plugin-react": "^7.31.10",
-    "eslint-plugin-react-hooks": "^4.6.0",
     "fs-extra": "^11.2.0",
     "html-loader": "^3.1.0",
     "html-webpack-plugin": "^5.5.0",
@@ -61,9 +60,6 @@
   "resolutions": {
     "@types/react": "18.3.1"
   },
-  "packageManager": "yarn@4.5.0",
-  "workspaces": [
-    "packages/*",
-    "apps/*"
-  ]
+  "browserslist": "> 0.5%, last 5 versions, not dead",
+  "packageManager": "yarn@4.5.0"
 }
