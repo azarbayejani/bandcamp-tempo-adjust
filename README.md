@@ -1,8 +1,20 @@
-# Bandcamp Tempo Adjust + Discogs Tempo Adjust
+<h1 align="center">
+  Bandcamp Tempo Adjust
+</h1>
 
-<a href="https://buymeacoffee.com/miseryconfusion"><img src="https://cdn.buymeacoffee.com/buttons/v2/arial-orange.png" height="36px" alt="Donate" /></a>
+<p align="center">
+  <a href="http://buymeacoffee.com/miseryconfusion"><img src="https://img.shields.io/badge/-buy_me_a%C2%A0coffee-gray?logo=buy-me-a-coffee" alt="buy me a coffee" /></a>
+  <a href="https://chromewebstore.google.com/detail/bandcamp-tempo-adjust/iniomjoihcjgakkfaebmcbnhmiobppel?hl=en-US"><img src="https://img.shields.io/chrome-web-store/users/iniomjoihcjgakkfaebmcbnhmiobppel?logo=googlechrome&logoColor=white&label=users" alt="chrome users" /></a>
+  <a href="https://addons.mozilla.org/en-US/firefox/addon/bandcamp-tempo-adjust/"><img src="https://img.shields.io/amo/users/bandcamp-tempo-adjust?logo=firefoxbrowser&logoColor=white" alt="firefox users" /></a>
+</p>
 
-https://user-images.githubusercontent.com/241079/211879993-bf036e16-253f-450c-a950-51a9d3b20b34.mp4
+<p align="center">and Discogs Tempo Adjust, too</p>
+
+<p align="center"><img src="https://github.com/user-attachments/assets/6dfc0381-49c1-4a58-83d1-e19f12c2f5d4" /></p>
+
+## Demo
+
+https://github.com/user-attachments/assets/7412e241-3d17-474c-9137-3f8c51e4d5c3
 
 ## Features
 
