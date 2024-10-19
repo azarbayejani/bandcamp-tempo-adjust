@@ -1,6 +1,8 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 
+import { ThemeProvider } from '@tempo-adjust/theme-provider';
+
 import PitchAdjust from './PitchAdjust';
 import useForceUpdate from './store';
 
@@ -10,7 +12,11 @@ const renderDiscogsPage = () => {
   const root = createRoot(appDiv);
   const observer = new MutationObserver((records) => {
     if (!document.getElementById(appDiv.id)) {
-      root.render(<PitchAdjust />);
+      root.render(
+        <ThemeProvider theme="light">
+          <PitchAdjust />
+        </ThemeProvider>
+      );
 
       const playerContainer =
         document.querySelector("[class^='player_']")?.parentElement;

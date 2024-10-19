@@ -4411,6 +4411,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@tempo-adjust/theme-provider@workspace:packages/theme-provider":
+  version: 0.0.0-use.local
+  resolution: "@tempo-adjust/theme-provider@workspace:packages/theme-provider"
+  dependencies:
+    typescript: "npm:^5.6.3"
+  languageName: unknown
+  linkType: soft
+
 "@tempo-adjust/to-one-decimal@workspace:packages/to-one-decimal":
   version: 0.0.0-use.local
   resolution: "@tempo-adjust/to-one-decimal@workspace:packages/to-one-decimal"

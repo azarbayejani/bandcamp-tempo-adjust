@@ -1,0 +1,10 @@
+{
+  "name": "@tempo-adjust/theme-provider",
+  "packageManager": "yarn@4.5.0",
+  "type": "module",
+  "main": "index.tsx",
+  "private": true,
+  "devDependencies": {
+    "typescript": "^5.6.3"
+  }
+}

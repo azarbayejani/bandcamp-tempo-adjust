@@ -1,6 +1,9 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { createRoot } from 'react-dom/client';
+
+import { ThemeProvider } from '@tempo-adjust/theme-provider';
+
 import CollectionPage from './CollectionPage';
 import PurchasesPage from './PurchasesPage';
 import ProvidedTralbumPage from './TralbumPage';
@@ -17,8 +20,9 @@ const queryClient = new QueryClient({
 });
 
 const renderTralbumPage = () => {
+  const body = document.querySelector('body');
   const player = document.querySelector('.inline_player');
-  if (player) {
+  if (player && body) {
     if (document.getElementById(appDiv.id)) {
       document.getElementById(appDiv.id)?.replaceWith(appDiv);
     } else {
@@ -40,7 +44,13 @@ const renderTralbumPage = () => {
         }
       }
     });
-    root.render(<ProvidedTralbumPage />);
+    root.render(
+      <ThemeProvider
+        theme={body.classList.contains('invertIconography') ? 'dark' : 'light'}
+      >
+        <ProvidedTralbumPage />
+      </ThemeProvider>
+    );
   }
 };
 
