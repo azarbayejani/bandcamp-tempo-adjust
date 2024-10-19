@@ -12,7 +12,14 @@ export default function Spinner() {
         }
       </style>
       <g className="spinner_OSmW">
-        <rect x="11" y="1" width="2" height="5" opacity=".14" />
+        <rect
+          x="11"
+          y="1"
+          width="2"
+          height="5"
+          opacity=".14"
+          fill="currentColor"
+        />
         <rect
           x="11"
           y="1"
@@ -20,6 +27,7 @@ export default function Spinner() {
           height="5"
           transform="rotate(30 12 12)"
           opacity=".29"
+          fill="currentColor"
         />
         <rect
           x="11"
@@ -28,6 +36,7 @@ export default function Spinner() {
           height="5"
           transform="rotate(60 12 12)"
           opacity=".43"
+          fill="currentColor"
         />
         <rect
           x="11"
@@ -36,6 +45,7 @@ export default function Spinner() {
           height="5"
           transform="rotate(90 12 12)"
           opacity=".57"
+          fill="currentColor"
         />
         <rect
           x="11"
@@ -44,6 +54,7 @@ export default function Spinner() {
           height="5"
           transform="rotate(120 12 12)"
           opacity=".71"
+          fill="currentColor"
         />
         <rect
           x="11"
@@ -52,8 +63,16 @@ export default function Spinner() {
           height="5"
           transform="rotate(150 12 12)"
           opacity=".86"
+          fill="currentColor"
         />
-        <rect x="11" y="1" width="2" height="5" transform="rotate(180 12 12)" />
+        <rect
+          x="11"
+          y="1"
+          width="2"
+          height="5"
+          transform="rotate(180 12 12)"
+          fill="currentColor"
+        />
       </g>
     </svg>
   );
