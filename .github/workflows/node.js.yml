@@ -25,10 +25,13 @@ jobs:
     # NOTE: pnpm caching support requires pnpm version >= 6.10.0
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@0609f0983b7a228f052f81ef4c3d6510cae254ad
+        name: Checkout
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
         with:
-          version: 9.12.3
+          version: 9
       - uses: actions/setup-node@v4
+        name: Install node
         with:
           node-version: '20'
           cache: 'pnpm'
