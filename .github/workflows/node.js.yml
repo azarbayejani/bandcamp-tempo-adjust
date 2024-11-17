@@ -24,14 +24,18 @@ jobs:
 
     # NOTE: pnpm caching support requires pnpm version >= 6.10.0
     steps:
-      - uses: actions/checkout@v4
-        name: Checkout
-      - uses: pnpm/action-setup@v4
-        name: Install pnpm
-      - uses: actions/setup-node@v4
-        name: Install node
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+      - name: Install node
+        uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'pnpm'
-      - run: pnpm install
-      - run: pnpm test
+      - name: Install dependencies
+        run: pnpm install
+      - name: Check typescript
+        run: pnpm check
+      - name: Run tests
+        run: pnpm test
