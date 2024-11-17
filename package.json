@@ -15,6 +15,7 @@
     "build": "pnpm build-chrome && pnpm build-firefox",
     "build:chrome": "pnpm --filter './apps/**' build",
     "build:firefox": "pnpm --filter './apps/**' build -b firefox --mv3",
+    "test": "vitest",
     "zip": "pnpm zip-chrome && pnpm zip-firefox",
     "zip:chrome": "pnpm --filter './apps/**' zip",
     "zip:firefox": "pnpm --filter './apps/**' zip -b firefox --mv3"

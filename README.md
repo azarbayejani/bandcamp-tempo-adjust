@@ -47,26 +47,33 @@ If this project has helped you, please consider donating:
 Install all dependencies
 
 ```
-yarn
+pnpm i
 ```
 
 ### Chrome
 
+#### For Bandcamp Tempo Adjust
+
 ```
-yarn dev
+pnpm dev:bandcamp
+```
+
+#### For Discogs Tempo Adjust
+
+```
+pnpm dev:discogs
 ```
 
 ### Firefox
 
-wxt's dev mode doesn't work with Firefox, so you need to manually rebuild and install the extension for Firefox using `wxt build`
+wxt's dev mode doesn't work with Firefox, so you need to manually rebuild and install the extension for Firefox using `pnpm build`
 
 ## Building for release
 
 Run the command
 
 ```
-yarn workspace bandcamp-tempo-adjust zip
-yarn workspace discogs-tempo-adjust zip
+pnpm zip
 ```
 
 Now, the content of the `.output` folder in `apps/bandcamp-tempo-adjust` and `apps/discogs-tempo-adjust` will be the extension ready to be submitted to the Chrome and Firefox web stores.
