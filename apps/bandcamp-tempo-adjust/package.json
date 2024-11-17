@@ -60,9 +60,6 @@
     "wxt": "^0.19.11",
     "@tempo-adjust/wxt-hooks": "workspace:*"
   },
-  "resolutions": {
-    "@types/react": "18.3.1"
-  },
   "browserslist": "> 0.5%, last 5 versions, not dead",
   "packageManager": "pnpm@9.12.3"
 }
