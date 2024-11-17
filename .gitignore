@@ -29,6 +29,7 @@ node_modules
 .DS_Store
 .env.local
 .env.development.local
+.env.submit
 .env.test.local
 .env.production.local
 .history
