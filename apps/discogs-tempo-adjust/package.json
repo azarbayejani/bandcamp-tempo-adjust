@@ -20,7 +20,9 @@
     "postinstall": "wxt prepare"
   },
   "dependencies": {
-    "@tempo-adjust/player-components": "0.0.0",
+    "@tempo-adjust/permissions": "workspace:*",
+    "@tempo-adjust/player-components": "workspace:*",
+    "@tempo-adjust/theme-provider": "workspace:*",
     "@types/react": "^18.3.1",
     "@types/react-dom": "^18.3.1",
     "classnames": "^2.5.1",
@@ -31,5 +33,6 @@
     "webextension-polyfill": "^0.10.0",
     "zustand": "^5.0.0-rc.2"
   },
-  "type": "module"
+  "type": "module",
+  "packageManager": "pnpm@9.12.3"
 }

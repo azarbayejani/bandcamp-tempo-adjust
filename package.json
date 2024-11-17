@@ -8,22 +8,21 @@
     "url": "https://github.com/azarbayejani/bandcamp-tempo-adjust.git"
   },
   "scripts": {
-    "check": "yarn workspaces foreach -A run tsc",
-    "dev:bandcamp": "yarn workspace bandcamp-tempo-adjust dev",
-    "dev:discogs": "yarn workspace discogs-tempo-adjust dev",
-    "build": "yarn build-chrome && yarn build-firefox",
-    "build-chrome": "yarn workspaces foreach -Ap --include '{bandcamp-tempo-adjust,discogs-tempo-adjust}' run build",
-    "build-firefox": "yarn workspaces foreach -Ap --include '{bandcamp-tempo-adjust,discogs-tempo-adjust}' run build -b firefox --mv3",
-    "zip": "yarn zip-chrome && yarn zip-firefox",
-    "zip-chrome": "yarn workspaces foreach -Ap --include '{bandcamp-tempo-adjust,discogs-tempo-adjust}' run zip",
-    "zip-firefox": "yarn workspaces foreach -Ap --include '{bandcamp-tempo-adjust,discogs-tempo-adjust}' run zip -b firefox --mv3"
+    "preinstall": "npx only-allow pnpm",
+    "check": "pnpm -r exec tsc",
+    "dev:bandcamp": "pnpm --filter bandcamp-tempo-adjust dev",
+    "dev:discogs": "pnpm --filter discogs-tempo-adjust dev",
+    "build": "pnpm build-chrome && pnpm build-firefox",
+    "build:chrome": "pnpm --filter './apps/**' build",
+    "build:firefox": "pnpm --filter './apps/**' build -b firefox --mv3",
+    "zip": "pnpm zip-chrome && pnpm zip-firefox",
+    "zip:chrome": "pnpm --filter './apps/**' zip",
+    "zip:firefox": "pnpm --filter './apps/**' zip -b firefox --mv3"
   },
   "dependencies": {
     "@json2csv/plainjs": "^7.0.6",
     "@tanstack/react-query": "^4.28.0",
     "@tanstack/react-query-devtools": "^4.28.0",
-    "@tempo-adjust/permissions": "0.0.0",
-    "@tempo-adjust/player-components": "0.0.0",
     "immer": "^9.0.17",
     "p-queue": "^8.0.1",
     "react": "^18.3.1",
@@ -33,8 +32,9 @@
     "webextension-polyfill": "^0.10.0"
   },
   "devDependencies": {
-    "@testing-library/jest-dom": "^6.4.2",
-    "@testing-library/react": "12",
+    "@testing-library/dom": "^10.4.0",
+    "@testing-library/jest-dom": "^6.6.2",
+    "@testing-library/react": "^16.0.1",
     "@testing-library/user-event": "^14.5.2",
     "@types/chrome": "^0.0.202",
     "@types/json2csv": "^5.0.3",
@@ -62,16 +62,12 @@
     "style-loader": "^3.3.1",
     "terser-webpack-plugin": "^5.3.6",
     "typescript": "^5.6.3",
-    "vitest": "^1.3.0",
+    "vitest": "^2.1.3",
     "web-ext": "^7.11.0",
     "wxt": "^0.19.11"
   },
   "resolutions": {
     "@types/react": "18.3.1"
   },
-  "packageManager": "yarn@4.5.0",
-  "workspaces": [
-    "packages/*",
-    "apps/*"
-  ]
+  "packageManager": "pnpm@9.12.3"
 }

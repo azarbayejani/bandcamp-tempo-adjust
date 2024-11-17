@@ -13,15 +13,17 @@
     "build": "wxt build",
     "build:firefox": "wxt build --browser firefox --mv3",
     "zip": "wxt zip",
-    "zip:firefox": "wxt zip --browser firefox",
+    "zip:firefox": "wxt zip --browser firefox --mv3",
     "postinstall": "wxt prepare"
   },
   "dependencies": {
     "@json2csv/plainjs": "^7.0.6",
     "@tanstack/react-query": "^4.28.0",
     "@tanstack/react-query-devtools": "^4.28.0",
-    "@tempo-adjust/permissions": "0.0.0",
-    "@tempo-adjust/player-components": "0.0.0",
+    "@tempo-adjust/permissions": "workspace:*",
+    "@tempo-adjust/player-components": "workspace:*",
+    "@tempo-adjust/theme-provider": "workspace:*",
+    "@tempo-adjust/to-one-decimal": "workspace:*",
     "immer": "^9.0.17",
     "p-queue": "^8.0.1",
     "react": "^18.3.1",
@@ -31,19 +33,22 @@
     "webextension-polyfill": "^0.10.0"
   },
   "devDependencies": {
-    "@testing-library/jest-dom": "^6.4.2",
-    "@testing-library/react": "12",
+    "@testing-library/jest-dom": "^6.6.2",
+    "@testing-library/react": "^16.0.1",
     "@testing-library/user-event": "^14.5.2",
     "@types/chrome": "^0.0.202",
+    "@types/fs-extra": "^11.0.4",
     "@types/json2csv": "^5.0.3",
     "@types/react": "^18.3.1",
     "@types/react-dom": "^18.3.1",
     "@types/webextension-polyfill": "^0.9.2",
     "@wxt-dev/module-react": "^1.1.1",
+    "fast-glob": "^3.3.2",
     "fs-extra": "^11.2.0",
     "html-loader": "^3.1.0",
     "html-webpack-plugin": "^5.5.0",
     "jsdom": "^24.0.0",
+    "jszip": "^3.10.1",
     "parcel": "2.0.0-canary.1728",
     "prettier": "^2.7.1",
     "rimraf": "^6.0.1",
@@ -61,5 +66,5 @@
     "@types/react": "18.3.1"
   },
   "browserslist": "> 0.5%, last 5 versions, not dead",
-  "packageManager": "yarn@4.5.0"
+  "packageManager": "pnpm@9.12.3"
 }

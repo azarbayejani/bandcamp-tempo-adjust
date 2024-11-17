@@ -19,7 +19,6 @@ const Button = ({
   disabled?: boolean;
 }) => {
   const theme = useTheme();
-  console.log('THEME', theme);
   return (
     <button
       className={classnames(css.button, {

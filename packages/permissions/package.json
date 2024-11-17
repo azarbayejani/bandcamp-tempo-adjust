@@ -1,6 +1,5 @@
 {
   "name": "@tempo-adjust/permissions",
-  "packageManager": "yarn@4.5.0",
   "type": "module",
   "version": "0.0.0",
   "main": "index.ts",
