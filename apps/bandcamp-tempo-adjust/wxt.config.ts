@@ -63,6 +63,12 @@ export default defineConfig({
 
       const files = [...packageFiles, ...appFiles];
 
+      // add SOURCE_CODE_REVIEW.md to the zip root
+      zip.file(
+        'SOURCE_CODE_REVIEW.md',
+        fs.readFileSync(path.resolve(wxt.config.root, 'SOURCE_CODE_REVIEW.md'))
+      );
+
       for (const file of files) {
         const absolutePath = path.resolve(workspaceRoot, file);
         const content = fs.readFileSync(absolutePath);
