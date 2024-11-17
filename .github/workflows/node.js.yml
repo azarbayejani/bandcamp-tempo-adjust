@@ -28,8 +28,6 @@ jobs:
         name: Checkout
       - uses: pnpm/action-setup@v4
         name: Install pnpm
-        with:
-          version: 9
       - uses: actions/setup-node@v4
         name: Install node
         with:
