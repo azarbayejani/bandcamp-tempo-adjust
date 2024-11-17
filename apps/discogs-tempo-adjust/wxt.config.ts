@@ -8,6 +8,6 @@ export default defineConfig({
       'A browser extension to detect and adjust track tempo on Discogs',
     action: {},
   },
-  modules: ['@wxt-dev/module-react'],
+  modules: ['@wxt-dev/module-react', '@tempo-adjust/wxt-hooks'],
   srcDir: 'src',
 });

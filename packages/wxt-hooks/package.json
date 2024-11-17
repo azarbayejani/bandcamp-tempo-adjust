@@ -1,0 +1,17 @@
+{
+  "name": "@tempo-adjust/wxt-hooks",
+  "main": "index.ts",
+  "type": "module",
+  "private": true,
+  "devDependencies": {
+    "@types/fs-extra": "^11.0.4",
+    "typescript": "^5.6.3"
+  },
+  "packageManager": "pnpm@9.12.3",
+  "dependencies": {
+    "fast-glob": "^3.3.2",
+    "fs-extra": "^11.2.0",
+    "jszip": "^3.10.1",
+    "wxt": "^0.19.11"
+  }
+}
