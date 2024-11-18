@@ -49,7 +49,7 @@ const BpmDetection: React.FC<{
     setEditing(false);
     const bpmNumber = Number(bpm);
     if (bpmNumber && !Number.isNaN(bpmNumber)) {
-      onClickSaveBpm(bpmNumber);
+      onClickSaveBpm(bpmNumber / playbackRate);
     }
   };
 
