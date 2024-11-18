@@ -18,7 +18,8 @@
     "test": "vitest",
     "zip": "pnpm zip:chrome && pnpm zip:firefox",
     "zip:chrome": "pnpm --filter './apps/**' zip",
-    "zip:firefox": "pnpm --filter './apps/**' zip -b firefox --mv3"
+    "zip:firefox": "pnpm --filter './apps/**' zip -b firefox --mv3",
+    "submit:bandcamp": "pnpm --filter bandcamp-tempo-adjust submit"
   },
   "dependencies": {
     "@json2csv/plainjs": "^7.0.6",
