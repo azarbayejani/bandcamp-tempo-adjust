@@ -30,6 +30,7 @@ node_modules
 .env.local
 .env.development.local
 .env.submit
+.env.submit.*
 .env.test.local
 .env.production.local
 .history
