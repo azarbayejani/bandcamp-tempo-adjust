@@ -9,12 +9,23 @@
   border-radius: 1px;
 }
 
+// Not sure why I can't combine this with webkit-slider-thumb
+.slider::-moz-range-thumb {
+  appearance: none;
+  background: rgb(255, 255, 255);
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  border-radius: 0;
+  height: 15px;
+  width: 17px;
+}
+
 .slider::-webkit-slider-thumb {
   -webkit-appearance: none;
   /* Override default look */
   appearance: none;
   background: rgb(255, 255, 255);
   border: 1px solid rgba(0, 0, 0, 0.25);
+  border-radius: 0;
   height: 15px;
   width: 17px;
 }
