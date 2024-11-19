@@ -1,6 +1,6 @@
 {
   "name": "@tempo-adjust/wxt-hooks",
-  "main": "index.ts",
+  "main": "index.js",
   "type": "module",
   "private": true,
   "devDependencies": {
