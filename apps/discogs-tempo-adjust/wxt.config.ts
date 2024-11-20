@@ -3,9 +3,8 @@ import { defineConfig } from 'wxt';
 export default defineConfig({
   manifest: {
     name: 'Discogs Tempo Adjust',
-    version: '0.1.1',
-    description:
-      'A browser extension to detect and adjust track tempo on Discogs',
+    version: '0.1.2',
+    description: 'A browser extension to adjust track tempo on Discogs',
     action: {},
     browser_specific_settings: {
       gecko: {
