@@ -32,7 +32,10 @@ https://github.com/user-attachments/assets/7412e241-3d17-474c-9137-3f8c51e4d5c3
 
 ### Discogs Tempo Adjust
 
-Coming to Chrome / Firefox soon!
+🔗 [Chrome Web Store](https://chromewebstore.google.com/detail/discogs-tempo-adjust/lifpcepdalajjkklljnfcjpjjjllfhha)
+
+🔗 [Firefox Add-On](https://addons.mozilla.org/en-US/firefox/addon/discogs-tempo-adjust/)
+
 
 ## Donation
 
