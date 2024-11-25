@@ -6,9 +6,9 @@ interface ThemeContextValue {
   theme: Theme;
 }
 
-const ThemeContext = React.createContext<ThemeContextValue>({
-  theme: 'light',
-});
+const ThemeContext = React.createContext<ThemeContextValue | undefined>(
+  undefined
+);
 
 export const ThemeProvider = ({
   children,
@@ -22,4 +22,11 @@ export const ThemeProvider = ({
   );
 };
 
-export const useTheme = () => React.useContext(ThemeContext).theme;
+export const useTheme = () => {
+  const themeContext = React.useContext(ThemeContext);
+  if (themeContext === undefined) {
+    throw new Error('useTheme must be used within a ThemeProvider');
+  }
+
+  return themeContext.theme;
+};

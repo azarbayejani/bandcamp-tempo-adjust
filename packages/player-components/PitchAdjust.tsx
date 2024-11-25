@@ -32,8 +32,6 @@ const useTempoRange = () => {
   const [tempoRangeIndex, setTempoRangeIndex] = React.useState(1);
   return {
     tempoRange: tempoRanges[tempoRangeIndex % tempoRanges.length],
-    advanceToNextTempoRange: () =>
-      setTempoRangeIndex((prevTempoRange) => prevTempoRange + 1),
     setTempoRangeIndex,
   };
 };
@@ -82,26 +80,32 @@ const PitchAdjust = ({
           step={0.001}
           value={playbackRate}
           className={css.slider}
+          aria-valuetext={`${percentageAsString}%`}
         />
         <div>
           <strong>{percentageAsString}%</strong>{' '}
         </div>
       </div>
-      <div className={css.tempoRangeRow}>
+      <div className={css.tempoRangeRow} role="radiogroup">
         {tempoRanges.map((currTempoRange, index) => (
           <Button
             key={currTempoRange.label}
             onClick={() => {
               setTempoRangeIndex(index);
             }}
-            active={currTempoRange.label === tempoRange.label}
+            role="radio"
+            aria-checked={currTempoRange.label === tempoRange.label}
           >
             {currTempoRange.label}
           </Button>
         ))}
       </div>
       <div className={css.otherControlsRow}>
-        <Button onClick={handlePreservesPitchChange} active={preservesPitch}>
+        <Button
+          onClick={handlePreservesPitchChange}
+          aria-checked={preservesPitch}
+          role="checkbox"
+        >
           Master Tempo
         </Button>
         <Button onClick={handleClickReset}>Reset</Button>

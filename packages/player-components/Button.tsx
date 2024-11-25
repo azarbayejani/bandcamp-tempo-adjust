@@ -6,27 +6,19 @@ import { useTheme } from '@tempo-adjust/theme-provider';
 
 import * as css from './Button.module.scss';
 
-// in practice, this is used as a checkbox, radio, and a button and should probably be split up for its actual uses
+// In practice, this can be used as a checkbox, radio, and a button
+// You can use aria-checked to make the button active
 const Button = ({
   children,
-  onClick,
-  active,
-  disabled,
-}: {
-  children: React.ReactNode;
-  onClick: () => void;
-  active?: boolean;
-  disabled?: boolean;
-}) => {
+  ...props
+}: React.ButtonHTMLAttributes<HTMLButtonElement>) => {
   const theme = useTheme();
   return (
     <button
       className={classnames(css.button, {
-        [css.active]: active,
         [css.dark]: theme === 'dark',
       })}
-      onClick={onClick}
-      disabled={disabled}
+      {...props}
     >
       {children}
     </button>

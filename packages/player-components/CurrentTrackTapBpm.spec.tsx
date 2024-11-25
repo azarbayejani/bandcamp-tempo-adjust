@@ -6,6 +6,7 @@ import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import CurrentTrackTapBpm from './CurrentTrackTapBpm';
+import { ThemeProvider } from '@tempo-adjust/theme-provider';
 
 declare global {
   var jest: {
@@ -22,8 +23,17 @@ describe('CurrentTrackTapBpm', () => {
     vi.resetAllMocks();
   });
 
+  const renderComponent = () => {
+    render(
+      <ThemeProvider theme="light">
+        <CurrentTrackTapBpm onSave={onSave} onCancel={onCancel} />
+        );
+      </ThemeProvider>
+    );
+  };
+
   it('allows you to manually input a bpm and save with Enter', async () => {
-    render(<CurrentTrackTapBpm onSave={onSave} onCancel={onCancel} />);
+    renderComponent();
 
     await waitFor(() => {
       expect(screen.getByRole('textbox')).toHaveFocus();
@@ -43,7 +53,7 @@ describe('CurrentTrackTapBpm', () => {
   });
 
   it('allows you to manually input a bpm and save with Enter', async () => {
-    render(<CurrentTrackTapBpm onSave={onSave} onCancel={onCancel} />);
+    renderComponent();
 
     await waitFor(() => {
       expect(screen.getByRole('textbox')).toHaveFocus();
@@ -63,7 +73,7 @@ describe('CurrentTrackTapBpm', () => {
   });
 
   it('calls onCancel when escape is entered', async () => {
-    render(<CurrentTrackTapBpm onSave={onSave} onCancel={onCancel} />);
+    renderComponent();
 
     await waitFor(() => {
       expect(screen.getByRole('textbox')).toHaveFocus();
@@ -77,7 +87,7 @@ describe('CurrentTrackTapBpm', () => {
   });
 
   it('calls onCancel when cancel is clicked', async () => {
-    render(<CurrentTrackTapBpm onSave={onSave} onCancel={onCancel} />);
+    renderComponent();
 
     await waitFor(() => {
       expect(screen.getByRole('textbox')).toHaveFocus();
@@ -103,7 +113,7 @@ describe('CurrentTrackTapBpm', () => {
         advanceTimers: vi.advanceTimersByTime.bind(vi),
       });
 
-      render(<CurrentTrackTapBpm onSave={onSave} onCancel={onCancel} />);
+      renderComponent();
 
       await waitFor(() => {
         expect(screen.getByRole('textbox')).toHaveFocus();
@@ -141,7 +151,7 @@ describe('CurrentTrackTapBpm', () => {
         advanceTimers: vi.advanceTimersByTime,
       });
 
-      render(<CurrentTrackTapBpm onSave={onSave} onCancel={onCancel} />);
+      renderComponent();
 
       await waitFor(() => {
         expect(screen.getByRole('textbox')).toHaveFocus();
