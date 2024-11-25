@@ -60,7 +60,7 @@ const BpmDetection: React.FC<{
   if (error) {
     return (
       <Container>
-        <div className={css.error}>
+        <div className={css.error} role="alert">
           <span>Error loading BPM. Please try reloading the page.</span>
         </div>
       </Container>
@@ -84,9 +84,9 @@ const BpmDetection: React.FC<{
 
   return (
     <Container>
-      <div className={css.bpmDisplayContainer}>
+      <div className={css.bpmDisplayContainer} data-testid="bpm-display">
         <div className={css.bpmDisplay}>
-          <div className={css.bpmDisplayValue}>{bpmOrDefault}</div>
+          <div className={css.bpmDisplayValue}>{bpmOrDefault} </div>
           <div className={css.bpmLabel}>
             <div>BPM</div>
           </div>

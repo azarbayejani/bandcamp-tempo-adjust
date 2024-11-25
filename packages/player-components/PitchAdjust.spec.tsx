@@ -1,22 +1,12 @@
 import { expect, describe, it, vi, afterEach } from 'vitest';
 
-import {
-  cleanup,
-  fireEvent,
-  render,
-  screen,
-  waitFor,
-} from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import PitchAdjust from './PitchAdjust';
 import { ThemeProvider } from '@tempo-adjust/theme-provider';
 
 describe('PitchAdjust', () => {
-  afterEach(() => {
-    cleanup();
-  });
-
   it('renders the correct initial state', () => {
     const onChangePreservesPitch = vi.fn();
     const onChangeTempo = vi.fn();
