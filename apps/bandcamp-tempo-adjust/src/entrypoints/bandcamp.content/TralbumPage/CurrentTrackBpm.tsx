@@ -2,16 +2,12 @@ import React from 'react';
 
 import { BpmDetection } from '@tempo-adjust/player-components';
 
-import { useAudio } from '../AudioContext';
+import { useBpm } from '../BpmContext';
+import useAudio from '../AudioStore';
 
 export default function CurrentTrackBpm() {
-  const {
-    trackInfoState,
-    playbackRate,
-    loadBpms,
-    reloadCurrentBpm,
-    setTrackBpm,
-  } = useAudio();
+  const { trackInfoState, loadBpms, reloadCurrentBpm, setTrackBpm } = useBpm();
+  const playbackRate = useAudio(({ playbackRate }) => playbackRate);
 
   const { currTrackUrl, trackInfoStore } = trackInfoState;
 

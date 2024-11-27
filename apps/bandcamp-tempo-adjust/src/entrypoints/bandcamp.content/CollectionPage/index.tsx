@@ -1,16 +1,16 @@
 import React from 'react';
-import { AudioProvider } from '../AudioContext';
+import { BpmProvider } from '../BpmContext';
 import PitchAdjust from './PitchAdjust';
 
 const CollectionPage = () => {
   return (
-    <AudioProvider
+    <BpmProvider
       selector="audio"
       initialTrackInfoStore={{}}
       getCurrTrackUrl={() => ''}
     >
       <PitchAdjust />
-    </AudioProvider>
+    </BpmProvider>
   );
 };
 
