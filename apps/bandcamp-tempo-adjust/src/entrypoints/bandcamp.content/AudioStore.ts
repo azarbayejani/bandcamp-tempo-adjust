@@ -7,9 +7,14 @@ export interface AudioState {
   togglePreservesPitch: () => void;
   volume: number;
   setVolume: (volume: number) => void;
+  currTrackUrl?: string;
+  setCurrTrackUrl: (url: string | undefined) => void;
 }
 
 const useAudio = create<AudioState>((set) => ({
+  currTrackUrl: undefined,
+  setCurrTrackUrl: (url: string | undefined) =>
+    set((state) => ({ ...state, currTrackUrl: url })),
   playbackRate: 1,
   setPlaybackRate: (playbackRate: number) =>
     set((state) => ({ ...state, playbackRate })),

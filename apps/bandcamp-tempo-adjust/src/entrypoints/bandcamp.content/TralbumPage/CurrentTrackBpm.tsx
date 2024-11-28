@@ -8,8 +8,9 @@ import useAudio from '../AudioStore';
 export default function CurrentTrackBpm() {
   const { trackInfoState, loadBpms, reloadCurrentBpm, setTrackBpm } = useBpm();
   const playbackRate = useAudio(({ playbackRate }) => playbackRate);
+  const currTrackUrl = useAudio(({ currTrackUrl }) => currTrackUrl);
 
-  const { currTrackUrl, trackInfoStore } = trackInfoState;
+  const { trackInfoStore } = trackInfoState;
 
   if (!currTrackUrl) {
     return null;

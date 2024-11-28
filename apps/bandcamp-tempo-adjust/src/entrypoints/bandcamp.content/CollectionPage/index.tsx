@@ -1,17 +1,13 @@
 import React from 'react';
-import { BpmProvider } from '../BpmContext';
 import PitchAdjust from './PitchAdjust';
+import { AudioController } from '../AudioController';
 
 const CollectionPage = () => {
-  return (
-    <BpmProvider
-      selector="audio"
-      initialTrackInfoStore={{}}
-      getCurrTrackUrl={() => ''}
-    >
-      <PitchAdjust />
-    </BpmProvider>
-  );
+  useEffect(() => {
+    new AudioController('audio');
+  }, []);
+
+  return <PitchAdjust />;
 };
 
 export default CollectionPage;

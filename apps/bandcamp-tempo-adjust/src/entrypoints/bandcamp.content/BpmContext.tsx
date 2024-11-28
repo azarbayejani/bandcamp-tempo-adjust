@@ -5,9 +5,7 @@ import browser from 'webextension-polyfill';
 import { TrackInfoByUrl as TrackInfoStore } from '~/types';
 import { hasAllPermissions } from '~/utils/hasAllPermissions';
 
-export type AudioRef = React.RefObject<HTMLAudioElement | null>;
 type AudioStateContext = {
-  audioRef: AudioRef;
   reloadCurrentBpm: () => void;
   loadBpms: () => void;
   setTrackBpm: (options: { bpm: number; url: string }) => void;
@@ -22,16 +20,6 @@ type BpmProviderProps = {
 };
 
 const AudioContext = createContext<AudioStateContext | undefined>(undefined);
-
-const useAudioRef = (selector: string) => {
-  const audioRef = useRef<HTMLAudioElement | null>(null);
-
-  useEffect(() => {
-    audioRef.current = document.querySelector(selector);
-  }, [selector]);
-
-  return audioRef;
-};
 
 interface BpmLoadStartAction {
   type: 'BPM_LOAD_START';
@@ -49,14 +37,8 @@ interface BpmLoadSuccessAction {
   bpm: number;
 }
 
-interface ChangeTrackAction {
-  type: 'CHANGE_TRACK';
-  url?: string;
-}
-
 type TrackReducerAction =
   | BpmLoadSuccessAction
-  | ChangeTrackAction
   | BpmLoadErrorAction
   | BpmLoadStartAction;
 
@@ -110,11 +92,6 @@ const trackStateReducer = produce(
         state.trackInfoStore[url].loading = false;
         break;
       }
-      case 'CHANGE_TRACK': {
-        const { url } = action;
-        state.currTrackUrl = url;
-        break;
-      }
     }
   }
 );
@@ -125,10 +102,7 @@ function BpmProvider({
   getCurrTrackUrl,
   initialTrackInfoStore,
 }: BpmProviderProps) {
-  const audioRef = useAudioRef(selector);
-
   const [trackInfoState, dispatch] = useReducer(trackStateReducer, {
-    currTrackUrl: getCurrTrackUrl(),
     trackInfoStore: initialTrackInfoStore,
   });
 
@@ -175,26 +149,7 @@ function BpmProvider({
       .catch(onError);
   };
 
-  useEffect(() => {
-    const changeTrack = async () => {
-      if (trackInfoState.trackInfoStore) {
-        dispatch({ type: 'CHANGE_TRACK', url: getCurrTrackUrl() });
-      }
-    };
-
-    audioRef.current && audioRef.current.addEventListener('play', changeTrack);
-    audioRef.current &&
-      audioRef.current.addEventListener('play', () =>
-        dispatch({ type: 'CHANGE_TRACK', url: getCurrTrackUrl() })
-      );
-    const audio = audioRef.current;
-    return () => {
-      audio && audio.removeEventListener('play', changeTrack);
-    };
-  }, [audioRef, trackInfoState.trackInfoStore, getCurrTrackUrl, loadBpms]);
-
   const value: AudioStateContext = {
-    audioRef,
     trackInfoState,
     reloadCurrentBpm: () => {
       const url = getCurrTrackUrl();

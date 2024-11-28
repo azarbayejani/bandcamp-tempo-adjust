@@ -35,7 +35,7 @@ const TralbumPage = () => {
   const [trackInfoStore, setTrackInfoStore] = useState<TrackInfoByUrl>();
 
   useEffect(() => {
-    new AudioController('audio');
+    new AudioController('audio', getCurrTrackUrl);
     fetchBandcampTrackInfoStore().then((store) => setTrackInfoStore(store));
   }, []);
 
