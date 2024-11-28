@@ -37,15 +37,17 @@ const useTempoRange = () => {
 };
 
 const PitchAdjust = ({
-  onChangeTempo,
+  playbackRate,
+  preservesPitch,
+  onChangePlaybackRate,
   onChangePreservesPitch,
 }: {
-  onChangeTempo: ({ playbackRate }: { playbackRate: number }) => void;
+  playbackRate: number;
+  preservesPitch: boolean;
+  onChangePlaybackRate: ({ playbackRate }: { playbackRate: number }) => void;
   onChangePreservesPitch: () => void;
 }) => {
-  const [playbackRate, setPlaybackRate] = React.useState(1);
   const { tempoRange, setTempoRangeIndex } = useTempoRange();
-  const [preservesPitch, setPreservesPitch] = React.useState(false);
 
   const percentage = String(((playbackRate - 1) * 100).toPrecision(3));
   const percentageAsString =
@@ -54,18 +56,15 @@ const PitchAdjust = ({
       : `+${String(percentage).slice(0, 3)}`;
 
   const handleSliderChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setPlaybackRate(event.target.valueAsNumber);
-    onChangeTempo({ playbackRate: event.target.valueAsNumber });
+    onChangePlaybackRate({ playbackRate: event.target.valueAsNumber });
   };
 
   const handlePreservesPitchChange = () => {
-    setPreservesPitch(!preservesPitch);
     onChangePreservesPitch();
   };
 
   const handleClickReset = () => {
-    setPlaybackRate(1);
-    onChangeTempo({ playbackRate: 1 });
+    onChangePlaybackRate({ playbackRate: 1 });
   };
 
   return (

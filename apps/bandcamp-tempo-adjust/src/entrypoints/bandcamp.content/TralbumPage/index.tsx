@@ -13,20 +13,32 @@ import { useShallow } from 'zustand/shallow';
 const getCurrTrackUrl = () =>
   document.querySelector('.title_link')?.getAttribute('href')?.trim();
 
-const selector = ({ togglePreservesPitch, setPlaybackRate }: AudioState) => ({
+const selector = ({
   togglePreservesPitch,
   setPlaybackRate,
+  playbackRate,
+  preservesPitch,
+}: AudioState) => ({
+  togglePreservesPitch,
+  setPlaybackRate,
+  playbackRate,
+  preservesPitch,
 });
 
 const TralbumPagePitchAdjust = () => {
-  const { togglePreservesPitch, setPlaybackRate } = useAudio(
-    useShallow(selector)
-  );
+  const {
+    togglePreservesPitch,
+    setPlaybackRate,
+    playbackRate,
+    preservesPitch,
+  } = useAudio(useShallow(selector));
 
   return (
     <PitchAdjust
+      playbackRate={playbackRate}
+      preservesPitch={preservesPitch}
       onChangePreservesPitch={togglePreservesPitch}
-      onChangeTempo={({ playbackRate }) => setPlaybackRate(playbackRate)}
+      onChangePlaybackRate={({ playbackRate }) => setPlaybackRate(playbackRate)}
     />
   );
 };

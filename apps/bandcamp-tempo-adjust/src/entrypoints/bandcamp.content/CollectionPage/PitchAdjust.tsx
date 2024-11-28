@@ -38,9 +38,9 @@ const useTempoRange = () => {
 };
 
 const PitchAdjust = () => {
-  const { playbackRate, setPlaybackRate } = useAudio(
-    ({ playbackRate, setPlaybackRate }) => ({ playbackRate, setPlaybackRate })
-  );
+  const playbackRate = useAudio(({ playbackRate }) => playbackRate);
+  const setPlaybackRate = useAudio(({ setPlaybackRate }) => setPlaybackRate);
+
   const { tempoRange, advanceToNextTempoRange } = useTempoRange();
 
   const percentage = String(((playbackRate - 1) * 100).toPrecision(3));
