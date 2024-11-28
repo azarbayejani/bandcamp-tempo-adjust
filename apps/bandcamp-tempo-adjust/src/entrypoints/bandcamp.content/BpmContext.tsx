@@ -1,9 +1,10 @@
 import produce from 'immer';
-import React, { createContext, useEffect, useReducer, useRef } from 'react';
+import React, { createContext, useReducer } from 'react';
 import { analyzeAudio } from '~/utils/analyzeAudio';
 import browser from 'webextension-polyfill';
 import { TrackInfoByUrl as TrackInfoStore } from '~/types';
 import { hasAllPermissions } from '~/utils/hasAllPermissions';
+import useAudio from './AudioStore';
 
 type AudioStateContext = {
   reloadCurrentBpm: () => void;
@@ -96,15 +97,11 @@ const trackStateReducer = produce(
   }
 );
 
-function BpmProvider({
-  children,
-  selector,
-  getCurrTrackUrl,
-  initialTrackInfoStore,
-}: BpmProviderProps) {
+function BpmProvider({ children, initialTrackInfoStore }: BpmProviderProps) {
   const [trackInfoState, dispatch] = useReducer(trackStateReducer, {
     trackInfoStore: initialTrackInfoStore,
   });
+  const currTrackUrl = useAudio(({ currTrackUrl }) => currTrackUrl);
 
   const loadBpms = React.useCallback(async () => {
     const hasAllPermissionsResponse = await hasAllPermissions();
@@ -152,7 +149,7 @@ function BpmProvider({
   const value: AudioStateContext = {
     trackInfoState,
     reloadCurrentBpm: () => {
-      const url = getCurrTrackUrl();
+      const url = currTrackUrl;
       if (url) {
         loadBpm(url);
       }
