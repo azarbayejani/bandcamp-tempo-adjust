@@ -3,30 +3,19 @@ import React, { useEffect, useState } from 'react';
 import { fetchBandcampTrackInfoStore } from '~/utils/fetchBandcampTrackInfoStore';
 import { TrackInfoByUrl } from '~/types';
 import AlbumTrackBpms from './AlbumTrackBpms';
-import { AudioProvider, useAudio } from '../AudioContext';
+import { BpmProvider } from '../BpmContext';
 import CurrentTrackBpm from './CurrentTrackBpm';
-import { PitchAdjust } from '@tempo-adjust/player-components';
+import { AudioController } from '../AudioController';
+import TralbumPagePitchAdjust from './PitchAdjust';
 
 const getCurrTrackUrl = () =>
   document.querySelector('.title_link')?.getAttribute('href')?.trim();
-
-const TralbumPagePitchAdjust = () => {
-  const { setPlaybackRate, setPreservesPitch } = useAudio();
-
-  return (
-    <PitchAdjust
-      onChangePreservesPitch={() => {
-        setPreservesPitch((preservesPitch) => !preservesPitch);
-      }}
-      onChangeTempo={({ playbackRate }) => setPlaybackRate(playbackRate)}
-    />
-  );
-};
 
 const TralbumPage = () => {
   const [trackInfoStore, setTrackInfoStore] = useState<TrackInfoByUrl>();
 
   useEffect(() => {
+    new AudioController('audio', getCurrTrackUrl);
     fetchBandcampTrackInfoStore().then((store) => setTrackInfoStore(store));
   }, []);
 
@@ -35,7 +24,7 @@ const TralbumPage = () => {
   }
 
   return (
-    <AudioProvider
+    <BpmProvider
       selector="audio"
       initialTrackInfoStore={trackInfoStore}
       getCurrTrackUrl={getCurrTrackUrl}
@@ -48,7 +37,7 @@ const TralbumPage = () => {
           <TralbumPagePitchAdjust />
         </div>
       </div>
-    </AudioProvider>
+    </BpmProvider>
   );
 };
 

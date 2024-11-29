@@ -3,7 +3,7 @@ import { createPortal } from 'react-dom';
 
 import { toOneDecimal } from '@tempo-adjust/to-one-decimal';
 
-import { useAudio } from '../AudioContext';
+import { useBpm } from '../BpmContext';
 import { TrackInfo } from '@/types';
 
 type AlbumTrackBpmProps = TrackInfo;
@@ -42,7 +42,7 @@ function AlbumTrackBpm({
 }
 
 export default function AlbumTrackBpms() {
-  const { trackInfoState } = useAudio();
+  const { trackInfoState } = useBpm();
 
   return (
     <>

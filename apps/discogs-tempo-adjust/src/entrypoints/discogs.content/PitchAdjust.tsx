@@ -21,15 +21,26 @@ const postMessageToYoutube = (message: YoutubeMessage) => {
 
 const DiscogsPitchAdjust = () => {
   const counter = useForceUpdate((state) => state.count);
+  const [playbackRate, setPlaybackRate] = React.useState(1);
+  const [preservesPitch, setPreservesPitch] = React.useState(false);
+
+  const togglePreservesPitch = () => {
+    setPreservesPitch((prev) => !prev);
+  };
+
   return (
     <PitchAdjust
       key={counter}
       onChangePreservesPitch={() => {
+        togglePreservesPitch();
         postMessageToYoutube({ action: 'togglePreservesPitch' });
       }}
-      onChangeTempo={({ playbackRate }) => {
+      onChangePlaybackRate={({ playbackRate }) => {
+        setPlaybackRate(playbackRate);
         postMessageToYoutube({ action: 'setPlaybackRate', playbackRate });
       }}
+      playbackRate={playbackRate}
+      preservesPitch={preservesPitch}
     />
   );
 };

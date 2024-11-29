@@ -1,32 +1,19 @@
 import produce from 'immer';
-import React, {
-  createContext,
-  useEffect,
-  useReducer,
-  useRef,
-  useState,
-} from 'react';
+import React, { createContext, useReducer } from 'react';
 import { analyzeAudio } from '~/utils/analyzeAudio';
 import browser from 'webextension-polyfill';
 import { TrackInfoByUrl as TrackInfoStore } from '~/types';
 import { hasAllPermissions } from '~/utils/hasAllPermissions';
+import useAudio from './AudioStore';
 
-type AudioRef = React.RefObject<HTMLAudioElement | null>;
 type AudioStateContext = {
-  audioRef: AudioRef;
-  playbackRate: number;
-  setPlaybackRate: React.Dispatch<React.SetStateAction<number>>;
-  volume: number;
-  setVolume: React.Dispatch<React.SetStateAction<number>>;
-  preservesPitch: boolean;
-  setPreservesPitch: React.Dispatch<React.SetStateAction<boolean>>;
   reloadCurrentBpm: () => void;
   loadBpms: () => void;
   setTrackBpm: (options: { bpm: number; url: string }) => void;
   trackInfoState: PageState;
 };
 
-type AudioProviderProps = {
+type BpmProviderProps = {
   children: React.ReactNode;
   getCurrTrackUrl: () => string | undefined;
   selector: string;
@@ -34,16 +21,6 @@ type AudioProviderProps = {
 };
 
 const AudioContext = createContext<AudioStateContext | undefined>(undefined);
-
-const useAudioRef = (selector: string) => {
-  const audioRef = useRef<HTMLAudioElement | null>(null);
-
-  useEffect(() => {
-    audioRef.current = document.querySelector(selector);
-  }, [selector]);
-
-  return audioRef;
-};
 
 interface BpmLoadStartAction {
   type: 'BPM_LOAD_START';
@@ -61,14 +38,8 @@ interface BpmLoadSuccessAction {
   bpm: number;
 }
 
-interface ChangeTrackAction {
-  type: 'CHANGE_TRACK';
-  url?: string;
-}
-
 type TrackReducerAction =
   | BpmLoadSuccessAction
-  | ChangeTrackAction
   | BpmLoadErrorAction
   | BpmLoadStartAction;
 
@@ -122,31 +93,15 @@ const trackStateReducer = produce(
         state.trackInfoStore[url].loading = false;
         break;
       }
-      case 'CHANGE_TRACK': {
-        const { url } = action;
-        state.currTrackUrl = url;
-        break;
-      }
     }
   }
 );
 
-function AudioProvider({
-  children,
-  selector,
-  getCurrTrackUrl,
-  initialTrackInfoStore,
-}: AudioProviderProps) {
-  const audioRef = useAudioRef(selector);
-
-  const [playbackRate, setPlaybackRate] = useState(1);
-  const [preservesPitch, setPreservesPitch] = useState(false);
-  const [volume, setVolume] = useState(1);
-
+function BpmProvider({ children, initialTrackInfoStore }: BpmProviderProps) {
   const [trackInfoState, dispatch] = useReducer(trackStateReducer, {
-    currTrackUrl: getCurrTrackUrl(),
     trackInfoStore: initialTrackInfoStore,
   });
+  const currTrackUrl = useAudio(({ currTrackUrl }) => currTrackUrl);
 
   const loadBpms = React.useCallback(async () => {
     const hasAllPermissionsResponse = await hasAllPermissions();
@@ -191,55 +146,10 @@ function AudioProvider({
       .catch(onError);
   };
 
-  useEffect(() => {
-    const setFields = () => {
-      if (audioRef.current) {
-        audioRef.current.preservesPitch = preservesPitch;
-        audioRef.current.playbackRate = playbackRate;
-        audioRef.current.volume = volume;
-      }
-    };
-
-    const changeTrack = async () => {
-      if (trackInfoState.trackInfoStore) {
-        dispatch({ type: 'CHANGE_TRACK', url: getCurrTrackUrl() });
-      }
-    };
-
-    setFields();
-
-    audioRef.current && audioRef.current.addEventListener('play', setFields);
-    audioRef.current && audioRef.current.addEventListener('play', changeTrack);
-    audioRef.current &&
-      audioRef.current.addEventListener('play', () =>
-        dispatch({ type: 'CHANGE_TRACK', url: getCurrTrackUrl() })
-      );
-    const audio = audioRef.current;
-    return () => {
-      audio && audio.removeEventListener('play', setFields);
-      audio && audio.removeEventListener('play', changeTrack);
-    };
-  }, [
-    preservesPitch,
-    playbackRate,
-    volume,
-    audioRef,
-    trackInfoState.trackInfoStore,
-    getCurrTrackUrl,
-    loadBpms,
-  ]);
-
   const value: AudioStateContext = {
-    audioRef,
-    playbackRate,
-    setPlaybackRate,
-    preservesPitch,
-    setPreservesPitch,
-    volume,
-    setVolume,
     trackInfoState,
     reloadCurrentBpm: () => {
-      const url = getCurrTrackUrl();
+      const url = currTrackUrl;
       if (url) {
         loadBpm(url);
       }
@@ -258,12 +168,12 @@ function AudioProvider({
   );
 }
 
-function useAudio() {
+function useBpm() {
   const context = React.useContext(AudioContext);
   if (context === undefined) {
-    throw new Error('useAudio must be used within a AudioProvider');
+    throw new Error('useBpm must be used within a BpmProvider');
   }
   return context;
 }
 
-export { AudioProvider, useAudio };
+export { BpmProvider, useBpm };

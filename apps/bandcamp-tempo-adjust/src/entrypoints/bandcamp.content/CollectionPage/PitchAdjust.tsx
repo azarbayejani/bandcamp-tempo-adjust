@@ -1,6 +1,6 @@
 import React from 'react';
 import { useCallback } from 'react';
-import { useAudio } from '../AudioContext';
+import useAudio from '../AudioStore';
 
 const tempoRanges = [
   {
@@ -38,7 +38,9 @@ const useTempoRange = () => {
 };
 
 const PitchAdjust = () => {
-  const { playbackRate, setPlaybackRate } = useAudio();
+  const playbackRate = useAudio(({ playbackRate }) => playbackRate);
+  const setPlaybackRate = useAudio(({ setPlaybackRate }) => setPlaybackRate);
+
   const { tempoRange, advanceToNextTempoRange } = useTempoRange();
 
   const percentage = String(((playbackRate - 1) * 100).toPrecision(3));

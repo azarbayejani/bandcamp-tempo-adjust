@@ -1,17 +1,13 @@
 import React from 'react';
-import { AudioProvider } from '../AudioContext';
 import PitchAdjust from './PitchAdjust';
+import { AudioController } from '../AudioController';
 
 const CollectionPage = () => {
-  return (
-    <AudioProvider
-      selector="audio"
-      initialTrackInfoStore={{}}
-      getCurrTrackUrl={() => ''}
-    >
-      <PitchAdjust />
-    </AudioProvider>
-  );
+  useEffect(() => {
+    new AudioController('audio');
+  }, []);
+
+  return <PitchAdjust />;
 };
 
 export default CollectionPage;
