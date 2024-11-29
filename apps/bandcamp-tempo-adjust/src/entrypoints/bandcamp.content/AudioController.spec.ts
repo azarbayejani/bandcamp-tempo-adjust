@@ -47,7 +47,7 @@ describe('AudioController', () => {
     expect(document.querySelector('audio')!.playbackRate).toBe(0.75);
   });
 
-  it.only('should update the audio element preservesPitch when the store preservesPitch changes', async () => {
+  it('should update the audio element preservesPitch when the store preservesPitch changes', async () => {
     const audio = render();
     new AudioController('audio');
 
