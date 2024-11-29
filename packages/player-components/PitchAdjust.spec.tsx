@@ -106,17 +106,6 @@ describe('PitchAdjust', () => {
         playbackRate: 1.1,
       });
     });
-
-    // TODO: move these to the tests for the parent components
-    // expect(screen.getByRole('slider')).toHaveValue('1.1');
-
-    // aria-valuetext is used for screen readers
-    // expect(screen.getByRole('slider')).toHaveAttribute(
-    //   'aria-valuetext',
-    //   '+10.%'
-    // );
-
-    // expect(screen.getByText('+10.%')).toBeInTheDocument();
   });
 
   it.skip('calls onChangeTempo with the minimum value when slider is changed outside the range', async () => {
@@ -142,16 +131,6 @@ describe('PitchAdjust', () => {
         playbackRate: 0.9,
       });
     });
-
-    // TODO: move these to the tests for the parent components
-    // expect(screen.getByRole('slider')).toHaveValue('0.9');
-
-    // aria-valuetext is used for screen readers
-    // expect(screen.getByRole('slider')).toHaveAttribute(
-    //   'aria-valuetext',
-    //   '-10.%'
-    // );
-    // expect(screen.getByText('-10.%')).toBeInTheDocument();
   });
 
   it.skip('calls onChangeTempo with the correct value when slider is changed', async () => {
@@ -177,8 +156,6 @@ describe('PitchAdjust', () => {
         playbackRate: 0.95,
       });
     });
-
-    // expect(screen.getByRole('slider')).toHaveValue('0.95');
   });
 
   it('changes the minimum and maximum values of the slider when the range is changed', async () => {
