@@ -7,4 +7,9 @@ export default defineConfig({
     css: true,
     globals: true,
   },
+  resolve: {
+    alias: {
+      'webextension-polyfill': '@webext-core/fake-browser',
+    },
+  },
 });

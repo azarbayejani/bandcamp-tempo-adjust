@@ -24,11 +24,7 @@ const TralbumPage = () => {
   }
 
   return (
-    <BpmProvider
-      selector="audio"
-      initialTrackInfoStore={trackInfoStore}
-      getCurrTrackUrl={getCurrTrackUrl}
-    >
+    <BpmProvider initialTrackInfoStore={trackInfoStore}>
       <AlbumTrackBpms />
       <div style={{ marginTop: 4, display: 'flex', gap: 12 }}>
         <CurrentTrackBpm />

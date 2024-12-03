@@ -38,7 +38,7 @@ function AlbumTrackBpm({
     return null;
   }
 
-  return <>({toOneDecimal(bpm)} BPM)</>;
+  return <>{`(${toOneDecimal(bpm)} BPM)`}</>;
 }
 
 export default function AlbumTrackBpms() {

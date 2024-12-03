@@ -1,9 +1,8 @@
 import produce from 'immer';
 import React, { createContext, useReducer } from 'react';
-import { analyzeAudio } from '~/utils/analyzeAudio';
-import browser from 'webextension-polyfill';
+import { analyzeAudio } from '../../utils/analyzeAudio';
 import { TrackInfoByUrl as TrackInfoStore } from '~/types';
-import { hasAllPermissions } from '~/utils/hasAllPermissions';
+import { hasAllPermissions } from '../../utils/hasAllPermissions';
 import useAudio from './AudioStore';
 
 type AudioStateContext = {
@@ -15,8 +14,6 @@ type AudioStateContext = {
 
 type BpmProviderProps = {
   children: React.ReactNode;
-  getCurrTrackUrl: () => string | undefined;
-  selector: string;
   initialTrackInfoStore: TrackInfoStore;
 };
 
