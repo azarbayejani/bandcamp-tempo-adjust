@@ -1,7 +1,7 @@
 {
   "name": "@tempo-adjust/player-components",
   "type": "module",
-  "main": "index.ts",
+  "main": "src/index.ts",
   "private": true,
   "dependencies": {
     "@tempo-adjust/theme-provider": "workspace:*",
