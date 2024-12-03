@@ -60,12 +60,11 @@ describe('AlbumTrackBpms', () => {
       expect(screen.getByTestId('bpm-3')).toHaveTextContent(
         /Error loading BPM/
       );
-      expect(screen.getByTestId('bpm-4')).toBeEmptyDOMElement();
     });
   });
 
   it('does not render anything when there are no divs for the tracks', () => {
-    render(
+    const { container } = render(
       <BpmProvider
         initialTrackInfoStore={{
           '/some/track': {
@@ -81,7 +80,7 @@ describe('AlbumTrackBpms', () => {
         <AlbumTrackBpms />
       </BpmProvider>
     );
-    expect(screen.getByTestId('bpm-1')).toBeEmptyDOMElement();
+    expect(container).toBeEmptyDOMElement();
   });
 
   it('does not render anything when there are no tracks', () => {

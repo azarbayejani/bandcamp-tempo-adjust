@@ -28,8 +28,6 @@ describe('AudioController', () => {
   // everything but volume changes don't have 2-way binding
 
   it('should update the audio element volume when the store volume changes', async () => {
-    console.log(document.getElementsByTagName('*'));
-
     const audio = render();
     new AudioController('audio');
 
