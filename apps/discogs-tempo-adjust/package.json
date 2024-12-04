@@ -33,9 +33,11 @@
   "dependencies": {
     "@tanstack/react-query": "catalog:",
     "@tanstack/react-query-devtools": "catalog:",
+    "@tempo-adjust/discogs": "workspace:*",
     "@tempo-adjust/permissions": "workspace:*",
     "@tempo-adjust/player-components": "workspace:*",
     "@tempo-adjust/theme-provider": "workspace:*",
+    "@tempo-adjust/youtube": "workspace:*",
     "@wxt-dev/webextension-polyfill": "catalog:",
     "classnames": "catalog:",
     "react": "catalog:",

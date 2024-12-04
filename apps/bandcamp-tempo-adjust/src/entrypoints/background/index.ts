@@ -4,13 +4,12 @@ import { bytesToBase64 } from '../../utils/base64';
 import { fetchAudioForAnalysis } from '../../utils/fetchAudioForAnalysis';
 
 const optionsPageUrl = '/options.html';
+const CHUNK_SIZE = 1024 * 1024;
 
 export default defineBackground({
   persistent: false,
   type: 'module',
   main() {
-    const CHUNK_SIZE = 1024 * 1024;
-
     const ports: Record<string, browser.Runtime.Port> = {};
 
     browser.action.onClicked.addListener(() => {

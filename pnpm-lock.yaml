@@ -137,6 +137,9 @@ importers:
       '@tanstack/react-query-devtools':
         specifier: 'catalog:'
         version: 4.44.0(@tanstack/react-query@4.44.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
+      '@tempo-adjust/discogs':
+        specifier: workspace:*
+        version: link:../../packages/discogs
       '@tempo-adjust/permissions':
         specifier: workspace:*
         version: link:../../packages/permissions
@@ -149,6 +152,9 @@ importers:
       '@tempo-adjust/to-one-decimal':
         specifier: workspace:*
         version: link:../../packages/to-one-decimal
+      '@tempo-adjust/youtube':
+        specifier: workspace:*
+        version: link:../../packages/youtube
       '@wxt-dev/webextension-polyfill':
         specifier: 'catalog:'
         version: 1.0.0(webextension-polyfill@0.10.0)(wxt@0.21.4(eslint@9.39.4(jiti@2.7.0))(rolldown@1.2.6)(typescript@5.9.3)(vite@8.2.2(@types/node@26.4.0)(jiti@2.7.0)(sass@1.103.1)(yaml@2.9.0))(web-ext@10.6.0(jiti@2.7.0)))
@@ -237,6 +243,9 @@ importers:
       '@tanstack/react-query-devtools':
         specifier: 'catalog:'
         version: 4.44.0(@tanstack/react-query@4.44.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
+      '@tempo-adjust/discogs':
+        specifier: workspace:*
+        version: link:../../packages/discogs
       '@tempo-adjust/permissions':
         specifier: workspace:*
         version: link:../../packages/permissions
@@ -246,6 +255,9 @@ importers:
       '@tempo-adjust/theme-provider':
         specifier: workspace:*
         version: link:../../packages/theme-provider
+      '@tempo-adjust/youtube':
+        specifier: workspace:*
+        version: link:../../packages/youtube
       '@wxt-dev/webextension-polyfill':
         specifier: 'catalog:'
         version: 1.0.0(webextension-polyfill@0.10.0)(wxt@0.21.4(eslint@9.39.5(jiti@2.7.0))(rolldown@1.2.6)(typescript@5.9.3)(vite@8.2.2(@types/node@26.4.0)(jiti@2.7.0)(sass@1.103.1)(yaml@2.9.0))(web-ext@10.6.0(jiti@2.7.0)))
@@ -301,6 +313,37 @@ importers:
       wxt:
         specifier: 'catalog:'
         version: 0.21.4(eslint@9.39.5(jiti@2.7.0))(rolldown@1.2.6)(typescript@5.9.3)(vite@8.2.2(@types/node@26.4.0)(jiti@2.7.0)(sass@1.103.1)(yaml@2.9.0))(web-ext@10.6.0(jiti@2.7.0))
+
+  packages/discogs:
+    dependencies:
+      '@tempo-adjust/player-components':
+        specifier: workspace:*
+        version: link:../player-components
+      '@tempo-adjust/theme-provider':
+        specifier: workspace:*
+        version: link:../theme-provider
+      '@tempo-adjust/youtube':
+        specifier: workspace:*
+        version: link:../youtube
+      react:
+        specifier: 'catalog:'
+        version: 19.2.8
+      react-dom:
+        specifier: 'catalog:'
+        version: 19.2.8(react@19.2.8)
+      zustand:
+        specifier: 'catalog:'
+        version: 5.0.15(@types/react@19.2.18)(immer@9.0.21)(react@19.2.8)(use-sync-external-store@1.6.0(react@19.2.8))
+    devDependencies:
+      '@types/react':
+        specifier: 'catalog:'
+        version: 19.2.18
+      '@types/react-dom':
+        specifier: 'catalog:'
+        version: 19.2.5(@types/react@19.2.18)
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
 
   packages/permissions:
     dependencies:
@@ -397,6 +440,12 @@ importers:
       vite:
         specifier: 'catalog:'
         version: 8.2.2(@types/node@26.4.0)(jiti@2.7.0)(sass@1.103.1)(yaml@2.9.0)
+
+  packages/youtube:
+    devDependencies:
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
 
 packages:
 
