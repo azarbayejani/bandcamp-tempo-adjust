@@ -153,6 +153,9 @@ importers:
       '@tanstack/react-query-devtools':
         specifier: ^4.28.0
         version: 4.36.1(@tanstack/react-query@4.36.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@tempo-adjust/discogs':
+        specifier: workspace:*
+        version: link:../../packages/discogs
       '@tempo-adjust/permissions':
         specifier: workspace:*
         version: link:../../packages/permissions
@@ -165,6 +168,9 @@ importers:
       '@tempo-adjust/to-one-decimal':
         specifier: workspace:*
         version: link:../../packages/to-one-decimal
+      '@tempo-adjust/youtube':
+        specifier: workspace:*
+        version: link:../../packages/youtube
       immer:
         specifier: ^9.0.17
         version: 9.0.21
@@ -274,6 +280,9 @@ importers:
 
   apps/discogs-tempo-adjust:
     dependencies:
+      '@tempo-adjust/discogs':
+        specifier: workspace:*
+        version: link:../../packages/discogs
       '@tempo-adjust/permissions':
         specifier: workspace:*
         version: link:../../packages/permissions
@@ -283,6 +292,9 @@ importers:
       '@tempo-adjust/theme-provider':
         specifier: workspace:*
         version: link:../../packages/theme-provider
+      '@tempo-adjust/youtube':
+        specifier: workspace:*
+        version: link:../../packages/youtube
       '@types/react':
         specifier: 18.3.1
         version: 18.3.1
@@ -326,6 +338,25 @@ importers:
       wxt:
         specifier: ^0.19.11
         version: 0.19.13(@types/node@22.9.0)(less@4.2.0)(lightningcss@1.28.1)(rollup@4.24.4)(sass@1.80.6)(stylus@0.62.0)(terser@5.36.0)(webpack-sources@3.2.3)
+
+  packages/discogs:
+    dependencies:
+      '@tempo-adjust/player-components':
+        specifier: workspace:*
+        version: link:../player-components
+      '@tempo-adjust/theme-provider':
+        specifier: workspace:*
+        version: link:../theme-provider
+      '@tempo-adjust/youtube':
+        specifier: workspace:*
+        version: link:../youtube
+      zustand:
+        specifier: ^5.0.0-rc.2
+        version: 5.0.1(@types/react@18.3.1)(immer@9.0.21)(react@18.3.1)(use-sync-external-store@1.2.2(react@18.3.1))
+    devDependencies:
+      typescript:
+        specifier: ^5.6.3
+        version: 5.6.3
 
   packages/permissions:
     dependencies:
@@ -386,6 +417,12 @@ importers:
       '@types/fs-extra':
         specifier: ^11.0.4
         version: 11.0.4
+      typescript:
+        specifier: ^5.6.3
+        version: 5.6.3
+
+  packages/youtube:
+    devDependencies:
       typescript:
         specifier: ^5.6.3
         version: 5.6.3

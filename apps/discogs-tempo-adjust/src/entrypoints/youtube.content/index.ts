@@ -1,11 +1,11 @@
 import { defineContentScript } from 'wxt/sandbox';
 
-import { renderYoutubePage } from './renderer';
+import { renderYoutubeIframe } from '@tempo-adjust/youtube';
 
 export default defineContentScript({
   matches: ['https://*.youtube.com/*', 'https://*.youtube-nocookie.com/*'],
   allFrames: true,
   main() {
-    renderYoutubePage();
+    renderYoutubeIframe({ allowedOrigins: ['https://www.discogs.com'] });
   },
 });

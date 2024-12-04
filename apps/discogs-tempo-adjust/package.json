@@ -21,9 +21,11 @@
     "postinstall": "wxt prepare"
   },
   "dependencies": {
+    "@tempo-adjust/discogs": "workspace:*",
     "@tempo-adjust/permissions": "workspace:*",
     "@tempo-adjust/player-components": "workspace:*",
     "@tempo-adjust/theme-provider": "workspace:*",
+    "@tempo-adjust/youtube": "workspace:*",
     "@types/react": "^18.3.1",
     "@types/react-dom": "^18.3.1",
     "classnames": "^2.5.1",

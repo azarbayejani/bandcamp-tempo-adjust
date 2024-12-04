@@ -11,15 +11,19 @@ class VideoController {
   private video: HTMLVideoElement;
   private playbackRate: number;
   private preservesPitch: boolean;
+  private allowedOrigins: string[];
 
-  constructor(video: HTMLVideoElement) {
+  constructor(
+    video: HTMLVideoElement,
+    { allowedOrigins }: { allowedOrigins: string[] }
+  ) {
     this.video = video;
     this.video.preservesPitch = false;
     this.playbackRate = video.playbackRate;
     this.preservesPitch = video.preservesPitch;
+    this.allowedOrigins = allowedOrigins;
 
     window.addEventListener('message', this.handleMessage.bind(this));
-    console.log('discogs-tempo-adjust: loaded');
   }
 
   setPlaybackRate(playbackRate: number) {
@@ -33,7 +37,7 @@ class VideoController {
   }
 
   handleMessage(event: MessageEvent) {
-    if (event.origin && event.origin !== 'https://www.discogs.com') return;
+    if (!event.origin || !this.allowedOrigins.includes(event.origin)) return;
     if (!event.data) return;
 
     let payload: YoutubeMessage | any;
@@ -70,17 +74,25 @@ class VideoController {
 
 const isYoutubePage = () => window.location.hostname === 'www.youtube.com';
 
-const renderYoutubePage = () => {
+const renderYoutubeIframe = ({
+  allowedOrigins,
+}: {
+  allowedOrigins: string[];
+}) => {
+  // must be in iframe
+  if (window.self === window.top) return;
+
   const video = document.querySelector('video');
   if (!video) return;
-  const videoController = new VideoController(video);
+  const videoController = new VideoController(video, { allowedOrigins });
 
   // if there is an ad and the playback rate is changed during the ad
   // we need to force update the playback rate when the actual video is ready
   const observer = new MutationObserver((records) => {
     videoController.forcePlaybackRate();
   });
+
   observer.observe(video, { attributes: true });
 };
 
-export { renderYoutubePage, isYoutubePage };
+export { renderYoutubeIframe, isYoutubePage };

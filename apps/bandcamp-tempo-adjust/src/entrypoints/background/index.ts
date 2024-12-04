@@ -2,13 +2,12 @@ import browser from 'webextension-polyfill';
 import { hasAllPermissions } from '@tempo-adjust/permissions';
 
 const optionsPageUrl = '/options.html';
+const CHUNK_SIZE = 1024 * 1024 * 16;
 
 export default defineBackground({
   persistent: false,
   type: 'module',
   main() {
-    const CHUNK_SIZE = 1024 * 1024 * 16;
-
     const ports: Record<string, browser.Runtime.Port> = {};
 
     browser.action.onClicked.addListener(() => {
