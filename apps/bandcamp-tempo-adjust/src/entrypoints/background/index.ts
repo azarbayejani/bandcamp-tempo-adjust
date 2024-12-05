@@ -1,5 +1,8 @@
 import browser from 'webextension-polyfill';
-import { hasAllPermissions } from '@tempo-adjust/permissions';
+import {
+  hasAllPermissions,
+  setupListeners,
+} from '@tempo-adjust/permissions/background';
 import { bytesToBase64 } from '../../utils/base64';
 import { fetchAudioForAnalysis } from '../../utils/fetchAudioForAnalysis';
 
@@ -9,7 +12,10 @@ const CHUNK_SIZE = 1024 * 1024;
 export default defineBackground({
   persistent: false,
   type: 'module',
+
   main() {
+    setupListeners();
+
     const ports: Record<string, browser.Runtime.Port> = {};
 
     browser.action.onClicked.addListener(() => {
