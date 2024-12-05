@@ -1,5 +1,8 @@
 import browser from 'webextension-polyfill';
-import { hasAllPermissions } from '@tempo-adjust/permissions';
+import {
+  hasAllPermissions,
+  setupListeners,
+} from '@tempo-adjust/permissions/background';
 
 const optionsPageUrl = '/options.html';
 const CHUNK_SIZE = 1024 * 1024 * 16;
@@ -7,7 +10,10 @@ const CHUNK_SIZE = 1024 * 1024 * 16;
 export default defineBackground({
   persistent: false,
   type: 'module',
+
   main() {
+    setupListeners();
+
     const ports: Record<string, browser.Runtime.Port> = {};
 
     browser.action.onClicked.addListener(() => {

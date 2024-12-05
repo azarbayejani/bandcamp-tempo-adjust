@@ -3,6 +3,11 @@
   "type": "module",
   "version": "0.0.0",
   "main": "index.ts",
+  "exports": {
+    ".": "./index.ts",
+    "./background": "./background.ts",
+    "./content": "./content.ts"
+  },
   "private": true,
   "devDependencies": {
     "@webext-core/fake-browser": "^1.3.1",

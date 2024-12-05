@@ -12,6 +12,7 @@
     "dev:firefox": "wxt --target firefox --mv3",
     "build": "wxt build",
     "build:firefox": "wxt build --browser firefox --mv3",
+    "build:safari": "wxt build --browser safari --mv3",
     "submit": "wxt submit",
     "zip": "wxt zip",
     "zip:firefox": "wxt zip --browser firefox --mv3",

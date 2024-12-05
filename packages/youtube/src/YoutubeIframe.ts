@@ -74,15 +74,42 @@ class VideoController {
 
 const isYoutubePage = () => window.location.hostname === 'www.youtube.com';
 
-const renderYoutubeIframe = ({
+function waitForSelector<K extends keyof HTMLElementTagNameMap>(
+  selector: K
+): Promise<HTMLElementTagNameMap[K] | null> {
+  return new Promise((resolve) => {
+    const element = document.querySelector(selector);
+    if (element) {
+      return resolve(element);
+    }
+
+    const observer = new MutationObserver((mutations) => {
+      const element = document.querySelector(selector);
+      if (element) {
+        observer.disconnect();
+        resolve(element);
+      }
+    });
+
+    // If you get "parameter 1 is not of type 'Node'" error, see https://stackoverflow.com/a/77855838/492336
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+    });
+  });
+}
+
+const renderYoutubeIframe = async ({
   allowedOrigins,
 }: {
   allowedOrigins: string[];
 }) => {
-  // must be in iframe
-  if (window.self === window.top) return;
+  const isTop = window.self === window.top;
 
-  const video = document.querySelector('video');
+  // must be in iframe
+  if (isTop) return;
+
+  const video = await waitForSelector('video');
   if (!video) return;
   const videoController = new VideoController(video, { allowedOrigins });
 

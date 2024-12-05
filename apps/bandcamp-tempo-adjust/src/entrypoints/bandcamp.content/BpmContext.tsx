@@ -2,7 +2,7 @@ import produce from 'immer';
 import React, { createContext, useReducer } from 'react';
 import { analyzeAudio } from '../../utils/analyzeAudio';
 import { TrackInfoByUrl as TrackInfoStore } from '~/types';
-import { hasAllPermissions } from '@tempo-adjust/permissions';
+import { hasAllPermissions } from '@tempo-adjust/permissions/content';
 import useAudio from './AudioStore';
 
 type AudioStateContext = {

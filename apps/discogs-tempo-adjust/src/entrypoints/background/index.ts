@@ -1,5 +1,5 @@
 import browser from 'webextension-polyfill';
-import { hasAllPermissions } from '../../utils/permissions';
+import { hasAllPermissions } from '@tempo-adjust/permissions/background';
 
 const optionsUrl = '/options.html';
 

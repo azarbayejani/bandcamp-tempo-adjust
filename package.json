@@ -13,6 +13,7 @@
     "dev:bandcamp": "pnpm --filter bandcamp-tempo-adjust dev",
     "dev:discogs": "pnpm --filter discogs-tempo-adjust dev",
     "build": "pnpm build:chrome && pnpm build:firefox",
+    "build:safari": "pnpm --filter bandcamp-tempo-adjust build:safari",
     "build:chrome": "pnpm --filter './apps/**' build",
     "build:firefox": "pnpm --filter './apps/**' build -b firefox --mv3",
     "test": "vitest",

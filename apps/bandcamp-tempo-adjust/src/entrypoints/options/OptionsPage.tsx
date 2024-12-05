@@ -20,6 +20,9 @@ const Options: React.FC<Props> = ({ title }: Props) => {
   });
   const queryClient = useQueryClient();
 
+  const extensionName =
+    import.meta.env.WXT_EXTENSION_NAME || 'Bandcamp Tempo Adjust';
+
   const handleRequestPermissions = () => {
     requestAllPermissions();
   };
@@ -40,7 +43,7 @@ const Options: React.FC<Props> = ({ title }: Props) => {
       <div className={css.options}>
         <img src={bandcampTempoAdjustLogo} alt="Bandcamp Tempo Adjust logo" />
         <p style={{ textAlign: 'center' }}>
-          Bandcamp Tempo Adjust needs your permission to access bandcamp.com and
+          {extensionName} needs your permission to access bandcamp.com and
           bcbits.com in order to work correctly.
         </p>
         <button className={css.button} onClick={handleRequestPermissions}>
@@ -53,7 +56,7 @@ const Options: React.FC<Props> = ({ title }: Props) => {
       <div className={`${css.options} ${css.optionsWithFooter}`}>
         <img src={bandcampTempoAdjustLogo} alt="Bandcamp Tempo Adjust logo" />
         <div className={css.center}>
-          <h1>Thanks for installing Bandcamp Tempo Adjust!</h1>
+          <h1>Thanks for installing {extensionName}!</h1>
         </div>
         <div className={css.center} style={{ padding: '0 20px' }}>
           Please consider donating to support continued development of the
