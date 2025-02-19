@@ -2,9 +2,7 @@
   "name": "@tempo-adjust/permissions",
   "type": "module",
   "version": "0.0.0",
-  "main": "index.ts",
   "exports": {
-    ".": "./index.ts",
     "./background": "./background.ts",
     "./content": "./content.ts"
   },

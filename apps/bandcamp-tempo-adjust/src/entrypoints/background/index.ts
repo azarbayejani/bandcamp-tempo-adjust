@@ -44,13 +44,6 @@ export default defineBackground({
       }
     );
 
-    // You can't return true from listener or else firefox will expect 'sendResponse' to be called
-    // https://github.com/mozilla/webextension-polyfill/issues/16#issuecomment-371355255
-    browser.runtime.onMessage.addListener(async (message, _sender) => {
-      if (message.action === 'hasAllPermissions') {
-        return { hasAllPermissions: await hasAllPermissions() };
-      }
-    });
 
     browser.runtime.onConnect.addListener(async (port) => {
       ports[port.name] = port;

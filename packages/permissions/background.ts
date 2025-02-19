@@ -1,17 +1,21 @@
 import browser from 'webextension-polyfill';
 
+// Exports from this file can only be used in the background script or options page
+
 type PermissionAction =
   | { action: 'hasAllPermissions' }
   | { action: 'requestAllPermissions' };
 
 export function setupListeners() {
   browser.runtime.onMessage.addListener(
-    (message: PermissionAction, _sender) => {
+    async (message: PermissionAction, _sender) => {
+      // You can't return true from listener or else firefox will expect 'sendResponse' to be called
+      // https://github.com/mozilla/webextension-polyfill/issues/16#issuecomment-371355255
       if (message.action === 'hasAllPermissions') {
-        return hasAllPermissions();
+        return { hasAllPermissions: await hasAllPermissions() };
       }
       if (message.action === 'requestAllPermissions') {
-        return requestAllPermissions();
+        return { requestAllPermissions: await requestAllPermissions() };
       }
     }
   );

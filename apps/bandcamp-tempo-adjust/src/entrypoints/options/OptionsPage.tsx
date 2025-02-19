@@ -3,12 +3,12 @@ import browser from 'webextension-polyfill';
 import {
   requestAllPermissions,
   hasAllPermissions,
-} from '@tempo-adjust/permissions';
+} from '@tempo-adjust/permissions/background';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 
 import * as css from './OptionsPage.module.css';
 
-const bandcampTempoAdjustLogo = '/icon-128.png';
+const logo = '/icon-128.png';
 
 interface Props {
   title: string;
@@ -23,12 +23,16 @@ const Options: React.FC<Props> = () => {
   const extensionName =
     import.meta.env.WXT_EXTENSION_NAME || 'Bandcamp Tempo Adjust';
 
-  const handleRequestPermissions = () => {
-    requestAllPermissions();
+  const handleRequestPermissions = async () => {
+    const permissionsResponse = await requestAllPermissions();
+    if (permissionsResponse) {
+      queryClient.invalidateQueries(['permissions']);
+    }
   };
 
   useEffect(() => {
     const listener = () => {
+      console.log('hi');
       queryClient.invalidateQueries(['permissions']);
     };
     browser.permissions.onAdded.addListener(listener);
@@ -38,13 +42,17 @@ const Options: React.FC<Props> = () => {
     };
   }, [queryClient]);
 
+  const domains = import.meta.env.SAFARI
+    ? 'discogs.com, youtube.com, youtube-nocookie.com, bandcamp.com and bcbits.com'
+    : 'bandcamp.com and bcbits.com';
+
   return !isLoading && !hasPermissions ? (
     <div className="OptionsContainer">
       <div className={css.options}>
-        <img src={bandcampTempoAdjustLogo} alt="Bandcamp Tempo Adjust logo" />
+        <img src={logo} alt={`${extensionName} logo}`} />
         <p style={{ textAlign: 'center' }}>
-          {extensionName} needs your permission to access bandcamp.com and
-          bcbits.com in order to work correctly.
+          {extensionName} needs your permission to access {domains} in order to
+          work correctly.
         </p>
         <button className={css.button} onClick={handleRequestPermissions}>
           Allow
@@ -54,24 +62,28 @@ const Options: React.FC<Props> = () => {
   ) : (
     <div className="OptionsContainer">
       <div className={`${css.options} ${css.optionsWithFooter}`}>
-        <img src={bandcampTempoAdjustLogo} alt="Bandcamp Tempo Adjust logo" />
+        <img src={logo} alt={`${extensionName} logo`} />
         <div className={css.center}>
           <h1>Thanks for installing {extensionName}!</h1>
         </div>
-        <div className={css.center} style={{ padding: '0 20px' }}>
-          Please consider donating to support continued development of the
-          extension.
-        </div>
+        {!import.meta.env.SAFARI && (
+          <>
+            <div className={css.center} style={{ padding: '0 20px' }}>
+              Please consider donating to support continued development of the
+              extension.
+            </div>
 
-        <div className={css.actionContainer}>
-          <a
-            href="https://buymeacoffee.com/miseryconfusion"
-            role="button"
-            className={css.button}
-          >
-            Donate
-          </a>
-        </div>
+            <div className={css.actionContainer}>
+              <a
+                href="https://buymeacoffee.com/miseryconfusion"
+                role="button"
+                className={css.button}
+              >
+                Donate
+              </a>
+            </div>
+          </>
+        )}
         <div className={`${css.center} ${css.footer}`}>
           <a
             href="https://github.com/azarbayejani/bandcamp-tempo-adjust"
