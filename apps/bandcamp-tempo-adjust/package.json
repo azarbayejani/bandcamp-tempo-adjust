@@ -10,6 +10,7 @@
   "scripts": {
     "dev": "wxt",
     "dev:firefox": "wxt --browser firefox --mv3",
+    "dev:safari": "wxt --browser safari --mv3",
     "build": "wxt build",
     "build:firefox": "wxt build --browser firefox --mv3",
     "build:safari": "wxt build --browser safari --mv3",

@@ -1,0 +1,861 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		ABB6D24C2D011AC700358E45 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB6D24B2D011AC700358E45 /* AppDelegate.swift */; };
+		ABB6D2502D011AC700358E45 /* Main.html in Resources */ = {isa = PBXBuildFile; fileRef = ABB6D24E2D011AC700358E45 /* Main.html */; };
+		ABB6D2522D011AC700358E45 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = ABB6D2512D011AC700358E45 /* Icon.png */; };
+		ABB6D2542D011AC700358E45 /* Style.css in Resources */ = {isa = PBXBuildFile; fileRef = ABB6D2532D011AC700358E45 /* Style.css */; };
+		ABB6D2562D011AC700358E45 /* Script.js in Resources */ = {isa = PBXBuildFile; fileRef = ABB6D2552D011AC700358E45 /* Script.js */; };
+		ABB6D2582D011AC700358E45 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB6D2572D011AC700358E45 /* ViewController.swift */; };
+		ABB6D25B2D011AC700358E45 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ABB6D2592D011AC700358E45 /* Main.storyboard */; };
+		ABB6D25D2D011AC800358E45 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ABB6D25C2D011AC800358E45 /* Assets.xcassets */; };
+		ABB6D26A2D011AC800358E45 /* Tempo_Adjust_for_Bandcamp_and_DiscogsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB6D2692D011AC800358E45 /* Tempo_Adjust_for_Bandcamp_and_DiscogsTests.swift */; };
+		ABB6D2742D011AC800358E45 /* Tempo_Adjust_for_Bandcamp_and_DiscogsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB6D2732D011AC800358E45 /* Tempo_Adjust_for_Bandcamp_and_DiscogsUITests.swift */; };
+		ABB6D2762D011AC800358E45 /* Tempo_Adjust_for_Bandcamp_and_DiscogsUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB6D2752D011AC800358E45 /* Tempo_Adjust_for_Bandcamp_and_DiscogsUITestsLaunchTests.swift */; };
+		ABB6D27C2D011AC900358E45 /* Tempo Adjust for Bandcamp and Discogs Extension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = ABB6D27B2D011AC900358E45 /* Tempo Adjust for Bandcamp and Discogs Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		ABB6D2812D011AC900358E45 /* SafariWebExtensionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB6D2802D011AC900358E45 /* SafariWebExtensionHandler.swift */; };
+		ABB6D29E2D011AC900358E45 /* background.js in Resources */ = {isa = PBXBuildFile; fileRef = ABB6D2942D011AC900358E45 /* background.js */; };
+		ABB6D29F2D011AC900358E45 /* volume.svg in Resources */ = {isa = PBXBuildFile; fileRef = ABB6D2952D011AC900358E45 /* volume.svg */; };
+		ABB6D2A02D011AC900358E45 /* chunks in Resources */ = {isa = PBXBuildFile; fileRef = ABB6D2962D011AC900358E45 /* chunks */; };
+		ABB6D2A12D011AC900358E45 /* content-scripts in Resources */ = {isa = PBXBuildFile; fileRef = ABB6D2972D011AC900358E45 /* content-scripts */; };
+		ABB6D2A22D011AC900358E45 /* mute.svg in Resources */ = {isa = PBXBuildFile; fileRef = ABB6D2982D011AC900358E45 /* mute.svg */; };
+		ABB6D2A32D011AC900358E45 /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = ABB6D2992D011AC900358E45 /* manifest.json */; };
+		ABB6D2A42D011AC900358E45 /* options.html in Resources */ = {isa = PBXBuildFile; fileRef = ABB6D29A2D011AC900358E45 /* options.html */; };
+		ABB6D2A52D011AC900358E45 /* icon-34.png in Resources */ = {isa = PBXBuildFile; fileRef = ABB6D29B2D011AC900358E45 /* icon-34.png */; };
+		ABB6D2A62D011AC900358E45 /* assets in Resources */ = {isa = PBXBuildFile; fileRef = ABB6D29C2D011AC900358E45 /* assets */; };
+		ABB6D2A72D011AC900358E45 /* icon-128.png in Resources */ = {isa = PBXBuildFile; fileRef = ABB6D29D2D011AC900358E45 /* icon-128.png */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		ABB6D2662D011AC800358E45 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ABB6D2402D011AC700358E45 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = ABB6D2472D011AC700358E45;
+			remoteInfo = "Tempo Adjust for Bandcamp and Discogs";
+		};
+		ABB6D2702D011AC800358E45 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ABB6D2402D011AC700358E45 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = ABB6D2472D011AC700358E45;
+			remoteInfo = "Tempo Adjust for Bandcamp and Discogs";
+		};
+		ABB6D27D2D011AC900358E45 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ABB6D2402D011AC700358E45 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = ABB6D27A2D011AC900358E45;
+			remoteInfo = "Tempo Adjust for Bandcamp and Discogs Extension";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		ABB6D2892D011AC900358E45 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				ABB6D27C2D011AC900358E45 /* Tempo Adjust for Bandcamp and Discogs Extension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		ABB6D2482D011AC700358E45 /* Tempo Adjust for Bandcamp and Discogs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Tempo Adjust for Bandcamp and Discogs.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		ABB6D24B2D011AC700358E45 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		ABB6D24F2D011AC700358E45 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = Base; path = Base.lproj/Main.html; sourceTree = "<group>"; };
+		ABB6D2512D011AC700358E45 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		ABB6D2532D011AC700358E45 /* Style.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = Style.css; sourceTree = "<group>"; };
+		ABB6D2552D011AC700358E45 /* Script.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = Script.js; sourceTree = "<group>"; };
+		ABB6D2572D011AC700358E45 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		ABB6D25A2D011AC700358E45 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		ABB6D25C2D011AC800358E45 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		ABB6D25E2D011AC800358E45 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		ABB6D25F2D011AC800358E45 /* Tempo_Adjust_for_Bandcamp_and_Discogs.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Tempo_Adjust_for_Bandcamp_and_Discogs.entitlements; sourceTree = "<group>"; };
+		ABB6D2602D011AC800358E45 /* Tempo Adjust for Bandcamp and Discogs.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Tempo Adjust for Bandcamp and Discogs.entitlements"; sourceTree = "<group>"; };
+		ABB6D2652D011AC800358E45 /* Tempo Adjust for Bandcamp and DiscogsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Tempo Adjust for Bandcamp and DiscogsTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		ABB6D2692D011AC800358E45 /* Tempo_Adjust_for_Bandcamp_and_DiscogsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tempo_Adjust_for_Bandcamp_and_DiscogsTests.swift; sourceTree = "<group>"; };
+		ABB6D26F2D011AC800358E45 /* Tempo Adjust for Bandcamp and DiscogsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Tempo Adjust for Bandcamp and DiscogsUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		ABB6D2732D011AC800358E45 /* Tempo_Adjust_for_Bandcamp_and_DiscogsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tempo_Adjust_for_Bandcamp_and_DiscogsUITests.swift; sourceTree = "<group>"; };
+		ABB6D2752D011AC800358E45 /* Tempo_Adjust_for_Bandcamp_and_DiscogsUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tempo_Adjust_for_Bandcamp_and_DiscogsUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		ABB6D27B2D011AC900358E45 /* Tempo Adjust for Bandcamp and Discogs Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Tempo Adjust for Bandcamp and Discogs Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		ABB6D2802D011AC900358E45 /* SafariWebExtensionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariWebExtensionHandler.swift; sourceTree = "<group>"; };
+		ABB6D2822D011AC900358E45 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		ABB6D2832D011AC900358E45 /* Tempo_Adjust_for_Bandcamp_and_Discogs_Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Tempo_Adjust_for_Bandcamp_and_Discogs_Extension.entitlements; sourceTree = "<group>"; };
+		ABB6D2942D011AC900358E45 /* background.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = background.js; path = "../../../apps/bandcamp-tempo-adjust/.output/safari-mv3/background.js"; sourceTree = "<group>"; };
+		ABB6D2952D011AC900358E45 /* volume.svg */ = {isa = PBXFileReference; lastKnownFileType = text; name = volume.svg; path = "../../../apps/bandcamp-tempo-adjust/.output/safari-mv3/volume.svg"; sourceTree = "<group>"; };
+		ABB6D2962D011AC900358E45 /* chunks */ = {isa = PBXFileReference; lastKnownFileType = folder; name = chunks; path = "../../../apps/bandcamp-tempo-adjust/.output/safari-mv3/chunks"; sourceTree = "<group>"; };
+		ABB6D2972D011AC900358E45 /* content-scripts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "content-scripts"; path = "../../../apps/bandcamp-tempo-adjust/.output/safari-mv3/content-scripts"; sourceTree = "<group>"; };
+		ABB6D2982D011AC900358E45 /* mute.svg */ = {isa = PBXFileReference; lastKnownFileType = text; name = mute.svg; path = "../../../apps/bandcamp-tempo-adjust/.output/safari-mv3/mute.svg"; sourceTree = "<group>"; };
+		ABB6D2992D011AC900358E45 /* manifest.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = manifest.json; path = "../../../apps/bandcamp-tempo-adjust/.output/safari-mv3/manifest.json"; sourceTree = "<group>"; };
+		ABB6D29A2D011AC900358E45 /* options.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = options.html; path = "../../../apps/bandcamp-tempo-adjust/.output/safari-mv3/options.html"; sourceTree = "<group>"; };
+		ABB6D29B2D011AC900358E45 /* icon-34.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-34.png"; path = "../../../apps/bandcamp-tempo-adjust/.output/safari-mv3/icon-34.png"; sourceTree = "<group>"; };
+		ABB6D29C2D011AC900358E45 /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = assets; path = "../../../apps/bandcamp-tempo-adjust/.output/safari-mv3/assets"; sourceTree = "<group>"; };
+		ABB6D29D2D011AC900358E45 /* icon-128.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-128.png"; path = "../../../apps/bandcamp-tempo-adjust/.output/safari-mv3/icon-128.png"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		ABB6D2452D011AC700358E45 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ABB6D2622D011AC800358E45 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ABB6D26C2D011AC800358E45 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ABB6D2782D011AC900358E45 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		ABB6D23F2D011AC700358E45 = {
+			isa = PBXGroup;
+			children = (
+				ABB6D24A2D011AC700358E45 /* Tempo Adjust for Bandcamp and Discogs */,
+				ABB6D2682D011AC800358E45 /* Tempo Adjust for Bandcamp and DiscogsTests */,
+				ABB6D2722D011AC800358E45 /* Tempo Adjust for Bandcamp and DiscogsUITests */,
+				ABB6D27F2D011AC900358E45 /* Tempo Adjust for Bandcamp and Discogs Extension */,
+				ABB6D2492D011AC700358E45 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		ABB6D2492D011AC700358E45 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				ABB6D2482D011AC700358E45 /* Tempo Adjust for Bandcamp and Discogs.app */,
+				ABB6D2652D011AC800358E45 /* Tempo Adjust for Bandcamp and DiscogsTests.xctest */,
+				ABB6D26F2D011AC800358E45 /* Tempo Adjust for Bandcamp and DiscogsUITests.xctest */,
+				ABB6D27B2D011AC900358E45 /* Tempo Adjust for Bandcamp and Discogs Extension.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		ABB6D24A2D011AC700358E45 /* Tempo Adjust for Bandcamp and Discogs */ = {
+			isa = PBXGroup;
+			children = (
+				ABB6D24B2D011AC700358E45 /* AppDelegate.swift */,
+				ABB6D2572D011AC700358E45 /* ViewController.swift */,
+				ABB6D2592D011AC700358E45 /* Main.storyboard */,
+				ABB6D25C2D011AC800358E45 /* Assets.xcassets */,
+				ABB6D25E2D011AC800358E45 /* Info.plist */,
+				ABB6D25F2D011AC800358E45 /* Tempo_Adjust_for_Bandcamp_and_Discogs.entitlements */,
+				ABB6D2602D011AC800358E45 /* Tempo Adjust for Bandcamp and Discogs.entitlements */,
+				ABB6D24D2D011AC700358E45 /* Resources */,
+			);
+			path = "Tempo Adjust for Bandcamp and Discogs";
+			sourceTree = "<group>";
+		};
+		ABB6D24D2D011AC700358E45 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				ABB6D24E2D011AC700358E45 /* Main.html */,
+				ABB6D2512D011AC700358E45 /* Icon.png */,
+				ABB6D2532D011AC700358E45 /* Style.css */,
+				ABB6D2552D011AC700358E45 /* Script.js */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		ABB6D2682D011AC800358E45 /* Tempo Adjust for Bandcamp and DiscogsTests */ = {
+			isa = PBXGroup;
+			children = (
+				ABB6D2692D011AC800358E45 /* Tempo_Adjust_for_Bandcamp_and_DiscogsTests.swift */,
+			);
+			path = "Tempo Adjust for Bandcamp and DiscogsTests";
+			sourceTree = "<group>";
+		};
+		ABB6D2722D011AC800358E45 /* Tempo Adjust for Bandcamp and DiscogsUITests */ = {
+			isa = PBXGroup;
+			children = (
+				ABB6D2732D011AC800358E45 /* Tempo_Adjust_for_Bandcamp_and_DiscogsUITests.swift */,
+				ABB6D2752D011AC800358E45 /* Tempo_Adjust_for_Bandcamp_and_DiscogsUITestsLaunchTests.swift */,
+			);
+			path = "Tempo Adjust for Bandcamp and DiscogsUITests";
+			sourceTree = "<group>";
+		};
+		ABB6D27F2D011AC900358E45 /* Tempo Adjust for Bandcamp and Discogs Extension */ = {
+			isa = PBXGroup;
+			children = (
+				ABB6D2932D011AC900358E45 /* Resources */,
+				ABB6D2802D011AC900358E45 /* SafariWebExtensionHandler.swift */,
+				ABB6D2822D011AC900358E45 /* Info.plist */,
+				ABB6D2832D011AC900358E45 /* Tempo_Adjust_for_Bandcamp_and_Discogs_Extension.entitlements */,
+			);
+			path = "Tempo Adjust for Bandcamp and Discogs Extension";
+			sourceTree = "<group>";
+		};
+		ABB6D2932D011AC900358E45 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				ABB6D2942D011AC900358E45 /* background.js */,
+				ABB6D2952D011AC900358E45 /* volume.svg */,
+				ABB6D2962D011AC900358E45 /* chunks */,
+				ABB6D2972D011AC900358E45 /* content-scripts */,
+				ABB6D2982D011AC900358E45 /* mute.svg */,
+				ABB6D2992D011AC900358E45 /* manifest.json */,
+				ABB6D29A2D011AC900358E45 /* options.html */,
+				ABB6D29B2D011AC900358E45 /* icon-34.png */,
+				ABB6D29C2D011AC900358E45 /* assets */,
+				ABB6D29D2D011AC900358E45 /* icon-128.png */,
+			);
+			name = Resources;
+			path = "Tempo Adjust for Bandcamp and Discogs Extension";
+			sourceTree = SOURCE_ROOT;
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		ABB6D2472D011AC700358E45 /* Tempo Adjust for Bandcamp and Discogs */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ABB6D28A2D011AC900358E45 /* Build configuration list for PBXNativeTarget "Tempo Adjust for Bandcamp and Discogs" */;
+			buildPhases = (
+				ABB6D2442D011AC700358E45 /* Sources */,
+				ABB6D2452D011AC700358E45 /* Frameworks */,
+				ABB6D2462D011AC700358E45 /* Resources */,
+				ABB6D2892D011AC900358E45 /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				ABB6D27E2D011AC900358E45 /* PBXTargetDependency */,
+			);
+			name = "Tempo Adjust for Bandcamp and Discogs";
+			packageProductDependencies = (
+			);
+			productName = "Tempo Adjust for Bandcamp and Discogs";
+			productReference = ABB6D2482D011AC700358E45 /* Tempo Adjust for Bandcamp and Discogs.app */;
+			productType = "com.apple.product-type.application";
+		};
+		ABB6D2642D011AC800358E45 /* Tempo Adjust for Bandcamp and DiscogsTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ABB6D28D2D011AC900358E45 /* Build configuration list for PBXNativeTarget "Tempo Adjust for Bandcamp and DiscogsTests" */;
+			buildPhases = (
+				ABB6D2612D011AC800358E45 /* Sources */,
+				ABB6D2622D011AC800358E45 /* Frameworks */,
+				ABB6D2632D011AC800358E45 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				ABB6D2672D011AC800358E45 /* PBXTargetDependency */,
+			);
+			name = "Tempo Adjust for Bandcamp and DiscogsTests";
+			packageProductDependencies = (
+			);
+			productName = "Tempo Adjust for Bandcamp and DiscogsTests";
+			productReference = ABB6D2652D011AC800358E45 /* Tempo Adjust for Bandcamp and DiscogsTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		ABB6D26E2D011AC800358E45 /* Tempo Adjust for Bandcamp and DiscogsUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ABB6D2902D011AC900358E45 /* Build configuration list for PBXNativeTarget "Tempo Adjust for Bandcamp and DiscogsUITests" */;
+			buildPhases = (
+				ABB6D26B2D011AC800358E45 /* Sources */,
+				ABB6D26C2D011AC800358E45 /* Frameworks */,
+				ABB6D26D2D011AC800358E45 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				ABB6D2712D011AC800358E45 /* PBXTargetDependency */,
+			);
+			name = "Tempo Adjust for Bandcamp and DiscogsUITests";
+			packageProductDependencies = (
+			);
+			productName = "Tempo Adjust for Bandcamp and DiscogsUITests";
+			productReference = ABB6D26F2D011AC800358E45 /* Tempo Adjust for Bandcamp and DiscogsUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		ABB6D27A2D011AC900358E45 /* Tempo Adjust for Bandcamp and Discogs Extension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ABB6D2862D011AC900358E45 /* Build configuration list for PBXNativeTarget "Tempo Adjust for Bandcamp and Discogs Extension" */;
+			buildPhases = (
+				ABB6D2772D011AC900358E45 /* Sources */,
+				ABB6D2782D011AC900358E45 /* Frameworks */,
+				ABB6D2792D011AC900358E45 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Tempo Adjust for Bandcamp and Discogs Extension";
+			packageProductDependencies = (
+			);
+			productName = "Tempo Adjust for Bandcamp and Discogs Extension";
+			productReference = ABB6D27B2D011AC900358E45 /* Tempo Adjust for Bandcamp and Discogs Extension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		ABB6D2402D011AC700358E45 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1610;
+				LastUpgradeCheck = 1610;
+				TargetAttributes = {
+					ABB6D2472D011AC700358E45 = {
+						CreatedOnToolsVersion = 16.1;
+					};
+					ABB6D2642D011AC800358E45 = {
+						CreatedOnToolsVersion = 16.1;
+						TestTargetID = ABB6D2472D011AC700358E45;
+					};
+					ABB6D26E2D011AC800358E45 = {
+						CreatedOnToolsVersion = 16.1;
+						TestTargetID = ABB6D2472D011AC700358E45;
+					};
+					ABB6D27A2D011AC900358E45 = {
+						CreatedOnToolsVersion = 16.1;
+					};
+				};
+			};
+			buildConfigurationList = ABB6D2432D011AC700358E45 /* Build configuration list for PBXProject "Tempo Adjust for Bandcamp and Discogs" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = ABB6D23F2D011AC700358E45;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = ABB6D2492D011AC700358E45 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				ABB6D2472D011AC700358E45 /* Tempo Adjust for Bandcamp and Discogs */,
+				ABB6D2642D011AC800358E45 /* Tempo Adjust for Bandcamp and DiscogsTests */,
+				ABB6D26E2D011AC800358E45 /* Tempo Adjust for Bandcamp and DiscogsUITests */,
+				ABB6D27A2D011AC900358E45 /* Tempo Adjust for Bandcamp and Discogs Extension */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		ABB6D2462D011AC700358E45 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ABB6D2522D011AC700358E45 /* Icon.png in Resources */,
+				ABB6D25B2D011AC700358E45 /* Main.storyboard in Resources */,
+				ABB6D2562D011AC700358E45 /* Script.js in Resources */,
+				ABB6D2502D011AC700358E45 /* Main.html in Resources */,
+				ABB6D25D2D011AC800358E45 /* Assets.xcassets in Resources */,
+				ABB6D2542D011AC700358E45 /* Style.css in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ABB6D2632D011AC800358E45 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ABB6D26D2D011AC800358E45 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ABB6D2792D011AC900358E45 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ABB6D2A42D011AC900358E45 /* options.html in Resources */,
+				ABB6D2A02D011AC900358E45 /* chunks in Resources */,
+				ABB6D29F2D011AC900358E45 /* volume.svg in Resources */,
+				ABB6D2A62D011AC900358E45 /* assets in Resources */,
+				ABB6D2A72D011AC900358E45 /* icon-128.png in Resources */,
+				ABB6D2A52D011AC900358E45 /* icon-34.png in Resources */,
+				ABB6D2A22D011AC900358E45 /* mute.svg in Resources */,
+				ABB6D29E2D011AC900358E45 /* background.js in Resources */,
+				ABB6D2A32D011AC900358E45 /* manifest.json in Resources */,
+				ABB6D2A12D011AC900358E45 /* content-scripts in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		ABB6D2442D011AC700358E45 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ABB6D2582D011AC700358E45 /* ViewController.swift in Sources */,
+				ABB6D24C2D011AC700358E45 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ABB6D2612D011AC800358E45 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ABB6D26A2D011AC800358E45 /* Tempo_Adjust_for_Bandcamp_and_DiscogsTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ABB6D26B2D011AC800358E45 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ABB6D2762D011AC800358E45 /* Tempo_Adjust_for_Bandcamp_and_DiscogsUITestsLaunchTests.swift in Sources */,
+				ABB6D2742D011AC800358E45 /* Tempo_Adjust_for_Bandcamp_and_DiscogsUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ABB6D2772D011AC900358E45 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ABB6D2812D011AC900358E45 /* SafariWebExtensionHandler.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		ABB6D2672D011AC800358E45 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = ABB6D2472D011AC700358E45 /* Tempo Adjust for Bandcamp and Discogs */;
+			targetProxy = ABB6D2662D011AC800358E45 /* PBXContainerItemProxy */;
+		};
+		ABB6D2712D011AC800358E45 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = ABB6D2472D011AC700358E45 /* Tempo Adjust for Bandcamp and Discogs */;
+			targetProxy = ABB6D2702D011AC800358E45 /* PBXContainerItemProxy */;
+		};
+		ABB6D27E2D011AC900358E45 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = ABB6D27A2D011AC900358E45 /* Tempo Adjust for Bandcamp and Discogs Extension */;
+			targetProxy = ABB6D27D2D011AC900358E45 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		ABB6D24E2D011AC700358E45 /* Main.html */ = {
+			isa = PBXVariantGroup;
+			children = (
+				ABB6D24F2D011AC700358E45 /* Base */,
+			);
+			name = Main.html;
+			sourceTree = "<group>";
+		};
+		ABB6D2592D011AC700358E45 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				ABB6D25A2D011AC700358E45 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		ABB6D2842D011AC900358E45 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.1;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		ABB6D2852D011AC900358E45 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = Release;
+		};
+		ABB6D2872D011AC900358E45 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "Tempo Adjust for Bandcamp and Discogs Extension/Tempo_Adjust_for_Bandcamp_and_Discogs_Extension.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = ;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Tempo Adjust for Bandcamp and Discogs Extension/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Tempo Adjust for Bandcamp and Discogs Extension";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 11.5;
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.miseryconfusion.tempoadjust.Extension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		ABB6D2882D011AC900358E45 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "Tempo Adjust for Bandcamp and Discogs Extension/Tempo_Adjust_for_Bandcamp_and_Discogs_Extension.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = ;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Tempo Adjust for Bandcamp and Discogs Extension/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Tempo Adjust for Bandcamp and Discogs Extension";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 11.5;
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.miseryconfusion.tempoadjust.Extension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		ABB6D28B2D011AC900358E45 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Tempo Adjust for Bandcamp and Discogs/Tempo Adjust for Bandcamp and Discogs.entitlements";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = ;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Tempo Adjust for Bandcamp and Discogs/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Tempo Adjust for Bandcamp and Discogs";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSMainStoryboardFile = Main;
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 11.5;
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+					"-framework",
+					WebKit,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.miseryconfusion.tempoadjust;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		ABB6D28C2D011AC900358E45 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Tempo Adjust for Bandcamp and Discogs/Tempo Adjust for Bandcamp and Discogs.entitlements";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = ;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Tempo Adjust for Bandcamp and Discogs/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Tempo Adjust for Bandcamp and Discogs";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSMainStoryboardFile = Main;
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 11.5;
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+					"-framework",
+					WebKit,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.miseryconfusion.tempoadjust;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		ABB6D28E2D011AC900358E45 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = ;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 11.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.miseryconfusion.tempoadjust.Tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tempo Adjust for Bandcamp and Discogs.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Tempo Adjust for Bandcamp and Discogs";
+			};
+			name = Debug;
+		};
+		ABB6D28F2D011AC900358E45 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = ;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 11.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.miseryconfusion.tempoadjust.Tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tempo Adjust for Bandcamp and Discogs.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Tempo Adjust for Bandcamp and Discogs";
+			};
+			name = Release;
+		};
+		ABB6D2912D011AC900358E45 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = ;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 11.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.miseryconfusion.tempoadjust.UITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = "Tempo Adjust for Bandcamp and Discogs";
+			};
+			name = Debug;
+		};
+		ABB6D2922D011AC900358E45 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = ;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 11.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.miseryconfusion.tempoadjust.UITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = "Tempo Adjust for Bandcamp and Discogs";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		ABB6D2432D011AC700358E45 /* Build configuration list for PBXProject "Tempo Adjust for Bandcamp and Discogs" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ABB6D2842D011AC900358E45 /* Debug */,
+				ABB6D2852D011AC900358E45 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		ABB6D2862D011AC900358E45 /* Build configuration list for PBXNativeTarget "Tempo Adjust for Bandcamp and Discogs Extension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ABB6D2872D011AC900358E45 /* Debug */,
+				ABB6D2882D011AC900358E45 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		ABB6D28A2D011AC900358E45 /* Build configuration list for PBXNativeTarget "Tempo Adjust for Bandcamp and Discogs" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ABB6D28B2D011AC900358E45 /* Debug */,
+				ABB6D28C2D011AC900358E45 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		ABB6D28D2D011AC900358E45 /* Build configuration list for PBXNativeTarget "Tempo Adjust for Bandcamp and DiscogsTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ABB6D28E2D011AC900358E45 /* Debug */,
+				ABB6D28F2D011AC900358E45 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		ABB6D2902D011AC900358E45 /* Build configuration list for PBXNativeTarget "Tempo Adjust for Bandcamp and DiscogsUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ABB6D2912D011AC900358E45 /* Debug */,
+				ABB6D2922D011AC900358E45 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = ABB6D2402D011AC700358E45 /* Project object */;
+}

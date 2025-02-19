@@ -1,0 +1,61 @@
+* {
+    -webkit-user-select: none;
+    -webkit-user-drag: none;
+    cursor: default;
+}
+
+:root {
+    color-scheme: light dark;
+
+    --spacing: 5px;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    gap: var(--spacing);
+    margin: 0 calc(var(--spacing) * 6);
+    height: 100%;
+
+    font: -apple-system-short-body;
+/*    text-align: center;*/
+}
+
+body.use-settings .settings-text {
+    display: revert;
+}
+
+body.use-settings .preferences-text {
+    display: none;
+}
+
+body:not(.use-settings) .preferences-text {
+    display: revert;
+}
+
+body:not(.use-settings) .settings-text  {
+    display: none;
+}
+
+body:not(.state-on, .state-off) :is(.state-on, .state-off) {
+    display: none;
+}
+
+body.state-on :is(.state-off, .state-unknown) {
+    display: none;
+}
+
+body.state-off :is(.state-on, .state-unknown) {
+    display: none;
+}
+
+button {
+    font-size: 1em;
+}

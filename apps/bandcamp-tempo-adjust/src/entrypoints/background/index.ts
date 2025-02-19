@@ -44,6 +44,32 @@ export default defineBackground({
       }
     );
 
+    if (import.meta.env.SAFARI) {
+      let nativePort = browser.runtime.connectNative('application.id');
+      // store the port so that it isn't garbage collected
+      ports['nativePort'] = nativePort;
+
+      nativePort.onMessage.addListener((message: { name: string }) => {
+        if (message.name === 'openOptions') {
+          browser.tabs.create({ url: optionsPageUrl.toString() });
+        }
+      });
+
+      /*
+        Listen for the native messaging port closing.
+      */
+      nativePort.onDisconnect.addListener((port) => {
+        if (port.error) {
+          console.log(`Disconnected due to an error: ${port.error.message}`);
+        } else {
+          // The port closed for an unspecified reason. If this occurred right after
+          // calling `browser.runtime.connectNative()` there may have been a problem
+          // starting the the native messaging client in the first place.
+          // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Native_messaging#troubleshooting
+          console.log(`Disconnected`, port);
+        }
+      });
+    }
 
     browser.runtime.onConnect.addListener(async (port) => {
       ports[port.name] = port;
