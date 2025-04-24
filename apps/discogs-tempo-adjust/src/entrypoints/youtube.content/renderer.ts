@@ -68,9 +68,19 @@ class VideoController {
   }
 }
 
+function isIframe() {
+  try {
+    return window.self !== window.top;
+  } catch (e) {
+    return true; // Assume it's in an iframe if access is blocked
+  }
+}
+
 const isYoutubePage = () => window.location.hostname === 'www.youtube.com';
 
 const renderYoutubePage = () => {
+  if (!isIframe()) return;
+
   const video = document.querySelector('video');
   if (!video) return;
   const videoController = new VideoController(video);
