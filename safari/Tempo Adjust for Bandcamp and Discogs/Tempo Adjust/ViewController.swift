@@ -39,8 +39,10 @@ class ViewController: NSViewController, WKNavigationDelegate, WKScriptMessageHan
 
             DispatchQueue.main.async {
                 if #available(macOS 13, *) {
+                    print("macOS 13", state.isEnabled)
                     webView.evaluateJavaScript("show(\(state.isEnabled), true)")
                 } else {
+                    print("below macOS 13", state.isEnabled)
                     webView.evaluateJavaScript("show(\(state.isEnabled), false)")
                 }
             }
