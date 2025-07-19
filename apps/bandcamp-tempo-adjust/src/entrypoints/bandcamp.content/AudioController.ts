@@ -1,38 +1,48 @@
 import useAudio from './AudioStore';
 
+// By default this affects ALL audio elements on the page
 class AudioController {
-  private audio: HTMLAudioElement;
+  private audioElements: HTMLAudioElement[];
 
   constructor(selector: string, getCurrTrackUrl?: () => string | undefined) {
-    const audio = document.querySelector(selector) as HTMLAudioElement | null;
-    if (!audio || !(audio instanceof HTMLAudioElement)) {
+    const audioElements = Array.from(
+      document.querySelectorAll<HTMLAudioElement>(selector)
+    );
+    if (
+      !audioElements.length ||
+      !audioElements.every((a) => a instanceof HTMLAudioElement)
+    ) {
       throw new Error('Audio element not found');
     }
 
-    this.audio = audio;
+    this.audioElements = audioElements;
 
     // set the initial state
-    useAudio.getState().setVolume(this.audio.volume);
-    useAudio.getState().setPlaybackRate(this.audio.playbackRate);
+    useAudio.getState().setVolume(this.audioElements[0].volume);
+    useAudio.getState().setPlaybackRate(this.audioElements[0].playbackRate);
     if (getCurrTrackUrl) {
       useAudio.getState().setCurrTrackUrl(getCurrTrackUrl());
     }
 
     useAudio.subscribe(({ playbackRate, preservesPitch, volume }) => {
-      this.audio.playbackRate = playbackRate;
-      this.audio.preservesPitch = preservesPitch;
-      this.audio.volume = volume;
-    });
-
-    this.audio.addEventListener('volumechange', () => {
-      useAudio.getState().setVolume(this.audio.volume);
-    });
-
-    if (getCurrTrackUrl) {
-      this.audio.addEventListener('play', () => {
-        useAudio.getState().setCurrTrackUrl(getCurrTrackUrl());
+      this.audioElements.forEach((audio) => {
+        audio.playbackRate = playbackRate;
+        audio.preservesPitch = preservesPitch;
+        audio.volume = volume;
       });
-    }
+    });
+
+    audioElements.forEach((audio) => {
+      audio.addEventListener('volumechange', () => {
+        useAudio.getState().setVolume(audio.volume);
+      });
+
+      if (getCurrTrackUrl) {
+        audio.addEventListener('play', () => {
+          useAudio.getState().setCurrTrackUrl(getCurrTrackUrl());
+        });
+      }
+    });
   }
 }
 
