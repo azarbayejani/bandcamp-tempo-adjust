@@ -1,4 +1,4 @@
-import { defineContentScript } from 'wxt/sandbox';
+import { defineContentScript } from '#imports';
 
 import { renderDiscogsPage } from './renderer';
 

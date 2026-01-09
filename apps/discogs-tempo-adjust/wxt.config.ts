@@ -12,6 +12,10 @@ export default defineConfig({
       },
     },
   },
-  modules: ['@wxt-dev/module-react', '@tempo-adjust/wxt-hooks'],
+  modules: [
+    '@wxt-dev/module-react',
+    '@tempo-adjust/wxt-hooks',
+    '@wxt-dev/webextension-polyfill',
+  ],
   srcDir: 'src',
 });

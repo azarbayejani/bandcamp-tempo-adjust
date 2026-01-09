@@ -15,6 +15,10 @@ export default defineConfig({
     host_permissions: ['https://*.bcbits.com/stream/*'],
     permissions: ['storage'],
   },
-  modules: ['@wxt-dev/module-react', '@tempo-adjust/wxt-hooks'],
+  modules: [
+    '@wxt-dev/module-react',
+    '@tempo-adjust/wxt-hooks',
+    '@wxt-dev/webextension-polyfill',
+  ],
   srcDir: 'src',
 });
