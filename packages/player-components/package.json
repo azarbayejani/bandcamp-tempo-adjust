@@ -6,7 +6,8 @@
   "dependencies": {
     "@tempo-adjust/theme-provider": "workspace:*",
     "@tempo-adjust/to-one-decimal": "workspace:*",
-    "classnames": "^2.5.1"
+    "classnames": "^2.5.1",
+    "rimraf": "^6.1.2"
   },
   "devDependencies": {
     "typescript": "^5.6.3"
