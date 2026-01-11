@@ -82,7 +82,7 @@ importers:
         specifier: 18.3.1
         version: 18.3.1(react@18.3.1)
       rimraf:
-        specifier: ^6.0.1
+        specifier: ^6.1.2
         version: 6.1.2
       sass:
         specifier: ^1.71.0
