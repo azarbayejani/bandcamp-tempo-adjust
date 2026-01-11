@@ -51,7 +51,7 @@
     "style-loader": "^3.3.1",
     "terser-webpack-plugin": "^5.3.6",
     "typescript": "^5.6.3",
-    "vitest": "^2.1.9"
+    "vitest": "^4.0.16"
   },
   "resolutions": {
     "@types/react": "18.3.1"
