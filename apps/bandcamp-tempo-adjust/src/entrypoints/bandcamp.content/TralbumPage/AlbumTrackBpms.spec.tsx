@@ -11,9 +11,9 @@ describe('AlbumTrackBpms', () => {
     it('renders them with the correct state', () => {
       render(
         <>
-          <div id="BandcampPitchAdjust_bpm_3" data-testid="bpm-3"></div>
-          <div id="BandcampPitchAdjust_bpm_2" data-testid="bpm-2"></div>
-          <div id="BandcampPitchAdjust_bpm_1" data-testid="bpm-1"></div>
+          <div id="BandcampPitchAdjust_bpm_3" data-testid="bpm-target-3"></div>
+          <div id="BandcampPitchAdjust_bpm_2" data-testid="bpm-target-2"></div>
+          <div id="BandcampPitchAdjust_bpm_1" data-testid="bpm-target-1"></div>
         </>
       );
 
@@ -55,9 +55,11 @@ describe('AlbumTrackBpms', () => {
         </BpmProvider>
       );
 
-      expect(screen.getByTestId('bpm-1')).toHaveTextContent(/123.0 BPM/);
-      expect(screen.getByTestId('bpm-2')).toHaveTextContent(/loading BPM.../);
-      expect(screen.getByTestId('bpm-3')).toHaveTextContent(
+      expect(screen.getByTestId('bpm-target-1')).toHaveTextContent(/123.0 BPM/);
+      expect(screen.getByTestId('bpm-target-2')).toHaveTextContent(
+        /loading BPM.../
+      );
+      expect(screen.getByTestId('bpm-target-3')).toHaveTextContent(
         /Error loading BPM/
       );
     });
