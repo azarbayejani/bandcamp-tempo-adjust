@@ -293,9 +293,15 @@ importers:
         specifier: ^5.0.0-rc.2
         version: 5.0.1(@types/react@18.3.1)(immer@9.0.21)(react@18.3.1)(use-sync-external-store@1.2.2(react@18.3.1))
     devDependencies:
+      '@playwright/test':
+        specifier: ^1.57.0
+        version: 1.57.0
       '@tempo-adjust/wxt-hooks':
         specifier: workspace:*
         version: link:../../packages/wxt-hooks
+      playwright:
+        specifier: ^1.57.0
+        version: 1.57.0
       rimraf:
         specifier: ^6.1.2
         version: 6.1.2

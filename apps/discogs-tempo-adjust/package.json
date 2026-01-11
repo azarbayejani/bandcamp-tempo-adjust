@@ -5,7 +5,9 @@
   "author": "Bobby Azarbayejani <bobby@azarbayejani.com>",
   "license": "MIT",
   "devDependencies": {
+    "@playwright/test": "^1.57.0",
     "@tempo-adjust/wxt-hooks": "workspace:*",
+    "playwright": "^1.57.0",
     "rimraf": "^6.1.2",
     "typescript": "^5.6.3",
     "typescript-plugin-css-modules": "^5.1.0",
@@ -18,7 +20,9 @@
     "build:firefox": "wxt build --browser firefox --mv3",
     "zip": "wxt zip",
     "zip:firefox": "wxt zip --browser firefox",
-    "postinstall": "wxt prepare"
+    "postinstall": "wxt prepare",
+    "e2e": "playwright test",
+    "e2e:watch": "playwright test --ui"
   },
   "dependencies": {
     "@tempo-adjust/permissions": "workspace:*",
