@@ -1,0 +1,3 @@
+{"sent_at":"2026-01-11T23:00:43.696Z","sdk":{"name":"sentry.javascript.browser","version":"8.55.0"}}
+{"type":"session"}
+{"sid":"c336363601054cff928a300009bfd615","init":true,"started":"2026-01-11T23:00:43.696Z","timestamp":"2026-01-11T23:00:43.696Z","status":"ok","errors":0,"attrs":{"release":"trackpipe@1bee5a71386e4790787bd3c8ada5dd264177c236","environment":"production","user_agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.7499.4 Safari/537.36"}}

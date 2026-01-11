@@ -1,6 +1,7 @@
 import { extension } from 'webextension-polyfill';
 import { test, expect } from './fixtures';
 import { openTralbum } from './pages/tralbum';
+import { setupNetwork } from './helpers/setupNetwork';
 
 interface Track {
   title: string;
@@ -8,13 +9,15 @@ interface Track {
 }
 
 interface Tralbum {
+  harPath: string;
   url: string;
   defaultTrackIndex: number;
   tracks: Track[];
 }
 
-const fixtures = {
+const fixtures: Record<string, Tralbum> = {
   album: {
+    harPath: 'e2e/fixtures/album.har',
     url: 'https://illegalafterstracks.bandcamp.com/album/illegal-afters-04',
     defaultTrackIndex: 4,
     tracks: [
@@ -41,6 +44,7 @@ const fixtures = {
     ],
   },
   albumWithExclusiveTracks: {
+    harPath: 'e2e/fixtures/album-with-exclusive-tracks.har',
     url: 'https://boulderhead.bandcamp.com/album/i-need-space-to-dance',
     defaultTrackIndex: 0,
     tracks: [
@@ -73,7 +77,11 @@ const getDefaultTrackBpm = (fixture: Tralbum) => {
 };
 
 test('can adjust playback rate', async ({ page, extensionId }) => {
-  const url = fixtures.album.url;
+  const fixture = fixtures.album;
+  await setupNetwork(page, {
+    harPath: fixture.harPath,
+  });
+  const url = fixture.url;
 
   const tralbum = await openTralbum(page, extensionId, url);
   await expect(tralbum.getAudioElement()).toBeDefined();
@@ -112,7 +120,11 @@ test('can adjust playback rate', async ({ page, extensionId }) => {
 });
 
 test('can toggle master tempo', async ({ page, extensionId }) => {
-  const url = fixtures.album.url;
+  const fixture = fixtures.album;
+  await setupNetwork(page, {
+    harPath: fixture.harPath,
+  });
+  const url = fixture.url;
 
   const tralbum = await openTralbum(page, extensionId, url);
 
@@ -131,11 +143,15 @@ test('can detect bpm and adjust playback rate', async ({
   page,
   extensionId,
 }) => {
-  const url = fixtures.album.url;
+  const fixture = fixtures.album;
+  await setupNetwork(page, {
+    harPath: fixture.harPath,
+  });
+  const url = fixture.url;
 
   const tralbum = await openTralbum(page, extensionId, url);
 
-  await tralbum.detectBpm(getDefaultTrackBpm(fixtures.album));
+  await tralbum.detectBpm(getDefaultTrackBpm(fixture));
 
   await tralbum.setPitchAdjust(1.1);
   await tralbum.waitForPlaybackRate(1.1);
@@ -144,52 +160,56 @@ test('can detect bpm and adjust playback rate', async ({
 });
 
 test('persists BPM across page loads', async ({ page, extensionId }) => {
-  const url = fixtures.album.url;
+  const fixture = fixtures.album;
+  await setupNetwork(page, {
+    harPath: fixture.harPath,
+  });
+  const url = fixture.url;
 
   const tralbum = await openTralbum(page, extensionId, url);
 
-  await tralbum.detectBpm(getDefaultTrackBpm(fixtures.album));
+  await tralbum.detectBpm(getDefaultTrackBpm(fixture));
   await page.reload();
-  await tralbum.expectBpm(getDefaultTrackBpm(fixtures.album));
+  await tralbum.expectBpm(getDefaultTrackBpm(fixture));
 });
 
 test('detecting BPM on an album detects all tracks, and changes when I play another track', async ({
   page,
   extensionId,
 }) => {
-  const url = fixtures.album.url;
+  const fixture = fixtures.album;
+  await setupNetwork(page, {
+    harPath: fixture.harPath,
+  });
+  const url = fixture.url;
 
   const tralbum = await openTralbum(page, extensionId, url);
 
-  await tralbum.detectBpm(getDefaultTrackBpm(fixtures.album));
-  await tralbum.expectTrackBpms(fixtures.album.tracks.map((t) => t.bpm));
+  await tralbum.detectBpm(getDefaultTrackBpm(fixture));
+  await tralbum.expectTrackBpms(fixture.tracks.map((t) => t.bpm));
 
-  await tralbum.clickPlayPauseForTrack(fixtures.album.tracks[0].title);
-  await tralbum.expectBpm(fixtures.album.tracks[0].bpm);
-  await tralbum.expectTrackBpms(fixtures.album.tracks.map((t) => t.bpm));
+  await tralbum.clickPlayPauseForTrack(fixture.tracks[0].title);
+  await tralbum.expectBpm(fixture.tracks[0].bpm);
+  await tralbum.expectTrackBpms(fixture.tracks.map((t) => t.bpm));
 });
 
 test('detecting BPM on an album with exclusive tracks works', async ({
   page,
   extensionId,
 }) => {
-  const url = fixtures.albumWithExclusiveTracks.url;
-  const defaultTrackIndex = fixtures.albumWithExclusiveTracks.defaultTrackIndex;
+  const fixture = fixtures.albumWithExclusiveTracks;
+  await setupNetwork(page, {
+    harPath: fixture.harPath,
+  });
+
+  const url = fixture.url;
 
   const tralbum = await openTralbum(page, extensionId, url);
 
-  await tralbum.detectBpm(
-    getDefaultTrackBpm(fixtures.albumWithExclusiveTracks)
-  );
-  await tralbum.expectTrackBpms(
-    fixtures.albumWithExclusiveTracks.tracks.map((t) => t.bpm)
-  );
+  await tralbum.detectBpm(getDefaultTrackBpm(fixture));
+  await tralbum.expectTrackBpms(fixture.tracks.map((t) => t.bpm));
 
-  await tralbum.clickPlayPauseForTrack(
-    fixtures.albumWithExclusiveTracks.tracks[1].title
-  );
-  await tralbum.expectBpm(fixtures.albumWithExclusiveTracks.tracks[1].bpm);
-  await tralbum.expectTrackBpms(
-    fixtures.albumWithExclusiveTracks.tracks.map((t) => t.bpm)
-  );
+  await tralbum.clickPlayPauseForTrack(fixture.tracks[1].title);
+  await tralbum.expectBpm(fixture.tracks[1].bpm);
+  await tralbum.expectTrackBpms(fixture.tracks.map((t) => t.bpm));
 });
