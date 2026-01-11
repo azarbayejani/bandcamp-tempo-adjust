@@ -19,7 +19,9 @@
     "zip": "pnpm zip:chrome && pnpm zip:firefox",
     "zip:chrome": "pnpm --filter './apps/**' zip",
     "zip:firefox": "pnpm --filter './apps/**' zip -b firefox --mv3",
-    "submit:bandcamp": "pnpm --filter bandcamp-tempo-adjust submit"
+    "submit:bandcamp": "pnpm --filter bandcamp-tempo-adjust submit",
+    "e2e": "pnpm -r e2e",
+    "e2e:ui": "pnpm -r e2e:ui"
   },
   "devDependencies": {
     "@testing-library/dom": "^10.4.0",

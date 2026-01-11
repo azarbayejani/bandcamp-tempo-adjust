@@ -22,7 +22,7 @@
     "zip:firefox": "wxt zip --browser firefox",
     "postinstall": "wxt prepare",
     "e2e": "playwright test",
-    "e2e:watch": "playwright test --ui"
+    "e2e:ui": "playwright test --ui"
   },
   "dependencies": {
     "@tempo-adjust/permissions": "workspace:*",
