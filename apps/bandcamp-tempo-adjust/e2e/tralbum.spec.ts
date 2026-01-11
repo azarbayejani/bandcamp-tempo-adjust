@@ -1,5 +1,17 @@
+import { extension } from 'webextension-polyfill';
 import { test, expect } from './fixtures';
 import { openTralbum } from './pages/tralbum';
+
+interface Track {
+  title: string;
+  bpm: string;
+}
+
+interface Tralbum {
+  url: string;
+  defaultTrackIndex: number;
+  tracks: Track[];
+}
 
 const fixtures = {
   album: {
@@ -28,10 +40,36 @@ const fixtures = {
       },
     ],
   },
+  albumWithExclusiveTracks: {
+    url: 'https://boulderhead.bandcamp.com/album/i-need-space-to-dance',
+    defaultTrackIndex: 0,
+    tracks: [
+      {
+        title: 'I Need Space To Dance',
+        bpm: '138.0',
+      },
+      {
+        title: 'Dance and Dance Again',
+        bpm: '94.0',
+      },
+      {
+        title: 'Direct Source',
+        bpm: '142.0',
+      },
+      {
+        title: 'Saucy Hive Mind',
+        bpm: '140.0',
+      },
+      {
+        title: 'Sense Hyper',
+        bpm: '97.3',
+      },
+    ],
+  },
 };
 
-const getDefaultTrackBpm = () => {
-  return fixtures.album.tracks[fixtures.album.defaultTrackIndex].bpm;
+const getDefaultTrackBpm = (fixture: Tralbum) => {
+  return fixture.tracks[fixture.defaultTrackIndex].bpm;
 };
 
 test('can adjust playback rate', async ({ page, extensionId }) => {
@@ -97,7 +135,7 @@ test('can detect bpm and adjust playback rate', async ({
 
   const tralbum = await openTralbum(page, extensionId, url);
 
-  await tralbum.detectBpm(getDefaultTrackBpm());
+  await tralbum.detectBpm(getDefaultTrackBpm(fixtures.album));
 
   await tralbum.setPitchAdjust(1.1);
   await tralbum.waitForPlaybackRate(1.1);
@@ -110,9 +148,9 @@ test('persists BPM across page loads', async ({ page, extensionId }) => {
 
   const tralbum = await openTralbum(page, extensionId, url);
 
-  await tralbum.detectBpm(getDefaultTrackBpm());
+  await tralbum.detectBpm(getDefaultTrackBpm(fixtures.album));
   await page.reload();
-  await tralbum.expectBpm(getDefaultTrackBpm());
+  await tralbum.expectBpm(getDefaultTrackBpm(fixtures.album));
 });
 
 test('detecting BPM on an album detects all tracks, and changes when I play another track', async ({
@@ -123,10 +161,35 @@ test('detecting BPM on an album detects all tracks, and changes when I play anot
 
   const tralbum = await openTralbum(page, extensionId, url);
 
-  await tralbum.detectBpm(getDefaultTrackBpm());
+  await tralbum.detectBpm(getDefaultTrackBpm(fixtures.album));
   await tralbum.expectTrackBpms(fixtures.album.tracks.map((t) => t.bpm));
 
   await tralbum.clickPlayPauseForTrack(fixtures.album.tracks[0].title);
   await tralbum.expectBpm(fixtures.album.tracks[0].bpm);
   await tralbum.expectTrackBpms(fixtures.album.tracks.map((t) => t.bpm));
+});
+
+test('detecting BPM on an album with exclusive tracks works', async ({
+  page,
+  extensionId,
+}) => {
+  const url = fixtures.albumWithExclusiveTracks.url;
+  const defaultTrackIndex = fixtures.albumWithExclusiveTracks.defaultTrackIndex;
+
+  const tralbum = await openTralbum(page, extensionId, url);
+
+  await tralbum.detectBpm(
+    getDefaultTrackBpm(fixtures.albumWithExclusiveTracks)
+  );
+  await tralbum.expectTrackBpms(
+    fixtures.albumWithExclusiveTracks.tracks.map((t) => t.bpm)
+  );
+
+  await tralbum.clickPlayPauseForTrack(
+    fixtures.albumWithExclusiveTracks.tracks[1].title
+  );
+  await tralbum.expectBpm(fixtures.albumWithExclusiveTracks.tracks[1].bpm);
+  await tralbum.expectTrackBpms(
+    fixtures.albumWithExclusiveTracks.tracks.map((t) => t.bpm)
+  );
 });

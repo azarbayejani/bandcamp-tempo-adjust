@@ -18,6 +18,10 @@ export default function CurrentTrackBpm() {
 
   const trackInfo = trackInfoStore[currTrackUrl];
 
+  if (!trackInfo) {
+    return null;
+  }
+
   return (
     <BpmDetection
       bpm={trackInfo.bpm}

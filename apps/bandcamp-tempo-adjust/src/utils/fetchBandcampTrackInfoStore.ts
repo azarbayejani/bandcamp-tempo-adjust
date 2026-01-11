@@ -3,13 +3,25 @@ import browser from 'webextension-polyfill';
 
 // this is bandcamp's data representation
 export interface BandcampTralbum {
-  trackinfo: {
-    file: {
-      [key: string]: string;
-    };
-    track_num: number;
-    title_link: string;
-  }[];
+  trackinfo: TrackInfo[];
+}
+
+type TrackInfo = PlayableTrackInfo | MaybePlayableTrackInfo;
+
+export interface PlayableTrackInfo {
+  file: {
+    [key: string]: string;
+  };
+  track_num: number;
+  title_link: string;
+}
+
+export interface MaybePlayableTrackInfo {
+  file?: {
+    [key: string]: string;
+  };
+  track_num: number;
+  title_link?: string;
 }
 
 export async function fetchBandcampTrackInfoStore() {
@@ -20,19 +32,16 @@ export async function fetchBandcampTrackInfoStore() {
     ? JSON.parse(tralbumJson)
     : { trackinfo: [] };
 
-  const titleLinks = tralbum.trackinfo.reduce((acc, track) => {
-    if (track.title_link) {
-      acc.push(track);
-    }
-    return acc;
-  }, [] as BandcampTralbum['trackinfo'][0][]);
+  const playableTracks = tralbum.trackinfo.filter(
+    (track): track is PlayableTrackInfo => !!(track.title_link && track.file)
+  );
   const getFromStorage =
     browser.storage?.local.get || (() => Promise.resolve({}));
 
   const storageGet = await getFromStorage(
-    titleLinks.map(({ title_link }) => title_link)
+    playableTracks.map(({ title_link }) => title_link)
   );
-  return titleLinks.reduce((acc, track) => {
+  return playableTracks.reduce((acc, track) => {
     const fullUrl = Object.values(track.file).find((possibleUrl) =>
       /https:\/\/\w+.bcbits.com/g.test(possibleUrl)
     );

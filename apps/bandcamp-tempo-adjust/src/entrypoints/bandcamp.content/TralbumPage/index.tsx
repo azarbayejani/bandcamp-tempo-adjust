@@ -23,6 +23,16 @@ const TralbumPage = () => {
     return null;
   }
 
+  const currTrackUrl = getCurrTrackUrl();
+
+  if (!currTrackUrl) {
+    return null;
+  }
+
+  if (!trackInfoStore[currTrackUrl]) {
+    return null;
+  }
+
   return (
     <BpmProvider initialTrackInfoStore={trackInfoStore}>
       <AlbumTrackBpms />
