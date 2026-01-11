@@ -38,3 +38,6 @@ node_modules
 
 # secrets
 secrets.*.js
+
+playwright-report
+test-results

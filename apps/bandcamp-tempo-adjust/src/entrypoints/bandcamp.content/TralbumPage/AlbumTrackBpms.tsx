@@ -38,7 +38,11 @@ function AlbumTrackBpm({
     return null;
   }
 
-  return <>{`(${toOneDecimal(bpm)} BPM)`}</>;
+  return (
+    <span data-testid={`bpm-${trackNumber}`}>{`(${toOneDecimal(
+      bpm
+    )} BPM)`}</span>
+  );
 }
 
 export default function AlbumTrackBpms() {

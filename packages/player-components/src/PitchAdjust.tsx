@@ -79,6 +79,7 @@ const PitchAdjust = ({
           step={0.001}
           value={playbackRate}
           className={css.slider}
+          aria-label="Pitch adjust"
           aria-valuetext={`${percentageAsString}%`}
         />
         <div>

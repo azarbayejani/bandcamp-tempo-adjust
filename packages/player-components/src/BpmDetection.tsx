@@ -68,7 +68,7 @@ const BpmDetection: React.FC<{
   }
 
   const bpmOrDefault = loading ? (
-    <Spinner />
+    <Spinner aria-label="Detecting BPM" />
   ) : (
     (bpm && toOneDecimal(bpm * playbackRate)) || '--'
   );
