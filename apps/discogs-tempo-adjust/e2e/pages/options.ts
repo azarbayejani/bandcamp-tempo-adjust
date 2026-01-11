@@ -6,7 +6,8 @@ export async function openOptions(page: Page, extensionId: string) {
   await page.getByRole('button', { name: 'Donate' });
 
   return {
-    getDonateButton: () => page.getByRole('button', { name: 'Donate' }),
+    getDonateButton: () =>
+      page.getByRole('button', { name: 'buy me a coffee' }),
     getReportABugLink: () => page.getByRole('button', { name: 'report a bug' }),
   };
 }
