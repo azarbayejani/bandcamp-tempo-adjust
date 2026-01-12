@@ -66,6 +66,6 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:
-          name: playwright-report
+          name: ${{ matrix.app }}-playwright-report
           path: apps/${{ matrix.app }}/playwright-report/
-          retention-days: 30
+          retention-days: 10
