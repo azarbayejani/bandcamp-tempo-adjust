@@ -35,13 +35,20 @@ jobs:
         run: pnpm check
       - name: Run tests
         run: pnpm test
-  e2e:
+  e2e-bandcamp:
     runs-on: ubuntu-latest
 
     # This workflow uses actions that are not certified by GitHub.
     # They are provided by a third-party and are governed by
     # separate terms of service, privacy policy, and support
     # documentation.
+
+    trategy:
+      fail-fast: false
+      matrix:
+        app:
+          - discogs-tempo-adjust
+          - bandcamp-tempo-adjust
 
     # NOTE: pnpm caching support requires pnpm version >= 6.10.0
     steps:
@@ -57,18 +64,12 @@ jobs:
       - name: Install dependencies
         run: pnpm install
       - name: Install Playwright Browsers
-        run: npx playwright install --with-deps
+        run: pnpm --filter ${{ matrix.app }} exec playwright install --with-deps
       - name: Run Playwright tests
-        run: pnpm e2e
+        run: pnpm --filter ${{ matrix.app }} e2e
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:
-          name: playwright-report-discogs-tempo-adjust
-          path: apps/discogs-tempo-adjust/playwright-report/
-          retention-days: 30
-      - uses: actions/upload-artifact@v4
-        if: ${{ !cancelled() }}
-        with:
-          name: playwright-report-bandcamp-tempo-adjust
-          path: apps/bandcamp-tempo-adjust/playwright-report-debug/
+          name: playwright-report
+          path: apps/${{ matrix.app }}/playwright-report/
           retention-days: 30
