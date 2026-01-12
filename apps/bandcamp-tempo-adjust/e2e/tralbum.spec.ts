@@ -17,7 +17,7 @@ interface Tralbum {
 
 const fixtures: Record<string, Tralbum> = {
   album: {
-    harPath: 'e2e/fixtures/album.har',
+    harPath: 'e2e/har/album.har',
     url: 'https://illegalafterstracks.bandcamp.com/album/illegal-afters-04',
     defaultTrackIndex: 4,
     tracks: [
@@ -44,7 +44,7 @@ const fixtures: Record<string, Tralbum> = {
     ],
   },
   albumWithExclusiveTracks: {
-    harPath: 'e2e/fixtures/album-with-exclusive-tracks.har',
+    harPath: 'e2e/har/album-with-exclusive-tracks.har',
     url: 'https://boulderhead.bandcamp.com/album/i-need-space-to-dance',
     defaultTrackIndex: 0,
     tracks: [

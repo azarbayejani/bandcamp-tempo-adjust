@@ -4,7 +4,7 @@ import { openRelease } from './pages/release';
 
 const fixtures = {
   release: {
-    harFile: 'e2e/fixtures/release.har',
+    harFile: 'e2e/har/release.har',
     url: 'https://www.discogs.com/release/15571627-Sketch-Artist-illegal-afters-01',
   },
 };
