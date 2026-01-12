@@ -1,0 +1,1 @@
+self.onmessage=function(e){var t=function n(e){var t=!1,n=new XMLHttpRequest;n.open("GET",e,!1);try{n.send(null),200===n.status&&(t=!0)}catch(e){}return t}(e.data.url);(e.data.returnFalseToo||t)&&self.postMessage({url:e.data.url,probeReturn:t})}

@@ -1,0 +1,1 @@
+{"r":{"rid":true},"m":{"dcc":16589,"src":"SYNCJS","ch":{"brands":[{"brand":"Chromium","version":"143"},{"brand":"Not A(Brand","version":"24"}],"fullVersionList":[{"brand":"Chromium","version":"143.0.7499.4"},{"brand":"Not A(Brand","version":"24.0.0.0"}],"mobile":false,"model":"","platform":"Windows","platformVersion":"10.0"}},"d":{},"c":[]}

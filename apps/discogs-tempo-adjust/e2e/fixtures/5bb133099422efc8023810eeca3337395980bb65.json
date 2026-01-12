@@ -1,0 +1,1 @@
+{"fetchCall":{"url":"https://id5-sync.com/g/v2/483.json","overrides":{"pbExtensions":{"bounce":{"setCookie":true}}}},"extensionsCall":{"url":"https://lb.eu-1-id5-sync.com/lb/v1","method":"GET"}}

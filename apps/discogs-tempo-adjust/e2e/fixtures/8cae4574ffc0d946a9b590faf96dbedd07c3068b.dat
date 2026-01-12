@@ -1,0 +1,8 @@
+
+
+try{__tagObject_callback_1768187428773537({ImpressionID:"b89dc0b4df6d4585b13054d789ad0624", ServerPublicDns:"rtbc-uw1.doubleverify.com"});}catch(e){}
+try{$dvbs.pubSub.publish("BeforeDecisionRender","b89dc0b4df6d4585b13054d789ad0624");}catch(e){}
+try{__verify_callback_1768187428773537({
+ResultID:2,
+Passback:""});}catch(e){}
+try{$dvbs.pubSub.publish("AfterDecisionRender","b89dc0b4df6d4585b13054d789ad0624");}catch(e){}

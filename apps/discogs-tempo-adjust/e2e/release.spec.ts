@@ -1,19 +1,36 @@
 import { test, expect } from './fixtures';
+import { setupNetwork } from './helpers/setupNetwork';
 import { openRelease } from './pages/release';
 
 const fixtures = {
   release: {
+    harFile: 'e2e/fixtures/release.har',
     url: 'https://www.discogs.com/release/15571627-Sketch-Artist-illegal-afters-01',
   },
 };
 
 test('can adjust playback rate', async ({ page, extensionId }) => {
+  await setupNetwork(page, {
+    harPath: fixtures.release.harFile,
+  });
+
   const url = fixtures.release.url;
 
   const release = await openRelease(page, extensionId, url);
 
   await release.clickYoutubePlayButton();
   await expect(release.getYoutubePlayButton()).not.toBeVisible();
+  if (page.frames().length > 0) {
+    await Promise.all(
+      page
+        .frames()
+        .map(
+          (frame) =>
+            frame.url().startsWith('https://www.youtube.com') &&
+            frame.waitForLoadState('networkidle')
+        )
+    );
+  }
 
   await release.setPitchAdjust(1.1);
   await release.waitForPlaybackRate(1.1);

@@ -1,0 +1,246 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+
+<head>
+  <script type="application/javascript">
+    window.__bt_edge_data = {
+      authorizationError: "Trusted IFrame is not authorized for orgId: 5150306120761344 and domain: https:&#x2F;&#x2F;www.discogs.com&#x2F;",
+      websiteID: Number(),
+      orgID: Number(5150306120761344),      
+      parentOrigin: "https://www.discogs.com"
+    };
+    const a = "sendExtCommand", f = () => new Promise((e, t) => {
+  const r = Date.now(), n = () => {
+    typeof window[a] == "function" ? e(!0) : Date.now() - r >= 3e4 ? t(
+      new d(
+        `Function ${a} not found on window within 30000ms`
+      )
+    ) : setTimeout(n, 50);
+  };
+  n();
+});
+class d extends Error {
+  constructor(t) {
+    super(t), this.name = "command_not_available_error";
+  }
+}
+const g = ["data-adblockplus", "data-adblock"];
+function m() {
+  return g.filter((e) => document.querySelector(`[${e}="true"]`));
+}
+function h(e) {
+  return Array.isArray(e) ? e.every(
+    (t) => y(t) || c(t)
+  ) : !1;
+}
+function y(e) {
+  const t = e;
+  return !!(typeof t.requestId == "string" && typeof t.name == "string" && (!t.version || typeof t.version == "string") && I(
+    e.result
+  ));
+}
+function I(e) {
+  return !!(e && typeof e == "object") && typeof e.aa == "boolean" && _(e.allowlist) && typeof e.allowlist.status == "boolean";
+}
+function _(e) {
+  return !!(e && typeof e == "object") && typeof e.status == "boolean";
+}
+function E(e) {
+  return Array.isArray(e) ? e.every(
+    (t) => w(t) || c(t)
+  ) : !1;
+}
+function w(e) {
+  const t = e;
+  return typeof t.requestId == "string" && typeof t.name == "string" && (!t.version || typeof t.version == "string") && typeof t.result == "object";
+}
+function c(e) {
+  const t = e;
+  return !!(t && typeof t.error == "string" && typeof t.name == "string" && typeof t.requestId == "string");
+}
+function A(e) {
+  return e.map((t) => {
+    const r = {};
+    return t?.result && typeof t.result == "object" && Object.entries(t.result).filter(([, n]) => typeof n == "boolean").forEach(([n, s]) => {
+      r[n] = s;
+    }), {
+      ...t,
+      result: r
+    };
+  });
+}
+class R {
+  /*
+   * @param logApiURL - The URL to log events to
+   * @param prefix - Prefix for log messages (not used in this implementation)
+   * @param level - The log level
+   * @param sampleRate - The sample rate to log events
+   * @returns Logger - Logger instance
+   */
+  constructor(t, r, n, s) {
+    this.prefix = r, this.level = n, this.sampleRate = s, this.logApiURL = `${t}/log`, this.prefix = r, this.level = n, this.sampleRate = s;
+  }
+  logApiURL;
+  shouldLog(t) {
+    return this.level === "ERROR" && t === "INFO" ? !1 : Math.random() < this.sampleRate;
+  }
+  /*
+   * Private method to log events to the API
+   * @param {Object} ctx - Log context
+   * @param {Object} body - Event body
+   * @returns {Promise<Response>} - Empty response
+   */
+  async log(t, r) {
+    return await fetch(`${this.logApiURL}?upapi=true`, {
+      method: "POST",
+      body: JSON.stringify({
+        orgID: t.orgID,
+        ...r
+      }),
+      headers: t.headers
+    });
+  }
+  /*
+   * Log an error event
+   * @param {LogContext} ctx - Log context
+   * @param {string} message - Error message
+   * @param {Error} error - Error object
+   * @param {object} meta - Additional metadata
+   */
+  error = async (t, r, n, s = {}) => {
+    if (this.shouldLog("ERROR"))
+      return await this.log(t, {
+        severity: 4,
+        event: `${this.prefix}.error`,
+        message: r,
+        error: {
+          name: n.message,
+          stack: n.stack
+        },
+        meta: s
+      });
+  };
+  /*
+   * Log an info event
+   * @param {LogContext} ctx - Log context
+   * @param {string} message - Info message
+   * @param {object} meta - Additional metadata
+   */
+  info = async (t, r, n = {}) => {
+    if (this.shouldLog("INFO"))
+      return await this.log(t, {
+        severity: 1,
+        event: `${this.prefix}.info`,
+        message: r,
+        meta: n
+      });
+  };
+}
+const { authorizationError: S, websiteID: b, orgID: x } = window.__bt_edge_data, T = new R(
+  "https://api.btloader.com",
+  "frontend.trusted_iframe_script",
+  "ERROR",
+  +"0.01"
+), u = (e, t) => T.info(
+  {
+    orgID: String(x)
+  },
+  e,
+  {
+    websiteID: b,
+    authorizationError: S,
+    ...t
+  }
+), i = window.__bt_edge_data?.parentOrigin || "*", o = (e) => {
+  e instanceof Error ? (window.parent.postMessage(
+    {
+      name: e.name,
+      type: "error",
+      message: e.message
+    },
+    i
+  ), u(`trustedIframe.posted_message.err.${e.name}`, {
+    message: e,
+    origin: i
+  })) : (window.parent.postMessage(e, i), u("trustedIframe.posted_message.success", { message: e, origin: i }));
+}, p = 3e4, M = async () => {
+  o({
+    type: "loaded"
+  });
+  let e = [];
+  try {
+    if (O(), e = m(), o({
+      response: {
+        attributes: e
+      },
+      type: "html_signal_attributes"
+    }), e.length === 0)
+      return;
+    await f();
+  } catch (t) {
+    o(t);
+    return;
+  }
+  v(), L();
+};
+function O() {
+  const e = window.__bt_edge_data?.authorizationError || "";
+  if (e)
+    throw new N(e);
+}
+async function v() {
+  const e = {
+    method: "getStatus",
+    timeoutMs: p
+  }, t = await window?.sendExtCommand(e);
+  try {
+    if (!h(t))
+      throw new l(
+        `Invalid response for getStatus ${JSON.stringify(t)}`
+      );
+    o({
+      request: e,
+      response: t,
+      type: "get_status_api_response"
+    });
+  } catch (r) {
+    o(r);
+    return;
+  }
+}
+async function L() {
+  try {
+    const e = {
+      method: "getExperimentFlags",
+      timeoutMs: p
+    }, t = await window?.sendExtCommand(e);
+    if (!E(t))
+      throw new l(
+        `Invalid response for getExperimentFlags ${JSON.stringify(t)}`
+      );
+    o({
+      request: e,
+      response: A(t),
+      type: "get_experiment_flags_api_response"
+    });
+  } catch (e) {
+    o(e);
+    return;
+  }
+}
+class l extends Error {
+  name = "invalid_response_error";
+}
+class N extends Error {
+  name = "authorization_error";
+}
+document.addEventListener("DOMContentLoaded", () => {
+  M();
+});
+
+  </script>
+</head>
+
+<body></body>
+
+</html>
