@@ -1,0 +1,74 @@
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
+
+name: CI
+
+on:
+  push:
+    branches: ['main']
+  pull_request:
+    branches: ['main']
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    # This workflow uses actions that are not certified by GitHub.
+    # They are provided by a third-party and are governed by
+    # separate terms of service, privacy policy, and support
+    # documentation.
+
+    # NOTE: pnpm caching support requires pnpm version >= 6.10.0
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+      - name: Install node
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          cache: 'pnpm'
+      - name: Install dependencies
+        run: pnpm install
+      - name: Check typescript
+        run: pnpm check
+      - name: Run tests
+        run: pnpm test
+  e2e:
+    runs-on: ubuntu-latest
+
+    # This workflow uses actions that are not certified by GitHub.
+    # They are provided by a third-party and are governed by
+    # separate terms of service, privacy policy, and support
+    # documentation.
+
+    # NOTE: pnpm caching support requires pnpm version >= 6.10.0
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+      - name: Install node
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          cache: 'pnpm'
+      - name: Install dependencies
+        run: pnpm install
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+      - name: Run Playwright tests
+        run: pnpm e2e
+      - uses: actions/upload-artifact@v4
+      if: ${{ !cancelled() }}
+        with:
+          name: playwright-report-discogs-tempo-adjust
+          path: apps/discogs-tempo-adjust/playwright-report/
+          retention-days: 30
+      - uses: actions/upload-artifact@v4
+      if: ${{ !cancelled() }}
+        with:
+          name: playwright-report-bandcamp-tempo-adjust
+          path: apps/bandcamp-tempo-adjust/playwright-report-debug/
+          retention-days: 30
