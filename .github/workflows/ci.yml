@@ -61,13 +61,13 @@ jobs:
       - name: Run Playwright tests
         run: pnpm e2e
       - uses: actions/upload-artifact@v4
-      if: ${{ !cancelled() }}
+        if: ${{ !cancelled() }}
         with:
           name: playwright-report-discogs-tempo-adjust
           path: apps/discogs-tempo-adjust/playwright-report/
           retention-days: 30
       - uses: actions/upload-artifact@v4
-      if: ${{ !cancelled() }}
+        if: ${{ !cancelled() }}
         with:
           name: playwright-report-bandcamp-tempo-adjust
           path: apps/bandcamp-tempo-adjust/playwright-report-debug/
