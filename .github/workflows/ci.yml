@@ -60,7 +60,7 @@ jobs:
       - name: Build
         run: pnpm --filter ${{ matrix.app }} build
       - name: Install Playwright Browsers
-        run: pnpm --filter ${{ matrix.app }} exec playwright install --with-deps
+        run: pnpm --filter ${{ matrix.app }} exec playwright install --with-deps chromium
       - name: Run Playwright tests
         run: pnpm --filter ${{ matrix.app }} e2e
       - uses: actions/upload-artifact@v4
