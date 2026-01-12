@@ -10,7 +10,7 @@ on:
     branches: ['main']
 
 jobs:
-  build:
+  checks:
     runs-on: ubuntu-latest
 
     # This workflow uses actions that are not certified by GitHub.
@@ -35,14 +35,9 @@ jobs:
         run: pnpm check
       - name: Run tests
         run: pnpm test
-  e2e-bandcamp:
+  e2e:
     runs-on: ubuntu-latest
-
-    # This workflow uses actions that are not certified by GitHub.
-    # They are provided by a third-party and are governed by
-    # separate terms of service, privacy policy, and support
-    # documentation.
-
+    needs: [checks, build]
     strategy:
       fail-fast: false
       matrix:
@@ -50,7 +45,6 @@ jobs:
           - discogs-tempo-adjust
           - bandcamp-tempo-adjust
 
-    # NOTE: pnpm caching support requires pnpm version >= 6.10.0
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -63,6 +57,8 @@ jobs:
           cache: 'pnpm'
       - name: Install dependencies
         run: pnpm install
+      - name: Build
+        run: pnpm --filter ${{ matrix.app }} build
       - name: Install Playwright Browsers
         run: pnpm --filter ${{ matrix.app }} exec playwright install --with-deps
       - name: Run Playwright tests
