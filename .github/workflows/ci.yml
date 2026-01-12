@@ -43,7 +43,7 @@ jobs:
     # separate terms of service, privacy policy, and support
     # documentation.
 
-    trategy:
+    strategy:
       fail-fast: false
       matrix:
         app:
