@@ -296,6 +296,9 @@ importers:
       '@tempo-adjust/wxt-hooks':
         specifier: workspace:*
         version: link:../../packages/wxt-hooks
+      '@types/har-format':
+        specifier: ^1.2.16
+        version: 1.2.16
       playwright:
         specifier: ^1.57.0
         version: 1.57.0

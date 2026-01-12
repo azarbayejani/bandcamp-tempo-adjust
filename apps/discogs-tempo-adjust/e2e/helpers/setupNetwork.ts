@@ -2,6 +2,7 @@ import fs from 'node:fs/promises';
 import path from 'path';
 import type { BrowserContext, Page } from '@playwright/test';
 import { setupYoutubeMock } from './setupYoutubeMock';
+import { Har } from 'har-format';
 
 type SetupNetworkOptions = {
   harPath?: string;
@@ -50,7 +51,7 @@ export async function setupNetwork(
       console.warn(`⚠️  Recording HAR → ${resolvedPath}`);
     }
 
-    const harContent = JSON.parse(await fs.readFile(harPath, 'utf-8'));
+    const harContent = JSON.parse(await fs.readFile(harPath, 'utf-8')) as Har;
 
     // Remove YouTube embed entries
     harContent.log.entries = harContent.log.entries.filter((entry) => {
