@@ -113,8 +113,10 @@ function BpmProvider({ children, initialTrackInfoStore }: BpmProviderProps) {
     );
 
     Object.values(trackInfoState.trackInfoStore).forEach((track) => {
-      const onError = () =>
+      const onError = (reason: string) => {
         dispatch({ type: 'BPM_LOAD_ERROR', url: track.url });
+        console.error('Error loading bpm', track.url, reason);
+      };
       if (!track.bpm) {
         analyzeAudio(track.audioPath)
           .then((resolvedBpm) => {
@@ -131,7 +133,10 @@ function BpmProvider({ children, initialTrackInfoStore }: BpmProviderProps) {
 
   const loadBpm = (url: string) => {
     dispatch({ type: 'BPM_LOAD_START', url });
-    const onError = () => dispatch({ type: 'BPM_LOAD_ERROR', url: url });
+    const onError = (reason: string) => {
+      dispatch({ type: 'BPM_LOAD_ERROR', url: url });
+      console.error('Error loading bpm', url, reason);
+    };
     analyzeAudio(trackInfoState.trackInfoStore[url].audioPath)
       .then((resolvedBpm) => {
         dispatch({
