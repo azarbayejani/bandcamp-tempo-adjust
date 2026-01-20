@@ -1,47 +1,51 @@
 .button {
-    background: none;
-    color: inherit;
-    border: none;
-    padding: 0;
-    font: inherit;
-    cursor: pointer;
-    outline: inherit;
-    margin: 0;
-    padding: 0.5rem;
-    border: 1px solid rgba(0, 0, 0, 0.3);
-    font-size: 12px;
-    padding: 4px;
-    flex-grow: 1;
-    flex-basis: 0;
-    text-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+  margin: 0;
+  padding: 0.5rem;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  font-size: 12px;
+  padding: 4px;
+  flex-grow: 1;
+  flex-basis: 0;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  text-decoration: none;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.2);
+    text-decoration: none;
+  }
+
+  &:disabled {
+    opacity: 0.3;
+  }
+
+  &.dark {
+    border: 1px solid rgba(255, 255, 255, 0.3);
 
     &:hover {
-      background: rgba(0, 0, 0, 0.2);
-      text-decoration: none;
-    }
-
-    &:disabled {
-      opacity: 0.3;
-    }
-
-    &.dark {
-      border: 1px solid rgba(255, 255, 255, 0.3);
-
-      &:hover {
-        background: rgba(255, 255, 255, 0.2);
-      }
-    }
-
-    &[aria-checked="true"] {
-      background: rgba(0, 0, 0, 0.3);
-
-      &.dark {
-        background: rgba(255, 255, 255, 0.3);
-      }
+      background: rgba(255, 255, 255, 0.2);
     }
   }
 
+  &[aria-checked='true'] {
+    background: rgba(0, 0, 0, 0.3);
+
+    &.dark {
+      background: rgba(255, 255, 255, 0.3);
+    }
+  }
+
+  &.rounded:not([role='radio']) {
+    border-radius: 3px;
+  }
+}

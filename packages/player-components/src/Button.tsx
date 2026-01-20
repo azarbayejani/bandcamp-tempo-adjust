@@ -2,7 +2,7 @@ import React from 'react';
 
 import classnames from 'classnames';
 
-import { useTheme } from '@tempo-adjust/theme-provider';
+import { useButtonStyle, useTheme } from '@tempo-adjust/theme-provider';
 
 import * as css from './Button.module.scss';
 
@@ -13,10 +13,12 @@ const Button = ({
   ...props
 }: React.ButtonHTMLAttributes<HTMLButtonElement>) => {
   const theme = useTheme();
+  const buttonStyle = useButtonStyle();
   return (
     <button
       className={classnames(css.button, {
         [css.dark]: theme === 'dark',
+        [css.rounded]: buttonStyle === 'rounded',
       })}
       {...props}
     >

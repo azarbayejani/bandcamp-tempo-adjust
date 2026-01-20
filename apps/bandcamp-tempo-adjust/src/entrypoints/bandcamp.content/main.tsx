@@ -9,6 +9,7 @@ import PurchasesPage from './PurchasesPage';
 import ProvidedTralbumPage from './TralbumPage';
 
 import './content.styles.scss';
+import { type BandcampTralbum } from '@/utils/fetchBandcampTrackInfoStore';
 
 const appDiv = document.createElement('div');
 appDiv.id = 'pitchSliderApp';
@@ -22,6 +23,7 @@ const queryClient = new QueryClient({
 const renderTralbumPage = () => {
   const body = document.querySelector('body');
   const player = document.querySelector('.inline_player');
+
   if (player && body) {
     appDiv.style.display = 'block';
     appDiv.style.marginTop = '8px';
@@ -53,7 +55,53 @@ const renderTralbumPage = () => {
       <ThemeProvider
         theme={body.classList.contains('invertIconography') ? 'dark' : 'light'}
       >
-        <ProvidedTralbumPage />
+        <ProvidedTralbumPage
+          getCurrTrackUrl={() =>
+            document.querySelector('.title_link')?.getAttribute('href')?.trim()
+          }
+        />
+      </ThemeProvider>
+    );
+  }
+};
+
+const renderMobileTralbumPage = () => {
+  const body = document.querySelector('body');
+  const player = document.querySelector('#player');
+  if (player && body) {
+    appDiv.style.gridColumn = '1 / -1';
+    if (document.getElementById(appDiv.id)) {
+      document.getElementById(appDiv.id)?.replaceWith(appDiv);
+    } else {
+      player.append(appDiv);
+    }
+    root.render(
+      <ThemeProvider
+        theme={body.classList.contains('invertIconography') ? 'dark' : 'light'}
+        buttonStyle="rounded"
+      >
+        <ProvidedTralbumPage
+          isMobile
+          getCurrTrackUrl={() => {
+            const audioElement = document.querySelector('audio');
+            const tralbumNode =
+              document.querySelector<HTMLElement>('[data-tralbum]');
+            const tralbum: BandcampTralbum = JSON.parse(
+              tralbumNode?.dataset.tralbum || '{}'
+            );
+            if (audioElement && audioElement.getAttribute('src')) {
+              return tralbum.trackinfo.find((track) => {
+                return (
+                  track.file &&
+                  Object.values(track.file).includes(
+                    audioElement.getAttribute('src') || ''
+                  ) &&
+                  track.title_link
+                );
+              })?.title_link;
+            }
+          }}
+        />
       </ThemeProvider>
     );
   }
@@ -142,6 +190,9 @@ const getPage = () => {
   if (document.querySelector('.inline_player')) {
     return 'tralbum';
   }
+  if (document.querySelector('#p-tralbum-page')) {
+    return 'mobile-tralbum';
+  }
   if (document.querySelector('#collection-player')) {
     return 'fan-collection';
   }
@@ -153,6 +204,9 @@ const getPage = () => {
 switch (getPage()) {
   case 'tralbum':
     renderTralbumPage();
+    break;
+  case 'mobile-tralbum':
+    renderMobileTralbumPage();
     break;
   case 'fan-collection':
     renderCollectionPage();

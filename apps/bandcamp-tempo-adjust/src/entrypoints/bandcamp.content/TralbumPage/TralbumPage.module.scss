@@ -1,0 +1,17 @@
+.container {
+  display: flex;
+  margin-top: 4px;
+  gap: 12px;
+
+  &.mobile {
+    flex-direction: column;
+  }
+}
+
+.separator {
+  border-left: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+.pitchAdjustContainer {
+  flex-grow: 1;
+}

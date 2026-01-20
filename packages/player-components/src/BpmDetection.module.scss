@@ -6,6 +6,10 @@
   width: 110px;
   align-items: center;
   justify-content: center;
+
+  &.mobile {
+    width: 100%;
+  }
 }
 
 .bpmDisplayContainer {
@@ -41,8 +45,6 @@
   gap: 8px;
   width: 100%;
 }
-
-
 
 .loading {
   width: 100%;

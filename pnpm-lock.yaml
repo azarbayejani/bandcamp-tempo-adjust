@@ -152,6 +152,9 @@ importers:
       '@wxt-dev/webextension-polyfill':
         specifier: 'catalog:'
         version: 1.0.0(webextension-polyfill@0.10.0)(wxt@0.21.4(eslint@9.39.4(jiti@2.7.0))(rolldown@1.2.6)(typescript@5.9.3)(vite@8.2.2(@types/node@26.4.0)(jiti@2.7.0)(sass@1.103.1)(yaml@2.9.0))(web-ext@10.6.0(jiti@2.7.0)))
+      classnames:
+        specifier: 'catalog:'
+        version: 2.5.1
       immer:
         specifier: ^9.0.21
         version: 9.0.21

@@ -7,11 +7,18 @@ import { BpmProvider } from '../BpmContext';
 import CurrentTrackBpm from './CurrentTrackBpm';
 import { useAudioController } from '../useAudioController';
 import TralbumPagePitchAdjust from './PitchAdjust';
+import useAudio from '../AudioStore';
 
-const getCurrTrackUrl = () =>
-  document.querySelector('.title_link')?.getAttribute('href')?.trim();
+import * as styles from './TralbumPage.module.scss';
+import classNames from 'classnames';
 
-const TralbumPage = () => {
+const TralbumPage = ({
+  getCurrTrackUrl,
+  isMobile,
+}: {
+  getCurrTrackUrl: () => string | undefined;
+  isMobile?: boolean;
+}) => {
   const [trackInfoStore, setTrackInfoStore] = useState<TrackInfoByUrl>();
 
   useAudioController({ selector: 'audio', getCurrTrackUrl });
@@ -20,11 +27,11 @@ const TralbumPage = () => {
     fetchBandcampTrackInfoStore().then((store) => setTrackInfoStore(store));
   }, []);
 
+  const currTrackUrl = useAudio(({ currTrackUrl }) => currTrackUrl);
+
   if (!trackInfoStore) {
     return null;
   }
-
-  const currTrackUrl = getCurrTrackUrl();
 
   if (!currTrackUrl) {
     return null;
@@ -37,10 +44,12 @@ const TralbumPage = () => {
   return (
     <BpmProvider initialTrackInfoStore={trackInfoStore}>
       <AlbumTrackBpms />
-      <div style={{ marginTop: 4, display: 'flex', gap: 12 }}>
+      <div
+        className={classNames(styles.container, { [styles.mobile]: isMobile })}
+      >
         <CurrentTrackBpm />
-        <div style={{ borderLeft: '1px solid rgba(0, 0, 0, 0.15)' }}></div>
-        <div style={{ flexGrow: 1 }}>
+        <div className={styles.separator}></div>
+        <div className={styles.pitchAdjustContainer}>
           <TralbumPagePitchAdjust />
         </div>
       </div>
