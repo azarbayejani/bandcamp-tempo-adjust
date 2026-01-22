@@ -1,5 +1,6 @@
 import produce from 'immer';
 import React, { createContext, useReducer } from 'react';
+import browser from 'webextension-polyfill';
 import { analyzeAudio } from '../../utils/analyzeAudio';
 import { TrackInfoByUrl as TrackInfoStore } from '~/types';
 import { hasAllPermissions } from '../../utils/hasAllPermissions';
