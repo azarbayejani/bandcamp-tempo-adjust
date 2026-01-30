@@ -35,12 +35,13 @@ export async function fetchBandcampTrackInfoStore() {
   const playableTracks = tralbum.trackinfo.filter(
     (track): track is PlayableTrackInfo => !!(track.title_link && track.file)
   );
-  const getFromStorage =
-    browser.storage?.local.get || (() => Promise.resolve({}));
+  const getFromStorage = browser.storage?.local?.get
+    ? (keys: string[]) => browser.storage.local.get(keys)
+    : (() => Promise.resolve({} as Record<string, { bpm?: number }>));
 
-  const storageGet = await getFromStorage(
+  const storageGet = (await getFromStorage(
     playableTracks.map(({ title_link }) => title_link)
-  );
+  )) as Record<string, { bpm?: number }>;
   return playableTracks.reduce((acc, track) => {
     const fullUrl = Object.values(track.file).find((possibleUrl) =>
       /https:\/\/\w+.bcbits.com/g.test(possibleUrl)
