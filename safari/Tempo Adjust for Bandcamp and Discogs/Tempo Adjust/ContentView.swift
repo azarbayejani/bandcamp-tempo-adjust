@@ -84,10 +84,17 @@ struct ContentView: View {
 
             HStack(spacing: 4) {
                 Text("Still need help?")
+                    .foregroundStyle(.secondary)
                 Link("Contact support", destination: URL(string: "mailto:dev@miseryconfusion.com")!)
+                    .onHover { hovering in
+                        if hovering {
+                            NSCursor.pointingHand.push()
+                        } else {
+                            NSCursor.pop()
+                        }
+                    }
             }
             .font(.callout)
-            .foregroundStyle(.secondary)
         }
         .padding(.horizontal, 30)
         .padding(.vertical, 20)
