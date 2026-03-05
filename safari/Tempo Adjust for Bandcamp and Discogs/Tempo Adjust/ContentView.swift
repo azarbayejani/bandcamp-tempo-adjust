@@ -54,18 +54,11 @@ struct ContentView: View {
                     VStack(alignment: .leading, spacing: 6) {
                         Text("Click ") + Text("Allow").bold() + Text(" in the Tempo Adjust settings to enable Tempo Adjust on Bandcamp and Discogs.")
 
-                        Text("If you do not see the Tempo Adjust settings page, you can ")
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
-                        + Text("re-open the Tempo Adjust settings page")
-                            .font(.caption)
-                            .foregroundStyle(.link)
-                            .bold()
-                            .underline()
-
-                    }
-                    .onTapGesture {
-                        openExtensionSettings()
+                        HStack(spacing: 0) {
+                            Text("If you do not see the Tempo Adjust settings page, try clicking on the Tempo Adjust icon in your Safari toolbar.")
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                        }
                     }
                 }
 
