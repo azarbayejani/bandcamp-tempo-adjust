@@ -94,11 +94,19 @@ class ViewController: NSViewController, WKNavigationDelegate, WKScriptMessageHan
 
         switch action {
             case "open-extension-settings":
-                debugPrint("Opening extension settings.")
-                SFSafariApplication.dispatchMessage(withName: "openOptions", toExtensionWithIdentifier: extensionBundleIdentifier) { error in
-                    debugPrint("Message attempted. Error info: \(String.init(describing: error))")
-                    
-                    self.activateSafari();
+                let defaults = UserDefaults(suiteName: "group.com.miseryconfusion.tempoadjust")
+                if let optionsUrl = defaults?.string(forKey: "optionsUrl"),
+                   let url = URL(string: optionsUrl) {
+                    debugPrint("Opening options URL directly: \(optionsUrl)")
+                    NSWorkspace.shared.open(url)
+                    self.activateSafari()
+                } else {
+                    // Fallback: URL not yet stored (extension hasn't connected), use dispatchMessage
+                    debugPrint("Options URL not available, falling back to dispatchMessage.")
+                    SFSafariApplication.dispatchMessage(withName: "openOptions", toExtensionWithIdentifier: extensionBundleIdentifier) { error in
+                        debugPrint("Message attempted. Error info: \(String.init(describing: error))")
+                        self.activateSafari()
+                    }
                 }
             case "open-safari-preferences":
                 SFSafariApplication.showPreferencesForExtension(withIdentifier: extensionBundleIdentifier) { error in

@@ -49,6 +49,13 @@ export default defineBackground({
       // store the port so that it isn't garbage collected
       ports['nativePort'] = nativePort;
 
+      // Send the options page URL to the native app so it can open it directly
+      // without relying on native messaging (which requires the service worker to be alive)
+      nativePort.postMessage({
+        name: 'extensionInfo',
+        optionsUrl: browser.runtime.getURL('options.html'),
+      });
+
       nativePort.onMessage.addListener((message: { name: string }) => {
         if (message.name === 'openOptions') {
           browser.tabs.create({ url: optionsPageUrl.toString() });
