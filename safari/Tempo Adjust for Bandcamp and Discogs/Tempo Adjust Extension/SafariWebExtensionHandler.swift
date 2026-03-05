@@ -29,15 +29,6 @@ class SafariWebExtensionHandler: NSObject, NSExtensionRequestHandling {
 
         os_log(.default, "Received message from browser.runtime.sendNativeMessage: %@ (profile: %@)", String(describing: message), profile?.uuidString ?? "none")
 
-        if let msgDict = message as? [String: Any],
-           let name = msgDict["name"] as? String,
-           name == "extensionInfo",
-           let optionsUrl = msgDict["optionsUrl"] as? String {
-            let defaults = UserDefaults(suiteName: "group.com.miseryconfusion.tempoadjust")
-            defaults?.set(optionsUrl, forKey: "optionsUrl")
-            os_log(.default, "Stored options URL: %@", optionsUrl)
-        }
-
         let response = NSExtensionItem()
         if #available(iOS 15.0, macOS 11.0, *) {
             response.userInfo = [ SFExtensionMessageKey: [ "echo": message ] ]
