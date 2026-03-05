@@ -7,13 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		AB68998C2DDD7BC900C9A704 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB68998B2DDD7BC900C9A704 /* AppDelegate.swift */; };
-		AB6899902DDD7BC900C9A704 /* Main.html in Resources */ = {isa = PBXBuildFile; fileRef = AB68998E2DDD7BC900C9A704 /* Main.html */; };
+		AB61A2852F5962020093D0C2 /* TempoAdjustApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB61A2842F5962020093D0C2 /* TempoAdjustApp.swift */; };
+		AB61A2872F59621C0093D0C2 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB61A2862F59621C0093D0C2 /* ContentView.swift */; };
 		AB6899922DDD7BC900C9A704 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = AB6899912DDD7BC900C9A704 /* Icon.png */; };
-		AB6899942DDD7BC900C9A704 /* Style.css in Resources */ = {isa = PBXBuildFile; fileRef = AB6899932DDD7BC900C9A704 /* Style.css */; };
-		AB6899962DDD7BC900C9A704 /* Script.js in Resources */ = {isa = PBXBuildFile; fileRef = AB6899952DDD7BC900C9A704 /* Script.js */; };
-		AB6899982DDD7BC900C9A704 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6899972DDD7BC900C9A704 /* ViewController.swift */; };
-		AB68999B2DDD7BC900C9A704 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB6899992DDD7BC900C9A704 /* Main.storyboard */; };
 		AB68999D2DDD7BCB00C9A704 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AB68999C2DDD7BCB00C9A704 /* Assets.xcassets */; };
 		AB6899AA2DDD7BCB00C9A704 /* Tempo_Adjust_for_Bandcamp_and_DiscogsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6899A92DDD7BCB00C9A704 /* Tempo_Adjust_for_Bandcamp_and_DiscogsTests.swift */; };
 		AB6899B42DDD7BCB00C9A704 /* Tempo_Adjust_for_Bandcamp_and_DiscogsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6899B32DDD7BCB00C9A704 /* Tempo_Adjust_for_Bandcamp_and_DiscogsUITests.swift */; };
@@ -71,14 +67,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		AB61A2842F5962020093D0C2 /* TempoAdjustApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempoAdjustApp.swift; sourceTree = "<group>"; };
+		AB61A2862F59621C0093D0C2 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		AB6899882DDD7BC900C9A704 /* Tempo Adjust.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Tempo Adjust.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		AB68998B2DDD7BC900C9A704 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		AB68998F2DDD7BC900C9A704 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = Base; path = Base.lproj/Main.html; sourceTree = "<group>"; };
 		AB6899912DDD7BC900C9A704 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
-		AB6899932DDD7BC900C9A704 /* Style.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = Style.css; sourceTree = "<group>"; };
-		AB6899952DDD7BC900C9A704 /* Script.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = Script.js; sourceTree = "<group>"; };
-		AB6899972DDD7BC900C9A704 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		AB68999A2DDD7BC900C9A704 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		AB68999C2DDD7BCB00C9A704 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AB68999E2DDD7BCB00C9A704 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AB68999F2DDD7BCB00C9A704 /* Tempo_Adjust.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Tempo_Adjust.entitlements; sourceTree = "<group>"; };
@@ -161,14 +153,13 @@
 		AB68998A2DDD7BC900C9A704 /* Tempo Adjust */ = {
 			isa = PBXGroup;
 			children = (
-				AB68998B2DDD7BC900C9A704 /* AppDelegate.swift */,
-				AB6899972DDD7BC900C9A704 /* ViewController.swift */,
-				AB6899992DDD7BC900C9A704 /* Main.storyboard */,
 				AB68999C2DDD7BCB00C9A704 /* Assets.xcassets */,
 				AB68999E2DDD7BCB00C9A704 /* Info.plist */,
 				AB68999F2DDD7BCB00C9A704 /* Tempo_Adjust.entitlements */,
 				AB6899A02DDD7BCB00C9A704 /* Tempo Adjust.entitlements */,
 				AB68998D2DDD7BC900C9A704 /* Resources */,
+				AB61A2842F5962020093D0C2 /* TempoAdjustApp.swift */,
+				AB61A2862F59621C0093D0C2 /* ContentView.swift */,
 			);
 			path = "Tempo Adjust";
 			sourceTree = "<group>";
@@ -176,10 +167,7 @@
 		AB68998D2DDD7BC900C9A704 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				AB68998E2DDD7BC900C9A704 /* Main.html */,
 				AB6899912DDD7BC900C9A704 /* Icon.png */,
-				AB6899932DDD7BC900C9A704 /* Style.css */,
-				AB6899952DDD7BC900C9A704 /* Script.js */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -368,11 +356,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AB6899922DDD7BC900C9A704 /* Icon.png in Resources */,
-				AB68999B2DDD7BC900C9A704 /* Main.storyboard in Resources */,
-				AB6899962DDD7BC900C9A704 /* Script.js in Resources */,
-				AB6899902DDD7BC900C9A704 /* Main.html in Resources */,
 				AB68999D2DDD7BCB00C9A704 /* Assets.xcassets in Resources */,
-				AB6899942DDD7BC900C9A704 /* Style.css in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -414,8 +398,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AB6899982DDD7BC900C9A704 /* ViewController.swift in Sources */,
-				AB68998C2DDD7BC900C9A704 /* AppDelegate.swift in Sources */,
+				AB61A2852F5962020093D0C2 /* TempoAdjustApp.swift in Sources */,
+				AB61A2872F59621C0093D0C2 /* ContentView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -463,25 +447,6 @@
 			targetProxy = AB6899BD2DDD7BCB00C9A704 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		AB68998E2DDD7BC900C9A704 /* Main.html */ = {
-			isa = PBXVariantGroup;
-			children = (
-				AB68998F2DDD7BC900C9A704 /* Base */,
-			);
-			name = Main.html;
-			sourceTree = "<group>";
-		};
-		AB6899992DDD7BC900C9A704 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				AB68999A2DDD7BC900C9A704 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		AB6899C42DDD7BCB00C9A704 /* Debug */ = {
@@ -695,19 +660,17 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "Tempo Adjust";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				INFOPLIST_KEY_NSMainStoryboardFile = Main;
-				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				INFOPLIST_KEY_NSMainStoryboardFile = "";
+				INFOPLIST_KEY_NSPrincipalClass = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MACOSX_DEPLOYMENT_TARGET = 15.6;
 				MARKETING_VERSION = 1.0;
 				OTHER_LDFLAGS = (
 					"-framework",
 					SafariServices,
-					"-framework",
-					WebKit,
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.miseryconfusion.tempoadjust;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -736,19 +699,17 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "Tempo Adjust";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				INFOPLIST_KEY_NSMainStoryboardFile = Main;
-				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				INFOPLIST_KEY_NSMainStoryboardFile = "";
+				INFOPLIST_KEY_NSPrincipalClass = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MACOSX_DEPLOYMENT_TARGET = 15.6;
 				MARKETING_VERSION = 1.0;
 				OTHER_LDFLAGS = (
 					"-framework",
 					SafariServices,
-					"-framework",
-					WebKit,
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.miseryconfusion.tempoadjust;
 				PRODUCT_NAME = "$(TARGET_NAME)";
