@@ -9,11 +9,64 @@ import SafariServices
 private let extensionBundleIdentifier = "com.miseryconfusion.tempoadjust.Extension"
 
 struct ContentView: View {
+    #if os(macOS)
     @State private var isExtensionEnabled: Bool?
-
     private let timer = Timer.publish(every: 0.5, on: .main, in: .common).autoconnect()
+    #endif
 
     var body: some View {
+        #if os(macOS)
+        macOSContent
+        #else
+        iOSContent
+        #endif
+    }
+
+    // MARK: - Shared Components
+
+    private func stepView<Content: View>(number: Int, @ViewBuilder content: () -> Content) -> some View {
+        HStack(alignment: .top, spacing: 8) {
+            Text("\(number).")
+                .font(.body)
+                .bold()
+                .frame(width: 20, alignment: .trailing)
+
+            content()
+                .font(.body)
+        }
+    }
+
+    private var supportFooter: some View {
+        HStack(spacing: 4) {
+            Text("Still need help?")
+                .foregroundStyle(.secondary)
+            Link("Contact support", destination: URL(string: "mailto:dev@miseryconfusion.com")!)
+            #if os(macOS)
+                .onHover { hovering in
+                    if hovering {
+                        NSCursor.pointingHand.push()
+                    } else {
+                        NSCursor.pop()
+                    }
+                }
+            #endif
+        }
+        .font(.callout)
+    }
+
+    #if os(iOS)
+    private var appIcon: Image {
+        if let uiImage = UIImage(named: "Icon") ?? UIImage(contentsOfFile: Bundle.main.path(forResource: "Icon", ofType: "png") ?? "") {
+            return Image(uiImage: uiImage)
+        }
+        return Image(systemName: "app.fill")
+    }
+    #endif
+
+    // MARK: - macOS Content
+
+    #if os(macOS)
+    private var macOSContent: some View {
         VStack(spacing: 12) {
             Image(nsImage: NSApp.applicationIconImage)
                 .resizable()
@@ -25,7 +78,6 @@ struct ContentView: View {
                 .multilineTextAlignment(.center)
 
             VStack(alignment: .leading, spacing: 16) {
-                // Step 1
                 stepView(number: 1) {
                     VStack(alignment: .leading, spacing: 6) {
                         Button("Open Safari Settings\u{2026}") {
@@ -49,10 +101,9 @@ struct ContentView: View {
                     }
                 }
 
-                // Step 2
                 stepView(number: 2) {
                     VStack(alignment: .leading, spacing: 6) {
-                        Text("Click ") + Text("Allow").bold() + Text(" in the Tempo Adjust settings to enable Tempo Adjust on Bandcamp and Discogs.")
+                        Text("Click **Allow** in the Tempo Adjust settings to enable Tempo Adjust on Bandcamp and Discogs.")
 
                         HStack(spacing: 0) {
                             Text("If you do not see the Tempo Adjust settings page, try clicking on the Tempo Adjust icon in your Safari toolbar.")
@@ -62,32 +113,17 @@ struct ContentView: View {
                     }
                 }
 
-                // Step 3
                 stepView(number: 3) {
-                    Text("Click ") + Text("Always allow").bold() + Text(".")
+                    Text("Click **Always allow**.")
                 }
 
-                // Step 4
                 stepView(number: 4) {
                     Text("Start using Tempo Adjust on your favorite releases on Bandcamp and Discogs.")
                 }
             }
 
             Spacer().frame(height: 4)
-
-            HStack(spacing: 4) {
-                Text("Still need help?")
-                    .foregroundStyle(.secondary)
-                Link("Contact support", destination: URL(string: "mailto:dev@miseryconfusion.com")!)
-                    .onHover { hovering in
-                        if hovering {
-                            NSCursor.pointingHand.push()
-                        } else {
-                            NSCursor.pop()
-                        }
-                    }
-            }
-            .font(.callout)
+            supportFooter
         }
         .padding(.horizontal, 30)
         .padding(.vertical, 20)
@@ -98,18 +134,6 @@ struct ContentView: View {
         }
         .task {
             checkExtensionState()
-        }
-    }
-
-    private func stepView<Content: View>(number: Int, @ViewBuilder content: () -> Content) -> some View {
-        HStack(alignment: .top, spacing: 8) {
-            Text("\(number).")
-                .font(.body)
-                .bold()
-                .frame(width: 20, alignment: .trailing)
-
-            content()
-                .font(.body)
         }
     }
 
@@ -145,4 +169,54 @@ struct ContentView: View {
         guard let appleScript = NSAppleScript(source: script) else { return }
         appleScript.executeAndReturnError(nil)
     }
+    #endif
+
+    // MARK: - iOS Content
+
+    #if os(iOS)
+    private var iOSContent: some View {
+        VStack(spacing: 20) {
+            Spacer()
+
+            appIcon
+                .resizable()
+                .frame(width: 128, height: 128)
+                .clipShape(RoundedRectangle(cornerRadius: 28, style: .continuous))
+                .accessibilityHidden(true)
+
+            Text("Start using Tempo Adjust\nin Safari")
+                .font(.title)
+                .bold()
+                .multilineTextAlignment(.center)
+
+            VStack(alignment: .leading, spacing: 20) {
+                stepView(number: 1) {
+                    Text("Open the ") + Text("Settings").bold() + Text(" app, then navigate to ") + Text("Safari > Extensions").bold() + Text(".")
+                }
+
+                stepView(number: 2) {
+                    Text("Tap ") + Text("Tempo Adjust").bold() + Text(" and turn on the toggle to enable the extension.")
+                }
+
+                stepView(number: 3) {
+                    Text("On the same page, tap **Settings** to open Tempo Adjust's settings screen.")
+                }
+                
+                stepView(number: 4, content: {
+                    Text("Tap 'Allow' to allow Tempo Adjust to run on Bandcamp and Discogs.")
+                })
+
+                stepView(number: 5) {
+                    Text("Open Safari and start using Tempo Adjust on your favorite releases on Bandcamp and Discogs.")
+                }
+            }
+
+            Spacer()
+            supportFooter
+        }
+        .padding(.horizontal, 30)
+        .padding(.vertical, 20)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+    #endif
 }

@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		AB61A2852F5962020093D0C2 /* TempoAdjustApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB61A2842F5962020093D0C2 /* TempoAdjustApp.swift */; };
 		AB61A2872F59621C0093D0C2 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB61A2862F59621C0093D0C2 /* ContentView.swift */; };
-		AB6899922DDD7BC900C9A704 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = AB6899912DDD7BC900C9A704 /* Icon.png */; };
+		AB61A2882F5A47DF0093D0C2 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = AB6899912DDD7BC900C9A704 /* Icon.png */; };
 		AB68999D2DDD7BCB00C9A704 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AB68999C2DDD7BCB00C9A704 /* Assets.xcassets */; };
 		AB6899AA2DDD7BCB00C9A704 /* Tempo_Adjust_for_Bandcamp_and_DiscogsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6899A92DDD7BCB00C9A704 /* Tempo_Adjust_for_Bandcamp_and_DiscogsTests.swift */; };
 		AB6899B42DDD7BCB00C9A704 /* Tempo_Adjust_for_Bandcamp_and_DiscogsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6899B32DDD7BCB00C9A704 /* Tempo_Adjust_for_Bandcamp_and_DiscogsUITests.swift */; };
@@ -355,7 +355,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AB6899922DDD7BC900C9A704 /* Icon.png in Resources */,
+				AB61A2882F5A47DF0093D0C2 /* Icon.png in Resources */,
 				AB68999D2DDD7BCB00C9A704 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -602,8 +602,11 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -636,8 +639,11 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -662,6 +668,7 @@
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_NSMainStoryboardFile = "";
 				INFOPLIST_KEY_NSPrincipalClass = "";
+				INFOPLIST_KEY_UILaunchStoryboardName = UILaunchScreen;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -675,8 +682,11 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.miseryconfusion.tempoadjust;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -701,6 +711,7 @@
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_NSMainStoryboardFile = "";
 				INFOPLIST_KEY_NSPrincipalClass = "";
+				INFOPLIST_KEY_UILaunchStoryboardName = UILaunchScreen;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -714,8 +725,11 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.miseryconfusion.tempoadjust;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
