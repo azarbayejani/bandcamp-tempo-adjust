@@ -1,0 +1,124 @@
+{
+  "appPolicies" : {
+    "eula" : "",
+    "policies" : [
+      {
+        "locale" : "en_US",
+        "policyText" : "",
+        "policyURL" : ""
+      }
+    ]
+  },
+  "identifier" : "E429934B",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+    {
+      "displayPrice" : "4.99",
+      "familyShareable" : false,
+      "internalID" : "76E56548",
+      "localizations" : [
+        {
+          "description" : "Buy the developer half a coffee",
+          "displayName" : "Small Tip",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "com.miseryconfusion.tempoadjust.smalltip",
+      "referenceName" : "Small Tip",
+      "type" : "Consumable"
+    },
+    {
+      "displayPrice" : "9.99",
+      "familyShareable" : false,
+      "internalID" : "1E43725C",
+      "localizations" : [
+        {
+          "description" : "Buy the developer a coffee",
+          "displayName" : "Medium Tip",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "com.miseryconfusion.tempoadjust.mediumtip",
+      "referenceName" : "Medium Tip",
+      "type" : "Consumable"
+    },
+    {
+      "displayPrice" : "19.99",
+      "familyShareable" : false,
+      "internalID" : "2F828C71",
+      "localizations" : [
+        {
+          "description" : "Buy the developer two coffees",
+          "displayName" : "Large Tip",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "com.miseryconfusion.tempoadjust.largetip",
+      "referenceName" : "Large Tip",
+      "type" : "Consumable"
+    }
+  ],
+  "settings" : {
+    "_askToBuyEnabled" : false,
+    "_billingGracePeriodEnabled" : false,
+    "_billingIssuesEnabled" : false,
+    "_disableDialogs" : false,
+    "_failTransactionsEnabled" : false,
+    "_locale" : "en_US",
+    "_renewalBillingIssuesEnabled" : false,
+    "_storefront" : "USA",
+    "_storeKitErrors" : [
+
+    ],
+    "_timeRate" : 0
+  },
+  "subscriptionGroups" : [
+    {
+      "id" : "A1B2C3D4",
+      "localizations" : [
+        {
+          "description" : "Support ongoing development of Tempo Adjust",
+          "displayName" : "Supporter",
+          "locale" : "en_US"
+        }
+      ],
+      "name" : "Supporter",
+      "subscriptions" : [
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "4.99",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "D5E6F7A8",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "Support ongoing development",
+              "displayName" : "Supporter",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "com.miseryconfusion.tempoadjust.supporter",
+          "recurringSubscriptionPeriod" : "P1Y",
+          "referenceName" : "Supporter",
+          "subscriptionGroupID" : "A1B2C3D4",
+          "type" : "RecurringSubscription",
+          "winbackOffers" : [
+
+          ]
+        }
+      ]
+    }
+  ],
+  "version" : {
+    "major" : 4,
+    "minor" : 0
+  }
+}

@@ -30,9 +30,11 @@ struct ContentView: View {
                 .font(.body)
                 .bold()
                 .frame(width: 20, alignment: .trailing)
+                .layoutPriority(1)
 
             content()
                 .font(.body)
+                .fixedSize(horizontal: false, vertical: true)
         }
     }
 
@@ -122,6 +124,17 @@ struct ContentView: View {
                 }
             }
 
+            Divider()
+                .padding(.vertical, 4)
+
+            SupportView()
+
+            Text("— or —")
+                .font(.caption)
+                .foregroundStyle(.secondary)
+
+            TipJarView()
+
             Spacer().frame(height: 4)
             supportFooter
         }
@@ -175,48 +188,59 @@ struct ContentView: View {
 
     #if os(iOS)
     private var iOSContent: some View {
-        VStack(spacing: 20) {
-            Spacer()
+        ScrollView {
+            VStack(spacing: 20) {
+                appIcon
+                    .resizable()
+                    .frame(width: 128, height: 128)
+                    .clipShape(RoundedRectangle(cornerRadius: 28, style: .continuous))
+                    .accessibilityHidden(true)
 
-            appIcon
-                .resizable()
-                .frame(width: 128, height: 128)
-                .clipShape(RoundedRectangle(cornerRadius: 28, style: .continuous))
-                .accessibilityHidden(true)
+                Text("Start using Tempo Adjust\nin Safari")
+                    .font(.title)
+                    .bold()
+                    .multilineTextAlignment(.center)
 
-            Text("Start using Tempo Adjust\nin Safari")
-                .font(.title)
-                .bold()
-                .multilineTextAlignment(.center)
+                VStack(alignment: .leading, spacing: 20) {
+                    stepView(number: 1) {
+                        Text("Open the **Settings** app, then navigate to **Safari > Extensions**.")
+                    }
 
-            VStack(alignment: .leading, spacing: 20) {
-                stepView(number: 1) {
-                    Text("Open the ") + Text("Settings").bold() + Text(" app, then navigate to ") + Text("Safari > Extensions").bold() + Text(".")
+                    stepView(number: 2) {
+                        Text("Tap **Tempo Adjust** and turn on the toggle to enable the extension.")
+                    }
+
+                    stepView(number: 3) {
+                        Text("On the same page, tap **Settings** to open Tempo Adjust's settings screen.")
+                    }
+                    
+                    stepView(number: 4) {
+                        Text("Tap 'Allow' to allow Tempo Adjust to run on Bandcamp and Discogs.")
+                    }
+
+                    stepView(number: 5) {
+                        Text("Open Safari and start using Tempo Adjust on your favorite releases on Bandcamp and Discogs.")
+                    }
                 }
 
-                stepView(number: 2) {
-                    Text("Tap ") + Text("Tempo Adjust").bold() + Text(" and turn on the toggle to enable the extension.")
-                }
+                Divider()
+                    .padding(.vertical, 4)
 
-                stepView(number: 3) {
-                    Text("On the same page, tap **Settings** to open Tempo Adjust's settings screen.")
-                }
-                
-                stepView(number: 4, content: {
-                    Text("Tap 'Allow' to allow Tempo Adjust to run on Bandcamp and Discogs.")
-                })
+                SupportView()
 
-                stepView(number: 5) {
-                    Text("Open Safari and start using Tempo Adjust on your favorite releases on Bandcamp and Discogs.")
-                }
+                Text("— or —")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+
+                TipJarView()
+
+                supportFooter
+                    .padding(.bottom, 8)
             }
-
-            Spacer()
-            supportFooter
+            .padding(.horizontal, 30)
+            .padding(.vertical, 20)
+            .frame(maxWidth: .infinity)
         }
-        .padding(.horizontal, 30)
-        .padding(.vertical, 20)
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
     #endif
 }

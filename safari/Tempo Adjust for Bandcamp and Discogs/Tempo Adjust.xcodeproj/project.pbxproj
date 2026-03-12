@@ -26,6 +26,9 @@
 		AB6899E52DDD7BCB00C9A704 /* icon-34.png in Resources */ = {isa = PBXBuildFile; fileRef = AB6899DB2DDD7BCB00C9A704 /* icon-34.png */; };
 		AB6899E62DDD7BCB00C9A704 /* assets in Resources */ = {isa = PBXBuildFile; fileRef = AB6899DC2DDD7BCB00C9A704 /* assets */; };
 		AB6899E72DDD7BCB00C9A704 /* icon-128.png in Resources */ = {isa = PBXBuildFile; fileRef = AB6899DD2DDD7BCB00C9A704 /* icon-128.png */; };
+		AB839F222F5FE1F900E8F48E /* TipJarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB839F212F5FE1F900E8F48E /* TipJarView.swift */; };
+		AB839F262F5FE55100E8F48E /* TipProducts.storekit in Resources */ = {isa = PBXBuildFile; fileRef = AB839F252F5FE55100E8F48E /* TipProducts.storekit */; };
+		AB839F282F624C9600E8F48E /* SupportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB839F272F624C9600E8F48E /* SupportView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -94,6 +97,9 @@
 		AB6899DB2DDD7BCB00C9A704 /* icon-34.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-34.png"; path = "../../../apps/bandcamp-tempo-adjust/.output/safari-mv3/icon-34.png"; sourceTree = "<group>"; };
 		AB6899DC2DDD7BCB00C9A704 /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = assets; path = "../../../apps/bandcamp-tempo-adjust/.output/safari-mv3/assets"; sourceTree = "<group>"; };
 		AB6899DD2DDD7BCB00C9A704 /* icon-128.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-128.png"; path = "../../../apps/bandcamp-tempo-adjust/.output/safari-mv3/icon-128.png"; sourceTree = "<group>"; };
+		AB839F212F5FE1F900E8F48E /* TipJarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipJarView.swift; sourceTree = "<group>"; };
+		AB839F252F5FE55100E8F48E /* TipProducts.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = TipProducts.storekit; sourceTree = "<group>"; };
+		AB839F272F624C9600E8F48E /* SupportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,6 +137,7 @@
 		AB68997F2DDD7BC900C9A704 = {
 			isa = PBXGroup;
 			children = (
+				AB839F252F5FE55100E8F48E /* TipProducts.storekit */,
 				AB68998A2DDD7BC900C9A704 /* Tempo Adjust */,
 				AB6899A82DDD7BCB00C9A704 /* Tempo AdjustTests */,
 				AB6899B22DDD7BCB00C9A704 /* Tempo AdjustUITests */,
@@ -160,6 +167,8 @@
 				AB68998D2DDD7BC900C9A704 /* Resources */,
 				AB61A2842F5962020093D0C2 /* TempoAdjustApp.swift */,
 				AB61A2862F59621C0093D0C2 /* ContentView.swift */,
+				AB839F212F5FE1F900E8F48E /* TipJarView.swift */,
+				AB839F272F624C9600E8F48E /* SupportView.swift */,
 			);
 			path = "Tempo Adjust";
 			sourceTree = "<group>";
@@ -355,6 +364,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB839F262F5FE55100E8F48E /* TipProducts.storekit in Resources */,
 				AB61A2882F5A47DF0093D0C2 /* Icon.png in Resources */,
 				AB68999D2DDD7BCB00C9A704 /* Assets.xcassets in Resources */,
 			);
@@ -398,6 +408,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB839F282F624C9600E8F48E /* SupportView.swift in Sources */,
+				AB839F222F5FE1F900E8F48E /* TipJarView.swift in Sources */,
 				AB61A2852F5962020093D0C2 /* TempoAdjustApp.swift in Sources */,
 				AB61A2872F59621C0093D0C2 /* ContentView.swift in Sources */,
 			);
