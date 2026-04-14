@@ -36,20 +36,29 @@ const Options: React.FC<Props> = ({ title }: Props) => {
   }, [queryClient]);
 
   return !isLoading && !hasPermissions ? (
-    <div className="OptionsContainer">
+    <div className={css.optionsContainer} style={{ display: 'flex' }}>
       <div className={css.options}>
         <img src={bandcampTempoAdjustLogo} alt="Bandcamp Tempo Adjust logo" />
         <p style={{ textAlign: 'center' }}>
-          Bandcamp Tempo Adjust needs your permission to access bandcamp.com and
-          bcbits.com in order to work correctly.
+          Bandcamp Tempo Adjust needs your permission to access:
         </p>
+        <ul style={{ textAlign: 'left' }}>
+          <li>
+            <strong>bandcamp.com</strong> and <strong>bcbits.com</strong> to
+            detect and adjust track tempo
+          </li>
+          <li>
+            <strong>api.frankfurter.app</strong> to fetch historical currency
+            exchange rates for the purchases page
+          </li>
+        </ul>
         <button className={css.button} onClick={handleRequestPermissions}>
           Allow
         </button>
       </div>
     </div>
   ) : (
-    <div className="OptionsContainer">
+    <div className={css.optionsContainer}>
       <div className={`${css.options} ${css.optionsWithFooter}`}>
         <img src={bandcampTempoAdjustLogo} alt="Bandcamp Tempo Adjust logo" />
         <div className={css.center}>
