@@ -12,7 +12,10 @@ export default defineConfig({
       },
     },
     action: {},
-    host_permissions: ['https://*.bcbits.com/stream/*'],
+    host_permissions: [
+      'https://*.bcbits.com/stream/*',
+      'https://api.frankfurter.app/*',
+    ],
     permissions: ['storage'],
   },
   modules: [

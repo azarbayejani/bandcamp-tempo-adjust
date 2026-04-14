@@ -1,12 +1,12 @@
-export default function getConversionRatesForDate(
+import browser from 'webextension-polyfill';
+
+export default async function getConversionRatesForDate(
   date: string,
   currency: string
 ) {
-  const apiUrl = `https://api.frankfurter.app/${date}?from=${currency}`;
-  return fetch(apiUrl)
-    .then((resp) => resp.json())
-    .then((resp) => ({
-      date,
-      rates: resp.rates,
-    }));
+  return browser.runtime.sendMessage({
+    action: 'fetchConversionRatesForDate',
+    date,
+    currency,
+  });
 }

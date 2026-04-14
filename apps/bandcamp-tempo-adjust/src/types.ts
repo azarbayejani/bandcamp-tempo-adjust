@@ -23,6 +23,16 @@ export type FetchAudioBufferFromUrlMessage =
   | FetchAudioBufferFromUrlErrorMessage
   | FetchAudioBufferFromUrlEndMessage;
 
+export interface FetchCurrenciesMessage {
+  action: 'fetchCurrencies';
+}
+
+export interface FetchConversionRatesForDateMessage {
+  action: 'fetchConversionRatesForDate';
+  date: string;
+  currency: string;
+}
+
 export type TrackInfo = {
   bpm?: number;
   trackNumber: number;
