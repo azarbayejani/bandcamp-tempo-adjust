@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { useQuery } from '@tanstack/react-query';
 import Select from 'react-select';
+import browser from 'webextension-polyfill';
+import { hasFrankfurterPermission as checkFrankfurterPermission } from '~/utils/hasFrankfurterPermission';
 import { downloadFile } from './downloadFile';
 import { fetchCurrencies } from './services/fetchCurrencies';
 import { formatDate } from './services/formatDate';
@@ -107,14 +109,22 @@ export default function PurchasesPage({ username, crumb }: PurchasesPageProps) {
   const [startedFirstFetch, setStartedFirstFetch] = useState(false);
   const [purchasesFilter, setPurchasesFilter] = useState('ALL');
   const [currency, setCurrency] = useState<string>('USD');
+  const [hasFrankfurterPermission, setHasFrankfurterPermission] = useState<
+    boolean | null
+  >(null);
+
+  useEffect(() => {
+    checkFrankfurterPermission().then(setHasFrankfurterPermission);
+  }, []);
 
   const currenciesQuery = useQuery({
     queryKey: ['currencies'],
     queryFn: fetchCurrencies,
+    enabled: hasFrankfurterPermission === true,
   });
   const purchasesQuery = usePurchases({
     username,
-    enabled: startedFirstFetch,
+    enabled: startedFirstFetch && hasFrankfurterPermission === true,
     currency,
     crumb,
   });
@@ -124,10 +134,33 @@ export default function PurchasesPage({ username, crumb }: PurchasesPageProps) {
     years.push(year.toString());
   }
 
-  if (currenciesQuery.isLoading) {
-    <div className="BandcampTempoAdjust__purchases_container">
-      <div className="BandcampTempoAdjust__purchases_row">Loading...</div>
-    </div>;
+  if (hasFrankfurterPermission === false) {
+    return (
+      <div className="BandcampTempoAdjust__purchases_container">
+        <div className="BandcampTempoAdjust__purchases_row">
+          <button
+            className="BandcampTempoAdjust__button BandcampTempoAdjust__button--purchases"
+            onClick={() =>
+              browser.runtime.sendMessage({ action: 'openOptions' })
+            }
+          >
+            Enable currency conversion
+          </button>
+          <span style={{ marginLeft: 12 }}>
+            Grant access to <strong>api.frankfurter.app</strong> to load
+            purchases with currency conversion.
+          </span>
+        </div>
+      </div>
+    );
+  }
+
+  if (hasFrankfurterPermission === null || currenciesQuery.isLoading) {
+    return (
+      <div className="BandcampTempoAdjust__purchases_container">
+        <div className="BandcampTempoAdjust__purchases_row">Loading...</div>
+      </div>
+    );
   }
 
   if (!currenciesQuery.data) {

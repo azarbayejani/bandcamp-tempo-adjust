@@ -12,10 +12,8 @@ export default defineConfig({
       },
     },
     action: {},
-    host_permissions: [
-      'https://*.bcbits.com/stream/*',
-      'https://api.frankfurter.app/*',
-    ],
+    host_permissions: ['https://*.bcbits.com/stream/*'],
+    optional_host_permissions: ['https://api.frankfurter.app/*'],
     permissions: ['storage'],
   },
   modules: [

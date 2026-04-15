@@ -42,6 +42,11 @@ export default defineBackground({
       if (message.action === 'hasAllPermissions') {
         return { hasAllPermissions: await hasAllPermissions() };
       }
+      if (message.action === 'hasFrankfurterPermission') {
+        return browser.permissions.contains({
+          origins: ['https://api.frankfurter.app/*'],
+        });
+      }
       if (message.action === 'fetchCurrencies') {
         return handleFetchCurrencies();
       }
