@@ -132,6 +132,9 @@ importers:
       '@wxt-dev/webextension-polyfill':
         specifier: ^1.0.0
         version: 1.0.0(webextension-polyfill@0.10.0)(wxt@0.20.13(jiti@2.6.1)(less@4.2.0)(lightningcss@1.28.1)(rollup@4.55.1)(sass@1.80.6)(stylus@0.62.0)(terser@5.44.1)(webpack-sources@3.3.3))
+      classnames:
+        specifier: ^2.5.1
+        version: 2.5.1
       i:
         specifier: ^0.3.7
         version: 0.3.7
