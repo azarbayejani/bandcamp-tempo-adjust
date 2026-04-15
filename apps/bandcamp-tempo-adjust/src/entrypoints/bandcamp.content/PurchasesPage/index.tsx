@@ -192,7 +192,7 @@ export default function PurchasesPage({ username, crumb }: PurchasesPageProps) {
             <strong>Note:</strong> Calculated totals are only an approximation
             due to currency conversions. Currency exchange rates for each
             purchase are based on historical data from{' '}
-            <a href="https://frankfurter.app">frankfurter.app</a>.
+            <a href="https://frankfurter.dev">frankfurter.dev</a>.
           </small>
         </div>
       </div>
