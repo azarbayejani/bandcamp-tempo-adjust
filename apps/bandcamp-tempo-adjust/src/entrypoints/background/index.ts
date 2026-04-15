@@ -1,9 +1,5 @@
 import browser from 'webextension-polyfill';
 import { hasAllPermissions } from '@tempo-adjust/permissions';
-import {
-  handleFetchCurrencies,
-  handleFetchConversionRatesForDate,
-} from './frankfurterHandlers';
 
 const optionsPageUrl = '/options.html';
 
@@ -30,31 +26,22 @@ export default defineBackground({
       }
     });
 
+    interface OpenOptionsMessage {
+      action: 'openOptions';
+    }
+    browser.runtime.onMessage.addListener(
+      (message: OpenOptionsMessage, _sender) => {
+        if (message.action === 'openOptions') {
+          browser.tabs.create({ url: optionsPageUrl.toString() });
+        }
+      }
+    );
+
     // You can't return true from listener or else firefox will expect 'sendResponse' to be called
     // https://github.com/mozilla/webextension-polyfill/issues/16#issuecomment-371355255
-    // All async handlers must be in a single listener — the polyfill stops at the first listener
-    // that returns a Promise, even if it resolves to undefined. Separate async listeners would
-    // cause earlier ones to shadow later ones for non-matching messages.
     browser.runtime.onMessage.addListener(async (message, _sender) => {
-      if (message.action === 'openOptions') {
-        browser.tabs.create({ url: optionsPageUrl.toString() });
-      }
       if (message.action === 'hasAllPermissions') {
         return { hasAllPermissions: await hasAllPermissions() };
-      }
-      if (message.action === 'hasFrankfurterPermission') {
-        return browser.permissions.contains({
-          origins: ['https://api.frankfurter.app/*'],
-        });
-      }
-      if (message.action === 'fetchCurrencies') {
-        return handleFetchCurrencies();
-      }
-      if (message.action === 'fetchConversionRatesForDate') {
-        return handleFetchConversionRatesForDate(
-          message.date,
-          message.currency
-        );
       }
     });
 

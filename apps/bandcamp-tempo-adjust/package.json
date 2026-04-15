@@ -28,7 +28,6 @@
     "@tempo-adjust/theme-provider": "workspace:*",
     "@tempo-adjust/to-one-decimal": "workspace:*",
     "@wxt-dev/webextension-polyfill": "^1.0.0",
-    "classnames": "^2.5.1",
     "i": "^0.3.7",
     "immer": "^9.0.17",
     "p-queue": "^8.0.1",
