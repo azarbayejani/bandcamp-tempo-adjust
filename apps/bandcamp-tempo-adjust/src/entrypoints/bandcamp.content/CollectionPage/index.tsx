@@ -1,11 +1,9 @@
 import React from 'react';
 import PitchAdjust from './PitchAdjust';
-import { AudioController } from '../AudioController';
+import { useAudioController } from '../useAudioController';
 
 const CollectionPage = () => {
-  useEffect(() => {
-    new AudioController('audio');
-  }, []);
+  useAudioController({ selector: 'audio' });
 
   return <PitchAdjust />;
 };

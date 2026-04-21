@@ -5,7 +5,7 @@ import { TrackInfoByUrl } from '~/types';
 import AlbumTrackBpms from './AlbumTrackBpms';
 import { BpmProvider } from '../BpmContext';
 import CurrentTrackBpm from './CurrentTrackBpm';
-import { AudioController } from '../AudioController';
+import { useAudioController } from '../useAudioController';
 import TralbumPagePitchAdjust from './PitchAdjust';
 
 const getCurrTrackUrl = () =>
@@ -14,8 +14,9 @@ const getCurrTrackUrl = () =>
 const TralbumPage = () => {
   const [trackInfoStore, setTrackInfoStore] = useState<TrackInfoByUrl>();
 
+  useAudioController({ selector: 'audio', getCurrTrackUrl });
+
   useEffect(() => {
-    new AudioController('audio', getCurrTrackUrl);
     fetchBandcampTrackInfoStore().then((store) => setTrackInfoStore(store));
   }, []);
 
