@@ -5,6 +5,9 @@
 
 import SwiftUI
 import StoreKit
+import OSLog
+
+private let logger = Logger(subsystem: "com.miseryconfusion.tempoadjust", category: "TipJar")
 
 struct TipJarView: View {
     private static let productIDs: [String] = [
@@ -17,6 +20,7 @@ struct TipJarView: View {
     @State private var products: [Product] = []
     @State private var showThankYou = false
     @State private var purchasing: String?
+    @State private var purchaseError: String?
 
     var body: some View {
         VStack(spacing: 12) {
@@ -55,8 +59,20 @@ struct TipJarView: View {
             do {
                 products = try await Product.products(for: Self.productIDs)
             } catch {
-                // Products failed to load — the section will remain empty
+                logger.error("Failed to load tip products: \(error.localizedDescription, privacy: .public)")
             }
+        }
+        .alert(
+            "Purchase Failed",
+            isPresented: Binding(
+                get: { purchaseError != nil },
+                set: { if !$0 { purchaseError = nil } }
+            ),
+            presenting: purchaseError
+        ) { _ in
+            Button("OK", role: .cancel) { purchaseError = nil }
+        } message: { error in
+            Text(error)
         }
     }
 
@@ -148,7 +164,7 @@ struct TipJarView: View {
                 break
             }
         } catch {
-            // Purchase failed — no action needed
+            purchaseError = error.localizedDescription
         }
     }
 }

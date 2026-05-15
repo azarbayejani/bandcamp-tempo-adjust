@@ -5,6 +5,9 @@
 
 import SwiftUI
 import StoreKit
+import OSLog
+
+private let logger = Logger(subsystem: "com.miseryconfusion.tempoadjust", category: "Support")
 
 struct SupportView: View {
     private static let productID = "com.miseryconfusion.tempoadjust.supporter"
@@ -13,6 +16,7 @@ struct SupportView: View {
     @State private var isSubscribed = false
     @State private var purchasing = false
     @State private var showThankYou = false
+    @State private var purchaseError: String?
 
     var body: some View {
         VStack(spacing: 12) {
@@ -50,9 +54,21 @@ struct SupportView: View {
                 let products = try await Product.products(for: [Self.productID])
                 product = products.first
             } catch {
-                // Product failed to load
+                logger.error("Failed to load supporter product: \(error.localizedDescription, privacy: .public)")
             }
             await checkSubscription()
+        }
+        .alert(
+            "Purchase Failed",
+            isPresented: Binding(
+                get: { purchaseError != nil },
+                set: { if !$0 { purchaseError = nil } }
+            ),
+            presenting: purchaseError
+        ) { _ in
+            Button("OK", role: .cancel) { purchaseError = nil }
+        } message: { error in
+            Text(error)
         }
     }
 
@@ -138,7 +154,7 @@ struct SupportView: View {
                 break
             }
         } catch {
-            // Purchase failed
+            purchaseError = error.localizedDescription
         }
     }
 
