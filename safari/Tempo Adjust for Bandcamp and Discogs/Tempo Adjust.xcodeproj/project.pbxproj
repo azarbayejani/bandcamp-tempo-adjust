@@ -87,6 +87,7 @@
 		AB6899C02DDD7BCB00C9A704 /* SafariWebExtensionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariWebExtensionHandler.swift; sourceTree = "<group>"; };
 		AB6899C22DDD7BCB00C9A704 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AB6899C32DDD7BCB00C9A704 /* Tempo_Adjust_Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Tempo_Adjust_Extension.entitlements; sourceTree = "<group>"; };
+		ABC0F100000000000000C0F1 /* Shared.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Shared.xcconfig; sourceTree = "<group>"; };
 		AB6899D42DDD7BCB00C9A704 /* background.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = background.js; path = "../../../apps/bandcamp-tempo-adjust/.output/safari-mv3/background.js"; sourceTree = "<group>"; };
 		AB6899D52DDD7BCB00C9A704 /* volume.svg */ = {isa = PBXFileReference; lastKnownFileType = text; name = volume.svg; path = "../../../apps/bandcamp-tempo-adjust/.output/safari-mv3/volume.svg"; sourceTree = "<group>"; };
 		AB6899D62DDD7BCB00C9A704 /* chunks */ = {isa = PBXFileReference; lastKnownFileType = folder; name = chunks; path = "../../../apps/bandcamp-tempo-adjust/.output/safari-mv3/chunks"; sourceTree = "<group>"; };
@@ -138,12 +139,21 @@
 			isa = PBXGroup;
 			children = (
 				AB839F252F5FE55100E8F48E /* TipProducts.storekit */,
+				ABC0F100000000000000C0CF /* Config */,
 				AB68998A2DDD7BC900C9A704 /* Tempo Adjust */,
 				AB6899A82DDD7BCB00C9A704 /* Tempo AdjustTests */,
 				AB6899B22DDD7BCB00C9A704 /* Tempo AdjustUITests */,
 				AB6899BF2DDD7BCB00C9A704 /* Tempo Adjust Extension */,
 				AB6899892DDD7BC900C9A704 /* Products */,
 			);
+			sourceTree = "<group>";
+		};
+		ABC0F100000000000000C0CF /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				ABC0F100000000000000C0F1 /* Shared.xcconfig */,
+			);
+			path = Config;
 			sourceTree = "<group>";
 		};
 		AB6899892DDD7BC900C9A704 /* Products */ = {
@@ -463,6 +473,7 @@
 /* Begin XCBuildConfiguration section */
 		AB6899C42DDD7BCB00C9A704 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = ABC0F100000000000000C0F1 /* Shared.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -497,7 +508,6 @@
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = ;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -529,6 +539,7 @@
 		};
 		AB6899C52DDD7BCB00C9A704 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = ABC0F100000000000000C0F1 /* Shared.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -563,7 +574,6 @@
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = ;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;

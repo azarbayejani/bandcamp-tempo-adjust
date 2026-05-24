@@ -1,0 +1,6 @@
+// Each developer creates Config/Local.xcconfig (gitignored) with their own
+// DEVELOPMENT_TEAM, e.g.:
+//
+//   DEVELOPMENT_TEAM = ABCDE12345
+//
+#include? "Local.xcconfig"

@@ -47,6 +47,9 @@ test-results
 ## build directory
 build/
 
+## Local xcconfig overrides (e.g. DEVELOPMENT_TEAM)
+Local.xcconfig
+
 ## User settings
 xcuserdata/
 
