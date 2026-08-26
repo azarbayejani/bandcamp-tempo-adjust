@@ -12,6 +12,8 @@ import './content.styles.scss';
 
 const appDiv = document.createElement('div');
 appDiv.id = 'pitchSliderApp';
+appDiv.style.display = 'block';
+appDiv.style.marginTop = '8px';
 
 const root = createRoot(appDiv);
 
@@ -23,10 +25,11 @@ const renderTralbumPage = () => {
   const body = document.querySelector('body');
   const player = document.querySelector('.inline_player');
   if (player && body) {
-    if (document.getElementById(appDiv.id)) {
-      document.getElementById(appDiv.id)?.replaceWith(appDiv);
+    const existingApp = document.getElementById(appDiv.id);
+    if (existingApp) {
+      existingApp.replaceWith(appDiv);
     } else {
-      player.append(appDiv);
+      player.insertAdjacentElement('afterend', appDiv);
     }
 
     // BUG: this assumes that all of these are playable tracks!
