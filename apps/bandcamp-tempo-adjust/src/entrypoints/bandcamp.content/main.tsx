@@ -26,11 +26,22 @@ const renderTralbumPage = () => {
   const player = document.querySelector('.inline_player');
   if (player && body) {
     const existingApp = document.getElementById(appDiv.id);
+    const appToInsert = existingApp ?? appDiv;
+
+    const trackTable = document.querySelector('#track_table');
     if (existingApp) {
-      existingApp.replaceWith(appDiv);
+      if (trackTable) {
+        existingApp.replaceWith(appDiv);
+      } else {
+        player.after(appToInsert);
+      }
     } else {
-      player.insertAdjacentElement('afterend', appDiv);
+      player.append(appDiv);
     }
+
+
+    appToInsert.style.clear = 'both';
+    appToInsert.style.width = '100%';
 
     // BUG: this assumes that all of these are playable tracks!
     const trackNodes = document.querySelectorAll('.title-col .title');
