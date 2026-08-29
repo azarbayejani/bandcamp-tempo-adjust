@@ -20,30 +20,19 @@ const queryClient = new QueryClient({
 });
 
 const renderTralbumPage = () => {
-
-  appDiv.style.display = 'block';
-  appDiv.style.marginTop = '8px';
-
   const body = document.querySelector('body');
   const player = document.querySelector('.inline_player');
   if (player && body) {
+    appDiv.style.display = 'block';
+    appDiv.style.marginTop = '8px';
+    appDiv.style.clear = 'both';
+    appDiv.style.width = '100%';
+
     const existingApp = document.getElementById(appDiv.id);
-    const appToInsert = existingApp ?? appDiv;
-
-    const trackTable = document.querySelector('#track_table');
-    if (existingApp) {
-      if (trackTable) {
-        existingApp.replaceWith(appDiv);
-      } else {
-        player.after(appToInsert);
-      }
-    } else {
-      player.append(appDiv);
+    if (existingApp && existingApp !== appDiv) {
+      existingApp.remove();
     }
-
-
-    appToInsert.style.clear = 'both';
-    appToInsert.style.width = '100%';
+    player.append(appDiv);
 
     // BUG: this assumes that all of these are playable tracks!
     const trackNodes = document.querySelectorAll('.title-col .title');
