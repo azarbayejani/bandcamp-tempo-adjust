@@ -23,11 +23,16 @@ const renderTralbumPage = () => {
   const body = document.querySelector('body');
   const player = document.querySelector('.inline_player');
   if (player && body) {
-    if (document.getElementById(appDiv.id)) {
-      document.getElementById(appDiv.id)?.replaceWith(appDiv);
-    } else {
-      player.append(appDiv);
+    appDiv.style.display = 'block';
+    appDiv.style.marginTop = '8px';
+    appDiv.style.clear = 'both';
+    appDiv.style.width = '100%';
+
+    const existingApp = document.getElementById(appDiv.id);
+    if (existingApp && existingApp !== appDiv) {
+      existingApp.remove();
     }
+    player.append(appDiv);
 
     // BUG: this assumes that all of these are playable tracks!
     const trackNodes = document.querySelectorAll('.title-col .title');
