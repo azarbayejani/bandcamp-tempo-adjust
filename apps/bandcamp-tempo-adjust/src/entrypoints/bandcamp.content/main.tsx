@@ -12,8 +12,6 @@ import './content.styles.scss';
 
 const appDiv = document.createElement('div');
 appDiv.id = 'pitchSliderApp';
-appDiv.style.display = 'block';
-appDiv.style.marginTop = '8px';
 
 const root = createRoot(appDiv);
 
@@ -22,6 +20,10 @@ const queryClient = new QueryClient({
 });
 
 const renderTralbumPage = () => {
+
+  appDiv.style.display = 'block';
+  appDiv.style.marginTop = '8px';
+
   const body = document.querySelector('body');
   const player = document.querySelector('.inline_player');
   if (player && body) {
