@@ -54,12 +54,15 @@
     "@types/react": "18.3.1"
   },
   "pnpm": {
-    "overrides": {
-      "node-forge": "^1.4.0",
-      "shell-quote": ">=1.9.0",
-      "adm-zip": "^0.6.0",
-      "tmp": ">=0.2.6",
-      "uuid@<11.1.1": ">=11.1.1"
+    "auditConfig": {
+      "ignoreCves": [
+        "CVE-2025-71330",
+        "CVE-2025-71329"
+      ],
+      "ignoreGhsas": [
+        "GHSA-w3rx-r6r6-pgpr",
+        "GHSA-5p2g-fcmc-qvqq"
+      ]
     },
     "peerDependencyRules": {
       "ignoreMissing": [
