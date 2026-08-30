@@ -11,7 +11,6 @@
     "playwright": "^1.57.0",
     "rimraf": "^6.1.2",
     "typescript": "^5.6.3",
-    "typescript-plugin-css-modules": "^5.1.0",
     "wxt": "^0.20.13"
   },
   "scripts": {
