@@ -55,10 +55,6 @@
   },
   "pnpm": {
     "auditConfig": {
-      "ignoreCves": [
-        "CVE-2025-71330",
-        "CVE-2025-71329"
-      ],
       "ignoreGhsas": [
         "GHSA-w3rx-r6r6-pgpr",
         "GHSA-5p2g-fcmc-qvqq"
