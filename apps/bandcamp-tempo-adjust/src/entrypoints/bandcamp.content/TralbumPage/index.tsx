@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import { fetchBandcampTrackInfoStore } from '~/utils/fetchBandcampTrackInfoStore';
-import { TrackInfoByUrl } from '~/types';
+import type { TrackInfoByUrl } from '~/types';
 import AlbumTrackBpms from './AlbumTrackBpms';
 import { BpmProvider } from '../BpmContext';
 import CurrentTrackBpm from './CurrentTrackBpm';

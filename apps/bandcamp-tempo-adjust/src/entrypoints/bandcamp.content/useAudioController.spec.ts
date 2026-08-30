@@ -2,7 +2,7 @@ import { describe, expect, it, vi } from 'vitest';
 
 import {
   useAudioController,
-  UseAudioControllerProps,
+  type UseAudioControllerProps,
 } from './useAudioController';
 import useAudio from './AudioStore';
 import { renderHook } from '@testing-library/react';

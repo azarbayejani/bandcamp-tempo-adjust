@@ -19,7 +19,7 @@ export const test = base.extend<{
     await context.close();
   },
   extensionId: async ({ context }, use) => {
-    let background: { url(): string };
+    let background: { url(): string } | undefined;
     if (pathToExtension.endsWith('-mv3')) {
       [background] = context.serviceWorkers();
       if (!background) background = await context.waitForEvent('serviceworker');
@@ -29,7 +29,7 @@ export const test = base.extend<{
         background = await context.waitForEvent('backgroundpage');
     }
 
-    const extensionId = background.url().split('/')[2];
+    const extensionId = background.url().split('/')[2]!;
     await use(extensionId);
   },
 });
