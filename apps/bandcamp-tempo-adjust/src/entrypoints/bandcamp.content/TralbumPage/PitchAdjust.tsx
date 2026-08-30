@@ -1,6 +1,6 @@
 import { PitchAdjust } from '@tempo-adjust/player-components';
 import { useShallow } from 'zustand/shallow';
-import useAudio, { AudioState } from '../AudioStore';
+import useAudio, { type AudioState } from '../AudioStore';
 
 const selector = ({
   togglePreservesPitch,

@@ -31,7 +31,7 @@ export const tempoRanges = [
 const useTempoRange = () => {
   const [tempoRangeIndex, setTempoRangeIndex] = React.useState(1);
   return {
-    tempoRange: tempoRanges[tempoRangeIndex % tempoRanges.length],
+    tempoRange: tempoRanges[tempoRangeIndex % tempoRanges.length]!,
     setTempoRangeIndex,
   };
 };

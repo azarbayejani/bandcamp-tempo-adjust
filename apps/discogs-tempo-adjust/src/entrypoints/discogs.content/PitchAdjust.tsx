@@ -1,6 +1,6 @@
 import React from 'react';
 import useForceUpdate from './store';
-import { YoutubeMessage } from '../youtube.content/renderer';
+import type { YoutubeMessage } from '../youtube.content/renderer';
 import { PitchAdjust } from '@tempo-adjust/player-components';
 
 const getCurrentYoutubeIframe = () => {

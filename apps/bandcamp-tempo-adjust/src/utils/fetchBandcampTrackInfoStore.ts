@@ -1,4 +1,4 @@
-import { TrackInfoByUrl } from '../types';
+import type { TrackInfoByUrl } from '../types';
 import browser from 'webextension-polyfill';
 
 // this is bandcamp's data representation

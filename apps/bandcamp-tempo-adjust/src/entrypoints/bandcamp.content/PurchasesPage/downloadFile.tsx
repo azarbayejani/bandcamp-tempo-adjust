@@ -1,4 +1,4 @@
-import { PurchaseWithLocalCurrency } from './usePurchases';
+import type { PurchaseWithLocalCurrency } from './usePurchases';
 import { Parser } from '@json2csv/plainjs';
 
 export function downloadFile(

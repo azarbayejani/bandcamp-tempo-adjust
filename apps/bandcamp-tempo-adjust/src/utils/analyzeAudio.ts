@@ -1,6 +1,6 @@
 import { analyze } from 'web-audio-beat-detector';
 import browser from 'webextension-polyfill';
-import { FetchAudioBufferFromUrlMessage } from '../types';
+import type { FetchAudioBufferFromUrlMessage } from '../types';
 
 function mergeChunks(chunks: Uint8Array[]) {
   let length = 0;

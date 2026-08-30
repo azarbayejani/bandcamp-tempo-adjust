@@ -5,7 +5,7 @@ import Select from 'react-select';
 import { downloadFile } from './downloadFile';
 import { fetchCurrencies } from './services/fetchCurrencies';
 import { formatDate } from './services/formatDate';
-import { PurchaseWithLocalCurrency, usePurchases } from './usePurchases';
+import { type PurchaseWithLocalCurrency, usePurchases } from './usePurchases';
 
 interface PurchasesPageProps {
   username: string;

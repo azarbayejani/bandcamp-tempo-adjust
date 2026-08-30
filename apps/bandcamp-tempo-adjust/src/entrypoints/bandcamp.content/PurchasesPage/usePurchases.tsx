@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { Purchase, PurchasesAPI } from './services/GetItemsAPI';
+import { type Purchase, PurchasesAPI } from './services/GetItemsAPI';
 import getConversionRatesForDate from './services/getConversionRatesForDate';
 
 interface UsePurchasesInput {

@@ -2,3 +2,6 @@ packages:
   - "apps/**"
   - "packages/**"
   - "!**/test/**"
+
+ignoredBuiltDependencies:
+  - "@parcel/watcher"

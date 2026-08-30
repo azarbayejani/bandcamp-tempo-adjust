@@ -2,7 +2,7 @@ import fs from 'node:fs/promises';
 import path from 'path';
 import type { BrowserContext, Page } from '@playwright/test';
 import { setupYoutubeMock } from './setupYoutubeMock';
-import { Har } from 'har-format';
+import type { Har } from 'har-format';
 
 type SetupNetworkOptions = {
   harPath?: string;
