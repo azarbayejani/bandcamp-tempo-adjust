@@ -60,15 +60,6 @@
         "GHSA-w3rx-r6r6-pgpr",
         "GHSA-5p2g-fcmc-qvqq"
       ]
-    },
-    "peerDependencyRules": {
-      "ignoreMissing": [
-        "less",
-        "stylus",
-        "sugarss",
-        "lightningcss",
-        "sass-embedded"
-      ]
     }
   },
   "packageManager": "pnpm@10.34.5"
