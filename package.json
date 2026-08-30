@@ -57,7 +57,9 @@
     "overrides": {
       "node-forge": "^1.4.0",
       "shell-quote": ">=1.9.0",
-      "adm-zip": "^0.6.0"
+      "adm-zip": "^0.6.0",
+      "tmp": ">=0.2.6",
+      "uuid@<11.1.1": ">=11.1.1"
     },
     "peerDependencyRules": {
       "ignoreMissing": [
