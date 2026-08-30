@@ -54,13 +54,5 @@
   "resolutions": {
     "@types/react": "18.3.1"
   },
-  "pnpm": {
-    "auditConfig": {
-      "ignoreGhsas": [
-        "GHSA-w3rx-r6r6-pgpr",
-        "GHSA-5p2g-fcmc-qvqq"
-      ]
-    }
-  },
   "packageManager": "pnpm@10.34.5"
 }
