@@ -30,6 +30,8 @@
     "e2e:ui": "playwright test --ui"
   },
   "dependencies": {
+    "@tanstack/react-query": "catalog:",
+    "@tanstack/react-query-devtools": "catalog:",
     "@tempo-adjust/permissions": "workspace:*",
     "@tempo-adjust/player-components": "workspace:*",
     "@tempo-adjust/theme-provider": "workspace:*",
@@ -37,7 +39,6 @@
     "classnames": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:",
-    "react-query": "^3.39.3",
     "webextension-polyfill": "catalog:",
     "zustand": "catalog:"
   },

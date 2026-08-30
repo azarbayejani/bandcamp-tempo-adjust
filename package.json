@@ -43,8 +43,5 @@
     "vitest": "catalog:",
     "yaml-eslint-parser": "^2.1.0"
   },
-  "resolutions": {
-    "@types/react": "18.3.1"
-  },
   "packageManager": "pnpm@10.34.5"
 }
