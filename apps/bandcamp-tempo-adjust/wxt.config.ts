@@ -3,7 +3,6 @@ import { defineConfig } from 'wxt';
 export default defineConfig({
   manifest: {
     name: 'Bandcamp Tempo Adjust',
-    version: '0.9.6',
     description:
       'A browser extension to detect and adjust track tempo on Bandcamp',
     browser_specific_settings: {
@@ -21,10 +20,4 @@ export default defineConfig({
     '@wxt-dev/webextension-polyfill',
   ],
   srcDir: 'src',
-  zip: {
-    // wxt 0.21 changed the default templates to use {{packageVersion}},
-    // but our package.json versions don't track the manifest version
-    artifactTemplate: '{{name}}-{{versionName}}-{{browser}}.zip',
-    sourcesTemplate: '{{name}}-{{versionName}}-sources.zip',
-  },
 });
