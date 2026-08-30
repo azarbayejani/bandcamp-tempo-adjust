@@ -4,6 +4,66 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+catalogs:
+  default:
+    '@playwright/test':
+      specifier: ^1.62.1
+      version: 1.62.1
+    '@testing-library/jest-dom':
+      specifier: ^6.9.1
+      version: 6.9.1
+    '@testing-library/react':
+      specifier: ^16.3.3
+      version: 16.3.3
+    '@testing-library/user-event':
+      specifier: ^14.6.6
+      version: 14.6.6
+    '@types/react-dom':
+      specifier: ^18.3.7
+      version: 18.3.7
+    '@types/webextension-polyfill':
+      specifier: ^0.9.2
+      version: 0.9.2
+    '@wxt-dev/module-react':
+      specifier: ^1.2.2
+      version: 1.2.2
+    '@wxt-dev/webextension-polyfill':
+      specifier: ^1.0.0
+      version: 1.0.0
+    classnames:
+      specifier: ^2.5.1
+      version: 2.5.1
+    react:
+      specifier: ^18.3.1
+      version: 18.3.1
+    react-dom:
+      specifier: ^18.3.1
+      version: 18.3.1
+    sass:
+      specifier: ^1.103.1
+      version: 1.103.1
+    typescript:
+      specifier: ^5.9.3
+      version: 5.9.3
+    vite:
+      specifier: ^8.2.2
+      version: 8.2.2
+    vitest:
+      specifier: ^4.1.11
+      version: 4.1.11
+    web-ext:
+      specifier: ^10.6.0
+      version: 10.6.0
+    webextension-polyfill:
+      specifier: ^0.10.0
+      version: 0.10.0
+    wxt:
+      specifier: ^0.21.4
+      version: 0.21.4
+    zustand:
+      specifier: ^5.0.15
+      version: 5.0.15
+
 overrides:
   '@types/react': 18.3.1
 
@@ -14,33 +74,9 @@ importers:
       '@eslint/js':
         specifier: ^9.39.5
         version: 9.39.5
-      '@testing-library/dom':
-        specifier: ^10.4.1
-        version: 10.4.1
       '@testing-library/jest-dom':
-        specifier: ^6.9.1
+        specifier: 'catalog:'
         version: 6.9.1
-      '@testing-library/react':
-        specifier: ^16.3.3
-        version: 16.3.3(@testing-library/dom@10.4.1)(@types/react-dom@18.3.7(@types/react@18.3.1))(@types/react@18.3.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@testing-library/user-event':
-        specifier: ^14.6.6
-        version: 14.6.6(@testing-library/dom@10.4.1)
-      '@types/chrome':
-        specifier: ^0.0.202
-        version: 0.0.202
-      '@types/json2csv':
-        specifier: ^5.0.7
-        version: 5.0.7
-      '@types/react':
-        specifier: 18.3.1
-        version: 18.3.1
-      '@types/react-dom':
-        specifier: ^18.3.7
-        version: 18.3.7(@types/react@18.3.1)
-      '@types/webextension-polyfill':
-        specifier: ^0.9.2
-        version: 0.9.2
       eslint:
         specifier: ^9.39.5
         version: 9.39.5(jiti@2.7.0)
@@ -53,9 +89,6 @@ importers:
       eslint-plugin-react-hooks:
         specifier: ^7.1.1
         version: 7.1.1(eslint@9.39.5(jiti@2.7.0))
-      fs-extra:
-        specifier: ^11.4.0
-        version: 11.4.0
       globals:
         specifier: ^17.11.0
         version: 17.11.0
@@ -65,26 +98,17 @@ importers:
       prettier:
         specifier: ^2.8.8
         version: 2.8.8
-      react:
-        specifier: 18.3.1
-        version: 18.3.1
-      react-dom:
-        specifier: 18.3.1
-        version: 18.3.1(react@18.3.1)
-      rimraf:
-        specifier: ^6.1.3
-        version: 6.1.3
       sass:
-        specifier: ^1.103.1
+        specifier: 'catalog:'
         version: 1.103.1
       typescript:
-        specifier: ^5.9.3
+        specifier: 'catalog:'
         version: 5.9.3
       typescript-eslint:
         specifier: ^8.68.0
         version: 8.68.0(eslint@9.39.5(jiti@2.7.0))(typescript@5.9.3)
       vitest:
-        specifier: ^4.1.11
+        specifier: 'catalog:'
         version: 4.1.11(@types/node@26.4.0)(jsdom@27.4.0)(vite@8.2.2(@types/node@26.4.0)(jiti@2.7.0)(sass@1.103.1))
 
   apps/bandcamp-tempo-adjust:
@@ -111,7 +135,7 @@ importers:
         specifier: workspace:*
         version: link:../../packages/to-one-decimal
       '@wxt-dev/webextension-polyfill':
-        specifier: ^1.0.0
+        specifier: 'catalog:'
         version: 1.0.0(webextension-polyfill@0.10.0)(wxt@0.21.4(eslint@9.39.4(jiti@2.7.0))(rolldown@1.2.6)(typescript@5.9.3)(vite@8.2.2(@types/node@26.4.0)(jiti@2.7.0)(sass@1.103.1))(web-ext@10.6.0(jiti@2.7.0)))
       immer:
         specifier: ^9.0.21
@@ -120,10 +144,10 @@ importers:
         specifier: ^8.1.1
         version: 8.1.1
       react:
-        specifier: ^18.3.1
+        specifier: 'catalog:'
         version: 18.3.1
       react-dom:
-        specifier: ^18.3.1
+        specifier: 'catalog:'
         version: 18.3.1(react@18.3.1)
       react-select:
         specifier: ^5.10.2
@@ -132,74 +156,59 @@ importers:
         specifier: ^8.2.39
         version: 8.2.39
       webextension-polyfill:
-        specifier: ^0.10.0
+        specifier: 'catalog:'
         version: 0.10.0
       zustand:
-        specifier: ^5.0.15
+        specifier: 'catalog:'
         version: 5.0.15(@types/react@18.3.1)(immer@9.0.21)(react@18.3.1)(use-sync-external-store@1.6.0(react@18.3.1))
     devDependencies:
       '@playwright/test':
-        specifier: ^1.62.1
+        specifier: 'catalog:'
         version: 1.62.1
       '@tempo-adjust/wxt-hooks':
         specifier: workspace:*
         version: link:../../packages/wxt-hooks
       '@testing-library/jest-dom':
-        specifier: ^6.9.1
+        specifier: 'catalog:'
         version: 6.9.1
       '@testing-library/react':
-        specifier: ^16.3.3
+        specifier: 'catalog:'
         version: 16.3.3(@testing-library/dom@10.4.1)(@types/react-dom@18.3.7(@types/react@18.3.1))(@types/react@18.3.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@testing-library/user-event':
-        specifier: ^14.6.6
+        specifier: 'catalog:'
         version: 14.6.6(@testing-library/dom@10.4.1)
-      '@types/chrome':
-        specifier: ^0.0.202
-        version: 0.0.202
-      '@types/fs-extra':
-        specifier: ^11.0.4
-        version: 11.0.4
-      '@types/json2csv':
-        specifier: ^5.0.7
-        version: 5.0.7
       '@types/react':
         specifier: 18.3.1
         version: 18.3.1
       '@types/react-dom':
-        specifier: ^18.3.7
+        specifier: 'catalog:'
         version: 18.3.7(@types/react@18.3.1)
       '@types/webextension-polyfill':
-        specifier: ^0.9.2
+        specifier: 'catalog:'
         version: 0.9.2
       '@webext-core/fake-browser':
         specifier: ^1.5.2
         version: 1.5.2
       '@wxt-dev/module-react':
-        specifier: ^1.2.2
+        specifier: 'catalog:'
         version: 1.2.2(vite@8.2.2(@types/node@26.4.0)(jiti@2.7.0)(sass@1.103.1))(wxt@0.21.4(eslint@9.39.4(jiti@2.7.0))(rolldown@1.2.6)(typescript@5.9.3)(vite@8.2.2(@types/node@26.4.0)(jiti@2.7.0)(sass@1.103.1))(web-ext@10.6.0(jiti@2.7.0)))
-      playwright:
-        specifier: ^1.62.1
-        version: 1.62.1
-      prettier:
-        specifier: ^2.8.8
-        version: 2.8.8
-      rimraf:
-        specifier: ^6.1.3
-        version: 6.1.3
       sass:
-        specifier: ^1.103.1
+        specifier: 'catalog:'
         version: 1.103.1
       typescript:
-        specifier: ^5.9.3
+        specifier: 'catalog:'
         version: 5.9.3
       vite:
-        specifier: ^8.2.2
+        specifier: 'catalog:'
         version: 8.2.2(@types/node@26.4.0)(jiti@2.7.0)(sass@1.103.1)
+      vitest:
+        specifier: 'catalog:'
+        version: 4.1.11(@types/node@26.4.0)(jsdom@27.4.0)(vite@8.2.2(@types/node@26.4.0)(jiti@2.7.0)(sass@1.103.1))
       web-ext:
-        specifier: ^10.6.0
+        specifier: 'catalog:'
         version: 10.6.0(jiti@2.7.0)
       wxt:
-        specifier: ^0.21.4
+        specifier: 'catalog:'
         version: 0.21.4(eslint@9.39.4(jiti@2.7.0))(rolldown@1.2.6)(typescript@5.9.3)(vite@8.2.2(@types/node@26.4.0)(jiti@2.7.0)(sass@1.103.1))(web-ext@10.6.0(jiti@2.7.0))
 
   apps/discogs-tempo-adjust:
@@ -213,42 +222,30 @@ importers:
       '@tempo-adjust/theme-provider':
         specifier: workspace:*
         version: link:../../packages/theme-provider
-      '@types/react':
-        specifier: 18.3.1
-        version: 18.3.1
-      '@types/react-dom':
-        specifier: ^18.3.7
-        version: 18.3.7(@types/react@18.3.1)
-      '@wxt-dev/module-react':
-        specifier: ^1.2.2
-        version: 1.2.2(vite@8.2.2(@types/node@26.4.0)(jiti@2.7.0)(sass@1.103.1))(wxt@0.21.4(eslint@9.39.5(jiti@2.7.0))(rolldown@1.2.6)(typescript@5.9.3)(vite@8.2.2(@types/node@26.4.0)(jiti@2.7.0)(sass@1.103.1))(web-ext@10.6.0(jiti@2.7.0)))
       '@wxt-dev/webextension-polyfill':
-        specifier: ^1.0.0
+        specifier: 'catalog:'
         version: 1.0.0(webextension-polyfill@0.10.0)(wxt@0.21.4(eslint@9.39.5(jiti@2.7.0))(rolldown@1.2.6)(typescript@5.9.3)(vite@8.2.2(@types/node@26.4.0)(jiti@2.7.0)(sass@1.103.1))(web-ext@10.6.0(jiti@2.7.0)))
       classnames:
-        specifier: ^2.5.1
+        specifier: 'catalog:'
         version: 2.5.1
       react:
-        specifier: ^18.3.1
+        specifier: 'catalog:'
         version: 18.3.1
       react-dom:
-        specifier: ^18.3.1
+        specifier: 'catalog:'
         version: 18.3.1(react@18.3.1)
-      react-error-overlay:
-        specifier: ^6.1.0
-        version: 6.1.0
       react-query:
         specifier: ^3.39.3
         version: 3.39.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       webextension-polyfill:
-        specifier: ^0.10.0
+        specifier: 'catalog:'
         version: 0.10.0
       zustand:
-        specifier: ^5.0.15
+        specifier: 'catalog:'
         version: 5.0.15(@types/react@18.3.1)(immer@9.0.21)(react@18.3.1)(use-sync-external-store@1.6.0(react@18.3.1))
     devDependencies:
       '@playwright/test':
-        specifier: ^1.62.1
+        specifier: 'catalog:'
         version: 1.62.1
       '@tempo-adjust/wxt-hooks':
         specifier: workspace:*
@@ -256,39 +253,45 @@ importers:
       '@types/har-format':
         specifier: ^1.2.16
         version: 1.2.16
-      playwright:
-        specifier: ^1.62.1
-        version: 1.62.1
-      rimraf:
-        specifier: ^6.1.3
-        version: 6.1.3
+      '@types/react':
+        specifier: 18.3.1
+        version: 18.3.1
+      '@types/react-dom':
+        specifier: 'catalog:'
+        version: 18.3.7(@types/react@18.3.1)
+      '@types/webextension-polyfill':
+        specifier: 'catalog:'
+        version: 0.9.2
+      '@wxt-dev/module-react':
+        specifier: 'catalog:'
+        version: 1.2.2(vite@8.2.2(@types/node@26.4.0)(jiti@2.7.0)(sass@1.103.1))(wxt@0.21.4(eslint@9.39.5(jiti@2.7.0))(rolldown@1.2.6)(typescript@5.9.3)(vite@8.2.2(@types/node@26.4.0)(jiti@2.7.0)(sass@1.103.1))(web-ext@10.6.0(jiti@2.7.0)))
+      sass:
+        specifier: 'catalog:'
+        version: 1.103.1
       typescript:
-        specifier: ^5.9.3
+        specifier: 'catalog:'
         version: 5.9.3
       vite:
-        specifier: ^8.2.2
+        specifier: 'catalog:'
         version: 8.2.2(@types/node@26.4.0)(jiti@2.7.0)(sass@1.103.1)
       web-ext:
-        specifier: ^10.6.0
+        specifier: 'catalog:'
         version: 10.6.0(jiti@2.7.0)
       wxt:
-        specifier: ^0.21.4
+        specifier: 'catalog:'
         version: 0.21.4(eslint@9.39.5(jiti@2.7.0))(rolldown@1.2.6)(typescript@5.9.3)(vite@8.2.2(@types/node@26.4.0)(jiti@2.7.0)(sass@1.103.1))(web-ext@10.6.0(jiti@2.7.0))
 
   packages/permissions:
     dependencies:
-      rimraf:
-        specifier: ^6.1.3
-        version: 6.1.3
       webextension-polyfill:
-        specifier: ^0.10.0
+        specifier: 'catalog:'
         version: 0.10.0
     devDependencies:
-      '@webext-core/fake-browser':
-        specifier: ^1.5.2
-        version: 1.5.2
+      '@types/webextension-polyfill':
+        specifier: 'catalog:'
+        version: 0.9.2
       typescript:
-        specifier: ^5.9.3
+        specifier: 'catalog:'
         version: 5.9.3
 
   packages/player-components:
@@ -300,34 +303,53 @@ importers:
         specifier: workspace:*
         version: link:../to-one-decimal
       classnames:
-        specifier: ^2.5.1
+        specifier: 'catalog:'
         version: 2.5.1
-      rimraf:
-        specifier: ^6.1.3
-        version: 6.1.3
     devDependencies:
+      '@testing-library/jest-dom':
+        specifier: 'catalog:'
+        version: 6.9.1
+      '@testing-library/react':
+        specifier: 'catalog:'
+        version: 16.3.3(@testing-library/dom@10.4.1)(@types/react-dom@18.3.7(@types/react@18.3.1))(@types/react@18.3.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@testing-library/user-event':
+        specifier: 'catalog:'
+        version: 14.6.6(@testing-library/dom@10.4.1)
+      '@types/react':
+        specifier: 18.3.1
+        version: 18.3.1
+      react:
+        specifier: 'catalog:'
+        version: 18.3.1
+      react-dom:
+        specifier: 'catalog:'
+        version: 18.3.1(react@18.3.1)
       typescript:
-        specifier: ^5.9.3
+        specifier: 'catalog:'
         version: 5.9.3
+      vitest:
+        specifier: 'catalog:'
+        version: 4.1.11(@types/node@26.4.0)(jsdom@27.4.0)(vite@8.2.2(@types/node@26.4.0)(jiti@2.7.0)(sass@1.103.1))
 
   packages/theme-provider:
-    dependencies:
-      rimraf:
-        specifier: ^6.1.3
-        version: 6.1.3
     devDependencies:
+      '@testing-library/jest-dom':
+        specifier: 'catalog:'
+        version: 6.9.1
+      '@types/react':
+        specifier: 18.3.1
+        version: 18.3.1
+      react:
+        specifier: 'catalog:'
+        version: 18.3.1
       typescript:
-        specifier: ^5.9.3
+        specifier: 'catalog:'
         version: 5.9.3
 
   packages/to-one-decimal:
-    dependencies:
-      rimraf:
-        specifier: ^6.1.3
-        version: 6.1.3
     devDependencies:
       typescript:
-        specifier: ^5.9.3
+        specifier: 'catalog:'
         version: 5.9.3
 
   packages/wxt-hooks:
@@ -341,21 +363,18 @@ importers:
       jszip:
         specifier: ^3.10.1
         version: 3.10.1
-      rimraf:
-        specifier: ^6.1.3
-        version: 6.1.3
       wxt:
-        specifier: ^0.21.4
+        specifier: 'catalog:'
         version: 0.21.4(eslint@9.39.5(jiti@2.7.0))(rolldown@1.2.6)(typescript@5.9.3)(vite@8.2.2(@types/node@26.4.0)(jiti@2.7.0)(sass@1.103.1))(web-ext@10.6.0(jiti@2.7.0))
     devDependencies:
       '@types/fs-extra':
         specifier: ^11.0.4
         version: 11.0.4
       typescript:
-        specifier: ^5.9.3
+        specifier: 'catalog:'
         version: 5.9.3
       vite:
-        specifier: ^8.2.2
+        specifier: 'catalog:'
         version: 8.2.2(@types/node@26.4.0)(jiti@2.7.0)(sass@1.103.1)
 
 packages:
@@ -955,9 +974,6 @@ packages:
   '@types/chai@5.2.3':
     resolution: {integrity: sha512-Mw558oeA9fFbv65/y4mHtXDs9bPnFMZAL/jxdPFUpOHHIXX91mcgEHbS5Lahr+pwZFR8A7GQleRWeI6cGFC2UA==}
 
-  '@types/chrome@0.0.202':
-    resolution: {integrity: sha512-Oc4daL9sFS+9MToVZPLMBxR7PxsEdod0b8wOY11lRr06GJp43MORvHeDyMD8QzeRGT6HI13oaYAe2PBgvALc4w==}
-
   '@types/deep-eql@4.0.2':
     resolution: {integrity: sha512-c9h9dVVMigMPc4bwTvC5dxqtqJZwQPePsWjPlpSOnojbor6pGqdk541lfA7AqFQr5pB1BRdq0juY9db81BwyFw==}
 
@@ -978,9 +994,6 @@ packages:
 
   '@types/json-schema@7.0.15':
     resolution: {integrity: sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==}
-
-  '@types/json2csv@5.0.7':
-    resolution: {integrity: sha512-Ma25zw9G9GEBnX8b12R4EYvnFT6dBh8L3jwsN5EUFXa+fl2dqmbLDbNWN0XuQU3rSXdsbBeCYjI9uHU2PUBxhA==}
 
   '@types/jsonfile@6.1.4':
     resolution: {integrity: sha512-D5qGUYwjvnNNextdU59/+fI+spnwtTFmyQP0h+PfIOSkNfpU6AOICUOkm4i0OnSk+NyjdPJrxCDro0sJsWlRpQ==}
@@ -2048,10 +2061,6 @@ packages:
     resolution: {integrity: sha512-XxwI8EOhVQgWp6iDL+3b0r86f4d6AX6zSU55HfB4ydCEuXLXc5FcYeOu+nnGftS4TEju/11rt4KJPTMgbfmv4A==}
     engines: {node: '>=10.13.0'}
 
-  glob@13.0.6:
-    resolution: {integrity: sha512-Wjlyrolmm8uDpm/ogGyXZXb1Z+Ca2B8NbJwqBVg0axK9GbBeoS7yGV6vjXnYdGm6X53iehEuxxbyiKp8QmN4Vw==}
-    engines: {node: 18 || 20 || >=22}
-
   glob@7.2.3:
     resolution: {integrity: sha512-nFR0zLpU2YCaRxwoCJvL6UvCH2JFyFVIvwTLsIf21AuHlMskA1hhTdk+LlYJtOlYt9v6dvszD2BGRqBL+iQK9Q==}
     deprecated: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
@@ -2680,10 +2689,6 @@ packages:
   minimist@1.2.8:
     resolution: {integrity: sha512-2yyAR8qBkN3YuheJanUpWC5U3bb5osDywNB8RzDVlDwDHbocAJveqqj1u8+SVD7jkWT4yvsHCpWqqWqAxb0zCA==}
 
-  minipass@7.1.3:
-    resolution: {integrity: sha512-tEBHqDnIoM/1rXME1zgka9g6Q2lcoCkxHLuc7ODJ5BxbP5d4c2Z5cGgtXAku59200Cx7diuHTOYfSBD8n6mm8A==}
-    engines: {node: '>=16 || 14 >=14.17'}
-
   mlly@1.8.2:
     resolution: {integrity: sha512-d+ObxMQFmbt10sretNDytwt85VrbkhhUA/JBGm1MPaWJ65Cl4wOgLaB1NYvJSZ0Ef03MMEU/0xpPMXUIQ29UfA==}
 
@@ -2809,9 +2814,6 @@ packages:
     resolution: {integrity: sha512-MyIV3ZA/PmyBN/ud8vV9XzwTrNtR4jFrObymZYnZqMmW0zA8Z17vnT0rBgFE/TlohB+YCHqXMgZzb3Csp49vqg==}
     engines: {node: '>=14.16'}
 
-  package-json-from-dist@1.0.1:
-    resolution: {integrity: sha512-UEZIS3/by4OC8vL3P2dTXRETpebLI2NiI5vIrjaD/5UtrkFX/tNbwjTSRAGC/+7CAo2pIcBaRgWmcBBHcsaCIw==}
-
   package-json@10.0.1:
     resolution: {integrity: sha512-ua1L4OgXSBdsu1FPb7F3tYH0F48a6kxvod4pLUlGY9COeJAJQNX/sNH2IiEmsxw7lqYiAwrdHMjz1FctOsyDQg==}
     engines: {node: '>=18'}
@@ -2857,10 +2859,6 @@ packages:
 
   path-parse@1.0.7:
     resolution: {integrity: sha512-LDJzPVEEEPR+y48z93A0Ed0yXb8pAByGWo/k5YYdYgpY2/2EsOsksJrq7lOHxryrVOn1ejG6oAp8ahvOIQD8sw==}
-
-  path-scurry@2.0.2:
-    resolution: {integrity: sha512-3O/iVVsJAPsOnpwWIeD+d6z/7PmqApyQePUtCndjatj/9I5LylHvt5qluFaBT3I5h3r1ejfR056c+FCv+NnNXg==}
-    engines: {node: 18 || 20 || >=22}
 
   path-type@4.0.0:
     resolution: {integrity: sha512-gDKb8aZMDeD/tZWs9P6+q0J9Mwkdl6xMV8TjnGP3qJVJ06bdMgkbBlLU8IdfOsIsFz2BW1rNVT3XuNEl8zPAvw==}
@@ -2987,9 +2985,6 @@ packages:
     peerDependencies:
       react: ^18.3.1
 
-  react-error-overlay@6.1.0:
-    resolution: {integrity: sha512-SN/U6Ytxf1QGkw/9ve5Y+NxBbZM6Ht95tuXNMKs8EJyFa/Vy/+Co3stop3KBHARfn/giv+Lj1uUnTfOJ3moFEQ==}
-
   react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
 
@@ -3090,11 +3085,6 @@ packages:
   rimraf@3.0.2:
     resolution: {integrity: sha512-JZkJMZkAGFFPP2YqXZXPbMlMBgsxzE8ILs4lMIX/2o0L9UBw9O/Y3o6wFw/i9YLapcUJWwqbi3kdxIPdC62TIA==}
     deprecated: Rimraf versions prior to v4 are no longer supported
-    hasBin: true
-
-  rimraf@6.1.3:
-    resolution: {integrity: sha512-LKg+Cr2ZF61fkcaK1UdkH2yEBBKnYjTyWzTJT6KNPcSPaiT7HSdhtMXQuN5wkTX0Xu72KQ1l8S42rlmexS2hSA==}
-    engines: {node: 20 || >=22}
     hasBin: true
 
   rolldown@1.2.6:
@@ -4432,11 +4422,6 @@ snapshots:
       '@types/deep-eql': 4.0.2
       assertion-error: 2.0.1
 
-  '@types/chrome@0.0.202':
-    dependencies:
-      '@types/filesystem': 0.0.36
-      '@types/har-format': 1.2.16
-
   '@types/deep-eql@4.0.2': {}
 
   '@types/estree@1.0.9': {}
@@ -4455,10 +4440,6 @@ snapshots:
   '@types/har-format@1.2.16': {}
 
   '@types/json-schema@7.0.15': {}
-
-  '@types/json2csv@5.0.7':
-    dependencies:
-      '@types/node': 26.4.0
 
   '@types/jsonfile@6.1.4':
     dependencies:
@@ -5779,12 +5760,6 @@ snapshots:
     dependencies:
       is-glob: 4.0.3
 
-  glob@13.0.6:
-    dependencies:
-      minimatch: 10.2.6
-      minipass: 7.1.3
-      path-scurry: 2.0.2
-
   glob@7.2.3:
     dependencies:
       fs.realpath: 1.0.0
@@ -6375,8 +6350,6 @@ snapshots:
 
   minimist@1.2.8: {}
 
-  minipass@7.1.3: {}
-
   mlly@1.8.2:
     dependencies:
       acorn: 8.18.0
@@ -6523,8 +6496,6 @@ snapshots:
 
   p-timeout@6.1.4: {}
 
-  package-json-from-dist@1.0.1: {}
-
   package-json@10.0.1:
     dependencies:
       ky: 1.14.3
@@ -6575,11 +6546,6 @@ snapshots:
   path-key@3.1.1: {}
 
   path-parse@1.0.7: {}
-
-  path-scurry@2.0.2:
-    dependencies:
-      lru-cache: 11.5.2
-      minipass: 7.1.3
 
   path-type@4.0.0: {}
 
@@ -6707,8 +6673,6 @@ snapshots:
       react: 18.3.1
       scheduler: 0.23.2
 
-  react-error-overlay@6.1.0: {}
-
   react-is@16.13.1: {}
 
   react-is@17.0.2: {}
@@ -6830,11 +6794,6 @@ snapshots:
   rimraf@3.0.2:
     dependencies:
       glob: 7.2.3
-
-  rimraf@6.1.3:
-    dependencies:
-      glob: 13.0.6
-      package-json-from-dist: 1.0.1
 
   rolldown@1.2.6:
     dependencies:
