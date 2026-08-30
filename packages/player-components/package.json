@@ -6,12 +6,20 @@
   "dependencies": {
     "@tempo-adjust/theme-provider": "workspace:*",
     "@tempo-adjust/to-one-decimal": "workspace:*",
-    "classnames": "^2.5.1",
-    "rimraf": "^6.1.3"
+    "classnames": "catalog:"
+  },
+  "peerDependencies": {
+    "react": "^18.3.1"
   },
   "devDependencies": {
-    "typescript": "^5.9.3"
+    "@testing-library/jest-dom": "catalog:",
+    "@testing-library/react": "catalog:",
+    "@testing-library/user-event": "catalog:",
+    "@types/react": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
   },
-  "version": "0.0.0",
-  "packageManager": "pnpm@10.34.5"
+  "version": "0.0.0"
 }

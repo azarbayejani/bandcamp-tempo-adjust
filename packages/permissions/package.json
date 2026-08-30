@@ -5,11 +5,10 @@
   "main": "index.ts",
   "private": true,
   "devDependencies": {
-    "@webext-core/fake-browser": "^1.5.2",
-    "typescript": "^5.9.3"
+    "@types/webextension-polyfill": "catalog:",
+    "typescript": "catalog:"
   },
   "dependencies": {
-    "rimraf": "^6.1.3",
-    "webextension-polyfill": "^0.10.0"
+    "webextension-polyfill": "catalog:"
   }
 }
