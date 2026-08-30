@@ -8,7 +8,7 @@
     "typescript": "^5.9.3",
     "vite": "^8.2.2"
   },
-  "packageManager": "pnpm@9.12.3",
+  "packageManager": "pnpm@10.34.5",
   "dependencies": {
     "fast-glob": "^3.3.3",
     "fs-extra": "^11.4.0",

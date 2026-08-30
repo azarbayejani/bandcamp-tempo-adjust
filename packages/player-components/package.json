@@ -13,5 +13,5 @@
     "typescript": "^5.9.3"
   },
   "version": "0.0.0",
-  "packageManager": "pnpm@9.12.3"
+  "packageManager": "pnpm@10.34.5"
 }
