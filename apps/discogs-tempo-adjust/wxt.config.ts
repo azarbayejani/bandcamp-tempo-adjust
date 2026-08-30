@@ -18,4 +18,10 @@ export default defineConfig({
     '@wxt-dev/webextension-polyfill',
   ],
   srcDir: 'src',
+  zip: {
+    // wxt 0.21 changed the default templates to use {{packageVersion}},
+    // but our package.json versions don't track the manifest version
+    artifactTemplate: '{{name}}-{{versionName}}-{{browser}}.zip',
+    sourcesTemplate: '{{name}}-{{versionName}}-sources.zip',
+  },
 });
