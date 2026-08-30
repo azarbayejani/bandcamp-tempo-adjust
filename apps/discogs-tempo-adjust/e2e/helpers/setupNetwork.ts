@@ -1,6 +1,6 @@
 import fs from 'node:fs/promises';
 import path from 'path';
-import type { BrowserContext, Page } from '@playwright/test';
+import type { Page } from '@playwright/test';
 import { setupYoutubeMock } from './setupYoutubeMock';
 import type { Har } from 'har-format';
 

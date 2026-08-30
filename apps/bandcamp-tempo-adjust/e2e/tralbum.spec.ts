@@ -1,4 +1,3 @@
-import { extension } from 'webextension-polyfill';
 import { test, expect } from './fixtures';
 import { openTralbum } from './pages/tralbum';
 import { setupNetwork } from './helpers/setupNetwork';

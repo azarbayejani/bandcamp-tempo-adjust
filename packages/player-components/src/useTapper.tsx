@@ -19,7 +19,7 @@ const tapperReducer: Reducer<
   { type: 'TAP' } | { type: 'RESET' } | { type: 'CHANGE'; newText: string }
 > = (prev, action) => {
   switch (action.type) {
-    case 'TAP':
+    case 'TAP': {
       const now = Date.now();
       const distance = prev.lastTap && now - prev.lastTap;
 
@@ -45,9 +45,10 @@ const tapperReducer: Reducer<
         text: bpm?.toString() || '',
         lastTap: now,
       };
+    }
     case 'RESET':
       return defaultTapperState;
-    case 'CHANGE':
+    case 'CHANGE': {
       const newTextAsNumber = +action.newText;
 
       if (isNaN(newTextAsNumber)) {
@@ -62,6 +63,7 @@ const tapperReducer: Reducer<
         bpm: newTextAsNumber,
         text: action.newText,
       };
+    }
   }
 };
 

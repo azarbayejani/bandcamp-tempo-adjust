@@ -1,4 +1,3 @@
-import React from 'react';
 import { createRoot } from 'react-dom/client';
 
 import { ThemeProvider } from '@tempo-adjust/theme-provider';
@@ -10,7 +9,7 @@ const renderDiscogsPage = () => {
   const appDiv = document.createElement('div');
   appDiv.id = 'discogs-tempo-adjust';
   const root = createRoot(appDiv);
-  const observer = new MutationObserver((records) => {
+  const observer = new MutationObserver(() => {
     if (!document.getElementById(appDiv.id)) {
       root.render(
         <ThemeProvider theme="light">
@@ -26,7 +25,7 @@ const renderDiscogsPage = () => {
 
         const iframe = playerContainer.querySelector('iframe');
         if (iframe) {
-          const iframeObserver = new MutationObserver((records) => {
+          const iframeObserver = new MutationObserver(() => {
             useForceUpdate.getState().forceUpdate();
           });
 
