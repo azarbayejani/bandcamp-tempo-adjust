@@ -73,7 +73,6 @@ const PitchAdjust = ({
         <input
           type="range"
           onChange={handleSliderChange}
-          onInput={handleSliderChange}
           min={tempoRange.min}
           max={tempoRange.max}
           step={0.001}

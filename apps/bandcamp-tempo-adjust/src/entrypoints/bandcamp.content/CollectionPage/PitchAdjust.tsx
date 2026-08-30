@@ -63,7 +63,6 @@ const PitchAdjust = () => {
         className="BandcampTempoAdjust__slider_range BandcampTempoAdjust__slider_range--collection"
         type="range"
         onChange={handleSliderChange}
-        onInput={handleSliderChange}
         min={tempoRange.min}
         max={tempoRange.max}
         step={0.001}
