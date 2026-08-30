@@ -58,6 +58,15 @@
       "node-forge": "^1.4.0",
       "shell-quote": ">=1.9.0",
       "adm-zip": "^0.6.0"
+    },
+    "peerDependencyRules": {
+      "ignoreMissing": [
+        "less",
+        "stylus",
+        "sugarss",
+        "lightningcss",
+        "sass-embedded"
+      ]
     }
   },
   "packageManager": "pnpm@9.12.3"
