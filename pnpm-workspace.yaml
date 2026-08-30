@@ -10,7 +10,7 @@ catalog:
   "@testing-library/jest-dom": ^6.9.1
   "@testing-library/react": ^16.3.3
   "@testing-library/user-event": ^14.6.6
-  "@types/react": 19.2.18
+  "@types/react": ^19.2.18
   "@types/react-dom": ^19.2.5
   "@types/webextension-polyfill": ^0.9.2
   "@wxt-dev/module-react": ^1.2.2
