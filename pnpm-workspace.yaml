@@ -5,5 +5,3 @@ packages:
 
 ignoredBuiltDependencies:
   - "@parcel/watcher"
-
-autoInstallPeers: false
