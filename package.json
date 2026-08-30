@@ -2,6 +2,7 @@
   "name": "@tempo-adjust/monorepo",
   "version": "0.1",
   "description": "A browser extension to detect and adjust track tempo on the web",
+  "type": "module",
   "license": "MIT",
   "repository": {
     "type": "git",
