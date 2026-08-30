@@ -14,7 +14,7 @@ interface Props {
   title: string;
 }
 
-const Options: React.FC<Props> = ({ title }: Props) => {
+const Options: React.FC<Props> = () => {
   const { data: hasPermissions, isLoading } = useQuery(['permissions'], {
     queryFn: hasAllPermissions,
   });

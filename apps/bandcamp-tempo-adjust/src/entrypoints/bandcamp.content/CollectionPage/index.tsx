@@ -1,4 +1,3 @@
-import React from 'react';
 import PitchAdjust from './PitchAdjust';
 import { useAudioController } from '../useAudioController';
 

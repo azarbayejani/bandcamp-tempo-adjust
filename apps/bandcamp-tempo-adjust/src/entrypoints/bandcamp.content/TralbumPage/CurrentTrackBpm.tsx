@@ -1,4 +1,3 @@
-import React from 'react';
 
 import { BpmDetection } from '@tempo-adjust/player-components';
 

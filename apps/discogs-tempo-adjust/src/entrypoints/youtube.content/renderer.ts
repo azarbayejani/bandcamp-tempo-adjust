@@ -87,7 +87,7 @@ const renderYoutubePage = () => {
 
   // if there is an ad and the playback rate is changed during the ad
   // we need to force update the playback rate when the actual video is ready
-  const observer = new MutationObserver((records) => {
+  const observer = new MutationObserver(() => {
     videoController.forcePlaybackRate();
   });
   observer.observe(video, { attributes: true });

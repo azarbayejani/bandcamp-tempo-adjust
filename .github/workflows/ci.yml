@@ -33,6 +33,8 @@ jobs:
         run: pnpm install
       - name: Check typescript
         run: pnpm check
+      - name: Lint
+        run: pnpm lint
       - name: Run tests
         run: pnpm test
   e2e:

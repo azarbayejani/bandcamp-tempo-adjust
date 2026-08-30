@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { fetchBandcampTrackInfoStore } from '~/utils/fetchBandcampTrackInfoStore';
 import type { TrackInfoByUrl } from '~/types';

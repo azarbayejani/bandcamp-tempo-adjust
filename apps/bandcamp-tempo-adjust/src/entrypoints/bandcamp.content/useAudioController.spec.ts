@@ -15,7 +15,7 @@ function render(
 ) {
   const elements: HTMLElement[] = [];
   for (let i = 0; i < numberOfElements; i++) {
-    let audioElement = document.createElement('audio');
+    const audioElement = document.createElement('audio');
     audioElement.classList.add('audio-selector');
     document.body.appendChild(audioElement);
     elements.push(audioElement);

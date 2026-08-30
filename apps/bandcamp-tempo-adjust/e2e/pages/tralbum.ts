@@ -32,7 +32,7 @@ export async function openTralbum(
     setPitchAdjust: async (value: number) => {
       await tralbum.getPitchAdjust().fill(value.toString());
     },
-    getPlaybackRate: async (value: number) => {
+    getPlaybackRate: async (_value: number) => {
       const audioElement = tralbum.getAudioElement();
       const playbackRate = await audioElement.evaluate(
         (element: HTMLAudioElement) => element.playbackRate

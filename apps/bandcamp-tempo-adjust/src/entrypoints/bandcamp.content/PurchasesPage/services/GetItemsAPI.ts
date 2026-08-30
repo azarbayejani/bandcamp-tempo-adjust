@@ -94,12 +94,12 @@ export interface Purchase {
   tax: number;
 }
 
-interface GetItemsAPIInvalidCrumbsErrorResponse {
+export interface GetItemsAPIInvalidCrumbsErrorResponse {
   crumb: string;
   error: string;
 }
 
-interface GetItemsAPISuccessfulResponse {
+export interface GetItemsAPISuccessfulResponse {
   items: ApiPurchase[];
   last_token: string;
 
@@ -146,7 +146,7 @@ export class PurchasesAPI {
     while (true) {
       try {
         // I really don't know why these types need to be explicitly defined...
-        let currLastToken: string | undefined = lastToken;
+        const currLastToken: string | undefined = lastToken;
         const response: {
           lastToken: string | undefined;
           purchases: Purchase[];

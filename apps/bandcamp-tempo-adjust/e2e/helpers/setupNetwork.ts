@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import type { BrowserContext, Page } from '@playwright/test';
+import type { Page } from '@playwright/test';
 
 type SetupNetworkOptions = {
   harPath?: string;

@@ -15,7 +15,7 @@ export async function openRelease(
     getYoutubePlayButton: () =>
       page.getByRole('button', { name: 'Play' }).first(),
 
-    clickPlayPauseForTrack: async (name: string) => {
+    clickPlayPauseForTrack: async (_name: string) => {
       // await page.getByRole('button', { name: `Play ${name}` }).click();
     },
 
@@ -24,7 +24,7 @@ export async function openRelease(
     setPitchAdjust: async (value: number) => {
       await release.getPitchAdjust().fill(value.toString());
     },
-    getPlaybackRate: async (value: number) => {
+    getPlaybackRate: async (_value: number) => {
       const audioElement = release.getVideoElement();
       const playbackRate = await audioElement.evaluate(
         (element: HTMLAudioElement) => element.playbackRate
