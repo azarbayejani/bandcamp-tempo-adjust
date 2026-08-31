@@ -13,14 +13,14 @@ export type RatesTable = Record<string, Record<string, number>>;
 const DAY_MS = 86_400_000;
 
 /** Previous calendar day of a `YYYY-MM-DD` string, computed in UTC to avoid DST drift. */
-export function previousDay(isoDate: string): string {
+function previousDay(isoDate: string): string {
   const [year, month, day] = isoDate.split('-').map(Number);
   return new Date(Date.UTC(year, month - 1, day) - DAY_MS)
     .toISOString()
     .slice(0, 10);
 }
 
-export function nearestPriorRateDay(
+function nearestPriorRateDay(
   rates: RatesTable,
   date: string,
   maxLookback = 10
@@ -35,7 +35,7 @@ export function nearestPriorRateDay(
   );
 }
 
-export function eurRate(row: Record<string, number>, code: string): number {
+function eurRate(row: RatesTable['key'], code: string): number {
   if (code === 'EUR') return 1;
   const rate = row[code];
   if (rate === undefined) {

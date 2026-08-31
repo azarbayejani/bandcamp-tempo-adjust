@@ -14,7 +14,7 @@ import { formatDate } from './formatDate';
  */
 
 export const RATES_STORAGE_KEY = 'tempoAdjust.exchangeRates';
-export const FRANKFURTER_BASE_URL = 'https://api.frankfurter.dev/v1';
+const FRANKFURTER_BASE_URL = 'https://api.frankfurter.dev/v1';
 const CACHE_VERSION = 1;
 
 export class FrankfurterHttpError extends Error {
@@ -79,7 +79,7 @@ export function createBrowserRatesStorage(
   };
 }
 
-export function isRatesCache(value: unknown): value is RatesCache {
+function isRatesCache(value: unknown): value is RatesCache {
   if (typeof value !== 'object' || value === null) return false;
   const candidate = value as Partial<RatesCache>;
   return (

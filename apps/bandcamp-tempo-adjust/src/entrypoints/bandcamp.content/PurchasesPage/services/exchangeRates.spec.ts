@@ -4,8 +4,6 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import {
   createBrowserRatesStorage,
   fetchRates,
-  FRANKFURTER_BASE_URL,
-  isRatesCache,
   loadRates,
   rangeStartFor,
   RATES_STORAGE_KEY,
@@ -14,6 +12,10 @@ import {
 } from './exchangeRates';
 
 const TODAY = '2024-03-20';
+
+// Deliberately duplicated from the implementation: the spec pins the actual
+// URLs requested from the network, not whatever constant the module holds.
+const BASE_URL = 'https://api.frankfurter.dev/v1';
 
 function memoryStorage(initial?: unknown): RatesStorage & { value: unknown } {
   const store = { value: initial } as RatesStorage & { value: unknown };
@@ -49,22 +51,6 @@ describe('rangeStartFor', () => {
   });
 });
 
-describe('isRatesCache', () => {
-  it('accepts the current shape and rejects anything else', () => {
-    const ok: RatesCache = {
-      version: 1,
-      startDate: '2024-01-01',
-      endDate: TODAY,
-      rates: {},
-    };
-    expect(isRatesCache(ok)).toBe(true);
-    expect(isRatesCache({ ...ok, version: 2 })).toBe(false);
-    expect(isRatesCache({ ...ok, rates: undefined })).toBe(false);
-    expect(isRatesCache(undefined)).toBe(false);
-    expect(isRatesCache('nope')).toBe(false);
-  });
-});
-
 describe('fetchRates', () => {
   it('requests the EUR-based time series with no base currency', async () => {
     fetchMock.mockResolvedValueOnce(
@@ -73,9 +59,7 @@ describe('fetchRates', () => {
     await expect(fetchRates('2024-01-01', TODAY)).resolves.toEqual({
       '2024-03-15': { USD: 1.0892 },
     });
-    expect(requestedUrls()).toEqual([
-      `${FRANKFURTER_BASE_URL}/2024-01-01..${TODAY}`,
-    ]);
+    expect(requestedUrls()).toEqual([`${BASE_URL}/2024-01-01..${TODAY}`]);
   });
 
   it('rejects on a non-OK response', async () => {
@@ -103,9 +87,7 @@ describe('loadRates', () => {
       loadRates('2019-01-01', { storage, today: TODAY })
     ).resolves.toEqual(day15);
 
-    expect(requestedUrls()).toEqual([
-      `${FRANKFURTER_BASE_URL}/2019-01-01..${TODAY}`,
-    ]);
+    expect(requestedUrls()).toEqual([`${BASE_URL}/2019-01-01..${TODAY}`]);
     expect(storage.value).toEqual({
       version: 1,
       startDate: '2019-01-01',
@@ -132,9 +114,7 @@ describe('loadRates', () => {
       ...day19,
     });
 
-    expect(requestedUrls()).toEqual([
-      `${FRANKFURTER_BASE_URL}/2024-03-19..${TODAY}`,
-    ]);
+    expect(requestedUrls()).toEqual([`${BASE_URL}/2024-03-19..${TODAY}`]);
     expect(storage.value).toMatchObject({
       endDate: '2024-03-19',
       rates: { ...day15, ...day19 },
@@ -167,28 +147,32 @@ describe('loadRates', () => {
     await expect(
       loadRates('2019-01-01', { storage, today: TODAY })
     ).resolves.toEqual(day19);
-    expect(requestedUrls()).toEqual([
-      `${FRANKFURTER_BASE_URL}/2019-01-01..${TODAY}`,
-    ]);
+    expect(requestedUrls()).toEqual([`${BASE_URL}/2019-01-01..${TODAY}`]);
     expect(storage.value).toMatchObject({
       startDate: '2019-01-01',
       endDate: '2024-03-19',
     });
   });
 
-  it('treats a cache with a different version as empty', async () => {
-    const storage = memoryStorage({
-      version: 0,
-      startDate: '2019-01-01',
-      endDate: TODAY,
-      rates: day15,
-    });
+  const validCache: RatesCache = {
+    version: 1,
+    startDate: '2019-01-01',
+    endDate: TODAY,
+    rates: { '2024-03-15': { USD: 1.0892 } },
+  };
+
+  it.each([
+    ['a different version', { ...validCache, version: 0 }],
+    ['a missing rates table', { ...validCache, rates: undefined }],
+    ['a non-object value', 'nope'],
+  ])('treats a cache with %s as empty', async (_desc, stored) => {
+    const storage = memoryStorage(stored);
     fetchMock.mockResolvedValueOnce(jsonResponse({ rates: day19 }));
 
-    await loadRates('2019-01-01', { storage, today: TODAY });
-    expect(requestedUrls()).toEqual([
-      `${FRANKFURTER_BASE_URL}/2019-01-01..${TODAY}`,
-    ]);
+    await expect(
+      loadRates('2019-01-01', { storage, today: TODAY })
+    ).resolves.toEqual(day19);
+    expect(requestedUrls()).toEqual([`${BASE_URL}/2019-01-01..${TODAY}`]);
     expect(storage.value).toMatchObject({ version: 1 });
   });
 
@@ -198,7 +182,7 @@ describe('loadRates', () => {
 
     await expect(
       loadRates('2019-01-01', { storage, today: TODAY })
-    ).rejects.toThrow();
+    ).rejects.toThrow(/HTTP 503/);
     expect(storage.value).toBeUndefined();
   });
 
