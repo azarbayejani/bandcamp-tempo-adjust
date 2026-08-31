@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import type { Purchase } from './services/GetItemsAPI';
-import { convertPurchases } from './usePurchases';
+import { convertPurchases, earliestPaymentDate } from './usePurchases';
 
 function purchase(overrides: Partial<Purchase> = {}): Purchase {
   return {
@@ -14,6 +14,22 @@ function purchase(overrides: Partial<Purchase> = {}): Purchase {
     ...overrides,
   };
 }
+
+describe('earliestPaymentDate', () => {
+  it('returns the earliest payment date', () => {
+    expect(
+      earliestPaymentDate([
+        purchase({ paymentDate: '2022-06-01' }),
+        purchase({ paymentDate: '2019-02-03' }),
+        purchase({ paymentDate: '2024-01-01' }),
+      ])
+    ).toBe('2019-02-03');
+  });
+
+  it('returns undefined for an empty list, which disables the rates query', () => {
+    expect(earliestPaymentDate([])).toBeUndefined();
+  });
+});
 
 describe('convertPurchases', () => {
   const rates = { '2024-03-15': { USD: 2 } };

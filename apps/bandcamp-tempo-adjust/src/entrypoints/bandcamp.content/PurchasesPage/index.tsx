@@ -130,13 +130,11 @@ export default function PurchasesPage({ username, crumb }: PurchasesPageProps) {
   const rates = ratesQuery.data;
 
   // Conversion is pure derivation: switching display currency touches no
-  // network. Per-purchase conversion failures (e.g. a currency the ECB
-  // doesn't publish) are collected rather than thrown during render.
+  // network. An empty purchase list needs no rates (the rates query never
+  // gets a start date), so it converts immediately.
   const converted = useMemo(() => {
-    if (!purchases) return undefined;
-    if (purchases.length === 0) return { purchases: [], failures: [] };
-    if (!rates) return undefined;
-    return convertPurchases(purchases, rates, currency);
+    if (!purchases || (!rates && purchases.length > 0)) return undefined;
+    return convertPurchases(purchases, rates ?? {}, currency);
   }, [purchases, rates, currency]);
   const convertedPurchases = converted?.purchases;
   const conversionFailures = converted?.failures ?? [];
