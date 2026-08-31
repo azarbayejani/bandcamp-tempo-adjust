@@ -6,9 +6,11 @@ import { formatDate } from './formatDate';
  * Historical exchange rates from frankfurter.dev, fetched as a single
  * EUR-based time series and cached in `browser.storage.local`.
  *
- * Privacy note: the only thing that leaves the browser is a date range
- * (rounded down to a year boundary) — no currency, no purchase dates, no
- * amounts. Cross rates are computed locally; see `convertCurrency.ts`.
+ * Privacy note: the only thing that leaves the browser is a date range —
+ * the start rounded down to a year boundary, the end the current date (an
+ * incremental refresh re-requests from the last cached rate day) — no
+ * currency, no purchase dates, no amounts. Cross rates are computed
+ * locally; see `convertCurrency.ts`.
  */
 
 export const RATES_STORAGE_KEY = 'tempoAdjust.exchangeRates';
