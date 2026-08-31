@@ -1,11 +1,17 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import { useQuery } from '@tanstack/react-query';
 import Select from 'react-select';
 import { downloadFile } from './downloadFile';
 import { fetchCurrencies } from './services/fetchCurrencies';
 import { formatDate } from './services/formatDate';
-import { type PurchaseWithLocalCurrency, usePurchases } from './usePurchases';
+import { useExchangeRates } from './useExchangeRates';
+import {
+  convertPurchases,
+  earliestPaymentDate,
+  type PurchaseWithLocalCurrency,
+  usePurchases,
+} from './usePurchases';
 
 interface PurchasesPageProps {
   username: string;
@@ -115,9 +121,35 @@ export default function PurchasesPage({ username, crumb }: PurchasesPageProps) {
   const purchasesQuery = usePurchases({
     username,
     enabled: startedFirstFetch,
-    currency,
     crumb,
   });
+  const purchases = purchasesQuery.data;
+  const ratesQuery = useExchangeRates(
+    purchases ? earliestPaymentDate(purchases) : undefined
+  );
+  const rates = ratesQuery.data;
+
+  // Conversion is pure derivation: switching display currency touches no
+  // network. Conversion errors (e.g. a currency the ECB doesn't publish) are
+  // captured here rather than thrown during render.
+  const converted = useMemo<
+    { purchases: PurchaseWithLocalCurrency[] } | { error: Error } | undefined
+  >(() => {
+    if (!purchases) return undefined;
+    if (purchases.length === 0) return { purchases: [] };
+    if (!rates) return undefined;
+    try {
+      return { purchases: convertPurchases(purchases, rates, currency) };
+    } catch (e) {
+      return { error: e instanceof Error ? e : new Error(String(e)) };
+    }
+  }, [purchases, rates, currency]);
+  const conversionError =
+    converted && 'error' in converted ? converted.error : undefined;
+  const convertedPurchases =
+    converted && 'purchases' in converted ? converted.purchases : undefined;
+  const hasError =
+    purchasesQuery.isError || ratesQuery.isError || !!conversionError;
 
   const years: string[] = [];
   for (let year = currentYear; year > 2007; year--) {
@@ -209,19 +241,31 @@ export default function PurchasesPage({ username, crumb }: PurchasesPageProps) {
           </button>
         </div>
       )}
-      {startedFirstFetch && purchasesQuery.isError && (
+      {purchasesQuery.isError && (
         <div className="BandcampTempoAdjust__purchases_row">
           <span>There was an error loading purchases.</span>
         </div>
       )}
-      {startedFirstFetch && purchasesQuery.isLoading && (
+      {ratesQuery.isError && (
+        <div className="BandcampTempoAdjust__purchases_row">
+          <span>There was an error loading exchange rates.</span>
+        </div>
+      )}
+      {conversionError && (
+        <div className="BandcampTempoAdjust__purchases_row">
+          <span>
+            There was an error converting currencies: {conversionError.message}
+          </span>
+        </div>
+      )}
+      {startedFirstFetch && !convertedPurchases && !hasError && (
         <div className="BandcampTempoAdjust__purchases_row">
           <span>Loading... (this could take a while)</span>
         </div>
       )}
-      {purchasesQuery.data && (
+      {convertedPurchases && (
         <PurchaseTotals
-          {...purchasesQuery.data}
+          purchases={convertedPurchases}
           currency={currency}
           purchasesFilter={purchasesFilter}
         />

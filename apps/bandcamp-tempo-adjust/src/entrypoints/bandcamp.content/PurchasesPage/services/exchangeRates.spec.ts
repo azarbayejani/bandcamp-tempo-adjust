@@ -1,0 +1,246 @@
+import { fakeBrowser } from '@webext-core/fake-browser';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+
+import {
+  createBrowserRatesStorage,
+  fetchRates,
+  FRANKFURTER_BASE_URL,
+  isRatesCache,
+  loadRates,
+  rangeStartFor,
+  RATES_STORAGE_KEY,
+  type RatesCache,
+  type RatesStorage,
+  todayISODate,
+} from './exchangeRates';
+
+const TODAY = '2024-03-20';
+
+function memoryStorage(initial?: unknown): RatesStorage & { value: unknown } {
+  const store = { value: initial } as RatesStorage & { value: unknown };
+  store.get = async () => store.value;
+  store.set = async (v) => {
+    store.value = v;
+  };
+  return store;
+}
+
+function jsonResponse(body: unknown, status = 200) {
+  return new Response(JSON.stringify(body), { status });
+}
+
+const fetchMock = vi.fn<typeof fetch>();
+
+beforeEach(() => {
+  fetchMock.mockReset();
+  vi.stubGlobal('fetch', fetchMock);
+});
+
+afterEach(() => {
+  vi.unstubAllGlobals();
+});
+
+function requestedUrls() {
+  return fetchMock.mock.calls.map(([input]) => String(input));
+}
+
+describe('rangeStartFor', () => {
+  it('rounds down to January 1st of the purchase year', () => {
+    expect(rangeStartFor('2019-06-02')).toBe('2019-01-01');
+  });
+});
+
+describe('todayISODate', () => {
+  it('formats in local time with zero padding', () => {
+    expect(todayISODate(new Date(2024, 2, 5, 23, 59))).toBe('2024-03-05');
+  });
+});
+
+describe('isRatesCache', () => {
+  it('accepts the current shape and rejects anything else', () => {
+    const ok: RatesCache = {
+      version: 1,
+      startDate: '2024-01-01',
+      endDate: TODAY,
+      rates: {},
+    };
+    expect(isRatesCache(ok)).toBe(true);
+    expect(isRatesCache({ ...ok, version: 2 })).toBe(false);
+    expect(isRatesCache({ ...ok, rates: undefined })).toBe(false);
+    expect(isRatesCache(undefined)).toBe(false);
+    expect(isRatesCache('nope')).toBe(false);
+  });
+});
+
+describe('fetchRates', () => {
+  it('requests the EUR-based time series with no base currency', async () => {
+    fetchMock.mockResolvedValueOnce(
+      jsonResponse({ rates: { '2024-03-15': { USD: 1.0892 } } })
+    );
+    await expect(fetchRates('2024-01-01', TODAY)).resolves.toEqual({
+      '2024-03-15': { USD: 1.0892 },
+    });
+    expect(requestedUrls()).toEqual([
+      `${FRANKFURTER_BASE_URL}/2024-01-01..${TODAY}`,
+    ]);
+  });
+
+  it('rejects on a non-OK response', async () => {
+    fetchMock.mockResolvedValueOnce(jsonResponse({ message: 'nope' }, 500));
+    await expect(fetchRates('2024-01-01', TODAY)).rejects.toThrow(/HTTP 500/);
+  });
+
+  it('rejects when the body has no rates', async () => {
+    fetchMock.mockResolvedValueOnce(jsonResponse({ amount: 1 }));
+    await expect(fetchRates('2024-01-01', TODAY)).rejects.toThrow(
+      /did not include rates/
+    );
+  });
+});
+
+describe('loadRates', () => {
+  const day15 = { '2024-03-15': { USD: 1.0892 } };
+  const day19 = { '2024-03-19': { USD: 1.0871 } };
+
+  it('fetches the full range and writes the cache when nothing is stored', async () => {
+    const storage = memoryStorage();
+    fetchMock.mockResolvedValueOnce(jsonResponse({ rates: day15 }));
+
+    await expect(
+      loadRates('2019-01-01', { storage, today: TODAY })
+    ).resolves.toEqual(day15);
+
+    expect(requestedUrls()).toEqual([
+      `${FRANKFURTER_BASE_URL}/2019-01-01..${TODAY}`,
+    ]);
+    expect(storage.value).toEqual({
+      version: 1,
+      startDate: '2019-01-01',
+      endDate: TODAY,
+      rates: day15,
+    });
+  });
+
+  it('fetches only the tail (from endDate inclusive) and merges it', async () => {
+    const storage = memoryStorage({
+      version: 1,
+      startDate: '2019-01-01',
+      endDate: '2024-03-19',
+      rates: day15,
+    });
+    fetchMock.mockResolvedValueOnce(jsonResponse({ rates: day19 }));
+
+    await expect(
+      loadRates('2019-01-01', { storage, today: TODAY })
+    ).resolves.toEqual({
+      ...day15,
+      ...day19,
+    });
+
+    expect(requestedUrls()).toEqual([
+      `${FRANKFURTER_BASE_URL}/2024-03-19..${TODAY}`,
+    ]);
+    expect(storage.value).toMatchObject({
+      endDate: TODAY,
+      rates: { ...day15, ...day19 },
+    });
+  });
+
+  it('makes no request when the cache already covers the range', async () => {
+    const storage = memoryStorage({
+      version: 1,
+      startDate: '2019-01-01',
+      endDate: TODAY,
+      rates: day15,
+    });
+
+    await expect(
+      loadRates('2020-01-01', { storage, today: TODAY })
+    ).resolves.toEqual(day15);
+    expect(fetchMock).not.toHaveBeenCalled();
+  });
+
+  it('refetches everything when an earlier start is needed', async () => {
+    const storage = memoryStorage({
+      version: 1,
+      startDate: '2022-01-01',
+      endDate: TODAY,
+      rates: day15,
+    });
+    fetchMock.mockResolvedValueOnce(jsonResponse({ rates: day19 }));
+
+    await expect(
+      loadRates('2019-01-01', { storage, today: TODAY })
+    ).resolves.toEqual(day19);
+    expect(requestedUrls()).toEqual([
+      `${FRANKFURTER_BASE_URL}/2019-01-01..${TODAY}`,
+    ]);
+    expect(storage.value).toMatchObject({
+      startDate: '2019-01-01',
+      endDate: TODAY,
+    });
+  });
+
+  it('treats a cache with a different version as empty', async () => {
+    const storage = memoryStorage({
+      version: 0,
+      startDate: '2019-01-01',
+      endDate: TODAY,
+      rates: day15,
+    });
+    fetchMock.mockResolvedValueOnce(jsonResponse({ rates: day19 }));
+
+    await loadRates('2019-01-01', { storage, today: TODAY });
+    expect(requestedUrls()).toEqual([
+      `${FRANKFURTER_BASE_URL}/2019-01-01..${TODAY}`,
+    ]);
+    expect(storage.value).toMatchObject({ version: 1 });
+  });
+
+  it('leaves the cache untouched when the fetch fails', async () => {
+    const storage = memoryStorage();
+    fetchMock.mockResolvedValueOnce(jsonResponse({}, 503));
+
+    await expect(
+      loadRates('2019-01-01', { storage, today: TODAY })
+    ).rejects.toThrow();
+    expect(storage.value).toBeUndefined();
+  });
+});
+
+describe('createBrowserRatesStorage', () => {
+  beforeEach(() => fakeBrowser.reset());
+
+  it('round-trips through browser.storage.local under the namespaced key', async () => {
+    const storage = createBrowserRatesStorage(fakeBrowser);
+    const cache: RatesCache = {
+      version: 1,
+      startDate: '2019-01-01',
+      endDate: TODAY,
+      rates: {},
+    };
+
+    await expect(storage.get()).resolves.toBeUndefined();
+    await storage.set(cache);
+    await expect(storage.get()).resolves.toEqual(cache);
+    await expect(
+      fakeBrowser.storage.local.get(RATES_STORAGE_KEY)
+    ).resolves.toEqual({
+      [RATES_STORAGE_KEY]: cache,
+    });
+  });
+
+  it('degrades to a no-op store when the storage API is unavailable', async () => {
+    const storage = createBrowserRatesStorage(undefined);
+    await expect(storage.get()).resolves.toBeUndefined();
+    await expect(
+      storage.set({
+        version: 1,
+        startDate: '2019-01-01',
+        endDate: TODAY,
+        rates: {},
+      })
+    ).resolves.toBeUndefined();
+    await expect(storage.get()).resolves.toBeUndefined();
+  });
+});

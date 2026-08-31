@@ -1,0 +1,140 @@
+import browser from 'webextension-polyfill';
+import type { RatesTable } from './convertCurrency';
+
+/**
+ * Historical exchange rates from frankfurter.dev, fetched as a single
+ * EUR-based time series and cached in `browser.storage.local`.
+ *
+ * Privacy note: the only thing that leaves the browser is a date range
+ * (rounded down to a year boundary) — no currency, no purchase dates, no
+ * amounts. Cross rates are computed locally; see `convertCurrency.ts`.
+ */
+
+export const RATES_STORAGE_KEY = 'tempoAdjust.exchangeRates';
+export const FRANKFURTER_BASE_URL = 'https://api.frankfurter.dev/v1';
+const CACHE_VERSION = 1;
+
+export interface RatesCache {
+  version: typeof CACHE_VERSION;
+  /** `YYYY-MM-DD` — earliest date requested from frankfurter. */
+  startDate: string;
+  /** `YYYY-MM-DD` — latest date requested from frankfurter. */
+  endDate: string;
+  rates: RatesTable;
+}
+
+export interface RatesStorage {
+  get(): Promise<unknown>;
+  set(value: RatesCache): Promise<void>;
+}
+
+interface StorageAreaLike {
+  get(key: string): Promise<Record<string, unknown>>;
+  set(items: Record<string, unknown>): Promise<void>;
+}
+
+interface BrowserLike {
+  storage?: { local?: StorageAreaLike };
+}
+
+/**
+ * Storage backed by `browser.storage.local`. Falls back to a no-op store when
+ * the extension storage API is unavailable (mirrors the guard in
+ * `utils/fetchBandcampTrackInfoStore.ts`).
+ */
+export function createBrowserRatesStorage(
+  browserLike: BrowserLike | undefined = browser
+): RatesStorage {
+  const local = browserLike?.storage?.local;
+  if (!local) {
+    return { get: async () => undefined, set: async () => {} };
+  }
+  return {
+    get: async () => (await local.get(RATES_STORAGE_KEY))[RATES_STORAGE_KEY],
+    set: (value) => local.set({ [RATES_STORAGE_KEY]: value }),
+  };
+}
+
+export function isRatesCache(value: unknown): value is RatesCache {
+  if (typeof value !== 'object' || value === null) return false;
+  const candidate = value as Partial<RatesCache>;
+  return (
+    candidate.version === CACHE_VERSION &&
+    typeof candidate.startDate === 'string' &&
+    typeof candidate.endDate === 'string' &&
+    typeof candidate.rates === 'object' &&
+    candidate.rates !== null
+  );
+}
+
+/** Local-timezone `YYYY-MM-DD`, matching the convention in `formatDate.ts`. */
+export function todayISODate(now = new Date()): string {
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, '0');
+  const day = String(now.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
+/** Round the requested range start down to January 1st of that year. */
+export function rangeStartFor(earliestPurchaseDate: string): string {
+  return `${earliestPurchaseDate.slice(0, 4)}-01-01`;
+}
+
+export async function fetchRates(
+  start: string,
+  end: string
+): Promise<RatesTable> {
+  const resp = await fetch(`${FRANKFURTER_BASE_URL}/${start}..${end}`);
+  if (!resp.ok) {
+    throw new Error(`frankfurter.dev responded with HTTP ${resp.status}`);
+  }
+  const body: { rates?: unknown } = await resp.json();
+  if (typeof body.rates !== 'object' || body.rates === null) {
+    throw new Error('frankfurter.dev response did not include rates');
+  }
+  return body.rates as RatesTable;
+}
+
+/**
+ * Return EUR-based rates covering `neededStart..today`, fetching only what
+ * the cache is missing.
+ *
+ * Incremental refreshes re-request from the cached `endDate` *inclusive*:
+ * the ECB publishes around 16:00 CET, so a fetch made earlier in the day
+ * won't include that day yet. The one-day overlap is harmless (it's a merge)
+ * and self-heals on the next load.
+ */
+export async function loadRates(
+  neededStart: string,
+  {
+    storage = createBrowserRatesStorage(),
+    today = todayISODate(),
+  }: { storage?: RatesStorage; today?: string } = {}
+): Promise<RatesTable> {
+  const stored = await storage.get();
+  const cache = isRatesCache(stored) ? stored : undefined;
+
+  if (!cache || neededStart < cache.startDate) {
+    const rates = await fetchRates(neededStart, today);
+    await storage.set({
+      version: CACHE_VERSION,
+      startDate: neededStart,
+      endDate: today,
+      rates,
+    });
+    return rates;
+  }
+
+  if (today > cache.endDate) {
+    const fresh = await fetchRates(cache.endDate, today);
+    const next: RatesCache = {
+      ...cache,
+      endDate: today,
+      rates: { ...cache.rates, ...fresh },
+    };
+    await storage.set(next);
+    return next.rates;
+  }
+
+  return cache.rates;
+}

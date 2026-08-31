@@ -1,65 +1,51 @@
 import { useQuery } from '@tanstack/react-query';
 import { type Purchase, PurchasesAPI } from './services/GetItemsAPI';
-import getConversionRatesForDate from './services/getConversionRatesForDate';
+import { convert, type RatesTable } from './services/convertCurrency';
 
 interface UsePurchasesInput {
   username: string;
-  currency: string;
   enabled: boolean;
   crumb?: string;
 }
 
 export type PurchaseWithLocalCurrency = Purchase & {
   totalPriceInLocalCurrency: number;
+  localCurrency: string;
 };
 
-export function usePurchases({
-  username,
-  currency,
-  enabled,
-  crumb,
-}: UsePurchasesInput) {
+/** The user's full order history, independent of display currency. */
+export function usePurchases({ username, enabled, crumb }: UsePurchasesInput) {
   return useQuery({
-    queryKey: ['purchases', currency],
-    queryFn: async () => {
-      const purchasesApi = new PurchasesAPI({ crumb, username });
-      const purchases = await purchasesApi.getAllItems();
-
-      const purchaseDates = purchases.reduce((acc, purchase) => {
-        acc[purchase.paymentDate] = true;
-        return acc;
-      }, {} as { [key: string]: boolean });
-
-      const dateToRates = (
-        await Promise.all(
-          Object.keys(purchaseDates).map((purchaseDate) =>
-            getConversionRatesForDate(purchaseDate, currency)
-          )
-        )
-      ).reduce((acc, { date, rates }) => {
-        acc[date] = rates;
-        return acc;
-      }, {} as { [key: string]: { [key: string]: number } });
-
-      const purchasesWithLocalCurrency = purchases.map((purchase) => {
-        const conversionRate =
-          purchase.currency === currency
-            ? 1
-            : dateToRates[purchase.paymentDate][purchase.currency];
-        if (!conversionRate) {
-          throw new Error(
-            `There was an error getting currency conversions from ${currency} to ${purchase.currency} on ${purchase.paymentDate}`
-          );
-        }
-        return {
-          ...purchase,
-          totalPriceInLocalCurrency: purchase.totalPrice / conversionRate,
-          localCurrency: currency,
-        };
-      });
-
-      return { purchases: purchasesWithLocalCurrency };
-    },
-    enabled: enabled,
+    queryKey: ['purchases', username],
+    queryFn: () => new PurchasesAPI({ crumb, username }).getAllItems(),
+    enabled,
   });
+}
+
+export function earliestPaymentDate(purchases: Purchase[]): string | undefined {
+  return purchases.reduce<string | undefined>(
+    (earliest, purchase) =>
+      earliest === undefined || purchase.paymentDate < earliest
+        ? purchase.paymentDate
+        : earliest,
+    undefined
+  );
+}
+
+export function convertPurchases(
+  purchases: Purchase[],
+  rates: RatesTable,
+  currency: string
+): PurchaseWithLocalCurrency[] {
+  return purchases.map((purchase) => ({
+    ...purchase,
+    totalPriceInLocalCurrency: convert(
+      purchase.totalPrice,
+      purchase.currency,
+      currency,
+      rates,
+      purchase.paymentDate
+    ),
+    localCurrency: currency,
+  }));
 }
