@@ -13,15 +13,12 @@ export type PurchaseWithLocalCurrency = Purchase & {
   localCurrency: string;
 };
 
-export interface ConversionFailure {
-  purchase: Purchase;
-  error: Error;
-}
+export type UnconvertiblePurchase = Purchase & {
+  /** Why `convert` rejected this purchase (e.g. a currency the ECB doesn't publish). */
+  conversionError: string;
+};
 
-export interface ConvertedPurchases {
-  purchases: PurchaseWithLocalCurrency[];
-  failures: ConversionFailure[];
-}
+export type ConvertedPurchase = PurchaseWithLocalCurrency | UnconvertiblePurchase;
 
 /** The user's full order history, independent of display currency. */
 export function usePurchases({ username, enabled, crumb }: UsePurchasesInput) {
@@ -43,20 +40,19 @@ export function earliestPaymentDate(purchases: Purchase[]): string | undefined {
 }
 
 /**
- * Convert each purchase into `currency`, collecting per-purchase failures
- * (e.g. a currency the ECB didn't publish on that date) instead of letting
- * one unconvertible purchase discard the whole list.
+ * Convert each purchase into `currency`, keeping the incoming order. A
+ * purchase that can't be converted (e.g. a currency the ECB didn't publish
+ * on that date) stays in place tagged with `conversionError` instead of
+ * being dropped, so exports can still include it.
  */
 export function convertPurchases(
   purchases: Purchase[],
   rates: RatesTable,
   currency: string
-): ConvertedPurchases {
-  const converted: PurchaseWithLocalCurrency[] = [];
-  const failures: ConversionFailure[] = [];
-  for (const purchase of purchases) {
+): ConvertedPurchase[] {
+  return purchases.map((purchase) => {
     try {
-      converted.push({
+      return {
         ...purchase,
         totalPriceInLocalCurrency: convert(
           purchase.totalPrice,
@@ -66,13 +62,12 @@ export function convertPurchases(
           purchase.paymentDate
         ),
         localCurrency: currency,
-      });
+      };
     } catch (e) {
-      failures.push({
-        purchase,
-        error: e instanceof Error ? e : new Error(String(e)),
-      });
+      return {
+        ...purchase,
+        conversionError: e instanceof Error ? e.message : String(e),
+      };
     }
-  }
-  return { purchases: converted, failures };
+  });
 }

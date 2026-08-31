@@ -7,9 +7,9 @@ import { fetchCurrencies } from './services/fetchCurrencies';
 import { formatDate } from './services/formatDate';
 import { useExchangeRates } from './useExchangeRates';
 import {
+  type ConvertedPurchase,
   convertPurchases,
   earliestPaymentDate,
-  type PurchaseWithLocalCurrency,
   usePurchases,
 } from './usePurchases';
 
@@ -19,35 +19,29 @@ interface PurchasesPageProps {
   crumb?: string;
 }
 
+/** Whether a `YYYY-MM-DD` payment date falls within the selected year filter. */
+function matchesPurchasesFilter(paymentDate: string, purchasesFilter: string) {
+  return (
+    purchasesFilter === 'ALL' ||
+    paymentDate.split('-').at(0) === purchasesFilter
+  );
+}
+
 function PurchaseTotals({
   currency,
-  purchases,
   purchasesFilter,
+  stats,
 }: {
-  purchases: PurchaseWithLocalCurrency[];
   purchasesFilter: string;
   currency: string;
+  stats: {
+    /** Purchases within the selected timespan, in original order. */
+    filteredPurchases: ConvertedPurchase[];
+    totalPriceInLocalCurrency: number;
+    purchaseCount: number;
+  };
 }) {
   const [generating, setGenerating] = useState(false);
-
-  const filteredPurchases = purchases.filter(
-    (purchase) =>
-      purchasesFilter === 'ALL' ||
-      purchase.paymentDate.split('-').at(0) === purchasesFilter
-  );
-
-  const totals = filteredPurchases.reduce(
-    (totals, currPurchase) => ({
-      totalPriceInLocalCurrency:
-        totals.totalPriceInLocalCurrency +
-        currPurchase.totalPriceInLocalCurrency,
-      purchaseCount: totals.purchaseCount + 1,
-    }),
-    { totalPriceInLocalCurrency: 0, purchaseCount: 0 } as {
-      totalPriceInLocalCurrency: number;
-      purchaseCount: number;
-    }
-  );
 
   return (
     <>
@@ -62,13 +56,13 @@ function PurchaseTotals({
               {new Intl.NumberFormat(navigator.language, {
                 style: 'currency',
                 currency,
-              }).format(totals.totalPriceInLocalCurrency)}{' '}
+              }).format(stats.totalPriceInLocalCurrency)}{' '}
               <span className="small">{currency}</span>
             </strong>
           </div>
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <span></span>
-            <span>{totals.purchaseCount} purchases</span>
+            <span>{stats.purchaseCount} purchases</span>
           </div>
         </div>
         {generating ? (
@@ -82,7 +76,7 @@ function PurchaseTotals({
                 new Date()
               )}`;
 
-              downloadFile(filteredPurchases, filename);
+              downloadFile(stats.filteredPurchases, filename);
 
               setGenerating(false);
             }}
@@ -136,9 +130,33 @@ export default function PurchasesPage({ username, crumb }: PurchasesPageProps) {
     if (!purchases || (!rates && purchases.length > 0)) return undefined;
     return convertPurchases(purchases, rates ?? {}, currency);
   }, [purchases, rates, currency]);
-  const convertedPurchases = converted?.purchases;
-  const conversionFailures = converted?.failures ?? [];
-  const firstFailure = conversionFailures[0];
+  // Everything derived from the selected timespan in one pass: the rows to
+  // display/export, the totals over the convertible ones, and the failure
+  // count (a failure outside the timespan is not excluded from anything the
+  // user is currently looking at).
+  const stats = useMemo(() => {
+    if (!converted) return undefined;
+    const filteredPurchases: ConvertedPurchase[] = [];
+    let totalPriceInLocalCurrency = 0;
+    let purchaseCount = 0;
+    let conversionFailureCount = 0;
+    for (const row of converted) {
+      if (!matchesPurchasesFilter(row.paymentDate, purchasesFilter)) continue;
+      filteredPurchases.push(row);
+      if ('conversionError' in row) {
+        conversionFailureCount++;
+      } else {
+        totalPriceInLocalCurrency += row.totalPriceInLocalCurrency;
+        purchaseCount++;
+      }
+    }
+    return {
+      filteredPurchases,
+      totalPriceInLocalCurrency,
+      purchaseCount,
+      conversionFailureCount,
+    };
+  }, [converted, purchasesFilter]);
   const hasError = purchasesQuery.isError || ratesQuery.isError;
 
   const years: string[] = [];
@@ -243,25 +261,23 @@ export default function PurchasesPage({ username, crumb }: PurchasesPageProps) {
           <span>There was an error loading exchange rates.</span>
         </div>
       )}
-      {firstFailure && (
+      {stats && stats.conversionFailureCount > 0 && (
         <div className="BandcampTempoAdjust__purchases_row">
           <span>
-            {conversionFailures.length} of {purchases?.length} purchases
-            couldn&apos;t be converted to {currency} and are excluded from the
-            totals (first: {firstFailure.purchase.currency} purchase on{' '}
-            {firstFailure.purchase.paymentDate} — {firstFailure.error.message}
-            ).
+            {stats.conversionFailureCount} of {stats.filteredPurchases.length}{' '}
+            purchases couldn&apos;t be converted to {currency}. They are
+            excluded from the totals but still appear in the CSV export.
           </span>
         </div>
       )}
-      {startedFirstFetch && !convertedPurchases && !hasError && (
+      {startedFirstFetch && !stats && !hasError && (
         <div className="BandcampTempoAdjust__purchases_row">
           <span>Loading... (this could take a while)</span>
         </div>
       )}
-      {convertedPurchases && (
+      {stats && (
         <PurchaseTotals
-          purchases={convertedPurchases}
+          stats={stats}
           currency={currency}
           purchasesFilter={purchasesFilter}
         />

@@ -36,27 +36,27 @@ describe('convertPurchases', () => {
 
   it('converts each purchase into the display currency', () => {
     const result = convertPurchases([purchase()], rates, 'USD');
-    expect(result.failures).toEqual([]);
-    expect(result.purchases).toHaveLength(1);
-    expect(result.purchases[0]).toMatchObject({
+    expect(result).toHaveLength(1);
+    expect(result[0]).toMatchObject({
       totalPriceInLocalCurrency: 20,
       localCurrency: 'USD',
     });
+    expect(result[0]).not.toHaveProperty('conversionError');
   });
 
   it('converts an empty list with an empty rates table', () => {
-    expect(convertPurchases([], {}, 'USD')).toEqual({
-      purchases: [],
-      failures: [],
-    });
+    expect(convertPurchases([], {}, 'USD')).toEqual([]);
   });
 
-  it('collects per-purchase failures instead of discarding the rest', () => {
+  it('keeps an unconvertible purchase in place, tagged with the error', () => {
     const unconvertible = purchase({ currency: 'ISK' });
     const result = convertPurchases([unconvertible, purchase()], rates, 'USD');
-    expect(result.purchases).toHaveLength(1);
-    expect(result.failures).toHaveLength(1);
-    expect(result.failures[0].purchase).toBe(unconvertible);
-    expect(result.failures[0].error.message).toMatch(/ISK/);
+    expect(result).toHaveLength(2);
+    expect(result[0]).toMatchObject({
+      currency: 'ISK',
+      conversionError: expect.stringMatching(/ISK/) as string,
+    });
+    expect(result[0]).not.toHaveProperty('totalPriceInLocalCurrency');
+    expect(result[1]).toMatchObject({ totalPriceInLocalCurrency: 20 });
   });
 });
