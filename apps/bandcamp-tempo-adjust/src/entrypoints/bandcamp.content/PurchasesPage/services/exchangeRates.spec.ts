@@ -11,7 +11,6 @@ import {
   RATES_STORAGE_KEY,
   type RatesCache,
   type RatesStorage,
-  todayISODate,
 } from './exchangeRates';
 
 const TODAY = '2024-03-20';
@@ -47,12 +46,6 @@ function requestedUrls() {
 describe('rangeStartFor', () => {
   it('rounds down to January 1st of the purchase year', () => {
     expect(rangeStartFor('2019-06-02')).toBe('2019-01-01');
-  });
-});
-
-describe('todayISODate', () => {
-  it('formats in local time with zero padding', () => {
-    expect(todayISODate(new Date(2024, 2, 5, 23, 59))).toBe('2024-03-05');
   });
 });
 

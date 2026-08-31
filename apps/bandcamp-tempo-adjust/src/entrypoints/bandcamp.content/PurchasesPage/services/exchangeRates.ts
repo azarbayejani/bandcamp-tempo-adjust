@@ -1,5 +1,6 @@
 import browser from 'webextension-polyfill';
 import type { RatesTable } from './convertCurrency';
+import { formatDate } from './formatDate';
 
 /**
  * Historical exchange rates from frankfurter.dev, fetched as a single
@@ -70,14 +71,6 @@ export function isRatesCache(value: unknown): value is RatesCache {
   );
 }
 
-/** Local-timezone `YYYY-MM-DD`, matching the convention in `formatDate.ts`. */
-export function todayISODate(now = new Date()): string {
-  const year = now.getFullYear();
-  const month = String(now.getMonth() + 1).padStart(2, '0');
-  const day = String(now.getDate()).padStart(2, '0');
-  return `${year}-${month}-${day}`;
-}
-
 /** Round the requested range start down to January 1st of that year. */
 export function rangeStartFor(earliestPurchaseDate: string): string {
   return `${earliestPurchaseDate.slice(0, 4)}-01-01`;
@@ -111,7 +104,7 @@ export async function loadRates(
   neededStart: string,
   {
     storage = createBrowserRatesStorage(),
-    today = todayISODate(),
+    today = formatDate(new Date()),
   }: { storage?: RatesStorage; today?: string } = {}
 ): Promise<RatesTable> {
   const stored = await storage.get();

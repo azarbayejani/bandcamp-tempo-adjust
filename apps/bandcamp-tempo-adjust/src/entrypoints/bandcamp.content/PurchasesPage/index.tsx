@@ -79,7 +79,7 @@ function PurchaseTotals({
             onClick={() => {
               setGenerating(true);
               const filename = `bandcamp-purchases-${purchasesFilter}-${formatDate(
-                new Date().toDateString()
+                new Date()
               )}`;
 
               downloadFile(filteredPurchases, filename);
