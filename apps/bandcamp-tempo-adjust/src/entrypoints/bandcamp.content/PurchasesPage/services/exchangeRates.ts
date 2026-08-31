@@ -28,24 +28,27 @@ export interface RatesStorage {
   set(value: RatesCache): Promise<void>;
 }
 
+/**
+ * The slice of `browser.storage.local` this module uses. Typed structurally
+ * rather than as the polyfill's `Browser` so the real browser and
+ * `@webext-core/fake-browser` both fit — they currently resolve different
+ * copies of `@types/webextension-polyfill` (0.9.2 vs 0.12.5) whose `Browser`
+ * types are incompatible on members we never touch.
+ */
 interface StorageAreaLike {
   get(key: string): Promise<Record<string, unknown>>;
   set(items: Record<string, unknown>): Promise<void>;
 }
 
-interface BrowserLike {
-  storage?: { local?: StorageAreaLike };
-}
-
 /**
  * Storage backed by `browser.storage.local`. Falls back to a no-op store when
- * the extension storage API is unavailable (mirrors the guard in
- * `utils/fetchBandcampTrackInfoStore.ts`).
+ * no browser object is available (under vitest, `webextension-polyfill` is
+ * aliased to a module with no default export, so `browser` is undefined).
  */
 export function createBrowserRatesStorage(
-  browserLike: BrowserLike | undefined = browser
+  browserLike: { storage: { local: StorageAreaLike } } | undefined = browser
 ): RatesStorage {
-  const local = browserLike?.storage?.local;
+  const local = browserLike?.storage.local;
   if (!local) {
     return { get: async () => undefined, set: async () => {} };
   }
