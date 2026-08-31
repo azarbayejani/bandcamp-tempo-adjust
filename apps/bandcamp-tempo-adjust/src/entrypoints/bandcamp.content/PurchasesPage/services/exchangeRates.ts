@@ -115,6 +115,19 @@ function latestRateDay(rates: RatesTable): string | undefined {
 }
 
 /**
+ * Persist the cache, tolerating storage failures: rates that were already
+ * fetched are still worth returning when they can't be saved (an invalidated
+ * extension context after an update, an exhausted quota, ...).
+ */
+async function trySet(storage: RatesStorage, value: RatesCache): Promise<void> {
+  try {
+    await storage.set(value);
+  } catch (e) {
+    console.warn('bandcamp-tempo-adjust: failed to cache exchange rates', e);
+  }
+}
+
+/**
  * Return EUR-based rates covering `neededStart..today`, fetching only what
  * the cache is missing.
  *
@@ -134,12 +147,20 @@ export async function loadRates(
     today = formatDate(new Date()),
   }: { storage?: RatesStorage; today?: string } = {}
 ): Promise<RatesTable> {
-  const stored = await storage.get();
+  let stored: unknown;
+  try {
+    stored = await storage.get();
+  } catch (e) {
+    console.warn(
+      'bandcamp-tempo-adjust: failed to read cached exchange rates',
+      e
+    );
+  }
   const cache = isRatesCache(stored) ? stored : undefined;
 
   if (!cache || neededStart < cache.startDate) {
     const rates = await fetchRates(neededStart, today);
-    await storage.set({
+    await trySet(storage, {
       version: CACHE_VERSION,
       startDate: neededStart,
       endDate: latestRateDay(rates) ?? today,
@@ -164,7 +185,7 @@ export async function loadRates(
       endDate: latestRateDay(rates) ?? cache.endDate,
       rates,
     };
-    await storage.set(next);
+    await trySet(storage, next);
     return next.rates;
   }
 

@@ -230,6 +230,36 @@ describe('loadRates', () => {
       loadRates('2019-01-01', { storage, today: TODAY })
     ).rejects.toThrow(/HTTP 404/);
   });
+
+  it('fetches fresh rates when reading the cache fails', async () => {
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    const storage = memoryStorage();
+    storage.get = async () => {
+      throw new Error('Extension context invalidated.');
+    };
+    fetchMock.mockResolvedValueOnce(jsonResponse({ rates: day15 }));
+
+    await expect(
+      loadRates('2019-01-01', { storage, today: TODAY })
+    ).resolves.toEqual(day15);
+    expect(warn).toHaveBeenCalledOnce();
+    warn.mockRestore();
+  });
+
+  it('returns fetched rates even when writing the cache fails', async () => {
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    const storage = memoryStorage();
+    storage.set = async () => {
+      throw new Error('QUOTA_BYTES quota exceeded');
+    };
+    fetchMock.mockResolvedValueOnce(jsonResponse({ rates: day15 }));
+
+    await expect(
+      loadRates('2019-01-01', { storage, today: TODAY })
+    ).resolves.toEqual(day15);
+    expect(warn).toHaveBeenCalledOnce();
+    warn.mockRestore();
+  });
 });
 
 describe('createBrowserRatesStorage', () => {
