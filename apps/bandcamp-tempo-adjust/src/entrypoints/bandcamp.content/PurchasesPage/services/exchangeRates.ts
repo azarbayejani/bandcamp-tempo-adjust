@@ -122,6 +122,10 @@ function latestRateDay(rates: RatesTable): string | undefined {
  * ECB publishes around 16:00 CET, business days only), so an incremental
  * refresh re-requests from that day inclusive — the one-day overlap is
  * harmless (it's a merge) and no published day can be skipped.
+ *
+ * A 404 on the refresh means frankfurter considers the range start to be in
+ * the future (a local clock running ahead of the server); the cache already
+ * covers everything the server has, so it is returned as-is.
  */
 export async function loadRates(
   neededStart: string,
@@ -145,7 +149,15 @@ export async function loadRates(
   }
 
   if (today > cache.endDate) {
-    const fresh = await fetchRates(cache.endDate, today);
+    let fresh: RatesTable;
+    try {
+      fresh = await fetchRates(cache.endDate, today);
+    } catch (e) {
+      if (e instanceof FrankfurterHttpError && e.status === 404) {
+        return cache.rates;
+      }
+      throw e;
+    }
     const rates = { ...cache.rates, ...fresh };
     const next: RatesCache = {
       ...cache,

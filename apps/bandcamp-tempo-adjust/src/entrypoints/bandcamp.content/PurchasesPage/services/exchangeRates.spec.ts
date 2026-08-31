@@ -201,6 +201,35 @@ describe('loadRates', () => {
     ).rejects.toThrow();
     expect(storage.value).toBeUndefined();
   });
+
+  it('returns the cached rates when the refresh 404s (clock ahead of the server)', async () => {
+    const cached: RatesCache = {
+      version: 1,
+      startDate: '2019-01-01',
+      endDate: '2024-03-19',
+      rates: day19,
+    };
+    const storage = memoryStorage(cached);
+    fetchMock.mockResolvedValueOnce(
+      jsonResponse({ message: 'not found' }, 404)
+    );
+
+    await expect(
+      loadRates('2019-01-01', { storage, today: '2024-03-22' })
+    ).resolves.toEqual(day19);
+    expect(storage.value).toEqual(cached);
+  });
+
+  it('still rejects when the initial full fetch 404s', async () => {
+    const storage = memoryStorage();
+    fetchMock.mockResolvedValueOnce(
+      jsonResponse({ message: 'not found' }, 404)
+    );
+
+    await expect(
+      loadRates('2019-01-01', { storage, today: TODAY })
+    ).rejects.toThrow(/HTTP 404/);
+  });
 });
 
 describe('createBrowserRatesStorage', () => {
