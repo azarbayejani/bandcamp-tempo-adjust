@@ -157,13 +157,15 @@ export default function PurchasesPage({ username, crumb }: PurchasesPageProps) {
   }
 
   if (currenciesQuery.isLoading) {
-    <div className="BandcampTempoAdjust__purchases_container">
-      <div className="BandcampTempoAdjust__purchases_row">Loading...</div>
-    </div>;
+    return (
+      <div className="BandcampTempoAdjust__purchases_container">
+        <div className="BandcampTempoAdjust__purchases_row">Loading...</div>
+      </div>
+    );
   }
 
   if (!currenciesQuery.data) {
-    console.log("Couldn't load currencies");
+    console.error("Couldn't load currencies", currenciesQuery.error);
     return null;
   }
 
