@@ -109,7 +109,9 @@ describe('loadRates', () => {
     expect(storage.value).toEqual({
       version: 1,
       startDate: '2019-01-01',
-      endDate: TODAY,
+      // The frontier is the last day frankfurter actually returned, so a
+      // not-yet-published business day is re-requested on the next load.
+      endDate: '2024-03-15',
       rates: day15,
     });
   });
@@ -134,7 +136,7 @@ describe('loadRates', () => {
       `${FRANKFURTER_BASE_URL}/2024-03-19..${TODAY}`,
     ]);
     expect(storage.value).toMatchObject({
-      endDate: TODAY,
+      endDate: '2024-03-19',
       rates: { ...day15, ...day19 },
     });
   });
@@ -170,7 +172,7 @@ describe('loadRates', () => {
     ]);
     expect(storage.value).toMatchObject({
       startDate: '2019-01-01',
-      endDate: TODAY,
+      endDate: '2024-03-19',
     });
   });
 

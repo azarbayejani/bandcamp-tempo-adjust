@@ -34,7 +34,10 @@ export interface RatesCache {
   version: typeof CACHE_VERSION;
   /** `YYYY-MM-DD` — earliest date requested from frankfurter. */
   startDate: string;
-  /** `YYYY-MM-DD` — latest date requested from frankfurter. */
+  /**
+   * `YYYY-MM-DD` — latest rate day actually present in `rates` (the ECB only
+   * publishes business days, so this can trail the date of the request).
+   */
   endDate: string;
   rates: RatesTable;
 }
@@ -102,14 +105,23 @@ export async function fetchRates(
   return body.rates as RatesTable;
 }
 
+/** Latest `YYYY-MM-DD` key in the table, or undefined when it has none. */
+function latestRateDay(rates: RatesTable): string | undefined {
+  let latest: string | undefined;
+  for (const day of Object.keys(rates)) {
+    if (latest === undefined || day > latest) latest = day;
+  }
+  return latest;
+}
+
 /**
  * Return EUR-based rates covering `neededStart..today`, fetching only what
  * the cache is missing.
  *
- * Incremental refreshes re-request from the cached `endDate` *inclusive*:
- * the ECB publishes around 16:00 CET, so a fetch made earlier in the day
- * won't include that day yet. The one-day overlap is harmless (it's a merge)
- * and self-heals on the next load.
+ * The cached `endDate` is the last day the table actually has data for (the
+ * ECB publishes around 16:00 CET, business days only), so an incremental
+ * refresh re-requests from that day inclusive — the one-day overlap is
+ * harmless (it's a merge) and no published day can be skipped.
  */
 export async function loadRates(
   neededStart: string,
@@ -126,7 +138,7 @@ export async function loadRates(
     await storage.set({
       version: CACHE_VERSION,
       startDate: neededStart,
-      endDate: today,
+      endDate: latestRateDay(rates) ?? today,
       rates,
     });
     return rates;
@@ -134,10 +146,11 @@ export async function loadRates(
 
   if (today > cache.endDate) {
     const fresh = await fetchRates(cache.endDate, today);
+    const rates = { ...cache.rates, ...fresh };
     const next: RatesCache = {
       ...cache,
-      endDate: today,
-      rates: { ...cache.rates, ...fresh },
+      endDate: latestRateDay(rates) ?? cache.endDate,
+      rates,
     };
     await storage.set(next);
     return next.rates;
