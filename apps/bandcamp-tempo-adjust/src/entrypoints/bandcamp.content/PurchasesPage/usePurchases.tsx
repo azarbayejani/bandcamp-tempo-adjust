@@ -13,6 +13,16 @@ export type PurchaseWithLocalCurrency = Purchase & {
   localCurrency: string;
 };
 
+export interface ConversionFailure {
+  purchase: Purchase;
+  error: Error;
+}
+
+export interface ConvertedPurchases {
+  purchases: PurchaseWithLocalCurrency[];
+  failures: ConversionFailure[];
+}
+
 /** The user's full order history, independent of display currency. */
 export function usePurchases({ username, enabled, crumb }: UsePurchasesInput) {
   return useQuery({
@@ -32,20 +42,37 @@ export function earliestPaymentDate(purchases: Purchase[]): string | undefined {
   );
 }
 
+/**
+ * Convert each purchase into `currency`, collecting per-purchase failures
+ * (e.g. a currency the ECB didn't publish on that date) instead of letting
+ * one unconvertible purchase discard the whole list.
+ */
 export function convertPurchases(
   purchases: Purchase[],
   rates: RatesTable,
   currency: string
-): PurchaseWithLocalCurrency[] {
-  return purchases.map((purchase) => ({
-    ...purchase,
-    totalPriceInLocalCurrency: convert(
-      purchase.totalPrice,
-      purchase.currency,
-      currency,
-      rates,
-      purchase.paymentDate
-    ),
-    localCurrency: currency,
-  }));
+): ConvertedPurchases {
+  const converted: PurchaseWithLocalCurrency[] = [];
+  const failures: ConversionFailure[] = [];
+  for (const purchase of purchases) {
+    try {
+      converted.push({
+        ...purchase,
+        totalPriceInLocalCurrency: convert(
+          purchase.totalPrice,
+          purchase.currency,
+          currency,
+          rates,
+          purchase.paymentDate
+        ),
+        localCurrency: currency,
+      });
+    } catch (e) {
+      failures.push({
+        purchase,
+        error: e instanceof Error ? e : new Error(String(e)),
+      });
+    }
+  }
+  return { purchases: converted, failures };
 }

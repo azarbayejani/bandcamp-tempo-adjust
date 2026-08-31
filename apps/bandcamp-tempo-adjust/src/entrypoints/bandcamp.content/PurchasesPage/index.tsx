@@ -130,26 +130,18 @@ export default function PurchasesPage({ username, crumb }: PurchasesPageProps) {
   const rates = ratesQuery.data;
 
   // Conversion is pure derivation: switching display currency touches no
-  // network. Conversion errors (e.g. a currency the ECB doesn't publish) are
-  // captured here rather than thrown during render.
-  const converted = useMemo<
-    { purchases: PurchaseWithLocalCurrency[] } | { error: Error } | undefined
-  >(() => {
+  // network. Per-purchase conversion failures (e.g. a currency the ECB
+  // doesn't publish) are collected rather than thrown during render.
+  const converted = useMemo(() => {
     if (!purchases) return undefined;
-    if (purchases.length === 0) return { purchases: [] };
+    if (purchases.length === 0) return { purchases: [], failures: [] };
     if (!rates) return undefined;
-    try {
-      return { purchases: convertPurchases(purchases, rates, currency) };
-    } catch (e) {
-      return { error: e instanceof Error ? e : new Error(String(e)) };
-    }
+    return convertPurchases(purchases, rates, currency);
   }, [purchases, rates, currency]);
-  const conversionError =
-    converted && 'error' in converted ? converted.error : undefined;
-  const convertedPurchases =
-    converted && 'purchases' in converted ? converted.purchases : undefined;
-  const hasError =
-    purchasesQuery.isError || ratesQuery.isError || !!conversionError;
+  const convertedPurchases = converted?.purchases;
+  const conversionFailures = converted?.failures ?? [];
+  const firstFailure = conversionFailures[0];
+  const hasError = purchasesQuery.isError || ratesQuery.isError;
 
   const years: string[] = [];
   for (let year = currentYear; year > 2007; year--) {
@@ -253,10 +245,14 @@ export default function PurchasesPage({ username, crumb }: PurchasesPageProps) {
           <span>There was an error loading exchange rates.</span>
         </div>
       )}
-      {conversionError && (
+      {firstFailure && (
         <div className="BandcampTempoAdjust__purchases_row">
           <span>
-            There was an error converting currencies: {conversionError.message}
+            {conversionFailures.length} of {purchases?.length} purchases
+            couldn&apos;t be converted to {currency} and are excluded from the
+            totals (first: {firstFailure.purchase.currency} purchase on{' '}
+            {firstFailure.purchase.paymentDate} — {firstFailure.error.message}
+            ).
           </span>
         </div>
       )}
