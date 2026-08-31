@@ -15,6 +15,21 @@ export const RATES_STORAGE_KEY = 'tempoAdjust.exchangeRates';
 export const FRANKFURTER_BASE_URL = 'https://api.frankfurter.dev/v1';
 const CACHE_VERSION = 1;
 
+export class FrankfurterHttpError extends Error {
+  constructor(public readonly status: number) {
+    super(`frankfurter.dev responded with HTTP ${status}`);
+  }
+}
+
+/** Fetch a frankfurter.dev endpoint, rejecting on a non-OK response. */
+export async function fetchFrankfurter<T>(path: string): Promise<T> {
+  const resp = await fetch(`${FRANKFURTER_BASE_URL}${path}`);
+  if (!resp.ok) {
+    throw new FrankfurterHttpError(resp.status);
+  }
+  return (await resp.json()) as T;
+}
+
 export interface RatesCache {
   version: typeof CACHE_VERSION;
   /** `YYYY-MM-DD` — earliest date requested from frankfurter. */
@@ -80,11 +95,7 @@ export async function fetchRates(
   start: string,
   end: string
 ): Promise<RatesTable> {
-  const resp = await fetch(`${FRANKFURTER_BASE_URL}/${start}..${end}`);
-  if (!resp.ok) {
-    throw new Error(`frankfurter.dev responded with HTTP ${resp.status}`);
-  }
-  const body: { rates?: unknown } = await resp.json();
+  const body = await fetchFrankfurter<{ rates?: unknown }>(`/${start}..${end}`);
   if (typeof body.rates !== 'object' || body.rates === null) {
     throw new Error('frankfurter.dev response did not include rates');
   }
