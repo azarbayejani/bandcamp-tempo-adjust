@@ -1,5 +1,6 @@
 import browser from 'webextension-polyfill';
 import type { RatesTable } from './convertCurrency';
+import { fetchFrankfurter, FrankfurterHttpError } from './frankfurter';
 import { formatDate } from './formatDate';
 
 /**
@@ -14,23 +15,7 @@ import { formatDate } from './formatDate';
  */
 
 export const RATES_STORAGE_KEY = 'tempoAdjust.exchangeRates';
-const FRANKFURTER_BASE_URL = 'https://api.frankfurter.dev/v1';
 const CACHE_VERSION = 1;
-
-export class FrankfurterHttpError extends Error {
-  constructor(public readonly status: number) {
-    super(`frankfurter.dev responded with HTTP ${status}`);
-  }
-}
-
-/** Fetch a frankfurter.dev endpoint, rejecting on a non-OK response. */
-export async function fetchFrankfurter<T>(path: string): Promise<T> {
-  const resp = await fetch(`${FRANKFURTER_BASE_URL}${path}`);
-  if (!resp.ok) {
-    throw new FrankfurterHttpError(resp.status);
-  }
-  return (await resp.json()) as T;
-}
 
 export interface RatesCache {
   version: typeof CACHE_VERSION;
