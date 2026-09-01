@@ -1,8 +1,11 @@
 import React from 'react';
 
+import { useIsMobile } from '@tempo-adjust/theme-provider';
+
 import * as css from './PitchAdjust.module.scss';
 
 import Button from './Button';
+import classNames from 'classnames';
 
 export const tempoRanges = [
   {
@@ -48,6 +51,7 @@ const PitchAdjust = ({
   onChangePreservesPitch: () => void;
 }) => {
   const { tempoRange, setTempoRangeIndex } = useTempoRange();
+  const isMobile = useIsMobile();
 
   const percentage = String(((playbackRate - 1) * 100).toPrecision(3));
   const percentageAsString =
@@ -68,7 +72,7 @@ const PitchAdjust = ({
   };
 
   return (
-    <div className={css.pitchAdjust}>
+    <div className={classNames(css.pitchAdjust, { [css.mobile]: isMobile })}>
       <div className={css.sliderContainer}>
         <input
           type="range"
@@ -81,7 +85,7 @@ const PitchAdjust = ({
           aria-label="Pitch adjust"
           aria-valuetext={`${percentageAsString}%`}
         />
-        <div>
+        <div className={css.percentage}>
           <strong>{percentageAsString}%</strong>{' '}
         </div>
       </div>

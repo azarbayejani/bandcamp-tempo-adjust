@@ -9,6 +9,16 @@
 
   &.mobile {
     width: 100%;
+    margin-top: 0;
+
+    // Keep the value and unit together as one lockup instead of
+    // stretching them across the full-width mobile layout.
+    .bpmDisplay {
+      width: auto;
+      justify-content: center;
+      align-items: baseline;
+      gap: 6px;
+    }
   }
 }
 

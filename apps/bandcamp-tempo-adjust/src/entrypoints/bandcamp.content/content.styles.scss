@@ -132,6 +132,14 @@
     }
   }
 
+  // Match Bandcamp's mobile tracklist duration styling (time.duration)
+  &__mobileTrackBpm {
+    margin-left: 6px;
+    font-size: 14px;
+    color: inherit;
+    opacity: 0.72;
+  }
+
   &__tapBpm {
     &_controlRow {
       display: flex;

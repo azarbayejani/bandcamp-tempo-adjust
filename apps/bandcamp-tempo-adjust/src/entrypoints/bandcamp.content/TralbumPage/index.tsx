@@ -8,17 +8,17 @@ import CurrentTrackBpm from './CurrentTrackBpm';
 import { useAudioController } from '../useAudioController';
 import TralbumPagePitchAdjust from './PitchAdjust';
 import useAudio from '../AudioStore';
+import { useIsMobile } from '@tempo-adjust/theme-provider';
 
 import * as styles from './TralbumPage.module.scss';
 import classNames from 'classnames';
 
 const TralbumPage = ({
   getCurrTrackUrl,
-  isMobile,
 }: {
   getCurrTrackUrl: () => string | undefined;
-  isMobile?: boolean;
 }) => {
+  const isMobile = useIsMobile();
   const [trackInfoStore, setTrackInfoStore] = useState<TrackInfoByUrl>();
 
   useAudioController({ selector: 'audio', getCurrTrackUrl });

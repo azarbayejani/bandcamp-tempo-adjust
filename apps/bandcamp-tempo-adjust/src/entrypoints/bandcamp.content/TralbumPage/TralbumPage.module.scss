@@ -5,6 +5,18 @@
 
   &.mobile {
     flex-direction: column;
+    margin-top: 8px;
+    gap: 16px;
+
+    // In the column layout the vertical rule has no height, so draw a
+    // horizontal one instead. currentColor keeps it legible on themed
+    // and dark artist pages.
+    .separator {
+      border-left: none;
+      border-top: 1px solid;
+      opacity: 0.15;
+      width: 100%;
+    }
   }
 }
 

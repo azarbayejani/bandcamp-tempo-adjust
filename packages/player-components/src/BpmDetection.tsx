@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import { toOneDecimal } from '@tempo-adjust/to-one-decimal';
+import { useIsMobile } from '@tempo-adjust/theme-provider';
 
 import * as css from './BpmDetection.module.scss';
 
@@ -9,17 +10,14 @@ import Button from './Button';
 import Spinner from './spinner';
 import classNames from 'classnames';
 
-const Container = ({
-  children,
-  isMobile,
-}: {
-  children: React.ReactNode;
-  isMobile?: boolean;
-}) => (
-  <div className={classNames(css.container, { [css.mobile]: !isMobile })}>
-    {children}
-  </div>
-);
+const Container = ({ children }: { children: React.ReactNode }) => {
+  const isMobile = useIsMobile();
+  return (
+    <div className={classNames(css.container, { [css.mobile]: isMobile })}>
+      {children}
+    </div>
+  );
+};
 
 const DetectBpmButton = ({
   onClick,
@@ -43,7 +41,6 @@ const BpmDetection: React.FC<{
   onClickLoadBpms: () => void;
   onClickReloadBpm: () => void;
   onClickSaveBpm: (bpm: number) => void;
-  isMobile?: boolean;
 }> = ({
   bpm,
   loading,
@@ -52,7 +49,6 @@ const BpmDetection: React.FC<{
   onClickLoadBpms,
   onClickSaveBpm,
   onClickReloadBpm,
-  isMobile,
 }) => {
   const [editing, setEditing] = useState(false);
 

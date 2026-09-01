@@ -37,6 +37,47 @@
   align-items: flex-end;
   max-width: 100%;
   margin-top: 8px;
+
+  &.mobile {
+    margin-top: 0;
+
+    // Match Bandcamp's mobile seek bar: a 2px hairline track and a 22px
+    // circular scrubber. The theme variables inherit from the page, so
+    // the fader follows the artist's custom colors; fallbacks mirror the
+    // default light theme. The input stays 22px tall for a touch-sized
+    // hit area, with the hairline drawn through its center.
+    .slider {
+      height: 22px;
+      border: none;
+      border-radius: 0;
+      background: transparent;
+      background-image: linear-gradient(
+        var(--dep-ui-color, #e6e6e6),
+        var(--dep-ui-color, #e6e6e6)
+      );
+      background-size: 100% 2px;
+      background-position: center;
+      background-repeat: no-repeat;
+
+      &::-moz-range-thumb {
+        height: 22px;
+        width: 22px;
+        border-radius: 50%;
+        box-sizing: border-box;
+        background: var(--dep-cta-text-color, #fff);
+        border: 2px solid var(--page-text-color, #222);
+      }
+
+      &::-webkit-slider-thumb {
+        height: 22px;
+        width: 22px;
+        border-radius: 50%;
+        box-sizing: border-box;
+        background: var(--dep-cta-text-color, #fff);
+        border: 2px solid var(--page-text-color, #222);
+      }
+    }
+  }
 }
 
 .sliderContainer {
@@ -45,6 +86,14 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
+}
+
+// Fixed-width numerals so the slider doesn't resize mid-drag as the
+// percentage readout changes width.
+.percentage {
+  font-variant-numeric: tabular-nums;
+  min-width: 3.2em;
+  text-align: right;
 }
 
 .tempoRangeRow {

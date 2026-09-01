@@ -20,9 +20,13 @@
   width: 100%;
   text-decoration: none;
 
-  &:hover {
-    background: rgba(0, 0, 0, 0.2);
-    text-decoration: none;
+  // Guard hover styles so taps on touchscreens don't leave buttons
+  // stuck in the hover state.
+  @media (hover: hover) {
+    &:hover {
+      background: rgba(0, 0, 0, 0.2);
+      text-decoration: none;
+    }
   }
 
   &:disabled {
@@ -32,8 +36,10 @@
   &.dark {
     border: 1px solid rgba(255, 255, 255, 0.3);
 
-    &:hover {
-      background: rgba(255, 255, 255, 0.2);
+    @media (hover: hover) {
+      &:hover {
+        background: rgba(255, 255, 255, 0.2);
+      }
     }
   }
 
@@ -45,7 +51,31 @@
     }
   }
 
-  &.rounded:not([role='radio']) {
-    border-radius: 3px;
+  &.rounded {
+    &:not([role='radio']) {
+      border-radius: 8px;
+    }
+
+    // Segmented control: round only the outer corners of the group.
+    &[role='radio']:first-child {
+      border-radius: 8px 0 0 8px;
+    }
+
+    &[role='radio']:last-child {
+      border-radius: 0 8px 8px 0;
+    }
+
+    // Higher-contrast selected state for mobile.
+    &[aria-checked='true'] {
+      background: #222;
+      border-color: #222;
+      color: #fff;
+
+      &.dark {
+        background: #fff;
+        border-color: #fff;
+        color: #222;
+      }
+    }
   }
 }

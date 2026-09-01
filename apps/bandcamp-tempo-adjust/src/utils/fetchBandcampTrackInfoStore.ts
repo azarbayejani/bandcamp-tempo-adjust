@@ -4,11 +4,13 @@ import browser from 'webextension-polyfill';
 // this is bandcamp's data representation
 export interface BandcampTralbum {
   trackinfo: TrackInfo[];
+  featured_track_id?: number;
 }
 
 type TrackInfo = PlayableTrackInfo | MaybePlayableTrackInfo;
 
 export interface PlayableTrackInfo {
+  id: number;
   file: {
     [key: string]: string;
   };
@@ -17,6 +19,7 @@ export interface PlayableTrackInfo {
 }
 
 export interface MaybePlayableTrackInfo {
+  id: number;
   file?: {
     [key: string]: string;
   };

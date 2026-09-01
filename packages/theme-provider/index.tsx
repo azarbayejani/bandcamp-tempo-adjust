@@ -6,6 +6,7 @@ type buttonStyle = 'rounded' | 'square';
 interface ThemeContextValue {
   theme: Theme;
   buttonStyle: 'rounded' | 'square';
+  isMobile: boolean;
 }
 
 const ThemeContext = React.createContext<ThemeContextValue | undefined>(
@@ -16,13 +17,15 @@ export const ThemeProvider = ({
   children,
   theme,
   buttonStyle = 'square',
+  isMobile = false,
 }: {
   children: React.ReactNode;
   theme: Theme;
   buttonStyle?: buttonStyle;
+  isMobile?: boolean;
 }) => {
   return (
-    <ThemeContext.Provider value={{ theme, buttonStyle }}>
+    <ThemeContext.Provider value={{ theme, buttonStyle, isMobile }}>
       {children}
     </ThemeContext.Provider>
   );
@@ -44,4 +47,13 @@ export const useButtonStyle = () => {
   }
 
   return themeContext.buttonStyle;
+};
+
+export const useIsMobile = () => {
+  const themeContext = React.useContext(ThemeContext);
+  if (themeContext === undefined) {
+    throw new Error('useIsMobile must be used within a ThemeProvider');
+  }
+
+  return themeContext.isMobile;
 };

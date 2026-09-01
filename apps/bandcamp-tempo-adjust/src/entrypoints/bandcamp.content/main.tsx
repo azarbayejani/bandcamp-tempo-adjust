@@ -75,31 +75,63 @@ const renderMobileTralbumPage = () => {
     } else {
       player.append(appDiv);
     }
+
+    document.querySelectorAll('#tracklist li.track').forEach((trackNode) => {
+      const trackNumber = trackNode.getAttribute('data-num');
+      const duration = trackNode.querySelector('time.duration');
+      if (!trackNumber || !duration) {
+        return;
+      }
+      const portal = document.createElement('span');
+      portal.id = `BandcampPitchAdjust_bpm_${trackNumber}`;
+      portal.className = 'BandcampTempoAdjust__mobileTrackBpm';
+      const existingPortal = document.getElementById(portal.id);
+      if (!existingPortal) {
+        duration.after(portal);
+      } else {
+        existingPortal.innerHTML = '';
+      }
+    });
+
     root.render(
       <ThemeProvider
         theme={body.classList.contains('invertIconography') ? 'dark' : 'light'}
         buttonStyle="rounded"
+        isMobile
       >
         <ProvidedTralbumPage
-          isMobile
           getCurrTrackUrl={() => {
-            const audioElement = document.querySelector('audio');
             const tralbumNode =
               document.querySelector<HTMLElement>('[data-tralbum]');
             const tralbum: BandcampTralbum = JSON.parse(
               tralbumNode?.dataset.tralbum || '{}'
             );
-            if (audioElement && audioElement.getAttribute('src')) {
-              return tralbum.trackinfo.find((track) => {
-                return (
+            const tracks = tralbum.trackinfo ?? [];
+
+            const src = document.querySelector('audio')?.getAttribute('src');
+            if (src) {
+              const playing = tracks.find(
+                (track) =>
                   track.file &&
-                  Object.values(track.file).includes(
-                    audioElement.getAttribute('src') || ''
-                  ) &&
+                  Object.values(track.file).includes(src) &&
                   track.title_link
-                );
-              })?.title_link;
+              );
+              if (playing) {
+                return playing.title_link;
+              }
             }
+
+            // Before playback starts the audio elements have no src; the
+            // player is primed with the featured track (or the first one).
+            const featured = tracks.find(
+              (track) =>
+                track.id === tralbum.featured_track_id &&
+                track.title_link &&
+                track.file
+            );
+            return (
+              featured ?? tracks.find((track) => track.title_link && track.file)
+            )?.title_link;
           }}
         />
       </ThemeProvider>
