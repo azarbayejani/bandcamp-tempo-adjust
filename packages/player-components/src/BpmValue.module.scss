@@ -21,10 +21,12 @@
   }
 }
 
-// The mobile fader row: value and unit sit together as one lockup.
+// The mobile fader row: a fixed-width lockup mirroring the 66px play
+// button above it, value and unit at its edges.
 .inline {
+  flex: 0 0 66px;
+  justify-content: space-between;
   align-items: baseline;
-  gap: 4px;
 
   > :last-child {
     font-size: 11px;
@@ -32,11 +34,7 @@
 }
 
 .inline .value {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 600;
   font-variant-numeric: tabular-nums;
-  // widest expected value ("999.9") so the fader doesn't shift when the
-  // bpm changes
-  min-width: 3em;
-  text-align: right;
 }
