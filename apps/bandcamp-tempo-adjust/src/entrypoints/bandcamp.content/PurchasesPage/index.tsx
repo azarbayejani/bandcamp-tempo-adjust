@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { type ReactNode, useMemo, useState } from 'react';
 
 import { useQuery } from '@tanstack/react-query';
 import Select from 'react-select';
@@ -17,6 +17,32 @@ interface PurchasesPageProps {
   username: string;
   totalItems: number;
   crumb?: string;
+}
+
+/**
+ * Shown when frankfurter's /currencies endpoint can't be reached: a small
+ * set the ECB has published continuously for years, so conversion (which can
+ * still be served from cached rates) keeps working instead of blocking the
+ * whole exporter.
+ */
+const FALLBACK_CURRENCIES = ['USD', 'EUR', 'GBP', 'JPY', 'AUD', 'CAD', 'CHF'];
+
+function ErrorRow({
+  severity,
+  children,
+}: {
+  severity: 'error' | 'warning';
+  children: ReactNode;
+}) {
+  return (
+    <div
+      className={`BandcampTempoAdjust__purchases_row BandcampTempoAdjust__purchases_row--${severity}`}
+      role="alert"
+    >
+      <span aria-hidden="true">⚠️</span>
+      <span>{children}</span>
+    </div>
+  );
 }
 
 /** Whether a `YYYY-MM-DD` payment date falls within the selected year filter. */
@@ -172,10 +198,9 @@ export default function PurchasesPage({ username, crumb }: PurchasesPageProps) {
     );
   }
 
-  if (!currenciesQuery.data) {
-    console.error("Couldn't load currencies", currenciesQuery.error);
-    return null;
-  }
+  const currencyCodes = currenciesQuery.data
+    ? Object.keys(currenciesQuery.data)
+    : FALLBACK_CURRENCIES;
 
   return (
     <div className="BandcampTempoAdjust__purchases_container">
@@ -194,7 +219,7 @@ export default function PurchasesPage({ username, crumb }: PurchasesPageProps) {
           <label htmlFor="currency">Currency:</label>
           <Select
             inputId="currency"
-            options={Object.keys(currenciesQuery.data).map((currencyCode) => ({
+            options={currencyCodes.map((currencyCode) => ({
               value: currencyCode,
               label: currencyCode,
             }))}
@@ -239,6 +264,12 @@ export default function PurchasesPage({ username, crumb }: PurchasesPageProps) {
         </div>
       </div>
 
+      {currenciesQuery.isError && (
+        <ErrorRow severity="warning">
+          Couldn&apos;t load the full currency list, so only a few common
+          currencies are available.
+        </ErrorRow>
+      )}
       {!startedFirstFetch && (
         <div className="BandcampTempoAdjust__purchases_row">
           <button
@@ -252,23 +283,21 @@ export default function PurchasesPage({ username, crumb }: PurchasesPageProps) {
         </div>
       )}
       {purchasesQuery.isError && (
-        <div className="BandcampTempoAdjust__purchases_row">
-          <span>There was an error loading purchases.</span>
-        </div>
+        <ErrorRow severity="error">
+          There was an error loading your purchases.
+        </ErrorRow>
       )}
       {ratesQuery.isError && (
-        <div className="BandcampTempoAdjust__purchases_row">
-          <span>There was an error loading exchange rates.</span>
-        </div>
+        <ErrorRow severity="error">
+          There was an error loading exchange rates.
+        </ErrorRow>
       )}
       {stats && stats.conversionFailureCount > 0 && (
-        <div className="BandcampTempoAdjust__purchases_row">
-          <span>
-            {stats.conversionFailureCount} of {stats.filteredPurchases.length}{' '}
-            purchases couldn&apos;t be converted to {currency}. They are
-            excluded from the totals but still appear in the CSV export.
-          </span>
-        </div>
+        <ErrorRow severity="warning">
+          {stats.conversionFailureCount} of {stats.filteredPurchases.length}{' '}
+          purchases couldn&apos;t be converted to {currency}. They are excluded
+          from the totals but still appear in the CSV export.
+        </ErrorRow>
       )}
       {startedFirstFetch && !stats && !hasError && (
         <div className="BandcampTempoAdjust__purchases_row">
