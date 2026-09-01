@@ -1,40 +1,20 @@
 import { MobileTempoPanel } from '@tempo-adjust/player-components';
-import { useShallow } from 'zustand/shallow';
 
 import { useBpm } from '../BpmContext';
-import useAudio, { type AudioState } from '../AudioStore';
-
-const selector = ({
-  togglePreservesPitch,
-  setPlaybackRate,
-  playbackRate,
-  preservesPitch,
-  currTrackUrl,
-}: AudioState) => ({
-  togglePreservesPitch,
-  setPlaybackRate,
-  playbackRate,
-  preservesPitch,
-  currTrackUrl,
-});
+import { useAudioControls } from '../useAudioControls';
+import { useCurrentTrackInfo } from './useCurrentTrackInfo';
 
 export default function TralbumPageMobileTempoPanel() {
-  const { trackInfoState, loadBpms, reloadCurrentBpm, setTrackBpm } = useBpm();
+  const { loadBpms, reloadCurrentBpm, setTrackBpm } = useBpm();
   const {
     togglePreservesPitch,
     setPlaybackRate,
     playbackRate,
     preservesPitch,
-    currTrackUrl,
-  } = useAudio(useShallow(selector));
+  } = useAudioControls();
+  const { currTrackUrl, trackInfo } = useCurrentTrackInfo();
 
-  if (!currTrackUrl) {
-    return null;
-  }
-
-  const trackInfo = trackInfoState.trackInfoStore[currTrackUrl];
-
-  if (!trackInfo) {
+  if (!currTrackUrl || !trackInfo) {
     return null;
   }
 

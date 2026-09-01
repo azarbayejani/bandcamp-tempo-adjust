@@ -1,35 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-import { toOneDecimal } from '@tempo-adjust/to-one-decimal';
-import { useIsMobile } from '@tempo-adjust/theme-provider';
+import BpmLoadError from './BpmLoadError';
+import BpmValue from './BpmValue';
+import Button from './Button';
+import CurrentTrackTapBpm from './CurrentTrackTapBpm';
+import useBpmEditing from './useBpmEditing';
 
 import * as css from './BpmDetection.module.scss';
-
-import CurrentTrackTapBpm from './CurrentTrackTapBpm';
-import Button from './Button';
-import Spinner from './spinner';
-import classNames from 'classnames';
-
-const Container = ({ children }: { children: React.ReactNode }) => {
-  const isMobile = useIsMobile();
-  return (
-    <div className={classNames(css.container, { [css.mobile]: isMobile })}>
-      {children}
-    </div>
-  );
-};
-
-const DetectBpmButton = ({
-  onClick,
-  disabled,
-}: {
-  onClick: () => void;
-  disabled?: boolean;
-}) => (
-  <Button onClick={onClick} disabled={disabled}>
-    Detect BPM
-  </Button>
-);
 
 // Some alternate ideas for what this could be named:
 // BpmDisplay
@@ -50,54 +27,27 @@ const BpmDetection: React.FC<{
   onClickSaveBpm,
   onClickReloadBpm,
 }) => {
-  const [editing, setEditing] = useState(false);
-
-  const handleSaveBpm = (bpm?: string) => {
-    setEditing(false);
-    const bpmNumber = Number(bpm);
-    if (bpmNumber && !Number.isNaN(bpmNumber)) {
-      onClickSaveBpm(bpmNumber / playbackRate);
-    }
-  };
-
-  const handleCancelEditing = () => {
-    setEditing(false);
-  };
+  const { editing, startEditing, cancelEditing, saveBpm } = useBpmEditing({
+    playbackRate,
+    onSaveBpm: onClickSaveBpm,
+  });
 
   if (error) {
     return (
-      <Container>
-        <div className={css.error} role="alert">
-          <span>Error loading BPM. Please try reloading the page.</span>
-        </div>
-      </Container>
+      <div className={css.container}>
+        <BpmLoadError />
+      </div>
     );
   }
 
-  const bpmOrDefault = loading ? (
-    <Spinner aria-label="Detecting BPM" />
-  ) : (
-    (bpm && toOneDecimal(bpm * playbackRate)) || '--'
-  );
-
   if (editing) {
-    return (
-      <CurrentTrackTapBpm
-        onSave={handleSaveBpm}
-        onCancel={handleCancelEditing}
-      />
-    );
+    return <CurrentTrackTapBpm onSave={saveBpm} onCancel={cancelEditing} />;
   }
 
   return (
-    <Container>
-      <div className={css.bpmDisplayContainer} data-testid="bpm-display">
-        <div className={css.bpmDisplay}>
-          <div className={css.bpmDisplayValue}>{bpmOrDefault} </div>
-          <div className={css.bpmLabel}>
-            <div>BPM</div>
-          </div>
-        </div>
+    <div className={css.container}>
+      <div className={css.bpmDisplayContainer}>
+        <BpmValue bpm={bpm} loading={loading} playbackRate={playbackRate} />
       </div>
       <div className={css.otherControlsRow}>
         {bpm ? (
@@ -105,15 +55,15 @@ const BpmDetection: React.FC<{
             <Button onClick={onClickReloadBpm} disabled={loading}>
               Re-analyze
             </Button>
-            <Button onClick={() => setEditing(true)}>Edit</Button>
+            <Button onClick={startEditing}>Edit</Button>
           </>
         ) : (
-          <>
-            <DetectBpmButton onClick={onClickLoadBpms} disabled={loading} />
-          </>
+          <Button onClick={onClickLoadBpms} disabled={loading}>
+            Detect BPM
+          </Button>
         )}
       </div>
-    </Container>
+    </div>
   );
 };
 

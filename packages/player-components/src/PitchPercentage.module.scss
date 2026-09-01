@@ -1,0 +1,7 @@
+// Fixed-width numerals so the fader doesn't resize mid-drag as the
+// percentage readout changes width.
+.percentage {
+  font-variant-numeric: tabular-nums;
+  min-width: 3.2em;
+  text-align: right;
+}

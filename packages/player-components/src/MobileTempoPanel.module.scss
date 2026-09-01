@@ -16,41 +16,8 @@
   }
 }
 
-.bpmLockup {
-  display: flex;
-  align-items: baseline;
-  gap: 4px;
-  white-space: nowrap;
-}
-
-.bpmValue {
-  font-size: 18px;
-  font-weight: 600;
-  font-variant-numeric: tabular-nums;
-  // widest expected value ("999.9") so the fader doesn't shift when the
-  // bpm changes
-  min-width: 3em;
-  text-align: right;
-}
-
-.bpmLabel {
-  font-size: 11px;
-}
-
-// Flush segmented control (the rounded Button variant shapes the outer
-// corners of the first and last segment).
-.rangeRow {
-  display: flex;
-  width: 100%;
-}
-
 .buttonRow {
   display: flex;
   gap: 8px;
   width: 100%;
-}
-
-.error {
-  color: #ff0f0f;
-  white-space: normal;
 }

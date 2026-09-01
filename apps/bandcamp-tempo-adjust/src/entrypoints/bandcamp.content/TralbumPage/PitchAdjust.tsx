@@ -1,18 +1,6 @@
 import { PitchAdjust } from '@tempo-adjust/player-components';
-import { useShallow } from 'zustand/shallow';
-import useAudio, { type AudioState } from '../AudioStore';
 
-const selector = ({
-  togglePreservesPitch,
-  setPlaybackRate,
-  playbackRate,
-  preservesPitch,
-}: AudioState) => ({
-  togglePreservesPitch,
-  setPlaybackRate,
-  playbackRate,
-  preservesPitch,
-});
+import { useAudioControls } from '../useAudioControls';
 
 const TralbumPagePitchAdjust = () => {
   const {
@@ -20,7 +8,7 @@ const TralbumPagePitchAdjust = () => {
     setPlaybackRate,
     playbackRate,
     preservesPitch,
-  } = useAudio(useShallow(selector));
+  } = useAudioControls();
 
   return (
     <PitchAdjust

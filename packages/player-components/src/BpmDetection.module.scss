@@ -6,47 +6,14 @@
   width: 110px;
   align-items: center;
   justify-content: center;
-
-  &.mobile {
-    width: 100%;
-    margin-top: 0;
-
-    // Keep the value and unit together as one lockup instead of
-    // stretching them across the full-width mobile layout.
-    .bpmDisplay {
-      width: auto;
-      justify-content: center;
-      align-items: baseline;
-      gap: 6px;
-    }
-  }
 }
 
 .bpmDisplayContainer {
-  text-align: center;
   width: 100%;
-  font-size: 24px;
   height: 48px;
-  line-height: 24px;
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.bpmDisplay {
-  display: flex;
-  width: 100%;
-  justify-content: space-between;
-}
-
-.bpmDisplayValue {
-  display: flex;
-  align-items: center;
-}
-
-.bpmLabel {
-  font-size: 12px;
-  margin-right: 2px;
 }
 
 // this mirrors .otherControlsRow in PitchAdjust.module.scss
@@ -54,16 +21,4 @@
   display: flex;
   gap: 8px;
   width: 100%;
-}
-
-.loading {
-  width: 100%;
-  place-content: center;
-  font-size: 24px;
-  display: flex;
-}
-
-.error {
-  color: #ff0f0f;
-  white-space: normal;
 }

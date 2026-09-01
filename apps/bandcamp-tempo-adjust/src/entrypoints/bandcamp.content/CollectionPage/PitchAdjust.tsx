@@ -1,61 +1,22 @@
 import React from 'react';
-import { useCallback } from 'react';
+import {
+  formatPitchPercentage,
+  useTempoRange,
+} from '@tempo-adjust/player-components';
 import useAudio from '../AudioStore';
-
-const tempoRanges = [
-  {
-    label: '±6',
-    min: 1 - 0.06,
-    max: 1 + 0.06,
-  },
-  {
-    label: '±10',
-    min: 1 - 0.1,
-    max: 1 + 0.1,
-  },
-  {
-    label: '±16',
-    min: 1 - 0.16,
-    max: 1 + 0.16,
-  },
-  {
-    label: 'WIDE',
-    // TODO: make this based on the browser
-    min: 0.1,
-    max: 2.0,
-  },
-];
-
-const useTempoRange = () => {
-  const [tempoRangeIndex, setTempoRangeIndex] = React.useState(1);
-  return {
-    // the modulo keeps the index in bounds
-    tempoRange: tempoRanges[tempoRangeIndex % tempoRanges.length]!,
-    advanceToNextTempoRange: useCallback(
-      () => setTempoRangeIndex(tempoRangeIndex + 1),
-      [tempoRangeIndex]
-    ),
-  };
-};
 
 const PitchAdjust = () => {
   const playbackRate = useAudio(({ playbackRate }) => playbackRate);
   const setPlaybackRate = useAudio(({ setPlaybackRate }) => setPlaybackRate);
 
-  const { tempoRange, advanceToNextTempoRange } = useTempoRange();
-
-  const percentage = String(((playbackRate - 1) * 100).toPrecision(3));
-  const percentageAsString =
-    playbackRate < 1
-      ? String(percentage).slice(0, 4)
-      : `+${String(percentage).slice(0, 3)}`;
+  const { tempoRange, tempoRangeIndex, setTempoRangeIndex } = useTempoRange();
 
   const handleSliderChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPlaybackRate(event.target.valueAsNumber);
   };
 
   const handleClickTempoRange = () => {
-    advanceToNextTempoRange();
+    setTempoRangeIndex(tempoRangeIndex + 1);
   };
 
   return (
@@ -75,7 +36,7 @@ const PitchAdjust = () => {
           className="BandcampTempoAdjust__button BandcampTempoAdjust__button--collection"
           onClick={() => setPlaybackRate(1)}
         >
-          {percentageAsString}%
+          {formatPitchPercentage(playbackRate)}%
         </button>
         <button
           title="Range adjust"

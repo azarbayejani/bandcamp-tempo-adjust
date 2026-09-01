@@ -1,0 +1,42 @@
+.lockup {
+  display: flex;
+  white-space: nowrap;
+
+  > :last-child {
+    // the BPM unit label
+    font-size: 12px;
+  }
+}
+
+// The desktop display: large value on the left, unit on the right edge
+// of the 110px column.
+.display {
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 24px;
+
+  > :last-child {
+    margin-right: 2px;
+  }
+}
+
+// The mobile fader row: value and unit sit together as one lockup.
+.inline {
+  align-items: baseline;
+  gap: 4px;
+
+  > :last-child {
+    font-size: 11px;
+  }
+}
+
+.inline .value {
+  font-size: 18px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  // widest expected value ("999.9") so the fader doesn't shift when the
+  // bpm changes
+  min-width: 3em;
+  text-align: right;
+}

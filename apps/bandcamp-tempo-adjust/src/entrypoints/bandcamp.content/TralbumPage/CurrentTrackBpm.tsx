@@ -1,23 +1,15 @@
-
 import { BpmDetection } from '@tempo-adjust/player-components';
 
 import { useBpm } from '../BpmContext';
-import useAudio from '../AudioStore';
+import { useAudioControls } from '../useAudioControls';
+import { useCurrentTrackInfo } from './useCurrentTrackInfo';
 
 export default function CurrentTrackBpm() {
-  const { trackInfoState, loadBpms, reloadCurrentBpm, setTrackBpm } = useBpm();
-  const playbackRate = useAudio(({ playbackRate }) => playbackRate);
-  const currTrackUrl = useAudio(({ currTrackUrl }) => currTrackUrl);
+  const { loadBpms, reloadCurrentBpm, setTrackBpm } = useBpm();
+  const { playbackRate } = useAudioControls();
+  const { currTrackUrl, trackInfo } = useCurrentTrackInfo();
 
-  const { trackInfoStore } = trackInfoState;
-
-  if (!currTrackUrl) {
-    return null;
-  }
-
-  const trackInfo = trackInfoStore[currTrackUrl];
-
-  if (!trackInfo) {
+  if (!currTrackUrl || !trackInfo) {
     return null;
   }
 

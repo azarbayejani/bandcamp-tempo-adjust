@@ -1,21 +1,18 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-import { toOneDecimal } from '@tempo-adjust/to-one-decimal';
-
-import classnames from 'classnames';
-
+import BpmLoadError from './BpmLoadError';
+import BpmValue from './BpmValue';
 import Button from './Button';
 import CurrentTrackTapBpm from './CurrentTrackTapBpm';
 import Menu from './Menu';
-import Spinner from './spinner';
-import {
-  formatPitchPercentage,
-  tempoRanges,
-  useTempoRange,
-} from './PitchAdjust';
+import PitchFader from './PitchFader';
+import PitchPercentage from './PitchPercentage';
+import TempoControls from './TempoControls';
+import TempoRangeSelector from './TempoRangeSelector';
+import useBpmEditing from './useBpmEditing';
+import { useTempoRange } from './tempo';
 
 import * as css from './MobileTempoPanel.module.scss';
-import * as pitchCss from './PitchAdjust.module.scss';
 
 // Single-column layout for the mobile tralbum page:
 //   <bpm> <fader> <percentage>
@@ -46,61 +43,33 @@ const MobileTempoPanel: React.FC<{
   onChangePreservesPitch,
 }) => {
   const { tempoRange, setTempoRangeIndex } = useTempoRange();
-  const [editing, setEditing] = useState(false);
-
-  const percentageAsString = formatPitchPercentage(playbackRate);
-
-  const handleSaveBpm = (bpmText?: string) => {
-    setEditing(false);
-    const bpmNumber = Number(bpmText);
-    if (bpmNumber && !Number.isNaN(bpmNumber)) {
-      onClickSaveBpm(bpmNumber / playbackRate);
-    }
-  };
+  const { editing, startEditing, cancelEditing, saveBpm } = useBpmEditing({
+    playbackRate,
+    onSaveBpm: onClickSaveBpm,
+  });
 
   if (editing) {
-    return (
-      <CurrentTrackTapBpm
-        onSave={handleSaveBpm}
-        onCancel={() => setEditing(false)}
-      />
-    );
+    return <CurrentTrackTapBpm onSave={saveBpm} onCancel={cancelEditing} />;
   }
-
-  const bpmOrDefault = loading ? (
-    <Spinner width={16} height={16} aria-label="Detecting BPM" />
-  ) : (
-    (bpm && toOneDecimal(bpm * playbackRate)) || '--'
-  );
 
   return (
     <div className={css.panel}>
       {error ? (
-        <div className={css.error} role="alert">
-          <span>Error loading BPM. Please try reloading the page.</span>
-        </div>
+        <BpmLoadError />
       ) : (
         <div className={css.faderRow}>
-          <div className={css.bpmLockup} data-testid="bpm-display">
-            <span className={css.bpmValue}>{bpmOrDefault}</span>
-            <span className={css.bpmLabel}>BPM</span>
-          </div>
-          <input
-            type="range"
-            onChange={(event) =>
-              onChangePlaybackRate({ playbackRate: event.target.valueAsNumber })
-            }
-            min={tempoRange.min}
-            max={tempoRange.max}
-            step={0.001}
-            value={playbackRate}
-            className={classnames(pitchCss.slider, pitchCss.sliderTouch)}
-            aria-label="Pitch adjust"
-            aria-valuetext={`${percentageAsString}%`}
+          <BpmValue
+            variant="inline"
+            bpm={bpm}
+            loading={loading}
+            playbackRate={playbackRate}
           />
-          <div className={pitchCss.percentage}>
-            <strong>{percentageAsString}%</strong>
-          </div>
+          <PitchFader
+            playbackRate={playbackRate}
+            tempoRange={tempoRange}
+            onChangePlaybackRate={onChangePlaybackRate}
+          />
+          <PitchPercentage playbackRate={playbackRate} />
         </div>
       )}
       {!error && !bpm && (
@@ -108,29 +77,16 @@ const MobileTempoPanel: React.FC<{
           Detect BPM
         </Button>
       )}
-      <div className={css.rangeRow} role="radiogroup">
-        {tempoRanges.map((currTempoRange, index) => (
-          <Button
-            key={currTempoRange.label}
-            onClick={() => setTempoRangeIndex(index)}
-            role="radio"
-            aria-checked={currTempoRange.label === tempoRange.label}
-          >
-            {currTempoRange.label}
-          </Button>
-        ))}
-      </div>
+      <TempoRangeSelector
+        tempoRange={tempoRange}
+        onSelect={setTempoRangeIndex}
+      />
       <div className={css.buttonRow}>
-        <Button
-          onClick={onChangePreservesPitch}
-          aria-checked={preservesPitch}
-          role="checkbox"
-        >
-          Master Tempo
-        </Button>
-        <Button onClick={() => onChangePlaybackRate({ playbackRate: 1 })}>
-          Reset
-        </Button>
+        <TempoControls
+          preservesPitch={preservesPitch}
+          onChangePreservesPitch={onChangePreservesPitch}
+          onReset={() => onChangePlaybackRate({ playbackRate: 1 })}
+        />
         {bpm && !error ? (
           <Menu
             label="BPM options"
@@ -140,7 +96,7 @@ const MobileTempoPanel: React.FC<{
                 onClick: onClickReloadBpm,
                 disabled: loading,
               },
-              { label: 'Edit BPM', onClick: () => setEditing(true) },
+              { label: 'Edit BPM', onClick: startEditing },
             ]}
           />
         ) : null}
