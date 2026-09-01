@@ -4,6 +4,14 @@ import { convert, type RatesTable } from './convertCurrency';
 
 // Verbatim rows from `GET https://api.frankfurter.dev/v1/2024-03-14..2024-03-15`
 // (EUR base), trimmed to the currencies exercised below. 2024-03-15 is a Friday.
+const march15 = {
+  AUD: 1.6579,
+  CAD: 1.4731,
+  GBP: 0.8541,
+  JPY: 162.03,
+  USD: 1.0892,
+};
+
 const rates: RatesTable = {
   '2024-03-14': {
     AUD: 1.6529,
@@ -12,18 +20,12 @@ const rates: RatesTable = {
     JPY: 161.7,
     USD: 1.0925,
   },
-  '2024-03-15': {
-    AUD: 1.6579,
-    CAD: 1.4731,
-    GBP: 0.8541,
-    JPY: 162.03,
-    USD: 1.0892,
-  },
+  '2024-03-15': march15,
 };
 
 describe('convert', () => {
   it('computes exact cross rates through EUR', () => {
-    const row = rates['2024-03-15'];
+    const row = march15;
     expect(convert(1, 'USD', 'GBP', rates, '2024-03-15')).toBeCloseTo(
       row.GBP / row.USD,
       10

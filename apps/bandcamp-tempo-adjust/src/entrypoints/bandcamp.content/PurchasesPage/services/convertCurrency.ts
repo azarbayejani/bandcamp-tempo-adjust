@@ -14,20 +14,19 @@ const DAY_MS = 86_400_000;
 
 /** Previous calendar day of a `YYYY-MM-DD` string, computed in UTC to avoid DST drift. */
 function previousDay(isoDate: string): string {
-  const [year, month, day] = isoDate.split('-').map(Number);
-  return new Date(Date.UTC(year, month - 1, day) - DAY_MS)
-    .toISOString()
-    .slice(0, 10);
+  // Date.parse reads date-only strings as UTC midnight
+  return new Date(Date.parse(isoDate) - DAY_MS).toISOString().slice(0, 10);
 }
 
-function nearestPriorRateDay(
+function nearestPriorRateRow(
   rates: RatesTable,
   date: string,
   maxLookback = 10
-): string {
+): Record<string, number> {
   let candidate = date;
   for (let i = 0; i <= maxLookback; i++) {
-    if (rates[candidate]) return candidate;
+    const row = rates[candidate];
+    if (row) return row;
     candidate = previousDay(candidate);
   }
   throw new Error(
@@ -35,7 +34,7 @@ function nearestPriorRateDay(
   );
 }
 
-function eurRate(row: RatesTable['key'], code: string): number {
+function eurRate(row: Record<string, number>, code: string): number {
   if (code === 'EUR') return 1;
   const rate = row[code];
   if (rate === undefined) {
@@ -56,6 +55,6 @@ export function convert(
   date: string
 ): number {
   if (from === to) return amount;
-  const row = rates[nearestPriorRateDay(rates, date)];
+  const row = nearestPriorRateRow(rates, date);
   return (amount * eurRate(row, to)) / eurRate(row, from);
 }

@@ -29,7 +29,8 @@ const tempoRanges = [
 const useTempoRange = () => {
   const [tempoRangeIndex, setTempoRangeIndex] = React.useState(1);
   return {
-    tempoRange: tempoRanges[tempoRangeIndex % tempoRanges.length],
+    // the modulo keeps the index in bounds
+    tempoRange: tempoRanges[tempoRangeIndex % tempoRanges.length]!,
     advanceToNextTempoRange: useCallback(
       () => setTempoRangeIndex(tempoRangeIndex + 1),
       [tempoRangeIndex]

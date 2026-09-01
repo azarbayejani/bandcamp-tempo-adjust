@@ -16,16 +16,17 @@ const useAudioController = ({
       document.querySelectorAll<HTMLAudioElement>(selector)
     );
 
+    const firstAudioElement = audioElements[0];
     if (
-      !audioElements.length ||
+      !firstAudioElement ||
       !audioElements.every((a) => a instanceof HTMLAudioElement)
     ) {
       throw new Error('Audio element not found');
     }
 
     // set the initial state
-    useAudio.getState().setVolume(audioElements[0].volume);
-    useAudio.getState().setPlaybackRate(audioElements[0].playbackRate);
+    useAudio.getState().setVolume(firstAudioElement.volume);
+    useAudio.getState().setPlaybackRate(firstAudioElement.playbackRate);
     if (getCurrTrackUrl) {
       useAudio.getState().setCurrTrackUrl(getCurrTrackUrl());
     }

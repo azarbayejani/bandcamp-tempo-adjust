@@ -8,11 +8,6 @@ import glob from 'fast-glob';
 export default defineWxtModule({
   name: '@tempo-adjust/wxt-hooks',
   hooks: {
-    'prepare:tsconfig': (_, { tsconfig }) => {
-      // wxt 0.21 enables this by default; the existing code has too many
-      // unchecked index accesses to turn it on yet
-      delete tsconfig.compilerOptions.noUncheckedIndexedAccess;
-    },
     'build:manifestGenerated': async (wxt, manifest) => {
       if (
         wxt.config.browser !== 'firefox' &&

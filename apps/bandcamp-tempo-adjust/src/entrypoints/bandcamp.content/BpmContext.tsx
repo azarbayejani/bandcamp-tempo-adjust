@@ -52,7 +52,7 @@ const trackStateReducer = produce(
     switch (type) {
       case 'BPM_LOAD_START': {
         const { url } = action;
-        if (!state.trackInfoStore) {
+        if (!state.trackInfoStore || !state.trackInfoStore[url]) {
           throw new Error(
             'Tried to load a bpm before initializing trackInfoByUrl state'
           );
@@ -133,12 +133,17 @@ function BpmProvider({ children, initialTrackInfoStore }: BpmProviderProps) {
   }, [trackInfoState.trackInfoStore]);
 
   const loadBpm = (url: string) => {
+    const track = trackInfoState.trackInfoStore[url];
+    if (!track) {
+      console.error('Tried to load a bpm for an unknown track', url);
+      return;
+    }
     dispatch({ type: 'BPM_LOAD_START', url });
     const onError = (reason: string) => {
       dispatch({ type: 'BPM_LOAD_ERROR', url: url });
       console.error('Error loading bpm', url, reason);
     };
-    analyzeAudio(trackInfoState.trackInfoStore[url].audioPath)
+    analyzeAudio(track.audioPath)
       .then((resolvedBpm) => {
         dispatch({
           type: 'BPM_LOAD_SUCCESS',

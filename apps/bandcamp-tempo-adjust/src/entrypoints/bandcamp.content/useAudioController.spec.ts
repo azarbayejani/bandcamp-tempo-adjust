@@ -81,6 +81,9 @@ describe('useAudioController', () => {
 
     const audioElements = document.querySelectorAll('audio');
     const [audio1, audio2] = audioElements;
+    if (!audio1 || !audio2) {
+      throw new Error('Expected two audio elements');
+    }
 
     expect(audio1.volume).toBe(1);
     expect(audio2.volume).toBe(1);
@@ -96,6 +99,9 @@ describe('useAudioController', () => {
 
     const audioElements = document.querySelectorAll('audio');
     const [audio1, audio2] = audioElements;
+    if (!audio1 || !audio2) {
+      throw new Error('Expected two audio elements');
+    }
 
     expect(audio1.volume).toBe(1);
     expect(audio2.volume).toBe(1);
