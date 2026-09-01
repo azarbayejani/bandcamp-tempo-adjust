@@ -49,6 +49,8 @@ export default defineBackground({
       ports[port.name] = port;
       const name = port.name;
 
+      port.onDisconnect.addListener(() => delete ports[port.name]);
+
       if (name.startsWith('AnalyzeAudio')) {
         const url = name.split('AnalyzeAudio#')[1];
         if (!url) {
