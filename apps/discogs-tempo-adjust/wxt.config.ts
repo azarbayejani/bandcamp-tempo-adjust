@@ -8,6 +8,7 @@ export default defineConfig({
     browser_specific_settings: {
       gecko: {
         id: '{6fc0284b-f220-4709-acad-d8b95f55637f}',
+        data_collection_permissions: { required: ['none'] },
       },
     },
   },

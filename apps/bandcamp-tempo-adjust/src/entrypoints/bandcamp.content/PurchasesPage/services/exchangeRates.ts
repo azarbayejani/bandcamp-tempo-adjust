@@ -1,0 +1,180 @@
+import browser from 'webextension-polyfill';
+import type { RatesTable } from './convertCurrency';
+import { fetchFrankfurter, FrankfurterHttpError } from './frankfurter';
+import { formatDate } from './formatDate';
+
+/**
+ * Historical exchange rates from frankfurter.dev, fetched as a single
+ * EUR-based time series and cached in `browser.storage.local`.
+ *
+ * Privacy note: the only thing that leaves the browser is a date range —
+ * the start rounded down to a year boundary, the end the current date (an
+ * incremental refresh re-requests from the last cached rate day) — no
+ * currency, no purchase dates, no amounts. Cross rates are computed
+ * locally; see `convertCurrency.ts`.
+ */
+
+export const RATES_STORAGE_KEY = 'tempoAdjust.exchangeRates';
+const CACHE_VERSION = 1;
+
+export interface RatesCache {
+  version: typeof CACHE_VERSION;
+  /** `YYYY-MM-DD` — earliest date requested from frankfurter. */
+  startDate: string;
+  /**
+   * `YYYY-MM-DD` — latest rate day actually present in `rates` (the ECB only
+   * publishes business days, so this can trail the date of the request).
+   */
+  endDate: string;
+  rates: RatesTable;
+}
+
+export interface RatesStorage {
+  get(): Promise<unknown>;
+  set(value: RatesCache): Promise<void>;
+}
+
+/**
+ * The slice of `browser.storage.local` this module uses. Typed structurally
+ * rather than as the polyfill's `Browser` so the real browser and
+ * `@webext-core/fake-browser` both fit — they currently resolve different
+ * copies of `@types/webextension-polyfill` (0.9.2 vs 0.12.5) whose `Browser`
+ * types are incompatible on members we never touch.
+ */
+interface StorageAreaLike {
+  get(key: string): Promise<Record<string, unknown>>;
+  set(items: Record<string, unknown>): Promise<void>;
+}
+
+/**
+ * Storage backed by `browser.storage.local`. Falls back to a no-op store when
+ * no browser object is available (under vitest, `webextension-polyfill` is
+ * aliased to a module with no default export, so `browser` is undefined).
+ */
+export function createBrowserRatesStorage(
+  browserLike: { storage: { local: StorageAreaLike } } | undefined = browser
+): RatesStorage {
+  const local = browserLike?.storage.local;
+  if (!local) {
+    return { get: async () => undefined, set: async () => {} };
+  }
+  return {
+    get: async () => (await local.get(RATES_STORAGE_KEY))[RATES_STORAGE_KEY],
+    set: (value) => local.set({ [RATES_STORAGE_KEY]: value }),
+  };
+}
+
+function isRatesCache(value: unknown): value is RatesCache {
+  if (typeof value !== 'object' || value === null) return false;
+  const candidate = value as Partial<RatesCache>;
+  return (
+    candidate.version === CACHE_VERSION &&
+    typeof candidate.startDate === 'string' &&
+    typeof candidate.endDate === 'string' &&
+    typeof candidate.rates === 'object' &&
+    candidate.rates !== null
+  );
+}
+
+/** Round the requested range start down to January 1st of that year. */
+export function rangeStartFor(earliestPurchaseDate: string): string {
+  return `${earliestPurchaseDate.slice(0, 4)}-01-01`;
+}
+
+export async function fetchRates(
+  start: string,
+  end: string
+): Promise<RatesTable> {
+  const body = await fetchFrankfurter<{ rates?: unknown }>(`/${start}..${end}`);
+  if (typeof body.rates !== 'object' || body.rates === null) {
+    throw new Error('frankfurter.dev response did not include rates');
+  }
+  return body.rates as RatesTable;
+}
+
+/** Latest `YYYY-MM-DD` key in the table, or undefined when it has none. */
+function latestRateDay(rates: RatesTable): string | undefined {
+  let latest: string | undefined;
+  for (const day of Object.keys(rates)) {
+    if (latest === undefined || day > latest) latest = day;
+  }
+  return latest;
+}
+
+/**
+ * Persist the cache, tolerating storage failures: rates that were already
+ * fetched are still worth returning when they can't be saved (an invalidated
+ * extension context after an update, an exhausted quota, ...).
+ */
+async function trySet(storage: RatesStorage, value: RatesCache): Promise<void> {
+  try {
+    await storage.set(value);
+  } catch (e) {
+    console.warn('bandcamp-tempo-adjust: failed to cache exchange rates', e);
+  }
+}
+
+/**
+ * Return EUR-based rates covering `neededStart..today`, fetching only what
+ * the cache is missing.
+ *
+ * The cached `endDate` is the last day the table actually has data for (the
+ * ECB publishes around 16:00 CET, business days only), so an incremental
+ * refresh re-requests from that day inclusive — the one-day overlap is
+ * harmless (it's a merge) and no published day can be skipped.
+ *
+ * A 404 on the refresh means frankfurter considers the range start to be in
+ * the future (a local clock running ahead of the server); the cache already
+ * covers everything the server has, so it is returned as-is.
+ */
+export async function loadRates(
+  neededStart: string,
+  {
+    storage = createBrowserRatesStorage(),
+    today = formatDate(new Date()),
+  }: { storage?: RatesStorage; today?: string } = {}
+): Promise<RatesTable> {
+  let stored: unknown;
+  try {
+    stored = await storage.get();
+  } catch (e) {
+    console.warn(
+      'bandcamp-tempo-adjust: failed to read cached exchange rates',
+      e
+    );
+  }
+  const cache = isRatesCache(stored) ? stored : undefined;
+
+  if (!cache || neededStart < cache.startDate) {
+    const rates = await fetchRates(neededStart, today);
+    await trySet(storage, {
+      version: CACHE_VERSION,
+      startDate: neededStart,
+      endDate: latestRateDay(rates) ?? today,
+      rates,
+    });
+    return rates;
+  }
+
+  if (today > cache.endDate) {
+    let fresh: RatesTable;
+    try {
+      fresh = await fetchRates(cache.endDate, today);
+    } catch (e) {
+      if (e instanceof FrankfurterHttpError && e.status === 404) {
+        return cache.rates;
+      }
+      throw e;
+    }
+    const rates = { ...cache.rates, ...fresh };
+    const next: RatesCache = {
+      ...cache,
+      endDate: latestRateDay(rates) ?? cache.endDate,
+      rates,
+    };
+    await trySet(storage, next);
+    return next.rates;
+  }
+
+  return cache.rates;
+}

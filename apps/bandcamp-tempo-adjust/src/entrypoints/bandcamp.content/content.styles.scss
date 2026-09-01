@@ -119,6 +119,16 @@
       &--controls {
         align-items: center;
       }
+
+      &--error {
+        background-color: #fdf2f2;
+        color: #9f1f1f;
+      }
+
+      &--warning {
+        background-color: #fcf6e5;
+        color: #7a5c0f;
+      }
     }
   }
 
