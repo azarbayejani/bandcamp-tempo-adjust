@@ -10,7 +10,7 @@
   },
   "scripts": {
     "preinstall": "npx only-allow pnpm",
-    "check": "pnpm -r exec tsc",
+    "check": "pnpm -r run check",
     "lint": "eslint .",
     "dev:bandcamp": "pnpm --filter bandcamp-tempo-adjust dev",
     "dev:discogs": "pnpm --filter discogs-tempo-adjust dev",

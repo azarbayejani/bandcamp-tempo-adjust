@@ -3,6 +3,9 @@
   "main": "index.js",
   "type": "module",
   "private": true,
+  "scripts": {
+    "check": "tsc"
+  },
   "devDependencies": {
     "@types/fs-extra": "^11.0.4",
     "typescript": "catalog:",

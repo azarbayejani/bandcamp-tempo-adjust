@@ -4,5 +4,6 @@
     "allowImportingTsExtensions": true,
     "jsx": "react-jsx",
     "types": ["@testing-library/jest-dom"]
-  }
+  },
+  "exclude": ["node_modules", ".output", "e2e"]
 }

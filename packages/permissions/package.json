@@ -4,6 +4,9 @@
   "version": "0.0.0",
   "main": "index.ts",
   "private": true,
+  "scripts": {
+    "check": "tsc"
+  },
   "devDependencies": {
     "@types/webextension-polyfill": "catalog:",
     "typescript": "catalog:"

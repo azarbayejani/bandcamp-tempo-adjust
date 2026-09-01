@@ -3,6 +3,9 @@
   "type": "module",
   "main": "index.ts",
   "private": true,
+  "scripts": {
+    "check": "tsc"
+  },
   "devDependencies": {
     "typescript": "catalog:"
   }

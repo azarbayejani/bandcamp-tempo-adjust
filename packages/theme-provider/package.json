@@ -3,6 +3,9 @@
   "type": "module",
   "main": "index.tsx",
   "private": true,
+  "scripts": {
+    "check": "tsc"
+  },
   "peerDependencies": {
     "react": "^18.3.1"
   },

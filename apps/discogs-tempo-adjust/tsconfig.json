@@ -3,5 +3,6 @@
   "compilerOptions": {
     "allowImportingTsExtensions": true,
     "jsx": "react-jsx"
-  }
+  },
+  "exclude": ["node_modules", ".output", "e2e"]
 }
