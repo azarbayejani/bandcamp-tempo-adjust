@@ -1,0 +1,60 @@
+name: Release Bandcamp Tempo Adjust
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry-run:
+        description: 'Dry run (validate without submitting or tagging)'
+        type: boolean
+        default: false
+
+jobs:
+  submit:
+    runs-on: ubuntu-latest
+    environment: release
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+      - name: Install pnpm
+        uses: pnpm/action-setup@v6
+      - name: Install node
+        uses: actions/setup-node@v7
+        with:
+          node-version: lts/*
+          cache: 'pnpm'
+      - name: Install dependencies
+        run: pnpm install
+      - name: Zip extensions
+        working-directory: apps/bandcamp-tempo-adjust
+        run: |
+          pnpm zip
+          pnpm zip -b firefox --mv3
+      - name: Submit to stores
+        working-directory: apps/bandcamp-tempo-adjust
+        run: |
+          pnpm wxt submit ${{ inputs.dry-run && '--dry-run' || '' }} \
+            --chrome-zip .output/*-chrome.zip \
+            --firefox-zip .output/*-firefox.zip --firefox-sources-zip .output/*-sources.zip
+        env:
+          CHROME_EXTENSION_ID: ${{ vars.BANDCAMP_CHROME_EXTENSION_ID }}
+          CHROME_API_VERSION: v2
+          CHROME_PUBLISHER_ID: ${{ secrets.CHROME_PUBLISHER_ID }}
+          CHROME_SERVICE_ACCOUNT_CLIENT_EMAIL: ${{ secrets.CHROME_SERVICE_ACCOUNT_CLIENT_EMAIL }}
+          CHROME_SERVICE_ACCOUNT_PRIVATE_KEY: ${{ secrets.CHROME_SERVICE_ACCOUNT_PRIVATE_KEY }}
+          FIREFOX_EXTENSION_ID: ${{ vars.BANDCAMP_FIREFOX_EXTENSION_ID }}
+          FIREFOX_JWT_ISSUER: ${{ secrets.FIREFOX_JWT_ISSUER }}
+          FIREFOX_JWT_SECRET: ${{ secrets.FIREFOX_JWT_SECRET }}
+      - name: Create GitHub release
+        if: ${{ !inputs.dry-run }}
+        working-directory: apps/bandcamp-tempo-adjust
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          version=$(node -p "require('./package.json').version")
+          gh release create "bandcamp-tempo-adjust-v${version}" \
+            --title "Bandcamp Tempo Adjust v${version}" \
+            --target "$GITHUB_SHA" \
+            --notes "Chrome and Firefox store submission of Bandcamp Tempo Adjust v${version}." \
+            .output/*-chrome.zip .output/*-firefox.zip
