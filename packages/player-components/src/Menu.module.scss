@@ -1,0 +1,50 @@
+.menu {
+  position: relative;
+  display: flex;
+  flex: 0 0 48px;
+}
+
+.menuList {
+  position: absolute;
+  bottom: calc(100% + 4px);
+  right: 0;
+  min-width: 140px;
+  background: var(--dep-cta-text-color, #fff);
+  color: inherit;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 10;
+
+  &.dark {
+    background: #222;
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+}
+
+.menuItem {
+  display: block;
+  width: 100%;
+  padding: 10px 16px;
+  background: none;
+  border: none;
+  font: inherit;
+  font-size: 14px;
+  color: inherit;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+
+  &:disabled {
+    opacity: 0.3;
+  }
+
+  &:active {
+    background: rgba(0, 0, 0, 0.08);
+  }
+
+  .dark &:active {
+    background: rgba(255, 255, 255, 0.12);
+  }
+}

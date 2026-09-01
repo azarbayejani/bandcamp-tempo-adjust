@@ -7,6 +7,7 @@ import { BpmProvider } from '../BpmContext';
 import CurrentTrackBpm from './CurrentTrackBpm';
 import { useAudioController } from '../useAudioController';
 import TralbumPagePitchAdjust from './PitchAdjust';
+import TralbumPageMobileTempoPanel from './MobileTempoPanel';
 import useAudio from '../AudioStore';
 import { useIsMobile } from '@tempo-adjust/theme-provider';
 
@@ -44,15 +45,19 @@ const TralbumPage = ({
   return (
     <BpmProvider initialTrackInfoStore={trackInfoStore}>
       <AlbumTrackBpms />
-      <div
-        className={classNames(styles.container, { [styles.mobile]: isMobile })}
-      >
-        <CurrentTrackBpm />
-        <div className={styles.separator}></div>
-        <div className={styles.pitchAdjustContainer}>
-          <TralbumPagePitchAdjust />
+      {isMobile ? (
+        <div className={classNames(styles.container, styles.mobile)}>
+          <TralbumPageMobileTempoPanel />
         </div>
-      </div>
+      ) : (
+        <div className={styles.container}>
+          <CurrentTrackBpm />
+          <div className={styles.separator}></div>
+          <div className={styles.pitchAdjustContainer}>
+            <TralbumPagePitchAdjust />
+          </div>
+        </div>
+      )}
     </BpmProvider>
   );
 };

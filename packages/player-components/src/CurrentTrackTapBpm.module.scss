@@ -6,6 +6,23 @@
   align-items: flex-start;
   max-width: 100%;
   width: 110px;
+
+  &.mobile {
+    width: 100%;
+    gap: 12px;
+
+    // Keep the input and its BPM label together instead of letting
+    // space-between spread them across the full row.
+    .tapBpmRow {
+      justify-content: flex-start;
+      gap: 8px;
+    }
+
+    .input {
+      height: 32px;
+      font-size: 16px;
+    }
+  }
 }
 
 .tapBpmContainer {
@@ -24,6 +41,7 @@
 .input {
   height: 24px;
   width: 8ch;
+  text-align: center;
 }
 
 // this mirrors .otherControlsRow in PitchAdjust.module.scss

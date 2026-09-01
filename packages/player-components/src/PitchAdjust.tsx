@@ -31,12 +31,19 @@ export const tempoRanges = [
   },
 ];
 
-const useTempoRange = () => {
+export const useTempoRange = () => {
   const [tempoRangeIndex, setTempoRangeIndex] = React.useState(1);
   return {
     tempoRange: tempoRanges[tempoRangeIndex % tempoRanges.length]!,
     setTempoRangeIndex,
   };
+};
+
+export const formatPitchPercentage = (playbackRate: number) => {
+  const percentage = String(((playbackRate - 1) * 100).toPrecision(3));
+  return playbackRate < 1
+    ? String(percentage).slice(0, 4)
+    : `+${String(percentage).slice(0, 3)}`;
 };
 
 const PitchAdjust = ({
@@ -53,11 +60,7 @@ const PitchAdjust = ({
   const { tempoRange, setTempoRangeIndex } = useTempoRange();
   const isMobile = useIsMobile();
 
-  const percentage = String(((playbackRate - 1) * 100).toPrecision(3));
-  const percentageAsString =
-    playbackRate < 1
-      ? String(percentage).slice(0, 4)
-      : `+${String(percentage).slice(0, 3)}`;
+  const percentageAsString = formatPitchPercentage(playbackRate);
 
   const handleSliderChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     onChangePlaybackRate({ playbackRate: event.target.valueAsNumber });
@@ -81,7 +84,7 @@ const PitchAdjust = ({
           max={tempoRange.max}
           step={0.001}
           value={playbackRate}
-          className={css.slider}
+          className={classNames(css.slider, { [css.sliderTouch]: isMobile })}
           aria-label="Pitch adjust"
           aria-valuetext={`${percentageAsString}%`}
         />

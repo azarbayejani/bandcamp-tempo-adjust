@@ -1,5 +1,9 @@
 import { useEffect, useRef } from 'react';
 
+import classnames from 'classnames';
+
+import { useIsMobile } from '@tempo-adjust/theme-provider';
+
 import useTapper from './useTapper';
 import Button from './Button';
 
@@ -13,6 +17,7 @@ export default function CurrentTrackTapBpm({
   onCancel: () => void;
 }) {
   const { text, tap, setBpm } = useTapper();
+  const isMobile = useIsMobile();
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -21,7 +26,7 @@ export default function CurrentTrackTapBpm({
   }, []);
 
   return (
-    <div className={css.container}>
+    <div className={classnames(css.container, { [css.mobile]: isMobile })}>
       <div className={css.tapBpmContainer}>
         <div className={css.tapBpmRow}>
           <input
