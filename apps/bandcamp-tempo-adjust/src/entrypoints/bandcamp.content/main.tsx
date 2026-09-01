@@ -70,6 +70,7 @@ const renderMobileTralbumPage = () => {
   const player = document.querySelector('#player');
   if (player && body) {
     appDiv.style.gridColumn = '1 / -1';
+    appDiv.classList.add('BandcampTempoAdjust--mobile');
     if (document.getElementById(appDiv.id)) {
       document.getElementById(appDiv.id)?.replaceWith(appDiv);
     } else {
