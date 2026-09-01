@@ -96,7 +96,15 @@ const renderMobileTralbumPage = () => {
 
     root.render(
       <ThemeProvider
-        theme={body.classList.contains('invertIconography') ? 'dark' : 'light'}
+        // The mobile layout marks dark custom designs on its page
+        // container, not with body.invertIconography like desktop.
+        theme={
+          document
+            .querySelector('#p-tralbum-page')
+            ?.classList.contains('dark')
+            ? 'dark'
+            : 'light'
+        }
         buttonStyle="rounded"
         isMobile
       >
