@@ -34,30 +34,28 @@ const TralbumPage = ({
     return null;
   }
 
-  if (!currTrackUrl) {
-    return null;
-  }
-
-  if (!trackInfoStore[currTrackUrl]) {
-    return null;
-  }
+  // The provider stays mounted while the current track is unknown (no
+  // src yet, or a track we can't analyze) so detected BPMs and in-flight
+  // analyses survive the transition; only the tempo panel is hidden.
+  const hasCurrentTrack = !!currTrackUrl && !!trackInfoStore[currTrackUrl];
 
   return (
     <BpmProvider initialTrackInfoStore={trackInfoStore}>
       <AlbumTrackBpms />
-      {isMobile ? (
-        <div className={classNames(styles.container, styles.mobile)}>
-          <TralbumPageMobileTempoPanel />
-        </div>
-      ) : (
-        <div className={styles.container}>
-          <CurrentTrackBpm />
-          <div className={styles.separator}></div>
-          <div className={styles.pitchAdjustContainer}>
-            <TralbumPagePitchAdjust />
+      {hasCurrentTrack &&
+        (isMobile ? (
+          <div className={classNames(styles.container, styles.mobile)}>
+            <TralbumPageMobileTempoPanel />
           </div>
-        </div>
-      )}
+        ) : (
+          <div className={styles.container}>
+            <CurrentTrackBpm />
+            <div className={styles.separator}></div>
+            <div className={styles.pitchAdjustContainer}>
+              <TralbumPagePitchAdjust />
+            </div>
+          </div>
+        ))}
     </BpmProvider>
   );
 };
