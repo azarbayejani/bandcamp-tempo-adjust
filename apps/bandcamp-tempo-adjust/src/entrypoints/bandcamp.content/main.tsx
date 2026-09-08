@@ -9,7 +9,8 @@ import PurchasesPage from './PurchasesPage';
 import ProvidedTralbumPage from './TralbumPage';
 
 import './content.styles.scss';
-import { type BandcampTralbum } from '@/utils/fetchBandcampTrackInfoStore';
+import { readBandcampTralbum } from '@/utils/fetchBandcampTrackInfoStore';
+import { createMobileTrackUrlResolver } from '@/utils/mobileCurrentTrack';
 
 const appDiv = document.createElement('div');
 appDiv.id = 'pitchSliderApp';
@@ -77,6 +78,8 @@ const renderMobileTralbumPage = () => {
       player.append(appDiv);
     }
 
+    const resolveTrackUrl = createMobileTrackUrlResolver(readBandcampTralbum());
+
     document.querySelectorAll('#tracklist li.track').forEach((trackNode) => {
       const trackNumber = trackNode.getAttribute('data-num');
       const duration = trackNode.querySelector('time.duration');
@@ -99,9 +102,7 @@ const renderMobileTralbumPage = () => {
         // The mobile layout marks dark custom designs on its page
         // container, not with body.invertIconography like desktop.
         theme={
-          document
-            .querySelector('#p-tralbum-page')
-            ?.classList.contains('dark')
+          document.querySelector('#p-tralbum-page')?.classList.contains('dark')
             ? 'dark'
             : 'light'
         }
@@ -109,39 +110,11 @@ const renderMobileTralbumPage = () => {
         isMobile
       >
         <ProvidedTralbumPage
-          getCurrTrackUrl={() => {
-            const tralbumNode =
-              document.querySelector<HTMLElement>('[data-tralbum]');
-            const tralbum: BandcampTralbum = JSON.parse(
-              tralbumNode?.dataset.tralbum || '{}'
-            );
-            const tracks = tralbum.trackinfo ?? [];
-
-            const src = document.querySelector('audio')?.getAttribute('src');
-            if (src) {
-              const playing = tracks.find(
-                (track) =>
-                  track.file &&
-                  Object.values(track.file).includes(src) &&
-                  track.title_link
-              );
-              if (playing) {
-                return playing.title_link;
-              }
-            }
-
-            // Before playback starts the audio elements have no src; the
-            // player is primed with the featured track (or the first one).
-            const featured = tracks.find(
-              (track) =>
-                track.id === tralbum.featured_track_id &&
-                track.title_link &&
-                track.file
-            );
-            return (
-              featured ?? tracks.find((track) => track.title_link && track.file)
-            )?.title_link;
-          }}
+          getCurrTrackUrl={() =>
+            resolveTrackUrl(
+              document.querySelector('audio')?.getAttribute('src')
+            )
+          }
         />
       </ThemeProvider>
     );
