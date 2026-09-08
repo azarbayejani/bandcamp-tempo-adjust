@@ -7,6 +7,7 @@ import { ThemeProvider } from '@tempo-adjust/theme-provider';
 import CollectionPage from './CollectionPage';
 import PurchasesPage from './PurchasesPage';
 import ProvidedTralbumPage from './TralbumPage';
+import { bpmPortalId } from './TralbumPage/AlbumTrackBpms';
 
 import './content.styles.scss';
 import { readBandcampTralbum } from '@/utils/fetchBandcampTrackInfoStore';
@@ -20,6 +21,27 @@ const root = createRoot(appDiv);
 const queryClient = new QueryClient({
   defaultOptions: { queries: { refetchOnWindowFocus: false } },
 });
+
+// Insert (or reset) the element a track's BPM renders into, right after
+// the track's duration in Bandcamp's tracklist.
+const ensureBpmPortal = (
+  anchor: Element,
+  trackNumber: number,
+  className?: string
+) => {
+  const id = bpmPortalId(trackNumber);
+  const existingPortal = document.getElementById(id);
+  if (existingPortal) {
+    existingPortal.innerHTML = '';
+    return;
+  }
+  const portal = document.createElement('span');
+  portal.id = id;
+  if (className) {
+    portal.className = className;
+  }
+  anchor.after(portal);
+};
 
 const renderTralbumPage = () => {
   const body = document.querySelector('body');
@@ -42,14 +64,7 @@ const renderTralbumPage = () => {
     trackNodes.forEach((trackNode, i) => {
       const timeNode = trackNode.querySelector('.time');
       if (timeNode) {
-        const portal = document.createElement('span');
-        portal.id = `BandcampPitchAdjust_bpm_${i + 1}`;
-        const existingPortal = document.getElementById(portal.id);
-        if (!existingPortal) {
-          timeNode.after(portal);
-        } else {
-          existingPortal.innerHTML = '';
-        }
+        ensureBpmPortal(timeNode, i + 1);
       }
     });
     root.render(
@@ -77,24 +92,24 @@ const renderMobileTralbumPage = () => {
       player.append(appDiv);
     }
 
-    const resolveTrackUrl = createMobileTrackUrlResolver(readBandcampTralbum());
+    const tralbum = readBandcampTralbum();
+    const resolveTrackUrl = createMobileTrackUrlResolver(tralbum);
 
-    document.querySelectorAll('#tracklist li.track').forEach((trackNode) => {
-      const trackNumber = trackNode.getAttribute('data-num');
-      const duration = trackNode.querySelector('time.duration');
-      if (!trackNumber || !duration) {
-        return;
+    // Bandcamp renders each mobile tracklist row as li#track_<id>, so
+    // the portal can be keyed by the same track_num the store uses
+    // instead of trusting the row's own numbering to match.
+    for (const track of tralbum.trackinfo) {
+      const duration = document.querySelector(
+        `#tracklist #track_${track.id} time.duration`
+      );
+      if (duration) {
+        ensureBpmPortal(
+          duration,
+          track.track_num,
+          'BandcampTempoAdjust__mobileTrackBpm'
+        );
       }
-      const portal = document.createElement('span');
-      portal.id = `BandcampPitchAdjust_bpm_${trackNumber}`;
-      portal.className = 'BandcampTempoAdjust__mobileTrackBpm';
-      const existingPortal = document.getElementById(portal.id);
-      if (!existingPortal) {
-        duration.after(portal);
-      } else {
-        existingPortal.innerHTML = '';
-      }
-    });
+    }
 
     root.render(
       <ThemeProvider

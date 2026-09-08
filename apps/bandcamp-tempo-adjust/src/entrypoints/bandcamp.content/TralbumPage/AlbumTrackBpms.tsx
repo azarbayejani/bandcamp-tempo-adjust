@@ -7,10 +7,13 @@ import type { TrackInfo } from '@/types';
 
 type AlbumTrackBpmProps = TrackInfo;
 
+// The id of the element in Bandcamp's tracklist that a track's BPM
+// renders into. The content script inserts these before rendering.
+export const bpmPortalId = (trackNumber: number) =>
+  `BandcampPitchAdjust_bpm_${trackNumber}`;
+
 function AlbumTrackBpmPortal(props: AlbumTrackBpmProps) {
-  const portalTarget = document.querySelector(
-    `#BandcampPitchAdjust_bpm_${props.trackNumber}`
-  );
+  const portalTarget = document.getElementById(bpmPortalId(props.trackNumber));
 
   if (!portalTarget) {
     return null;
