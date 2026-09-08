@@ -9,7 +9,10 @@
   bottom: calc(100% + 4px);
   right: 0;
   min-width: 140px;
-  background: var(--dep-cta-text-color, #fff);
+  // The page background pairs with the inherited page text color, so
+  // the list stays legible on custom artist themes. Fallbacks mirror
+  // Bandcamp's default light and dark pages.
+  background: var(--dep-page-background-color, #fff);
   color: inherit;
   border: 1px solid rgba(0, 0, 0, 0.3);
   border-radius: 8px;
@@ -18,7 +21,7 @@
   z-index: 10;
 
   &.dark {
-    background: #222;
+    background: var(--dep-page-background-color, #222);
     border-color: rgba(255, 255, 255, 0.3);
   }
 }

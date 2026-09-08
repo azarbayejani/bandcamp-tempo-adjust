@@ -32,9 +32,10 @@
 
 // Match Bandcamp's mobile seek bar: a 2px hairline track and a 22px
 // circular scrubber. The theme variables inherit from the page, so the
-// fader follows the artist's custom colors; fallbacks mirror the default
-// light theme. The input stays 22px tall for a touch-sized hit area,
-// with the hairline drawn through its center.
+// fader follows the artist's custom colors; the thumb is the page
+// background ringed in the page text color, so the two always contrast.
+// Fallbacks mirror the default light theme. The input stays 22px tall
+// for a touch-sized hit area, with the hairline drawn through its center.
 .sliderTouch {
   height: 22px;
   border: none;
@@ -53,7 +54,7 @@
     width: 22px;
     border-radius: 50%;
     box-sizing: border-box;
-    background: var(--dep-cta-text-color, #fff);
+    background: var(--dep-page-background-color, #fff);
     border: 2px solid var(--page-text-color, #222);
   }
 
@@ -62,7 +63,7 @@
     width: 22px;
     border-radius: 50%;
     box-sizing: border-box;
-    background: var(--dep-cta-text-color, #fff);
+    background: var(--dep-page-background-color, #fff);
     border: 2px solid var(--page-text-color, #222);
   }
 }
