@@ -3,7 +3,6 @@ import { expect, describe, it, vi, afterEach, beforeEach } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-
 import CurrentTrackTapBpm from './CurrentTrackTapBpm';
 import { ThemeProvider } from '@tempo-adjust/theme-provider';
 
@@ -29,6 +28,12 @@ describe('CurrentTrackTapBpm', () => {
       </ThemeProvider>
     );
   };
+
+  it('labels the input so tapping "BPM" focuses it', () => {
+    renderComponent();
+
+    expect(screen.getByLabelText('BPM')).toBe(screen.getByRole('textbox'));
+  });
 
   it('allows you to manually input a bpm and save with Enter', async () => {
     renderComponent();

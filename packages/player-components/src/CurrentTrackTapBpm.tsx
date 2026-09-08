@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useId, useRef } from 'react';
 
 import classnames from 'classnames';
 
@@ -20,6 +20,8 @@ export default function CurrentTrackTapBpm({
   const isMobile = useIsMobile();
 
   const inputRef = useRef<HTMLInputElement>(null);
+  // Unique per instance, and can't collide with ids on the host page.
+  const inputId = useId();
 
   useEffect(() => {
     inputRef.current?.focus();
@@ -33,7 +35,7 @@ export default function CurrentTrackTapBpm({
             type="text"
             value={text || ''}
             className={css.input}
-            id="bpmInput"
+            id={inputId}
             onKeyDown={(e) => {
               if (e.key.match(/[\d.]/)) {
                 return;
@@ -53,9 +55,8 @@ export default function CurrentTrackTapBpm({
               setBpm(e.target.value);
             }}
             ref={inputRef}
-            aria-label="BPM"
           />
-          <label htmlFor="bpm-input">BPM</label>
+          <label htmlFor={inputId}>BPM</label>
         </div>
         <div className={css.helperText}>
           <small>start tapping any key or type BPM in</small>
