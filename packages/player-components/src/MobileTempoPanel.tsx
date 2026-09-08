@@ -15,10 +15,11 @@ import { useTempoRange } from './tempo';
 import * as css from './MobileTempoPanel.module.scss';
 
 // Single-column layout for the mobile tralbum page:
+//   <bpm error, if detection failed>
 //   <bpm> <fader> <percentage>
 //   <detect bpm, until a bpm exists>
 //   <tempo range selectors>
-//   <master tempo> <reset> <menu: re-analyze / edit>
+//   <master tempo> <reset> <menu: re-analyze / edit, once a bpm exists or failed>
 const MobileTempoPanel: React.FC<{
   bpm?: number;
   loading: boolean;
@@ -54,24 +55,25 @@ const MobileTempoPanel: React.FC<{
 
   return (
     <div className={css.panel}>
-      {error ? (
-        <BpmLoadError />
-      ) : (
-        <div className={css.faderRow}>
+      {/* A failed detection only affects the BPM readout; the fader must
+          stay usable, and the menu below offers a way to retry. */}
+      {error && <BpmLoadError />}
+      <div className={css.faderRow}>
+        {!error && (
           <BpmValue
             variant="inline"
             bpm={bpm}
             loading={loading}
             playbackRate={playbackRate}
           />
-          <PitchFader
-            playbackRate={playbackRate}
-            tempoRange={tempoRange}
-            onChangePlaybackRate={onChangePlaybackRate}
-          />
-          <PitchPercentage playbackRate={playbackRate} />
-        </div>
-      )}
+        )}
+        <PitchFader
+          playbackRate={playbackRate}
+          tempoRange={tempoRange}
+          onChangePlaybackRate={onChangePlaybackRate}
+        />
+        <PitchPercentage playbackRate={playbackRate} />
+      </div>
       {!error && !bpm && (
         <Button onClick={onClickLoadBpms} disabled={loading}>
           Detect BPM
@@ -87,7 +89,7 @@ const MobileTempoPanel: React.FC<{
           onChangePreservesPitch={onChangePreservesPitch}
           onReset={() => onChangePlaybackRate({ playbackRate: 1 })}
         />
-        {bpm && !error ? (
+        {bpm || error ? (
           <Menu
             label="BPM options"
             items={[
