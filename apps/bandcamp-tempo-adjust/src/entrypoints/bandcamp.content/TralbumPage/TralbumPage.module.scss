@@ -3,20 +3,19 @@
   margin-top: 4px;
   gap: 12px;
 
+  // Set the mobile controls apart from the page with hairlines in the
+  // page's own divider color. The top one also keeps the expanded
+  // player's seek bar from sitting directly against our tempo fader,
+  // two near-identical hairline sliders. This lives on the panel's own
+  // container, which only renders once there is something to frame.
   &.mobile {
     flex-direction: column;
-    margin-top: 8px;
     gap: 16px;
-
-    // In the column layout the vertical rule has no height, so draw a
-    // horizontal one instead. currentColor keeps it legible on themed
-    // and dark artist pages.
-    .separator {
-      border-left: none;
-      border-top: 1px solid;
-      opacity: 0.15;
-      width: 100%;
-    }
+    margin-top: 12px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    border-top: 1px solid var(--dep-ui-color, #e6e6e6);
+    border-bottom: 1px solid var(--dep-ui-color, #e6e6e6);
   }
 }
 

@@ -1,15 +1,4 @@
 .BandcampTempoAdjust {
-  // Set the extension's mobile controls apart from the page with
-  // hairlines in the page's own divider color. The top one also keeps
-  // the expanded player's seek bar from sitting directly against our
-  // tempo fader — two near-identical hairline sliders.
-  &--mobile {
-    margin-top: 12px;
-    padding-top: 4px;
-    padding-bottom: 12px;
-    border-top: 1px solid var(--dep-ui-color, #e6e6e6);
-    border-bottom: 1px solid var(--dep-ui-color, #e6e6e6);
-  }
   &__slider {
     display: flex;
     align-items: center;
