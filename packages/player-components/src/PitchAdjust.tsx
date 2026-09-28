@@ -1,5 +1,3 @@
-import React from 'react';
-
 import PitchFader from './PitchFader';
 import PitchPercentage from './PitchPercentage';
 import TempoControls from './TempoControls';

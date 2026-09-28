@@ -1,5 +1,3 @@
-import React from 'react';
-
 import Button from './Button';
 
 // The Master Tempo toggle and Reset button, shared by the desktop and

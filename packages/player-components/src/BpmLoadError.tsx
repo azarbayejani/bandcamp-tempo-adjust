@@ -1,5 +1,3 @@
-import React from 'react';
-
 import * as css from './BpmLoadError.module.scss';
 
 const BpmLoadError = () => (

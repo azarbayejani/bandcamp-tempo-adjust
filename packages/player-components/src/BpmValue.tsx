@@ -1,5 +1,3 @@
-import React from 'react';
-
 import classnames from 'classnames';
 
 import { toOneDecimal } from '@tempo-adjust/to-one-decimal';
