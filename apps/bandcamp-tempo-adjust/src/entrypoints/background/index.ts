@@ -45,7 +45,7 @@ export default defineBackground({
     );
 
     if (import.meta.env.SAFARI) {
-      let nativePort = browser.runtime.connectNative('application.id');
+      const nativePort = browser.runtime.connectNative('application.id');
       // store the port so that it isn't garbage collected
       ports['nativePort'] = nativePort;
 

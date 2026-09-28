@@ -91,7 +91,7 @@ function waitForSelector<K extends keyof HTMLElementTagNameMap>(
       return resolve(element);
     }
 
-    const observer = new MutationObserver((mutations) => {
+    const observer = new MutationObserver(() => {
       const element = document.querySelector(selector);
       if (element) {
         observer.disconnect();
