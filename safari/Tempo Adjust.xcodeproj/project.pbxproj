@@ -16,16 +16,6 @@
 		AB6899B62DDD7BCB00C9A704 /* Tempo_Adjust_for_Bandcamp_and_DiscogsUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6899B52DDD7BCB00C9A704 /* Tempo_Adjust_for_Bandcamp_and_DiscogsUITestsLaunchTests.swift */; };
 		AB6899BC2DDD7BCB00C9A704 /* Tempo Adjust Extension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = AB6899BB2DDD7BCB00C9A704 /* Tempo Adjust Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		AB6899C12DDD7BCB00C9A704 /* SafariWebExtensionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6899C02DDD7BCB00C9A704 /* SafariWebExtensionHandler.swift */; };
-		AB6899DE2DDD7BCB00C9A704 /* background.js in Resources */ = {isa = PBXBuildFile; fileRef = AB6899D42DDD7BCB00C9A704 /* background.js */; };
-		AB6899DF2DDD7BCB00C9A704 /* volume.svg in Resources */ = {isa = PBXBuildFile; fileRef = AB6899D52DDD7BCB00C9A704 /* volume.svg */; };
-		AB6899E02DDD7BCB00C9A704 /* chunks in Resources */ = {isa = PBXBuildFile; fileRef = AB6899D62DDD7BCB00C9A704 /* chunks */; };
-		AB6899E12DDD7BCB00C9A704 /* content-scripts in Resources */ = {isa = PBXBuildFile; fileRef = AB6899D72DDD7BCB00C9A704 /* content-scripts */; };
-		AB6899E22DDD7BCB00C9A704 /* mute.svg in Resources */ = {isa = PBXBuildFile; fileRef = AB6899D82DDD7BCB00C9A704 /* mute.svg */; };
-		AB6899E32DDD7BCB00C9A704 /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = AB6899D92DDD7BCB00C9A704 /* manifest.json */; };
-		AB6899E42DDD7BCB00C9A704 /* options.html in Resources */ = {isa = PBXBuildFile; fileRef = AB6899DA2DDD7BCB00C9A704 /* options.html */; };
-		AB6899E52DDD7BCB00C9A704 /* icon-34.png in Resources */ = {isa = PBXBuildFile; fileRef = AB6899DB2DDD7BCB00C9A704 /* icon-34.png */; };
-		AB6899E62DDD7BCB00C9A704 /* assets in Resources */ = {isa = PBXBuildFile; fileRef = AB6899DC2DDD7BCB00C9A704 /* assets */; };
-		AB6899E72DDD7BCB00C9A704 /* icon-128.png in Resources */ = {isa = PBXBuildFile; fileRef = AB6899DD2DDD7BCB00C9A704 /* icon-128.png */; };
 		AB839F222F5FE1F900E8F48E /* TipJarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB839F212F5FE1F900E8F48E /* TipJarView.swift */; };
 		AB839F262F5FE55100E8F48E /* TipProducts.storekit in Resources */ = {isa = PBXBuildFile; fileRef = AB839F252F5FE55100E8F48E /* TipProducts.storekit */; };
 		AB839F282F624C9600E8F48E /* SupportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB839F272F624C9600E8F48E /* SupportView.swift */; };
@@ -88,16 +78,6 @@
 		AB6899C22DDD7BCB00C9A704 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AB6899C32DDD7BCB00C9A704 /* Tempo_Adjust_Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Tempo_Adjust_Extension.entitlements; sourceTree = "<group>"; };
 		ABC0F100000000000000C0F1 /* Shared.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Shared.xcconfig; sourceTree = "<group>"; };
-		AB6899D42DDD7BCB00C9A704 /* background.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = background.js; path = "../../apps/bandcamp-tempo-adjust/.output/safari-mv3/background.js"; sourceTree = "<group>"; };
-		AB6899D52DDD7BCB00C9A704 /* volume.svg */ = {isa = PBXFileReference; lastKnownFileType = text; name = volume.svg; path = "../../apps/bandcamp-tempo-adjust/.output/safari-mv3/volume.svg"; sourceTree = "<group>"; };
-		AB6899D62DDD7BCB00C9A704 /* chunks */ = {isa = PBXFileReference; lastKnownFileType = folder; name = chunks; path = "../../apps/bandcamp-tempo-adjust/.output/safari-mv3/chunks"; sourceTree = "<group>"; };
-		AB6899D72DDD7BCB00C9A704 /* content-scripts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "content-scripts"; path = "../../apps/bandcamp-tempo-adjust/.output/safari-mv3/content-scripts"; sourceTree = "<group>"; };
-		AB6899D82DDD7BCB00C9A704 /* mute.svg */ = {isa = PBXFileReference; lastKnownFileType = text; name = mute.svg; path = "../../apps/bandcamp-tempo-adjust/.output/safari-mv3/mute.svg"; sourceTree = "<group>"; };
-		AB6899D92DDD7BCB00C9A704 /* manifest.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = manifest.json; path = "../../apps/bandcamp-tempo-adjust/.output/safari-mv3/manifest.json"; sourceTree = "<group>"; };
-		AB6899DA2DDD7BCB00C9A704 /* options.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = options.html; path = "../../apps/bandcamp-tempo-adjust/.output/safari-mv3/options.html"; sourceTree = "<group>"; };
-		AB6899DB2DDD7BCB00C9A704 /* icon-34.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-34.png"; path = "../../apps/bandcamp-tempo-adjust/.output/safari-mv3/icon-34.png"; sourceTree = "<group>"; };
-		AB6899DC2DDD7BCB00C9A704 /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = assets; path = "../../apps/bandcamp-tempo-adjust/.output/safari-mv3/assets"; sourceTree = "<group>"; };
-		AB6899DD2DDD7BCB00C9A704 /* icon-128.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-128.png"; path = "../../apps/bandcamp-tempo-adjust/.output/safari-mv3/icon-128.png"; sourceTree = "<group>"; };
 		AB839F212F5FE1F900E8F48E /* TipJarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipJarView.swift; sourceTree = "<group>"; };
 		AB839F252F5FE55100E8F48E /* TipProducts.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = TipProducts.storekit; sourceTree = "<group>"; };
 		AB839F272F624C9600E8F48E /* SupportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportView.swift; sourceTree = "<group>"; };
@@ -211,31 +191,12 @@
 		AB6899BF2DDD7BCB00C9A704 /* Tempo Adjust Extension */ = {
 			isa = PBXGroup;
 			children = (
-				AB6899D32DDD7BCB00C9A704 /* Resources */,
 				AB6899C02DDD7BCB00C9A704 /* SafariWebExtensionHandler.swift */,
 				AB6899C22DDD7BCB00C9A704 /* Info.plist */,
 				AB6899C32DDD7BCB00C9A704 /* Tempo_Adjust_Extension.entitlements */,
 			);
 			path = "Tempo Adjust Extension";
 			sourceTree = "<group>";
-		};
-		AB6899D32DDD7BCB00C9A704 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				AB6899D42DDD7BCB00C9A704 /* background.js */,
-				AB6899D52DDD7BCB00C9A704 /* volume.svg */,
-				AB6899D62DDD7BCB00C9A704 /* chunks */,
-				AB6899D72DDD7BCB00C9A704 /* content-scripts */,
-				AB6899D82DDD7BCB00C9A704 /* mute.svg */,
-				AB6899D92DDD7BCB00C9A704 /* manifest.json */,
-				AB6899DA2DDD7BCB00C9A704 /* options.html */,
-				AB6899DB2DDD7BCB00C9A704 /* icon-34.png */,
-				AB6899DC2DDD7BCB00C9A704 /* assets */,
-				AB6899DD2DDD7BCB00C9A704 /* icon-128.png */,
-			);
-			name = Resources;
-			path = "Tempo Adjust Extension";
-			sourceTree = SOURCE_ROOT;
 		};
 /* End PBXGroup section */
 
@@ -307,6 +268,7 @@
 			buildPhases = (
 				AB6899B72DDD7BCB00C9A704 /* Sources */,
 				AB6899B82DDD7BCB00C9A704 /* Frameworks */,
+				ABC0F200000000000000C0F1 /* Build Web Extension */,
 				AB6899B92DDD7BCB00C9A704 /* Resources */,
 			);
 			buildRules = (
@@ -398,20 +360,33 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AB6899E42DDD7BCB00C9A704 /* options.html in Resources */,
-				AB6899E02DDD7BCB00C9A704 /* chunks in Resources */,
-				AB6899DF2DDD7BCB00C9A704 /* volume.svg in Resources */,
-				AB6899E62DDD7BCB00C9A704 /* assets in Resources */,
-				AB6899E72DDD7BCB00C9A704 /* icon-128.png in Resources */,
-				AB6899E52DDD7BCB00C9A704 /* icon-34.png in Resources */,
-				AB6899E22DDD7BCB00C9A704 /* mute.svg in Resources */,
-				AB6899DE2DDD7BCB00C9A704 /* background.js in Resources */,
-				AB6899E32DDD7BCB00C9A704 /* manifest.json in Resources */,
-				AB6899E12DDD7BCB00C9A704 /* content-scripts in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		ABC0F200000000000000C0F1 /* Build Web Extension */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Build Web Extension";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/bash;
+			shellScript = "exec \"${PROJECT_DIR}/scripts/build-web-extension.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		AB6899842DDD7BC900C9A704 /* Sources */ = {
@@ -604,6 +579,7 @@
 				DEAD_CODE_STRIPPING = YES;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Tempo Adjust Extension/Info.plist";
@@ -641,6 +617,7 @@
 				DEAD_CODE_STRIPPING = YES;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Tempo Adjust Extension/Info.plist";
