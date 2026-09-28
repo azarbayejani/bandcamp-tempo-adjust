@@ -3,6 +3,7 @@
 # extension target's bundle. Called from the "Build Web Extension" Run
 # Script phase of the "Tempo Adjust Extension" target, so every Xcode
 # build, run and archive packages a fresh build of the current source.
+# It first checks that the app version matches package.json.
 #
 # Can also be run by hand from an Xcode-like environment; it needs
 # TARGET_BUILD_DIR and UNLOCALIZED_RESOURCES_FOLDER_PATH to know where
@@ -23,6 +24,24 @@ WXT_OUTPUT="$REPO_ROOT/apps/bandcamp-tempo-adjust/.output/safari-mv3"
 # Info.plist and signature. Safari needs manifest.json at this level.
 DEST="$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH"
 COPIED_LIST="$DERIVED_FILE_DIR/web-extension-files.txt"
+
+# --- Check the app version --------------------------------------------------
+# package.json is the single source of the version for every store. Xcode
+# resolves MARKETING_VERSION (from Config/Version.xcconfig) before any build
+# phase runs, so this build can't pick up a new value; instead, on a
+# mismatch, rewrite Version.xcconfig and fail so the next build uses it.
+# The app target depends on this one, so it never builds with a stale value.
+PACKAGE_JSON="$REPO_ROOT/apps/bandcamp-tempo-adjust/package.json"
+VERSION_XCCONFIG="$SCRIPT_DIR/../Config/Version.xcconfig"
+PACKAGE_VERSION="$(plutil -extract version raw -o - "$PACKAGE_JSON")"
+
+if [ "${MARKETING_VERSION:-}" != "$PACKAGE_VERSION" ]; then
+  sed -i '' -E "s/^MARKETING_VERSION = .*/MARKETING_VERSION = $PACKAGE_VERSION/" "$VERSION_XCCONFIG"
+  echo "error: MARKETING_VERSION is '${MARKETING_VERSION:-}' but package.json says '$PACKAGE_VERSION'." >&2
+  echo "error: Updated safari/Config/Version.xcconfig to $PACKAGE_VERSION. Build again and commit it." >&2
+  echo "error: If this repeats, something overrides MARKETING_VERSION (a target build setting or Config/Local.xcconfig)." >&2
+  exit 1
+fi
 
 # --- Find node and pnpm -----------------------------------------------------
 # Xcode runs build phases with a minimal PATH (/usr/bin:/bin:...), so none

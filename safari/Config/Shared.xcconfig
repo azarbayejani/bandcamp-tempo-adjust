@@ -1,3 +1,8 @@
+// Base configuration for the whole project (set on the project's Debug and
+// Release configurations, so every target inherits it).
+
+#include "Version.xcconfig"
+
 // Each developer creates Config/Local.xcconfig (gitignored) with their own
 // DEVELOPMENT_TEAM, e.g.:
 //
