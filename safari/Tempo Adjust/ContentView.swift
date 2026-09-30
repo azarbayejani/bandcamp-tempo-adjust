@@ -19,16 +19,19 @@ struct ContentView: View {
     private let timer = Timer.publish(every: 0.5, on: .main, in: .common).autoconnect()
     #endif
     @Environment(\.scenePhase) private var scenePhase
-    @State private var hasAllPermissions = false
+    // Read up front, not in .task, so the first frame already shows the right
+    // screen instead of flashing the setup steps.
+    @State private var hasAllPermissions = Self.storedHasAllPermissions()
     @State private var showingSetupSteps = false
     @State private var showingTipJar = false
 
     // macOS can also check that the extension is still on; iOS can't, so a
     // disabled extension keeps showing as set up there. The setup steps stay
-    // one tap away for that case.
+    // one tap away for that case. Until Safari answers, assume the extension
+    // is still on, since it was when it last reported.
     private var isAllSet: Bool {
         #if os(macOS)
-        hasAllPermissions && isExtensionEnabled == true
+        hasAllPermissions && isExtensionEnabled != false
         #else
         hasAllPermissions
         #endif
@@ -45,9 +48,6 @@ struct ContentView: View {
         .sheet(isPresented: $showingTipJar) {
             tipJarSheet
         }
-        .task {
-            refreshSetupState()
-        }
         .onChange(of: scenePhase) { _, phase in
             if phase == .active {
                 refreshSetupState()
@@ -55,8 +55,12 @@ struct ContentView: View {
         }
     }
 
+    private static func storedHasAllPermissions() -> Bool {
+        UserDefaults(suiteName: appGroupIdentifier)?.bool(forKey: hasAllPermissionsKey) ?? false
+    }
+
     private func refreshSetupState() {
-        hasAllPermissions = UserDefaults(suiteName: appGroupIdentifier)?.bool(forKey: hasAllPermissionsKey) ?? false
+        hasAllPermissions = Self.storedHasAllPermissions()
     }
 
     // MARK: - Shared Components
