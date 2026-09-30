@@ -2,6 +2,7 @@ import { type ReactNode, useMemo, useState } from 'react';
 
 import { useQuery } from '@tanstack/react-query';
 import Select from 'react-select';
+import { DONATE_URL, TIP_JAR_URL } from '@/utils/tipJar';
 import { downloadFile } from './downloadFile';
 import { fetchCurrencies } from './services/fetchCurrencies';
 import { formatDate } from './services/formatDate';
@@ -115,12 +116,14 @@ function PurchaseTotals({
         <div>
           <strong>Did this help you do your taxes?</strong>{' '}
           <a
-            href="https://buymeacoffee.com/miseryconfusion"
-            target="_blank"
+            href={import.meta.env.SAFARI ? TIP_JAR_URL : DONATE_URL}
+            // A new tab for the app link would just sit empty behind the app.
+            target={import.meta.env.SAFARI ? undefined : '_blank'}
             rel="noreferrer"
             className="BandcampTempoAdjust__button BandcampTempoAdjust__button--purchases"
           >
-            Consider donating to support future development!
+            Consider {import.meta.env.SAFARI ? 'leaving a tip' : 'donating'} to
+            support future development!
           </a>
         </div>
       </div>

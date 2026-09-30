@@ -57,6 +57,13 @@ struct ContentView: View {
                 refreshSetupState()
             }
         }
+        // The extension's Donate buttons open tempoadjust://tip. Once setup
+        // is done the tip jar is already on the page.
+        .onOpenURL { url in
+            if url.host == "tip" && !isAllSet {
+                showingTipJar = true
+            }
+        }
     }
 
     private static func storedHasAllPermissions() -> Bool {
