@@ -75,47 +75,7 @@
     "_timeRate" : 0
   },
   "subscriptionGroups" : [
-    {
-      "id" : "A1B2C3D4",
-      "localizations" : [
-        {
-          "description" : "Support ongoing development of Tempo Adjust",
-          "displayName" : "Supporter",
-          "locale" : "en_US"
-        }
-      ],
-      "name" : "Supporter",
-      "subscriptions" : [
-        {
-          "adHocOffers" : [
 
-          ],
-          "codeOffers" : [
-
-          ],
-          "displayPrice" : "4.99",
-          "familyShareable" : false,
-          "groupNumber" : 1,
-          "internalID" : "D5E6F7A8",
-          "introductoryOffer" : null,
-          "localizations" : [
-            {
-              "description" : "Support ongoing development",
-              "displayName" : "Supporter",
-              "locale" : "en_US"
-            }
-          ],
-          "productID" : "com.miseryconfusion.tempoadjust.supporter",
-          "recurringSubscriptionPeriod" : "P1Y",
-          "referenceName" : "Supporter",
-          "subscriptionGroupID" : "A1B2C3D4",
-          "type" : "RecurringSubscription",
-          "winbackOffers" : [
-
-          ]
-        }
-      ]
-    }
   ],
   "version" : {
     "major" : 4,

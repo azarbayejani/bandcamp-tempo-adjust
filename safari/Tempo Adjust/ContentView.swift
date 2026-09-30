@@ -135,12 +135,6 @@ struct ContentView: View {
             Divider()
                 .padding(.vertical, 4)
 
-            SupportView()
-
-            Text("— or —")
-                .font(.caption)
-                .foregroundStyle(.secondary)
-
             TipJarView()
 
             Spacer().frame(height: 4)
@@ -239,12 +233,6 @@ struct ContentView: View {
 
                 Divider()
                     .padding(.vertical, 4)
-
-                SupportView()
-
-                Text("— or —")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
 
                 TipJarView()
 

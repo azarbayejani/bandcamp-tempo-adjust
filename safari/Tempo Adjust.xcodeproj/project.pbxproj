@@ -18,7 +18,6 @@
 		AB6899C12DDD7BCB00C9A704 /* SafariWebExtensionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6899C02DDD7BCB00C9A704 /* SafariWebExtensionHandler.swift */; };
 		AB839F222F5FE1F900E8F48E /* TipJarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB839F212F5FE1F900E8F48E /* TipJarView.swift */; };
 		AB839F262F5FE55100E8F48E /* TipProducts.storekit in Resources */ = {isa = PBXBuildFile; fileRef = AB839F252F5FE55100E8F48E /* TipProducts.storekit */; };
-		AB839F282F624C9600E8F48E /* SupportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB839F272F624C9600E8F48E /* SupportView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,7 +78,6 @@
 		AB6899C32DDD7BCB00C9A704 /* Tempo_Adjust_Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Tempo_Adjust_Extension.entitlements; sourceTree = "<group>"; };
 		AB839F212F5FE1F900E8F48E /* TipJarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipJarView.swift; sourceTree = "<group>"; };
 		AB839F252F5FE55100E8F48E /* TipProducts.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = TipProducts.storekit; sourceTree = "<group>"; };
-		AB839F272F624C9600E8F48E /* SupportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportView.swift; sourceTree = "<group>"; };
 		ABC0F100000000000000C0F1 /* Shared.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Shared.xcconfig; sourceTree = "<group>"; };
 		ABC0F100000000000000C0F2 /* Version.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Version.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -151,7 +149,6 @@
 				AB61A2842F5962020093D0C2 /* TempoAdjustApp.swift */,
 				AB61A2862F59621C0093D0C2 /* ContentView.swift */,
 				AB839F212F5FE1F900E8F48E /* TipJarView.swift */,
-				AB839F272F624C9600E8F48E /* SupportView.swift */,
 			);
 			path = "Tempo Adjust";
 			sourceTree = "<group>";
@@ -395,7 +392,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AB839F282F624C9600E8F48E /* SupportView.swift in Sources */,
 				AB839F222F5FE1F900E8F48E /* TipJarView.swift in Sources */,
 				AB61A2852F5962020093D0C2 /* TempoAdjustApp.swift in Sources */,
 				AB61A2872F59621C0093D0C2 /* ContentView.swift in Sources */,

@@ -24,7 +24,8 @@ struct TipJarView: View {
 
     var body: some View {
         VStack(spacing: 12) {
-            
+            Text("Support Tempo Adjust")
+                .font(.headline)
 
             Text("Leave a tip to support development")
                 .font(.subheadline)
