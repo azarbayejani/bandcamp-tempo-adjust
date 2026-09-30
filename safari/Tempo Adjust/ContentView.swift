@@ -79,7 +79,7 @@ struct ContentView: View {
                     .multilineTextAlignment(.center)
             }
         } else {
-            Text("Start using Tempo Adjust\nin Safari")
+            Text("Start using Tempo Adjust in Safari")
                 .font(.title)
                 .bold()
                 .multilineTextAlignment(.center)
