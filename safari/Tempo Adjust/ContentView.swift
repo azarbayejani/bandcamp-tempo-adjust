@@ -63,6 +63,14 @@ struct ContentView: View {
         }
         return Image(systemName: "app.fill")
     }
+
+    // iOS 18 moved Safari under Settings > Apps.
+    private var openSafariExtensionsStep: LocalizedStringKey {
+        if #available(iOS 18, *) {
+            return "Open the **Settings** app and go to **Apps > Safari > Extensions**."
+        }
+        return "Open the **Settings** app and go to **Safari > Extensions**."
+    }
     #endif
 
     // MARK: - macOS Content
@@ -203,23 +211,29 @@ struct ContentView: View {
 
                 VStack(alignment: .leading, spacing: 20) {
                     stepView(number: 1) {
-                        Text("Open the **Settings** app, then navigate to **Safari > Extensions**.")
+                        Text(openSafariExtensionsStep)
                     }
 
                     stepView(number: 2) {
-                        Text("Tap **Tempo Adjust** and turn on the toggle to enable the extension.")
+                        Text("Tap **Tempo Adjust** and turn on the toggle.")
                     }
 
                     stepView(number: 3) {
-                        Text("On the same page, tap **Settings** to open Tempo Adjust's settings screen.")
+                        VStack(alignment: .leading, spacing: 6) {
+                            Text("On the same page, tap **Extension Settings**. Tempo Adjust's setup page opens in Safari.")
+
+                            Text("If you don't see Extension Settings, open Safari, tap the extensions menu in the address bar, then tap **Tempo Adjust**.")
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                        }
                     }
-                    
+
                     stepView(number: 4) {
-                        Text("Tap 'Allow' to allow Tempo Adjust to run on Bandcamp and Discogs.")
+                        Text("Tap **Allow**, then **Always Allow**, so Tempo Adjust can run on Bandcamp and Discogs.")
                     }
 
                     stepView(number: 5) {
-                        Text("Open Safari and start using Tempo Adjust on your favorite releases on Bandcamp and Discogs.")
+                        Text("Start using Tempo Adjust on your favorite releases on Bandcamp and Discogs.")
                     }
                 }
 
