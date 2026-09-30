@@ -19,7 +19,6 @@ export default defineContentScript({
   },
 
   main() {
-    console.log('before');
     if (!isDiscogsPage()) {
       return;
     }

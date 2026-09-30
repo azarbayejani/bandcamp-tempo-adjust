@@ -32,7 +32,6 @@ const Options: React.FC<Props> = () => {
 
   useEffect(() => {
     const listener = () => {
-      console.log('hi');
       queryClient.invalidateQueries(['permissions']);
     };
     browser.permissions.onAdded.addListener(listener);
@@ -49,7 +48,7 @@ const Options: React.FC<Props> = () => {
   return !isLoading && !hasPermissions ? (
     <div className="OptionsContainer">
       <div className={css.options}>
-        <img src={logo} alt={`${extensionName} logo}`} />
+        <img src={logo} alt={`${extensionName} logo`} />
         <p style={{ textAlign: 'center' }}>
           {extensionName} needs your permission to access {domains} in order to
           work correctly.
