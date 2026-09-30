@@ -16,8 +16,13 @@ struct TipJarView: View {
         "com.miseryconfusion.tempoadjust.largetip"
     ]
 
+    private enum LoadState {
+        case loading, loaded, unavailable
+    }
+
     @AppStorage("tipCount") private var tipCount: Int = 0
     @State private var products: [Product] = []
+    @State private var loadState = LoadState.loading
     @State private var showThankYou = false
     @State private var purchasing: String?
     @State private var purchaseError: String?
@@ -35,9 +40,12 @@ struct TipJarView: View {
                 if showThankYou {
                     thankYouView
                         .transition(.opacity)
-                } else if products.isEmpty {
+                } else if loadState == .loading {
                     ProgressView()
                         .padding(.vertical, 8)
+                        .transition(.opacity)
+                } else if loadState == .unavailable {
+                    unavailableView
                         .transition(.opacity)
                 } else {
                     VStack(spacing: 8) {
@@ -57,11 +65,7 @@ struct TipJarView: View {
 
         }
         .task {
-            do {
-                products = try await Product.products(for: Self.productIDs)
-            } catch {
-                logger.error("Failed to load tip products: \(error.localizedDescription, privacy: .public)")
-            }
+            await loadProducts()
         }
         .alert(
             "Purchase Failed",
@@ -117,6 +121,33 @@ struct TipJarView: View {
                 .bold()
         }
         .padding(.vertical, 12)
+    }
+
+    private var unavailableView: some View {
+        VStack(spacing: 8) {
+            Text("Tips aren't available right now.")
+                .font(.callout)
+                .foregroundStyle(.secondary)
+            Button("Try Again") {
+                Task { await loadProducts() }
+            }
+        }
+        .padding(.vertical, 8)
+    }
+
+    // An empty result counts as unavailable: StoreKit returns no products,
+    // rather than an error, when they aren't set up for this build.
+    private func loadProducts() async {
+        loadState = .loading
+        do {
+            products = try await Product.products(for: Self.productIDs)
+        } catch {
+            logger.error("Failed to load tip products: \(error.localizedDescription, privacy: .public)")
+            products = []
+        }
+        withAnimation {
+            loadState = products.isEmpty ? .unavailable : .loaded
+        }
     }
 
     @ViewBuilder
