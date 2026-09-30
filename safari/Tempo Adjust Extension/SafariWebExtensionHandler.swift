@@ -8,6 +8,10 @@
 import SafariServices
 import os.log
 
+// Shared with the app through the App Group; keep in sync with ContentView.swift.
+private let appGroupIdentifier = "group.com.miseryconfusion.tempoadjust"
+private let hasAllPermissionsKey = "hasAllPermissions"
+
 class SafariWebExtensionHandler: NSObject, NSExtensionRequestHandling {
 
     func beginRequest(with context: NSExtensionContext) {
@@ -28,6 +32,14 @@ class SafariWebExtensionHandler: NSObject, NSExtensionRequestHandling {
         }
 
         os_log(.default, "Received message from browser.runtime.sendNativeMessage: %@ (profile: %@)", String(describing: message), profile?.uuidString ?? "none")
+
+        // The background script reports whether setup is finished; the app
+        // reads it to decide between the setup steps and "You're all set".
+        if let body = message as? [String: Any],
+           body["name"] as? String == "setupState",
+           let hasAllPermissions = body["hasAllPermissions"] as? Bool {
+            UserDefaults(suiteName: appGroupIdentifier)?.set(hasAllPermissions, forKey: hasAllPermissionsKey)
+        }
 
         let response = NSExtensionItem()
         if #available(iOS 15.0, macOS 11.0, *) {

@@ -8,12 +8,31 @@ import SafariServices
 
 private let extensionBundleIdentifier = "com.miseryconfusion.tempoadjust.Extension"
 
+// Written by SafariWebExtensionHandler when the extension reports whether it
+// has every permission it needs; keep in sync with that file.
+private let appGroupIdentifier = "group.com.miseryconfusion.tempoadjust"
+private let hasAllPermissionsKey = "hasAllPermissions"
+
 struct ContentView: View {
     #if os(macOS)
     @State private var isExtensionEnabled: Bool?
     private let timer = Timer.publish(every: 0.5, on: .main, in: .common).autoconnect()
     #endif
+    @Environment(\.scenePhase) private var scenePhase
+    @State private var hasAllPermissions = false
+    @State private var showingSetupSteps = false
     @State private var showingTipJar = false
+
+    // macOS can also check that the extension is still on; iOS can't, so a
+    // disabled extension keeps showing as set up there. The setup steps stay
+    // one tap away for that case.
+    private var isAllSet: Bool {
+        #if os(macOS)
+        hasAllPermissions && isExtensionEnabled == true
+        #else
+        hasAllPermissions
+        #endif
+    }
 
     var body: some View {
         Group {
@@ -26,9 +45,80 @@ struct ContentView: View {
         .sheet(isPresented: $showingTipJar) {
             tipJarSheet
         }
+        .task {
+            refreshSetupState()
+        }
+        .onChange(of: scenePhase) { _, phase in
+            if phase == .active {
+                refreshSetupState()
+            }
+        }
+    }
+
+    private func refreshSetupState() {
+        hasAllPermissions = UserDefaults(suiteName: appGroupIdentifier)?.bool(forKey: hasAllPermissionsKey) ?? false
     }
 
     // MARK: - Shared Components
+
+    @ViewBuilder
+    private var title: some View {
+        if isAllSet {
+            VStack(spacing: 6) {
+                HStack(spacing: 8) {
+                    Image(systemName: "checkmark.circle.fill")
+                        .foregroundStyle(.green)
+                        .accessibilityHidden(true)
+                    Text("You're all set")
+                }
+                .font(.title)
+                .bold()
+
+                Text("Tempo Adjust is ready on Bandcamp and Discogs in Safari.")
+                    .foregroundStyle(.secondary)
+                    .multilineTextAlignment(.center)
+            }
+        } else {
+            Text("Start using Tempo Adjust\nin Safari")
+                .font(.title)
+                .bold()
+                .multilineTextAlignment(.center)
+        }
+    }
+
+    // iOS can't tell when the extension is turned off, so point people back
+    // at the steps if it stops working. macOS notices and shows them again.
+    private var setupStepsLabel: LocalizedStringKey {
+        #if os(macOS)
+        "Setup steps"
+        #else
+        "Not working? See setup steps"
+        #endif
+    }
+
+    // Once setup is done the steps fold away, and the tip jar, which sat
+    // behind a card until then, moves onto the page.
+    @ViewBuilder
+    private func setupAndSupport(steps: some View) -> some View {
+        if isAllSet {
+            DisclosureGroup(setupStepsLabel, isExpanded: $showingSetupSteps) {
+                steps
+                    .padding(.top, 12)
+            }
+
+            Divider()
+                .padding(.vertical, 4)
+
+            TipJarView()
+        } else {
+            steps
+
+            Divider()
+                .padding(.vertical, 4)
+
+            tipPrompt
+        }
+    }
 
     private func stepView<Content: View>(number: Int, @ViewBuilder content: () -> Content) -> some View {
         HStack(alignment: .top, spacing: 8) {
@@ -62,7 +152,8 @@ struct ContentView: View {
         .font(.callout)
     }
 
-    // Tips live in a sheet so the setup steps don't compete with them.
+    // Until setup is done, tips live in a sheet so the setup steps don't
+    // compete with them.
     private var tipPrompt: some View {
         Button {
             showingTipJar = true
@@ -72,10 +163,10 @@ struct ContentView: View {
                     .foregroundStyle(.pink)
                     .frame(width: 24)
                 VStack(alignment: .leading, spacing: 2) {
-                    Text("Enjoying Tempo Adjust?")
+                    Text("Support Development")
                         .font(.body)
                         .bold()
-                    Text("Leave a tip to support it")
+                    Text("Leave a tip")
                         .font(.callout)
                         .foregroundStyle(.secondary)
                 }
@@ -149,60 +240,9 @@ struct ContentView: View {
                 .resizable()
                 .frame(width: 128, height: 128)
 
-            Text("Start using Tempo Adjust\nin Safari")
-                .font(.title)
-                .bold()
-                .multilineTextAlignment(.center)
+            title
 
-            VStack(alignment: .leading, spacing: 16) {
-                stepView(number: 1) {
-                    VStack(alignment: .leading, spacing: 6) {
-                        Button("Open Safari Settings\u{2026}") {
-                            openSafariPreferences()
-                        }
-
-                        if let enabled = isExtensionEnabled {
-                            if enabled {
-                                Text("\u{2705} The Tempo Adjust extension is currently on. Continue following the install steps to make sure it works on Bandcamp and Discogs.")
-                                    .font(.caption)
-                                    .foregroundStyle(.secondary)
-                            } else {
-                                Text("\u{274C} Tempo Adjust is not enabled")
-                                    .font(.caption)
-                                    .foregroundStyle(.secondary)
-                                Text("Enable the extension by checking the checkbox next to the Tempo Adjust extension on the left panel")
-                                    .font(.caption)
-                                    .foregroundStyle(.secondary)
-                            }
-                        }
-                    }
-                }
-
-                stepView(number: 2) {
-                    VStack(alignment: .leading, spacing: 6) {
-                        Text("Click **Allow** in the Tempo Adjust settings to enable Tempo Adjust on Bandcamp and Discogs.")
-
-                        HStack(spacing: 0) {
-                            Text("If you do not see the Tempo Adjust settings page, try clicking on the Tempo Adjust icon in your Safari toolbar.")
-                                .font(.caption)
-                                .foregroundStyle(.secondary)
-                        }
-                    }
-                }
-
-                stepView(number: 3) {
-                    Text("Click **Always allow**.")
-                }
-
-                stepView(number: 4) {
-                    Text("Start using Tempo Adjust on your favorite releases on Bandcamp and Discogs.")
-                }
-            }
-
-            Divider()
-                .padding(.vertical, 4)
-
-            tipPrompt
+            setupAndSupport(steps: macOSSteps)
 
             Spacer().frame(height: 4)
             supportFooter
@@ -213,9 +253,57 @@ struct ContentView: View {
         .fixedSize()
         .onReceive(timer) { _ in
             checkExtensionState()
+            refreshSetupState()
         }
         .task {
             checkExtensionState()
+        }
+    }
+
+    private var macOSSteps: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            stepView(number: 1) {
+                VStack(alignment: .leading, spacing: 6) {
+                    Button("Open Safari Settings\u{2026}") {
+                        openSafariPreferences()
+                    }
+
+                    if let enabled = isExtensionEnabled {
+                        if enabled {
+                            Text("\u{2705} The Tempo Adjust extension is currently on. Continue following the install steps to make sure it works on Bandcamp and Discogs.")
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                        } else {
+                            Text("\u{274C} Tempo Adjust is not enabled")
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                            Text("Enable the extension by checking the checkbox next to the Tempo Adjust extension on the left panel")
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                        }
+                    }
+                }
+            }
+
+            stepView(number: 2) {
+                VStack(alignment: .leading, spacing: 6) {
+                    Text("Click **Allow** in the Tempo Adjust settings to enable Tempo Adjust on Bandcamp and Discogs.")
+
+                    HStack(spacing: 0) {
+                        Text("If you do not see the Tempo Adjust settings page, try clicking on the Tempo Adjust icon in your Safari toolbar.")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+                }
+            }
+
+            stepView(number: 3) {
+                Text("Click **Always allow**.")
+            }
+
+            stepView(number: 4) {
+                Text("Start using Tempo Adjust on your favorite releases on Bandcamp and Discogs.")
+            }
         }
     }
 
@@ -265,43 +353,9 @@ struct ContentView: View {
                     .clipShape(RoundedRectangle(cornerRadius: 28, style: .continuous))
                     .accessibilityHidden(true)
 
-                Text("Start using Tempo Adjust\nin Safari")
-                    .font(.title)
-                    .bold()
-                    .multilineTextAlignment(.center)
+                title
 
-                VStack(alignment: .leading, spacing: 20) {
-                    stepView(number: 1) {
-                        Text(openSafariExtensionsStep)
-                    }
-
-                    stepView(number: 2) {
-                        Text("Tap **Tempo Adjust** and turn on the toggle.")
-                    }
-
-                    stepView(number: 3) {
-                        VStack(alignment: .leading, spacing: 6) {
-                            Text("On the same page, tap **Extension Settings**. Tempo Adjust's setup page opens in Safari.")
-
-                            Text("If you don't see Extension Settings, open Safari, tap the extensions menu in the address bar, then tap **Tempo Adjust**.")
-                                .font(.caption)
-                                .foregroundStyle(.secondary)
-                        }
-                    }
-
-                    stepView(number: 4) {
-                        Text("Tap **Allow**, then **Always Allow**, so Tempo Adjust can run on Bandcamp and Discogs.")
-                    }
-
-                    stepView(number: 5) {
-                        Text("Start using Tempo Adjust on your favorite releases on Bandcamp and Discogs.")
-                    }
-                }
-
-                Divider()
-                    .padding(.vertical, 4)
-
-                tipPrompt
+                setupAndSupport(steps: iOSSteps)
 
                 supportFooter
                     .padding(.bottom, 8)
@@ -309,6 +363,36 @@ struct ContentView: View {
             .padding(.horizontal, 30)
             .padding(.vertical, 20)
             .frame(maxWidth: .infinity)
+        }
+    }
+
+    private var iOSSteps: some View {
+        VStack(alignment: .leading, spacing: 20) {
+            stepView(number: 1) {
+                Text(openSafariExtensionsStep)
+            }
+
+            stepView(number: 2) {
+                Text("Tap **Tempo Adjust** and turn on the toggle.")
+            }
+
+            stepView(number: 3) {
+                VStack(alignment: .leading, spacing: 6) {
+                    Text("On the same page, tap **Extension Settings**. Tempo Adjust's setup page opens in Safari.")
+
+                    Text("If you don't see Extension Settings, open Safari, tap the extensions menu in the address bar, then tap **Tempo Adjust**.")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+            }
+
+            stepView(number: 4) {
+                Text("Tap **Allow**, then **Always Allow**, so Tempo Adjust can run on Bandcamp and Discogs.")
+            }
+
+            stepView(number: 5) {
+                Text("Start using Tempo Adjust on your favorite releases on Bandcamp and Discogs.")
+            }
         }
     }
     #endif

@@ -49,6 +49,23 @@ export default defineBackground({
       // store the port so that it isn't garbage collected
       ports['nativePort'] = nativePort;
 
+      // Tell the containing app whether setup is finished, so it can show
+      // "You're all set" instead of the setup steps. iOS offers the app no
+      // other way to find out.
+      const reportSetupState = async () => {
+        try {
+          await browser.runtime.sendNativeMessage('application.id', {
+            name: 'setupState',
+            hasAllPermissions: await hasAllPermissions(),
+          });
+        } catch (error) {
+          console.log('Could not report setup state to the app', error);
+        }
+      };
+      void reportSetupState();
+      browser.permissions.onAdded.addListener(() => void reportSetupState());
+      browser.permissions.onRemoved.addListener(() => void reportSetupState());
+
       nativePort.onMessage.addListener((message: { name: string }) => {
         if (message.name === 'openOptions') {
           browser.tabs.create({ url: optionsPageUrl.toString() });
