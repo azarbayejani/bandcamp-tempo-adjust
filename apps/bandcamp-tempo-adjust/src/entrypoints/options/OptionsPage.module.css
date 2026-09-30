@@ -27,6 +27,13 @@
   font-size: 0.75rem;
 }
 
+.divider {
+  border: none;
+  border-top: 1px solid #dbdbdb;
+  width: calc(100% - 40px);
+  margin: 18px 20px;
+}
+
 .button {
   display: inline-flex;
   text-decoration: none;

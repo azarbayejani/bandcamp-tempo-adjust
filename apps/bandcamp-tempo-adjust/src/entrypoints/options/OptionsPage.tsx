@@ -95,6 +95,11 @@ const Options: React.FC<Props> = () => {
           <h1>Thanks for installing {extensionName}!</h1>
         </div>
         <div className={css.center} style={{ padding: '0 20px' }}>
+          Start using it on your favorite releases on{' '}
+          {import.meta.env.SAFARI ? 'Bandcamp and Discogs' : 'Bandcamp'}.
+        </div>
+        <hr className={css.divider} />
+        <div className={css.center} style={{ padding: '0 20px' }}>
           Please consider{' '}
           {import.meta.env.SAFARI ? 'leaving a tip' : 'donating'} to support
           continued development of the extension.
