@@ -3,6 +3,11 @@
 
 #include "Version.xcconfig"
 
+// Minimum OS versions. Safari Web Extensions need iOS 15 / macOS 12, but the
+// app's SwiftUI (symbolEffect, Window scene) needs iOS 17 / macOS 14.
+IPHONEOS_DEPLOYMENT_TARGET = 17.0
+MACOSX_DEPLOYMENT_TARGET = 14.0
+
 // Each developer creates Config/Local.xcconfig (gitignored) with their own
 // DEVELOPMENT_TEAM, e.g.:
 //
