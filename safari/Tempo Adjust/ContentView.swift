@@ -109,6 +109,7 @@ struct ContentView: View {
                 steps
                     .padding(.top, 12)
             }
+            .disclosureGroupStyle(SetupStepsDisclosureStyle())
 
             Divider()
                 .padding(.vertical, 4)
@@ -400,4 +401,39 @@ struct ContentView: View {
         }
     }
     #endif
+}
+
+// The default style on macOS toggles only from the chevron and draws its
+// focus ring around that alone. Make the chevron and label one button so
+// the whole label is clickable and focus covers both.
+private struct SetupStepsDisclosureStyle: DisclosureGroupStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        VStack(alignment: .leading, spacing: 0) {
+            HStack {
+                Button {
+                    withAnimation(.easeInOut(duration: 0.2)) {
+                        configuration.isExpanded.toggle()
+                    }
+                } label: {
+                    HStack(spacing: 6) {
+                        Image(systemName: "chevron.right")
+                            .font(.caption.weight(.semibold))
+                            .foregroundStyle(.secondary)
+                            .rotationEffect(.degrees(configuration.isExpanded ? 90 : 0))
+                        configuration.label
+                    }
+                    .padding(.vertical, 2)
+                    .contentShape(Rectangle())
+                }
+                .buttonStyle(.plain)
+                .accessibilityValue(configuration.isExpanded ? "Expanded" : "Collapsed")
+
+                Spacer(minLength: 0)
+            }
+
+            if configuration.isExpanded {
+                configuration.content
+            }
+        }
+    }
 }
