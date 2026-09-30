@@ -13,13 +13,19 @@ struct ContentView: View {
     @State private var isExtensionEnabled: Bool?
     private let timer = Timer.publish(every: 0.5, on: .main, in: .common).autoconnect()
     #endif
+    @State private var showingTipJar = false
 
     var body: some View {
-        #if os(macOS)
-        macOSContent
-        #else
-        iOSContent
-        #endif
+        Group {
+            #if os(macOS)
+            macOSContent
+            #else
+            iOSContent
+            #endif
+        }
+        .sheet(isPresented: $showingTipJar) {
+            tipJarSheet
+        }
     }
 
     // MARK: - Shared Components
@@ -54,6 +60,67 @@ struct ContentView: View {
             #endif
         }
         .font(.callout)
+    }
+
+    // Tips live in a sheet so the setup steps don't compete with them.
+    private var tipPrompt: some View {
+        Button {
+            showingTipJar = true
+        } label: {
+            HStack(spacing: 12) {
+                Image(systemName: "heart.fill")
+                    .foregroundStyle(.pink)
+                    .frame(width: 24)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Enjoying Tempo Adjust?")
+                        .font(.body)
+                        .bold()
+                    Text("Leave a tip to support it")
+                        .font(.callout)
+                        .foregroundStyle(.secondary)
+                }
+                Spacer()
+                Image(systemName: "chevron.right")
+                    .font(.callout.weight(.semibold))
+                    .foregroundStyle(.tertiary)
+            }
+            .padding(.horizontal, 16)
+            .padding(.vertical, 10)
+            .background(.quaternary, in: RoundedRectangle(cornerRadius: 10))
+            .contentShape(RoundedRectangle(cornerRadius: 10))
+        }
+        .buttonStyle(.plain)
+        .accessibilityHint("Opens the tip jar")
+    }
+
+    @ViewBuilder
+    private var tipJarSheet: some View {
+        #if os(macOS)
+        VStack(spacing: 16) {
+            TipJarView()
+            Button("Done") {
+                showingTipJar = false
+            }
+            .keyboardShortcut(.defaultAction)
+        }
+        .padding(24)
+        .frame(width: 360)
+        #else
+        NavigationStack {
+            ScrollView {
+                TipJarView()
+                    .padding()
+            }
+            .toolbar {
+                ToolbarItem(placement: .confirmationAction) {
+                    Button("Done") {
+                        showingTipJar = false
+                    }
+                }
+            }
+        }
+        .presentationDetents([.medium, .large])
+        #endif
     }
 
     #if os(iOS)
@@ -135,7 +202,7 @@ struct ContentView: View {
             Divider()
                 .padding(.vertical, 4)
 
-            TipJarView()
+            tipPrompt
 
             Spacer().frame(height: 4)
             supportFooter
@@ -234,7 +301,7 @@ struct ContentView: View {
                 Divider()
                     .padding(.vertical, 4)
 
-                TipJarView()
+                tipPrompt
 
                 supportFooter
                     .padding(.bottom, 8)
