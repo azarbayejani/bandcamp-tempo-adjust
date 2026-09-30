@@ -26,6 +26,8 @@ struct TipJarView: View {
     @State private var showThankYou = false
     @State private var purchasing: String?
     @State private var purchaseError: String?
+    // Scales with Dynamic Type so the icons don't overlap the tip names.
+    @ScaledMetric(relativeTo: .body) private var iconWidth: CGFloat = 24
 
     var body: some View {
         VStack(spacing: 12) {
@@ -89,7 +91,7 @@ struct TipJarView: View {
         } label: {
             HStack {
                 tipIcon(for: product.id)
-                    .frame(width: 24)
+                    .frame(width: iconWidth)
                 Text(product.displayName)
                     .font(.body)
                 Spacer()

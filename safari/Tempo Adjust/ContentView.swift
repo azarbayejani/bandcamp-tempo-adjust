@@ -24,6 +24,10 @@ struct ContentView: View {
     @State private var hasAllPermissions = Self.storedHasAllPermissions()
     @State private var showingSetupSteps = false
     @State private var showingTipJar = false
+    // Scale with Dynamic Type so step numbers and icons don't clip or
+    // overlap their text at larger sizes.
+    @ScaledMetric(relativeTo: .body) private var stepNumberWidth: CGFloat = 20
+    @ScaledMetric(relativeTo: .body) private var iconWidth: CGFloat = 24
 
     // macOS can also check that the extension is still on; iOS can't, so a
     // disabled extension keeps showing as set up there. The setup steps stay
@@ -130,7 +134,7 @@ struct ContentView: View {
             Text("\(number).")
                 .font(.body)
                 .bold()
-                .frame(width: 20, alignment: .trailing)
+                .frame(width: stepNumberWidth, alignment: .trailing)
                 .layoutPriority(1)
 
             content()
@@ -166,7 +170,7 @@ struct ContentView: View {
             HStack(spacing: 12) {
                 Image(systemName: "heart.fill")
                     .foregroundStyle(.pink)
-                    .frame(width: 24)
+                    .frame(width: iconWidth)
                 VStack(alignment: .leading, spacing: 2) {
                     Text("Support Development")
                         .font(.body)
