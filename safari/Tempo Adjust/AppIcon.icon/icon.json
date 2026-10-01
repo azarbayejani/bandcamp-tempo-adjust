@@ -79,6 +79,31 @@
     {
       "layers": [
         {
+          "image-name": "fader-ticks.svg",
+          "name": "fader-ticks",
+          "position": {
+            "scale": 1,
+            "translation-in-points": [
+              -56,
+              0
+            ]
+          },
+          "fill-specializations": [
+            {
+              "appearance": "dark",
+              "value": {
+                "solid": "extended-srgb:0.55686,0.55686,0.57647,1.00000"
+              }
+            },
+            {
+              "appearance": "tinted",
+              "value": {
+                "solid": "extended-srgb:0.55686,0.55686,0.57647,1.00000"
+              }
+            }
+          ]
+        },
+        {
           "image-name": "fader-track.svg",
           "name": "fader-track",
           "position": {
