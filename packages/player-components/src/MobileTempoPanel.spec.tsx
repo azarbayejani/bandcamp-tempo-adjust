@@ -9,6 +9,7 @@ import { ThemeProvider } from '@tempo-adjust/theme-provider';
 const renderPanel = (
   props: Partial<React.ComponentProps<typeof MobileTempoPanel>> = {}
 ) => {
+  const onClickDetectBpm = vi.fn();
   const onClickReloadBpm = vi.fn();
   render(
     <ThemeProvider theme="light" buttonStyle="rounded" isMobile>
@@ -17,7 +18,7 @@ const renderPanel = (
         error={false}
         playbackRate={1}
         preservesPitch={false}
-        onClickLoadBpms={vi.fn()}
+        onClickDetectBpm={onClickDetectBpm}
         onClickReloadBpm={onClickReloadBpm}
         onClickSaveBpm={vi.fn()}
         onChangePlaybackRate={vi.fn()}
@@ -26,7 +27,7 @@ const renderPanel = (
       />
     </ThemeProvider>
   );
-  return { onClickReloadBpm };
+  return { onClickDetectBpm, onClickReloadBpm };
 };
 
 describe('MobileTempoPanel', () => {
@@ -40,6 +41,14 @@ describe('MobileTempoPanel', () => {
     expect(
       screen.queryByRole('button', { name: 'BPM options' })
     ).not.toBeInTheDocument();
+  });
+
+  it('calls onClickDetectBpm when detect is clicked', async () => {
+    const { onClickDetectBpm } = renderPanel();
+
+    await userEvent.click(screen.getByRole('button', { name: 'Detect BPM' }));
+
+    expect(onClickDetectBpm).toHaveBeenCalled();
   });
 
   describe('when bpm detection failed', () => {

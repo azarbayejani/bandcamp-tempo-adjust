@@ -8,6 +8,7 @@ import useAudio from './AudioStore';
 
 type AudioStateContext = {
   reloadCurrentBpm: () => void;
+  loadCurrentBpm: () => void;
   loadBpms: () => void;
   setTrackBpm: (options: { bpm: number; url: string }) => void;
   trackInfoState: PageState;
@@ -161,6 +162,17 @@ function BpmProvider({ children, initialTrackInfoStore }: BpmProviderProps) {
       if (url) {
         loadBpm(url);
       }
+    },
+    loadCurrentBpm: async () => {
+      const url = currTrackUrl;
+      if (!url) {
+        return;
+      }
+      if (!(await hasAllPermissions())) {
+        browser.runtime.sendMessage({ action: 'openOptions' });
+        return;
+      }
+      loadBpm(url);
     },
     loadBpms,
     setTrackBpm: ({ bpm, url }) => {

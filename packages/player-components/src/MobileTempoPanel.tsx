@@ -26,7 +26,7 @@ const MobileTempoPanel: React.FC<{
   error: boolean;
   playbackRate: number;
   preservesPitch: boolean;
-  onClickLoadBpms: () => void;
+  onClickDetectBpm: () => void;
   onClickReloadBpm: () => void;
   onClickSaveBpm: (bpm: number) => void;
   onChangePlaybackRate: ({ playbackRate }: { playbackRate: number }) => void;
@@ -37,7 +37,7 @@ const MobileTempoPanel: React.FC<{
   error,
   playbackRate,
   preservesPitch,
-  onClickLoadBpms,
+  onClickDetectBpm,
   onClickReloadBpm,
   onClickSaveBpm,
   onChangePlaybackRate,
@@ -75,7 +75,7 @@ const MobileTempoPanel: React.FC<{
         <PitchPercentage playbackRate={playbackRate} />
       </div>
       {!error && !bpm && (
-        <Button onClick={onClickLoadBpms} disabled={loading}>
+        <Button onClick={onClickDetectBpm} disabled={loading}>
           Detect BPM
         </Button>
       )}
