@@ -5,7 +5,9 @@ interface FetchAudioBufferFromUrlStartMessage {
 interface FetchAudioBufferFromUrlDataMessage {
   type: 'DATA';
   startIndex: number;
-  data: any;
+  // Audio bytes as base64. Chrome and Safari serialize port messages as
+  // JSON, which has no binary type, so an ArrayBuffer can't be sent as-is.
+  data: string;
 }
 
 interface FetchAudioBufferFromUrlEndMessage {
@@ -14,7 +16,7 @@ interface FetchAudioBufferFromUrlEndMessage {
 
 interface FetchAudioBufferFromUrlErrorMessage {
   type: 'ERROR';
-  reason?: any;
+  reason: string;
 }
 
 export type FetchAudioBufferFromUrlMessage =

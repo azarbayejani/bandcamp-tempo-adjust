@@ -1,5 +1,7 @@
 import browser from 'webextension-polyfill';
 import { hasAllPermissions } from '@tempo-adjust/permissions';
+import { bytesToBase64 } from '../../utils/base64';
+import { fetchAudioForAnalysis } from '../../utils/fetchAudioForAnalysis';
 
 const optionsPageUrl = '/options.html';
 
@@ -7,7 +9,7 @@ export default defineBackground({
   persistent: false,
   type: 'module',
   main() {
-    const CHUNK_SIZE = 1024 * 1024 * 16;
+    const CHUNK_SIZE = 1024 * 1024;
 
     const ports: Record<string, browser.Runtime.Port> = {};
 
@@ -56,22 +58,23 @@ export default defineBackground({
         if (!url) {
           return;
         }
-        fetch(url)
-          .then((r) => r.arrayBuffer())
-          .then((buffer) => {
+        fetchAudioForAnalysis(url)
+          .then((bytes) => {
             port.postMessage({ type: 'START' });
-            for (let i = 0; i < buffer.byteLength; i += CHUNK_SIZE) {
-              const chunk = buffer.slice(i, i + CHUNK_SIZE);
+            for (let i = 0; i < bytes.byteLength; i += CHUNK_SIZE) {
               port.postMessage({
                 type: 'DATA',
                 startIndex: i,
-                data: Array.from(new Uint8Array(chunk)),
+                data: bytesToBase64(bytes.subarray(i, i + CHUNK_SIZE)),
               });
             }
             port.postMessage({ type: 'END' });
           })
           .catch((reason) => {
-            port.postMessage({ type: 'ERROR', reason });
+            port.postMessage({
+              type: 'ERROR',
+              reason: reason instanceof Error ? reason.message : String(reason),
+            });
           });
       }
     });
