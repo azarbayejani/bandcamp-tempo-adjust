@@ -1,3 +1,5 @@
+import { existsSync } from 'node:fs';
+import { join } from 'node:path';
 import { defineConfig } from 'wxt';
 
 export default defineConfig({
@@ -16,6 +18,22 @@ export default defineConfig({
     permissions:
       browser === 'safari' ? ['nativeMessaging', 'storage'] : ['storage'],
   }),
+  hooks: {
+    // The App Store build ships its own icon art (keeping the Bandcamp mark out
+    // of App Review), so files in public-safari/ replace same-named public/ files.
+    'build:publicAssets': (wxt, files) => {
+      if (wxt.config.browser !== 'safari') return;
+      for (const file of files) {
+        if (!('absoluteSrc' in file)) continue;
+        const override = join(
+          wxt.config.root,
+          'public-safari',
+          file.relativeDest
+        );
+        if (existsSync(override)) file.absoluteSrc = override;
+      }
+    },
+  },
   modules: [
     '@wxt-dev/module-react',
     '@tempo-adjust/wxt-hooks',

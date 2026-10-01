@@ -16,6 +16,7 @@
     "dev:discogs": "pnpm --filter discogs-tempo-adjust dev",
     "build": "pnpm build:chrome && pnpm build:firefox",
     "build:safari": "pnpm --filter bandcamp-tempo-adjust build:safari",
+    "icons:safari": "pnpm --filter bandcamp-tempo-adjust icons:safari",
     "build:safari-app": "xcodebuild -project 'safari/Tempo Adjust.xcodeproj' -scheme 'Tempo Adjust' -destination 'generic/platform=macOS' build",
     "build:chrome": "pnpm --filter './apps/**' build",
     "build:firefox": "pnpm --filter './apps/**' build -b firefox --mv3",

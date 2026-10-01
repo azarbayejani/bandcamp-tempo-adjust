@@ -11,6 +11,7 @@
 		AB61A2872F59621C0093D0C2 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB61A2862F59621C0093D0C2 /* ContentView.swift */; };
 		AB61A2882F5A47DF0093D0C2 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = AB6899912DDD7BC900C9A704 /* Icon.png */; };
 		AB68999D2DDD7BCB00C9A704 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AB68999C2DDD7BCB00C9A704 /* Assets.xcassets */; };
+		AB6899F12DDD7BCB00C9A704 /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = AB6899F02DDD7BCB00C9A704 /* AppIcon.icon */; };
 		AB6899AA2DDD7BCB00C9A704 /* Tempo_Adjust_for_Bandcamp_and_DiscogsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6899A92DDD7BCB00C9A704 /* Tempo_Adjust_for_Bandcamp_and_DiscogsTests.swift */; };
 		AB6899B42DDD7BCB00C9A704 /* Tempo_Adjust_for_Bandcamp_and_DiscogsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6899B32DDD7BCB00C9A704 /* Tempo_Adjust_for_Bandcamp_and_DiscogsUITests.swift */; };
 		AB6899B62DDD7BCB00C9A704 /* Tempo_Adjust_for_Bandcamp_and_DiscogsUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6899B52DDD7BCB00C9A704 /* Tempo_Adjust_for_Bandcamp_and_DiscogsUITestsLaunchTests.swift */; };
@@ -64,6 +65,7 @@
 		AB6899882DDD7BC900C9A704 /* Tempo Adjust.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Tempo Adjust.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB6899912DDD7BC900C9A704 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		AB68999C2DDD7BCB00C9A704 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		AB6899F02DDD7BCB00C9A704 /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIcon.icon; sourceTree = "<group>"; };
 		AB68999E2DDD7BCB00C9A704 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AB68999F2DDD7BCB00C9A704 /* Tempo_Adjust.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Tempo_Adjust.entitlements; sourceTree = "<group>"; };
 		AB6899A02DDD7BCB00C9A704 /* Tempo Adjust.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Tempo Adjust.entitlements"; sourceTree = "<group>"; };
@@ -142,6 +144,7 @@
 			isa = PBXGroup;
 			children = (
 				AB68999C2DDD7BCB00C9A704 /* Assets.xcassets */,
+				AB6899F02DDD7BCB00C9A704 /* AppIcon.icon */,
 				AB68999E2DDD7BCB00C9A704 /* Info.plist */,
 				AB68999F2DDD7BCB00C9A704 /* Tempo_Adjust.entitlements */,
 				AB6899A02DDD7BCB00C9A704 /* Tempo Adjust.entitlements */,
@@ -338,6 +341,7 @@
 				AB839F262F5FE55100E8F48E /* TipProducts.storekit in Resources */,
 				AB61A2882F5A47DF0093D0C2 /* Icon.png in Resources */,
 				AB68999D2DDD7BCB00C9A704 /* Assets.xcassets in Resources */,
+				AB6899F12DDD7BCB00C9A704 /* AppIcon.icon in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

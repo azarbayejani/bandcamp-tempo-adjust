@@ -14,6 +14,7 @@
     "build": "wxt build",
     "build:firefox": "wxt build --browser firefox --mv3",
     "build:safari": "wxt build --browser safari --mv3",
+    "icons:safari": "node scripts/generate-safari-icons.mjs",
     "submit": "wxt submit",
     "zip": "wxt zip",
     "zip:firefox": "wxt zip --browser firefox --mv3",
@@ -45,6 +46,7 @@
   },
   "devDependencies": {
     "@playwright/test": "catalog:",
+    "@resvg/resvg-js": "^2.6.2",
     "@tempo-adjust/wxt-hooks": "workspace:*",
     "@testing-library/jest-dom": "catalog:",
     "@testing-library/react": "catalog:",
