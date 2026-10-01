@@ -19,6 +19,58 @@
           "fill-specializations": [
             {
               "value": {
+                "solid": "srgb:1.00000,1.00000,1.00000,1.00000"
+              }
+            },
+            {
+              "appearance": "dark",
+              "value": {
+                "solid": "srgb:0.82353,0.83137,0.84706,1.00000"
+              }
+            }
+          ],
+          "glass": true,
+          "image-name": "hand.svg",
+          "name": "hand"
+        },
+        {
+          "fill-specializations": [
+            {
+              "value": {
+                "solid": "srgb:0.07843,0.08235,0.09412,1.00000"
+              }
+            },
+            {
+              "appearance": "dark",
+              "value": {
+                "solid": "srgb:0.05490,0.05882,0.06667,1.00000"
+              }
+            }
+          ],
+          "glass": false,
+          "hidden": false,
+          "image-name": "hand-outline.svg",
+          "name": "hand-outline",
+          "opacity": 1
+        }
+      ],
+      "name": "Hand",
+      "shadow": {
+        "kind": "neutral",
+        "opacity": 0.5
+      },
+      "specular": true,
+      "translucency": {
+        "enabled": true,
+        "value": 0.1
+      }
+    },
+    {
+      "layers": [
+        {
+          "fill-specializations": [
+            {
+              "value": {
                 "solid": "srgb:0.07843,0.08235,0.09412,1.00000"
               }
             },
@@ -62,6 +114,12 @@
               "appearance": "dark",
               "value": {
                 "solid": "srgb:0.22745,0.23922,0.26275,1.00000"
+              }
+            },
+            {
+              "appearance": "tinted",
+              "value": {
+                "solid": "srgb:0.54118,0.55686,0.58431,1.00000"
               }
             }
           ],
@@ -144,6 +202,12 @@
               "appearance": "dark",
               "value": {
                 "solid": "srgb:0.22745,0.23922,0.26275,1.00000"
+              }
+            },
+            {
+              "appearance": "tinted",
+              "value": {
+                "solid": "srgb:0.54118,0.55686,0.58431,1.00000"
               }
             }
           ],
