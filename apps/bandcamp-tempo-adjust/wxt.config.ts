@@ -18,7 +18,9 @@ export default defineConfig({
   manifest: ({ browser }) => ({
     name: browser === 'safari' ? 'Tempo Adjust' : 'Bandcamp Tempo Adjust',
     description:
-      'A browser extension to detect and adjust track tempo on Bandcamp',
+      browser === 'safari'
+        ? 'A browser extension to detect and adjust track tempo on Bandcamp and Discogs'
+        : 'A browser extension to detect and adjust track tempo on Bandcamp',
     browser_specific_settings: {
       gecko: {
         id: '{e7517334-00b5-4560-a933-4c4cffbeaa05}',
