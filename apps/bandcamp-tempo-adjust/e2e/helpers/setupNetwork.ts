@@ -18,8 +18,9 @@ export async function setupNetwork(
     throw new Error('RECORD_FIXTURES must not be set in CI');
   }
 
-  // 2. Enforce offline mode in CI (after mocks are in place)
-  if (IS_CI) {
+  // 2. Stay offline unless recording, so a request the fixtures don't cover
+  // fails the same way locally as it does in CI.
+  if (!RECORD_FIXTURES) {
     await page.context().setOffline(true);
   }
 

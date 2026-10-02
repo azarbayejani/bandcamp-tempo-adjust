@@ -29,8 +29,9 @@ export async function setupNetwork(
     throw new Error('RECORD_FIXTURES must not be set in CI');
   }
 
-  // 2. Enforce offline mode in CI (after mocks are in place)
-  if (IS_CI) {
+  // 2. Stay offline unless recording. The HAR only covers Discogs' own
+  // hosts; left online, the page's live ad stack keeps `load` from firing.
+  if (!RECORD_FIXTURES) {
     await page.context().setOffline(true);
   }
 
