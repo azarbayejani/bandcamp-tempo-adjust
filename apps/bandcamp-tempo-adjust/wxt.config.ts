@@ -16,7 +16,7 @@ const safariActionIconVariants = [
 
 export default defineConfig({
   manifest: ({ browser }) => ({
-    name: import.meta.env.WXT_EXTENSION_NAME || 'Bandcamp Tempo Adjust',
+    name: browser === 'safari' ? 'Tempo Adjust' : 'Bandcamp Tempo Adjust',
     description:
       'A browser extension to detect and adjust track tempo on Bandcamp',
     browser_specific_settings: {

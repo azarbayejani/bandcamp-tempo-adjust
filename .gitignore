@@ -27,12 +27,7 @@ node_modules
 
 # misc
 .DS_Store
-.env.local
-.env.development.local
-.env.submit
-.env.submit.*
-.env.test.local
-.env.production.local
+.env*
 .history
 .parcel-cache
 
@@ -49,6 +44,13 @@ build/
 
 ## Local xcconfig overrides (e.g. DEVELOPMENT_TEAM)
 Local.xcconfig
+
+## Signing and App Store Connect credentials. Nothing creates these in the
+## repo today; this guards against one being dropped in for release automation.
+*.p8
+*.p12
+*.mobileprovision
+*.provisionprofile
 
 ## User settings
 xcuserdata/

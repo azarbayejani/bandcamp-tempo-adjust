@@ -198,8 +198,6 @@ describe('OptionsPage', () => {
   describe('on Safari', () => {
     beforeEach(() => {
       vi.stubEnv('SAFARI', 'true');
-      // As set in .env.safari.
-      vi.stubEnv('WXT_EXTENSION_NAME', 'Tempo Adjust');
     });
 
     afterEach(() => {

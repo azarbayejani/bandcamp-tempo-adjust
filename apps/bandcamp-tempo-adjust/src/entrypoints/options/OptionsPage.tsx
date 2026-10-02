@@ -45,8 +45,9 @@ const Options: React.FC = () => {
   });
   const queryClient = useQueryClient();
 
-  const extensionName =
-    import.meta.env.WXT_EXTENSION_NAME || 'Bandcamp Tempo Adjust';
+  const extensionName = import.meta.env.SAFARI
+    ? 'Tempo Adjust'
+    : 'Bandcamp Tempo Adjust';
 
   // index.html's static title can't follow the build's extension name.
   useEffect(() => {
