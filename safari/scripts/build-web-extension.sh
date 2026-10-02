@@ -5,6 +5,11 @@
 # build, run and archive packages a fresh build of the current source.
 # It first checks that the app version matches package.json.
 #
+# The phase declares the bundle's manifest.json as its output. Without a
+# declared output Xcode doesn't re-sign the .appex after this script changes
+# it, and the stale signature stops Safari loading the options page until
+# the build folder is cleaned.
+#
 # Can also be run by hand from an Xcode-like environment; it needs
 # TARGET_BUILD_DIR and UNLOCALIZED_RESOURCES_FOLDER_PATH to know where
 # to copy, and DERIVED_FILE_DIR to remember what it copied last time.
