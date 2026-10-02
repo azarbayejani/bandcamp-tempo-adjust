@@ -8,8 +8,9 @@ export default function TralbumPageMobileTempoPanel() {
   const { loadCurrentBpm, reloadCurrentBpm, setTrackBpm } = useBpm();
   const {
     togglePreservesPitch,
-    setPlaybackRate,
+    changePlaybackRate,
     playbackRate,
+    playbackRatePending,
     preservesPitch,
   } = useAudioControls();
   const { currTrackUrl, trackInfo } = useCurrentTrackInfo();
@@ -24,13 +25,14 @@ export default function TralbumPageMobileTempoPanel() {
       loading={trackInfo.loading}
       error={trackInfo.error}
       playbackRate={playbackRate}
+      playbackRatePending={playbackRatePending}
       preservesPitch={preservesPitch}
       // Phones only analyze the playing track: decoding a whole album
       // costs mobile data and bogs down the page on slower devices.
       onClickDetectBpm={loadCurrentBpm}
       onClickReloadBpm={reloadCurrentBpm}
       onClickSaveBpm={(bpm) => setTrackBpm({ url: currTrackUrl, bpm })}
-      onChangePlaybackRate={({ playbackRate }) => setPlaybackRate(playbackRate)}
+      onChangePlaybackRate={changePlaybackRate}
       onChangePreservesPitch={togglePreservesPitch}
     />
   );

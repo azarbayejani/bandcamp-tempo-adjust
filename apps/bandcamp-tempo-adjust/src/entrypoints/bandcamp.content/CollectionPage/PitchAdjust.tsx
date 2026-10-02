@@ -1,19 +1,27 @@
 import React from 'react';
+import classnames from 'classnames';
 import {
   formatPitchPercentage,
+  useRangeCommit,
   useTempoRange,
 } from '@tempo-adjust/player-components';
-import useAudio from '../AudioStore';
+import { useAudioControls } from '../useAudioControls';
 
 const PitchAdjust = () => {
-  const playbackRate = useAudio(({ playbackRate }) => playbackRate);
-  const setPlaybackRate = useAudio(({ setPlaybackRate }) => setPlaybackRate);
+  const { playbackRate, playbackRatePending, changePlaybackRate } =
+    useAudioControls();
 
   const { tempoRange, tempoRangeIndex, setTempoRangeIndex } = useTempoRange();
 
   const handleSliderChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setPlaybackRate(event.target.valueAsNumber);
+    changePlaybackRate({
+      playbackRate: event.target.valueAsNumber,
+      committed: false,
+    });
   };
+  const sliderRef = useRangeCommit((playbackRate) =>
+    changePlaybackRate({ playbackRate, committed: true })
+  );
 
   const handleClickTempoRange = () => {
     setTempoRangeIndex(tempoRangeIndex + 1);
@@ -22,6 +30,7 @@ const PitchAdjust = () => {
   return (
     <div className="BandcampTempoAdjust__slider BandcampTempoAdjust__slider--collection">
       <input
+        ref={sliderRef}
         className="BandcampTempoAdjust__slider_range BandcampTempoAdjust__slider_range--collection"
         type="range"
         onChange={handleSliderChange}
@@ -33,8 +42,13 @@ const PitchAdjust = () => {
       <div style={{ display: 'flex' }}>
         <button
           title="Reset"
-          className="BandcampTempoAdjust__button BandcampTempoAdjust__button--collection"
-          onClick={() => setPlaybackRate(1)}
+          className={classnames(
+            'BandcampTempoAdjust__button BandcampTempoAdjust__button--collection',
+            { 'BandcampTempoAdjust__button--pending': playbackRatePending }
+          )}
+          onClick={() =>
+            changePlaybackRate({ playbackRate: 1, committed: true })
+          }
         >
           {formatPitchPercentage(playbackRate)}%
         </button>

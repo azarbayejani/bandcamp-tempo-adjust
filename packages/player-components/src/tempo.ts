@@ -6,6 +6,13 @@ export type TempoRange = {
   max: number;
 };
 
+// `committed` is false while the fader is still being dragged, and true
+// once the user has settled on a rate.
+export type PlaybackRateChange = {
+  playbackRate: number;
+  committed: boolean;
+};
+
 export const tempoRanges: TempoRange[] = [
   {
     label: '±6',

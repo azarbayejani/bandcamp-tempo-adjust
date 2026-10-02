@@ -1,4 +1,4 @@
-import { expect, describe, it } from 'vitest';
+import { expect, describe, it, vi } from 'vitest';
 
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 
@@ -28,6 +28,26 @@ describe('PitchAdjust', () => {
     expect(screen.getByRole('button', { name: '-5.0%' })).toBeInTheDocument();
 
     expect(useAudio.getState().playbackRate).toBe(0.95);
+  });
+
+  it('holds the audio playback rate until the slider is released on Safari', () => {
+    vi.stubEnv('SAFARI', 'true');
+    useAudio.getState().setPlaybackRate(1);
+    render(<PitchAdjust />);
+    const slider = screen.getByRole('slider');
+
+    fireEvent.input(slider, { target: { value: '1.05' } });
+
+    const percentage = screen.getByRole('button', { name: '+5.0%' });
+    expect(percentage).toHaveClass('BandcampTempoAdjust__button--pending');
+    expect(useAudio.getState().audioPlaybackRate).toBe(1);
+
+    fireEvent(slider, new Event('change', { bubbles: true }));
+
+    expect(percentage).not.toHaveClass('BandcampTempoAdjust__button--pending');
+    expect(useAudio.getState().audioPlaybackRate).toBe(1.05);
+
+    vi.unstubAllEnvs();
   });
 
   it('advances the tempo ranges when I click on them', async () => {

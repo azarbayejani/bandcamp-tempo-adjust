@@ -5,17 +5,19 @@ import { useAudioControls } from '../useAudioControls';
 const TralbumPagePitchAdjust = () => {
   const {
     togglePreservesPitch,
-    setPlaybackRate,
+    changePlaybackRate,
     playbackRate,
+    playbackRatePending,
     preservesPitch,
   } = useAudioControls();
 
   return (
     <PitchAdjust
       playbackRate={playbackRate}
+      playbackRatePending={playbackRatePending}
       preservesPitch={preservesPitch}
       onChangePreservesPitch={togglePreservesPitch}
-      onChangePlaybackRate={({ playbackRate }) => setPlaybackRate(playbackRate)}
+      onChangePlaybackRate={changePlaybackRate}
     />
   );
 };

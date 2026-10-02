@@ -2,19 +2,23 @@ import PitchFader from './PitchFader';
 import PitchPercentage from './PitchPercentage';
 import TempoControls from './TempoControls';
 import TempoRangeSelector from './TempoRangeSelector';
-import { useTempoRange } from './tempo';
+import { useTempoRange, type PlaybackRateChange } from './tempo';
 
 import * as css from './PitchAdjust.module.scss';
 
+// `playbackRatePending` marks a `playbackRate` that is shown but not yet
+// applied to the audio, which dims the readout.
 const PitchAdjust = ({
   playbackRate,
+  playbackRatePending,
   preservesPitch,
   onChangePlaybackRate,
   onChangePreservesPitch,
 }: {
   playbackRate: number;
+  playbackRatePending?: boolean;
   preservesPitch: boolean;
-  onChangePlaybackRate: ({ playbackRate }: { playbackRate: number }) => void;
+  onChangePlaybackRate: (change: PlaybackRateChange) => void;
   onChangePreservesPitch: () => void;
 }) => {
   const { tempoRange, setTempoRangeIndex } = useTempoRange();
@@ -27,7 +31,10 @@ const PitchAdjust = ({
           tempoRange={tempoRange}
           onChangePlaybackRate={onChangePlaybackRate}
         />
-        <PitchPercentage playbackRate={playbackRate} />
+        <PitchPercentage
+          playbackRate={playbackRate}
+          pending={playbackRatePending}
+        />
       </div>
       <TempoRangeSelector
         tempoRange={tempoRange}
@@ -37,7 +44,9 @@ const PitchAdjust = ({
         <TempoControls
           preservesPitch={preservesPitch}
           onChangePreservesPitch={onChangePreservesPitch}
-          onReset={() => onChangePlaybackRate({ playbackRate: 1 })}
+          onReset={() =>
+            onChangePlaybackRate({ playbackRate: 1, committed: true })
+          }
         />
       </div>
     </div>

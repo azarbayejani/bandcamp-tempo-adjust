@@ -167,4 +167,37 @@ describe('BpmDetection', () => {
       });
     });
   });
+
+  describe('when the playback rate is pending', () => {
+    const renderPending = (
+      props: Partial<React.ComponentProps<typeof BpmDetection>>
+    ) =>
+      render(
+        <ThemeProvider theme="light">
+          <BpmDetection
+            loading={false}
+            error={false}
+            playbackRate={1.05}
+            playbackRatePending
+            onClickLoadBpms={vi.fn()}
+            onClickReloadBpm={vi.fn()}
+            onClickSaveBpm={vi.fn()}
+            {...props}
+          />
+        </ThemeProvider>
+      );
+
+    it('dims the adjusted bpm', () => {
+      renderPending({ bpm: 120 });
+
+      expect(screen.getByTestId('bpm-display')).toHaveTextContent('126');
+      expect(screen.getByTestId('bpm-display')).toHaveClass(/pending/);
+    });
+
+    it('does not dim the empty state', () => {
+      renderPending({});
+
+      expect(screen.getByTestId('bpm-display')).not.toHaveClass(/pending/);
+    });
+  });
 });

@@ -5,7 +5,12 @@ import { ThemeProvider } from '@tempo-adjust/theme-provider';
 import PitchAdjust from './PitchAdjust';
 import useForceUpdate from './store';
 
-const renderDiscogsPage = () => {
+// `commitOnRelease` holds the video at its current rate until the pitch
+// fader is released, for browsers where changing playbackRate interrupts
+// playback (https://bugs.webkit.org/show_bug.cgi?id=163433).
+const renderDiscogsPage = ({
+  commitOnRelease = false,
+}: { commitOnRelease?: boolean } = {}) => {
   const appDiv = document.createElement('div');
   appDiv.id = 'discogs-tempo-adjust';
   const root = createRoot(appDiv);
@@ -13,7 +18,7 @@ const renderDiscogsPage = () => {
     if (!document.getElementById(appDiv.id)) {
       root.render(
         <ThemeProvider theme="light">
-          <PitchAdjust />
+          <PitchAdjust commitOnRelease={commitOnRelease} />
         </ThemeProvider>
       );
 

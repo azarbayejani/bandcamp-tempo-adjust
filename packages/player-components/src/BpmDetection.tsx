@@ -15,6 +15,7 @@ const BpmDetection: React.FC<{
   loading: boolean;
   error: boolean;
   playbackRate: number;
+  playbackRatePending?: boolean;
   onClickLoadBpms: () => void;
   onClickReloadBpm: () => void;
   onClickSaveBpm: (bpm: number) => void;
@@ -23,6 +24,7 @@ const BpmDetection: React.FC<{
   loading,
   error,
   playbackRate,
+  playbackRatePending,
   onClickLoadBpms,
   onClickSaveBpm,
   onClickReloadBpm,
@@ -47,7 +49,12 @@ const BpmDetection: React.FC<{
   return (
     <div className={css.container}>
       <div className={css.bpmDisplayContainer}>
-        <BpmValue bpm={bpm} loading={loading} playbackRate={playbackRate} />
+        <BpmValue
+          bpm={bpm}
+          loading={loading}
+          playbackRate={playbackRate}
+          pending={playbackRatePending}
+        />
       </div>
       <div className={css.otherControlsRow}>
         {bpm ? (

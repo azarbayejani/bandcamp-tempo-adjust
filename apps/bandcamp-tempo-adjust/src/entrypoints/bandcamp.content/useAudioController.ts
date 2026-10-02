@@ -32,9 +32,9 @@ const useAudioController = ({
     }
 
     const audioStoreUnsubscribe = useAudio.subscribe(
-      ({ playbackRate, preservesPitch, volume }) => {
+      ({ audioPlaybackRate, preservesPitch, volume }) => {
         audioElements.forEach((audio) => {
-          audio.playbackRate = playbackRate;
+          audio.playbackRate = audioPlaybackRate;
           audio.preservesPitch = preservesPitch;
           audio.volume = volume;
         });
@@ -58,7 +58,7 @@ const useAudioController = ({
         if (mutation.type === 'attributes') {
           if (mutation.target instanceof HTMLAudioElement) {
             const castedElement = mutation.target as HTMLAudioElement;
-            castedElement.playbackRate = useAudio.getState().playbackRate;
+            castedElement.playbackRate = useAudio.getState().audioPlaybackRate;
           }
         }
       }

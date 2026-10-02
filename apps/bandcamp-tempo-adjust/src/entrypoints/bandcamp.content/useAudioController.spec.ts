@@ -5,7 +5,7 @@ import {
   type UseAudioControllerProps,
 } from './useAudioController';
 import useAudio from './AudioStore';
-import { renderHook } from '@testing-library/react';
+import { renderHook, waitFor } from '@testing-library/react';
 
 function render(
   { selector, getCurrTrackUrl }: UseAudioControllerProps = {
@@ -61,6 +61,41 @@ describe('useAudioController', () => {
     expect(audio!.playbackRate).toBe(1);
     useAudio.getState().setPlaybackRate(0.75);
     expect(document.querySelector('audio')!.playbackRate).toBe(0.75);
+    cleanup();
+  });
+
+  it('should hold the audio element playbackRate while a rate is previewed', async () => {
+    const { cleanup } = render();
+    const audio = document.querySelector('audio')!;
+    useAudio.getState().setPlaybackRate(1);
+
+    useAudio.getState().previewPlaybackRate(0.9);
+    expect(useAudio.getState().playbackRate).toBe(0.9);
+    expect(audio.playbackRate).toBe(1);
+
+    useAudio.getState().previewPlaybackRate(0.85);
+    expect(audio.playbackRate).toBe(1);
+
+    useAudio.getState().setPlaybackRate(0.85);
+    expect(audio.playbackRate).toBe(0.85);
+
+    cleanup();
+  });
+
+  it('should restore the audio playbackRate when the audio element changes during a preview', async () => {
+    const { cleanup } = render();
+    const audio = document.querySelector('audio')!;
+    useAudio.getState().setPlaybackRate(0.95);
+    useAudio.getState().previewPlaybackRate(0.9);
+
+    // Loading the next track resets the element's playbackRate
+    audio.playbackRate = 1;
+    audio.setAttribute('src', 'next-track.mp3');
+
+    await waitFor(() => {
+      expect(audio.playbackRate).toBe(0.95);
+    });
+
     cleanup();
   });
 

@@ -23,6 +23,6 @@ export default defineContentScript({
       return;
     }
     console.log('Discogs content script loaded');
-    renderDiscogsPage();
+    renderDiscogsPage({ commitOnRelease: import.meta.env.SAFARI });
   },
 });

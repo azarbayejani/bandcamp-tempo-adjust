@@ -19,9 +19,16 @@ const postMessageToYoutube = (message: YoutubeMessage) => {
   );
 };
 
-const DiscogsPitchAdjust = () => {
+const DiscogsPitchAdjust = ({
+  commitOnRelease = false,
+}: {
+  commitOnRelease?: boolean;
+}) => {
   const counter = useForceUpdate((state) => state.count);
   const [playbackRate, setPlaybackRate] = React.useState(1);
+  // The rate last sent to the video. With `commitOnRelease` it trails
+  // `playbackRate` while the fader is being dragged.
+  const [videoPlaybackRate, setVideoPlaybackRate] = React.useState(1);
   const [preservesPitch, setPreservesPitch] = React.useState(false);
 
   const togglePreservesPitch = () => {
@@ -35,11 +42,15 @@ const DiscogsPitchAdjust = () => {
         togglePreservesPitch();
         postMessageToYoutube({ action: 'togglePreservesPitch' });
       }}
-      onChangePlaybackRate={({ playbackRate }) => {
+      onChangePlaybackRate={({ playbackRate, committed }) => {
         setPlaybackRate(playbackRate);
-        postMessageToYoutube({ action: 'setPlaybackRate', playbackRate });
+        if (committed || !commitOnRelease) {
+          postMessageToYoutube({ action: 'setPlaybackRate', playbackRate });
+          setVideoPlaybackRate(playbackRate);
+        }
       }}
       playbackRate={playbackRate}
+      playbackRatePending={playbackRate !== videoPlaybackRate}
       preservesPitch={preservesPitch}
     />
   );

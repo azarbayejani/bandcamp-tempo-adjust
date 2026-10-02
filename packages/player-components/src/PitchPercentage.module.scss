@@ -5,3 +5,8 @@
   min-width: 3.2em;
   text-align: right;
 }
+
+// The fader has moved but the audio hasn't caught up yet.
+.pending {
+  opacity: 0.5;
+}

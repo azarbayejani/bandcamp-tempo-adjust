@@ -10,7 +10,7 @@ import PitchPercentage from './PitchPercentage';
 import TempoControls from './TempoControls';
 import TempoRangeSelector from './TempoRangeSelector';
 import useBpmEditing from './useBpmEditing';
-import { useTempoRange } from './tempo';
+import { useTempoRange, type PlaybackRateChange } from './tempo';
 
 import * as css from './MobileTempoPanel.module.scss';
 
@@ -25,17 +25,19 @@ const MobileTempoPanel: React.FC<{
   loading: boolean;
   error: boolean;
   playbackRate: number;
+  playbackRatePending?: boolean;
   preservesPitch: boolean;
   onClickDetectBpm: () => void;
   onClickReloadBpm: () => void;
   onClickSaveBpm: (bpm: number) => void;
-  onChangePlaybackRate: ({ playbackRate }: { playbackRate: number }) => void;
+  onChangePlaybackRate: (change: PlaybackRateChange) => void;
   onChangePreservesPitch: () => void;
 }> = ({
   bpm,
   loading,
   error,
   playbackRate,
+  playbackRatePending,
   preservesPitch,
   onClickDetectBpm,
   onClickReloadBpm,
@@ -65,6 +67,7 @@ const MobileTempoPanel: React.FC<{
             bpm={bpm}
             loading={loading}
             playbackRate={playbackRate}
+            pending={playbackRatePending}
           />
         )}
         <PitchFader
@@ -72,7 +75,10 @@ const MobileTempoPanel: React.FC<{
           tempoRange={tempoRange}
           onChangePlaybackRate={onChangePlaybackRate}
         />
-        <PitchPercentage playbackRate={playbackRate} />
+        <PitchPercentage
+          playbackRate={playbackRate}
+          pending={playbackRatePending}
+        />
       </div>
       {!error && !bpm && (
         <Button onClick={onClickDetectBpm} disabled={loading}>
@@ -87,7 +93,9 @@ const MobileTempoPanel: React.FC<{
         <TempoControls
           preservesPitch={preservesPitch}
           onChangePreservesPitch={onChangePreservesPitch}
-          onReset={() => onChangePlaybackRate({ playbackRate: 1 })}
+          onReset={() =>
+            onChangePlaybackRate({ playbackRate: 1, committed: true })
+          }
         />
         {bpm || error ? (
           <Menu

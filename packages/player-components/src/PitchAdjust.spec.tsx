@@ -1,3 +1,4 @@
+import React from 'react';
 import { expect, describe, it, vi } from 'vitest';
 
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
@@ -104,6 +105,7 @@ describe('PitchAdjust', () => {
     await waitFor(() => {
       expect(onChangeTempo).toHaveBeenCalledWith({
         playbackRate: 1.1,
+        committed: true,
       });
     });
   });
@@ -129,6 +131,7 @@ describe('PitchAdjust', () => {
     await waitFor(() => {
       expect(onChangeTempo).toHaveBeenCalledWith({
         playbackRate: 0.9,
+        committed: true,
       });
     });
   });
@@ -154,6 +157,73 @@ describe('PitchAdjust', () => {
     await waitFor(() => {
       expect(onChangeTempo).toHaveBeenCalledWith({
         playbackRate: 0.95,
+        committed: true,
+      });
+    });
+  });
+
+  describe('dragging the fader', () => {
+    const renderWithState = () => {
+      const onChangeTempo = vi.fn();
+      const Harness = () => {
+        const [playbackRate, setPlaybackRate] = React.useState(1);
+        return (
+          <ThemeProvider theme="light">
+            <PitchAdjust
+              playbackRate={playbackRate}
+              preservesPitch={false}
+              onChangePreservesPitch={vi.fn()}
+              onChangePlaybackRate={(change) => {
+                onChangeTempo(change);
+                setPlaybackRate(change.playbackRate);
+              }}
+            />
+          </ThemeProvider>
+        );
+      };
+      render(<Harness />);
+      return { onChangeTempo };
+    };
+
+    it('reports uncommitted changes while the fader is moving', () => {
+      const { onChangeTempo } = renderWithState();
+
+      fireEvent.input(screen.getByRole('slider'), {
+        target: { value: '1.05' },
+      });
+
+      expect(onChangeTempo).toHaveBeenCalledTimes(1);
+      expect(onChangeTempo).toHaveBeenCalledWith({
+        playbackRate: 1.05,
+        committed: false,
+      });
+      expect(screen.getByText('+5.0%')).toBeInTheDocument();
+    });
+
+    it('commits the change when the fader is released', () => {
+      const { onChangeTempo } = renderWithState();
+      const slider = screen.getByRole('slider');
+
+      fireEvent.input(slider, { target: { value: '1.03' } });
+      fireEvent.input(slider, { target: { value: '1.05' } });
+      // Browsers fire `change` on release, without a new value
+      fireEvent(slider, new Event('change', { bubbles: true }));
+
+      expect(onChangeTempo).toHaveBeenCalledTimes(3);
+      expect(onChangeTempo).toHaveBeenLastCalledWith({
+        playbackRate: 1.05,
+        committed: true,
+      });
+    });
+
+    it('commits the change when reset is clicked', async () => {
+      const { onChangeTempo } = renderWithState();
+
+      await userEvent.click(screen.getByRole('button', { name: 'Reset' }));
+
+      expect(onChangeTempo).toHaveBeenCalledWith({
+        playbackRate: 1,
+        committed: true,
       });
     });
   });

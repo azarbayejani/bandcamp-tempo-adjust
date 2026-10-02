@@ -8,16 +8,19 @@ import * as css from './BpmValue.module.scss';
 
 // The BPM value/unit lockup shared by the desktop display and the
 // mobile fader row. Shows the rate-adjusted BPM, a spinner while
-// detecting, or -- before detection.
+// detecting, or -- before detection. `pending` dims a BPM the audio
+// hasn't caught up to yet.
 const BpmValue = ({
   bpm,
   loading,
   playbackRate,
+  pending = false,
   variant = 'display',
 }: {
   bpm?: number;
   loading: boolean;
   playbackRate: number;
+  pending?: boolean;
   variant?: 'display' | 'inline';
 }) => {
   const spinnerSize = variant === 'inline' ? 16 : 24;
@@ -33,7 +36,9 @@ const BpmValue = ({
 
   return (
     <div
-      className={classnames(css.lockup, css[variant])}
+      className={classnames(css.lockup, css[variant], {
+        [css.pending]: pending && !loading && !!bpm,
+      })}
       data-testid="bpm-display"
     >
       <span className={css.value}>{value}</span> <span>BPM</span>
