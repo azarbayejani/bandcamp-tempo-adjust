@@ -1,16 +1,44 @@
+:root {
+  color-scheme: light dark;
+  --page-background: #fff;
+  --text: #111;
+  --text-secondary: #555;
+  --border: #dbdbdb;
+  --button-background: #111;
+  --button-text: #fff;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --page-background: #1a1a1c;
+    --text: #ededed;
+    --text-secondary: #b0b0b0;
+    --border: #3a3a3c;
+    --button-background: #ededed;
+    --button-text: #111;
+  }
+}
+
+body {
+  background: var(--page-background);
+  color: var(--text);
+  /* Chrome shrinks body text on extension pages to 75%; Safari and Firefox
+     leave it at 16px. */
+  font-size: 16px;
+}
 
 .options {
   width: 100%;
   margin-top: 36px;
   margin-left: auto;
   margin-right: auto;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   max-width: 480px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  border: 1px solid #dbdbdb;
+  border: 1px solid var(--border);
   border-radius: 0.75rem;
   padding: 48px 0;
 }
@@ -20,16 +48,26 @@
 }
 
 .footer {
-  border-top: 1px solid #dbdbdb;
+  border-top: 1px solid var(--border);
   width: 100%;
   margin-top: 18px;
-  padding: 8px 0;
-  font-size: 0.75rem;
+  padding: 12px 0;
+  font-size: 0.875rem;
+}
+
+.footerLink {
+  color: var(--text-secondary);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.footerLink:hover {
+  color: var(--text);
 }
 
 .divider {
   border: none;
-  border-top: 1px solid #dbdbdb;
+  border-top: 1px solid var(--border);
   width: calc(100% - 40px);
   margin: 18px 20px;
 }
@@ -37,8 +75,9 @@
 .button {
   display: inline-flex;
   text-decoration: none;
-  background: rgb(0,161,198);
-  color: #fff;
+  background: var(--button-background);
+  color: var(--button-text);
+  box-sizing: border-box;
   width: 200px;
   height: 36px;
   padding: 0 1em;
@@ -49,6 +88,61 @@
   justify-content: center;
   align-items: center;
   cursor: pointer;
+}
+
+.button:hover {
+  opacity: 0.85;
+}
+
+.logo {
+  display: block;
+}
+
+.details {
+  width: calc(100% - 40px);
+  margin-top: 18px;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+/* The disclosure triangle is centred along with the text, which leaves the
+   words off centre under the button, so the summary is a plain link instead. */
+.detailsSummary {
+  display: block;
+  width: fit-content;
+  margin: 0 auto;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.detailsSummary::-webkit-details-marker {
+  display: none;
+}
+
+.detailsSummary:hover {
+  color: var(--text);
+}
+
+.detailsIntro {
+  margin: 20px 0 12px;
+}
+
+.permissionList {
+  margin: 0;
+}
+
+.permissionList dt {
+  color: var(--text);
+  font-weight: bold;
+}
+
+.permissionList dd {
+  margin: 2px 0 12px;
+}
+
+.permissionList dd:last-child {
+  margin-bottom: 0;
 }
 
 .actionContainer {
@@ -64,6 +158,14 @@
   text-align: center;
 }
 
-a {
-  text-decoration: none;
+/* Below this width the card fills the window, so its border would only frame
+   the viewport. */
+@media (max-width: 520px) {
+  .options {
+    border: none;
+  }
+
+  .footer {
+    width: calc(100% - 40px);
+  }
 }
