@@ -1,9 +1,13 @@
 import { test, expect } from './fixtures';
 import { openTralbum } from './pages/tralbum';
 import { setupNetwork } from './helpers/setupNetwork';
+import { setupAudioMock } from './helpers/setupAudioMock';
 
 interface Track {
+  id: number;
   title: string;
+  // The tempo of the audio setupAudioMock generates for the track, as the
+  // extension displays it.
   bpm: string;
 }
 
@@ -21,24 +25,29 @@ const fixtures: Record<string, Tralbum> = {
     defaultTrackIndex: 4,
     tracks: [
       {
+        id: 4239584012,
         title: 'Silver Oxide',
-        bpm: '98.7',
+        bpm: '100.0',
       },
       {
+        id: 2069543010,
         title: 'u can have whatever u want',
-        bpm: '145.0',
+        bpm: '125.0',
       },
       {
+        id: 2413093513,
         title: 'Titrating',
         bpm: '150.0',
       },
       {
+        id: 745771613,
         title: 'Turboprop Patterns',
-        bpm: '140.0',
+        bpm: '128.0',
       },
       {
+        id: 1112731765,
         title: 'ME',
-        bpm: '140.0',
+        bpm: '120.0',
       },
     ],
   },
@@ -48,24 +57,29 @@ const fixtures: Record<string, Tralbum> = {
     defaultTrackIndex: 0,
     tracks: [
       {
+        id: 3505007755,
         title: 'I Need Space To Dance',
-        bpm: '138.0',
+        bpm: '144.0',
       },
       {
+        id: 3698878352,
         title: 'Dance and Dance Again',
-        bpm: '94.0',
+        bpm: '96.0',
       },
       {
+        id: 3522373913,
         title: 'Direct Source',
-        bpm: '142.0',
+        bpm: '160.0',
       },
       {
+        id: 2678384002,
         title: 'Saucy Hive Mind',
-        bpm: '140.0',
+        bpm: '125.0',
       },
       {
+        id: 56556822,
         title: 'Sense Hyper',
-        bpm: '97.3',
+        bpm: '100.0',
       },
     ],
   },
@@ -142,15 +156,11 @@ test('can detect bpm and adjust playback rate', async ({
   page,
   extensionId,
 }) => {
-  if (process.env.CI) {
-    console.warn('Skipping test for CI');
-    return;
-  }
-
   const fixture = fixtures.album;
   await setupNetwork(page, {
     harPath: fixture.harPath,
   });
+  await setupAudioMock(page.context(), fixture.tracks);
   const url = fixture.url;
 
   const tralbum = await openTralbum(page, extensionId, url);
@@ -160,19 +170,15 @@ test('can detect bpm and adjust playback rate', async ({
   await tralbum.setPitchAdjust(1.1);
   await tralbum.waitForPlaybackRate(1.1);
 
-  await tralbum.expectBpm('154.0');
+  await tralbum.expectBpm('132.0');
 });
 
 test('persists BPM across page loads', async ({ page, extensionId }) => {
-  if (process.env.CI) {
-    console.warn('Skipping test for CI');
-    return;
-  }
-
   const fixture = fixtures.album;
   await setupNetwork(page, {
     harPath: fixture.harPath,
   });
+  await setupAudioMock(page.context(), fixture.tracks);
   const url = fixture.url;
 
   const tralbum = await openTralbum(page, extensionId, url);
@@ -186,15 +192,11 @@ test('detecting BPM on an album detects all tracks, and changes when I play anot
   page,
   extensionId,
 }) => {
-  if (process.env.CI) {
-    console.warn('Skipping test for CI');
-    return;
-  }
-
   const fixture = fixtures.album;
   await setupNetwork(page, {
     harPath: fixture.harPath,
   });
+  await setupAudioMock(page.context(), fixture.tracks);
   const url = fixture.url;
 
   const tralbum = await openTralbum(page, extensionId, url);
@@ -211,15 +213,11 @@ test('detecting BPM on an album with exclusive tracks works', async ({
   page,
   extensionId,
 }) => {
-  if (process.env.CI) {
-    console.warn('Skipping test for CI');
-    return;
-  }
-
   const fixture = fixtures.albumWithExclusiveTracks;
   await setupNetwork(page, {
     harPath: fixture.harPath,
   });
+  await setupAudioMock(page.context(), fixture.tracks);
 
   const url = fixture.url;
 

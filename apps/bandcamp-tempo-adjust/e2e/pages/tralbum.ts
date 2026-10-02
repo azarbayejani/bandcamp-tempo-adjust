@@ -65,10 +65,9 @@ export async function openTralbum(
     // BPM Detection
     detectBpm: async (expectedBpm?: string) => {
       await page.getByRole('button', { name: 'Detect BPM' }).click();
-      await expect(
-        page.getByRole('progressbar', { name: 'Detecting BPM' })
-      ).toBeVisible();
 
+      // No check for the spinner here: detection can finish before the test
+      // gets a look at it.
       await expect(page.getByTestId('bpm-display')).toBeVisible();
       await tralbum.expectBpm(expectedBpm);
       await expect(
