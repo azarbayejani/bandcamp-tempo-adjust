@@ -62,9 +62,13 @@ export default defineBackground({
           console.log('Could not report setup state to the app', error);
         }
       };
-      void reportSetupState();
-      browser.permissions.onAdded.addListener(() => void reportSetupState());
-      browser.permissions.onRemoved.addListener(() => void reportSetupState());
+      reportSetupState();
+      browser.permissions.onAdded.addListener(() => {
+        reportSetupState();
+      });
+      browser.permissions.onRemoved.addListener(() => {
+        reportSetupState();
+      });
 
       nativePort.onMessage.addListener((message: { name: string }) => {
         if (message.name === 'openOptions') {
