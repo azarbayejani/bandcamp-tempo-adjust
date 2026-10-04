@@ -2,18 +2,18 @@ import { defineContentScript } from '#imports';
 
 import { renderYoutubeIframe } from '@tempo-adjust/youtube';
 
-// weird hack:
-// Each content script needs to have *some* permissions, but on Chrome/Firefox,
-// these scripts start with no permissions by default because of Discogs Tempo
-// Adjust, so just use bandcamp.com since that's always allowed
-const fakePermissions = ['https://www.bandcamp.com/*'];
+// WXT validates every content script before applying `include`, and a
+// per-browser `matches` resolves to undefined for browsers without a key,
+// which fails the build. An empty list satisfies the check; the entrypoint
+// is still skipped on Chrome/Firefox and never reaches their manifests.
+const noMatches: string[] = [];
 
 export default defineContentScript({
   // Extensions are only combined on Safari for now
   include: ['safari'],
   matches: {
-    chrome: fakePermissions,
-    firefox: fakePermissions,
+    chrome: noMatches,
+    firefox: noMatches,
     // Safari should always have access to Youtube
     safari: ['https://*.youtube.com/*', 'https://*.youtube-nocookie.com/*'],
   },
