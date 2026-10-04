@@ -67,7 +67,6 @@
 		AB68999C2DDD7BCB00C9A704 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AB6899F02DDD7BCB00C9A704 /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIcon.icon; sourceTree = "<group>"; };
 		AB68999E2DDD7BCB00C9A704 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		AB68999F2DDD7BCB00C9A704 /* Tempo_Adjust.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Tempo_Adjust.entitlements; sourceTree = "<group>"; };
 		AB6899A02DDD7BCB00C9A704 /* Tempo Adjust.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Tempo Adjust.entitlements"; sourceTree = "<group>"; };
 		AB6899A52DDD7BCB00C9A704 /* Tempo AdjustTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Tempo AdjustTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB6899A92DDD7BCB00C9A704 /* Tempo_AdjustTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tempo_AdjustTests.swift; sourceTree = "<group>"; };
@@ -146,7 +145,6 @@
 				AB68999C2DDD7BCB00C9A704 /* Assets.xcassets */,
 				AB6899F02DDD7BCB00C9A704 /* AppIcon.icon */,
 				AB68999E2DDD7BCB00C9A704 /* Info.plist */,
-				AB68999F2DDD7BCB00C9A704 /* Tempo_Adjust.entitlements */,
 				AB6899A02DDD7BCB00C9A704 /* Tempo Adjust.entitlements */,
 				AB68998D2DDD7BC900C9A704 /* Resources */,
 				AB61A2842F5962020093D0C2 /* TempoAdjustApp.swift */,
