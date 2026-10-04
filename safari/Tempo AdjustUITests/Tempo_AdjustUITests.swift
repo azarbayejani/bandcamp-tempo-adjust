@@ -1,13 +1,13 @@
 //
-//  Tempo_Adjust_for_Bandcamp_and_DiscogsUITests.swift
-//  Tempo Adjust for Bandcamp and DiscogsUITests
+//  Tempo_AdjustUITests.swift
+//  Tempo AdjustUITests
 //
 //  Created by Bobak Azarbayejani on 5/20/25.
 //
 
 import XCTest
 
-final class Tempo_Adjust_for_Bandcamp_and_DiscogsUITests: XCTestCase {
+final class Tempo_AdjustUITests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.

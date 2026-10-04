@@ -1,13 +1,13 @@
 //
-//  Tempo_Adjust_for_Bandcamp_and_DiscogsUITestsLaunchTests.swift
-//  Tempo Adjust for Bandcamp and DiscogsUITests
+//  Tempo_AdjustUITestsLaunchTests.swift
+//  Tempo AdjustUITests
 //
 //  Created by Bobak Azarbayejani on 5/20/25.
 //
 
 import XCTest
 
-final class Tempo_Adjust_for_Bandcamp_and_DiscogsUITestsLaunchTests: XCTestCase {
+final class Tempo_AdjustUITestsLaunchTests: XCTestCase {
 
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
         true

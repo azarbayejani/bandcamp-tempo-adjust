@@ -1,6 +1,6 @@
 //
 //  SafariWebExtensionHandler.swift
-//  Tempo Adjust for Bandcamp and Discogs Extension
+//  Tempo Adjust Extension
 //
 //  Created by Bobak Azarbayejani on 5/20/25.
 //

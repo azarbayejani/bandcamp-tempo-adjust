@@ -1,14 +1,14 @@
 //
-//  Tempo_Adjust_for_Bandcamp_and_DiscogsTests.swift
-//  Tempo Adjust for Bandcamp and DiscogsTests
+//  Tempo_AdjustTests.swift
+//  Tempo AdjustTests
 //
 //  Created by Bobak Azarbayejani on 5/20/25.
 //
 
 import Testing
-@testable import Tempo_Adjust_for_Bandcamp_and_Discogs
+@testable import Tempo_Adjust
 
-struct Tempo_Adjust_for_Bandcamp_and_DiscogsTests {
+struct Tempo_AdjustTests {
 
     @Test func example() async throws {
         // Write your test here and use APIs like `#expect(...)` to check expected conditions.

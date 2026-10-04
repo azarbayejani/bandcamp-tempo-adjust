@@ -1,6 +1,6 @@
 //
 //  TipJarView.swift
-//  Tempo Adjust for Bandcamp and Discogs
+//  Tempo Adjust
 //
 
 import SwiftUI
