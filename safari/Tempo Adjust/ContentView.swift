@@ -4,6 +4,7 @@
 //
 
 import SwiftUI
+import Combine
 import SafariServices
 
 private let extensionBundleIdentifier = "com.miseryconfusion.tempoadjust.Extension"
