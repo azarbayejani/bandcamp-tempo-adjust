@@ -1,29 +1,45 @@
 import { type Reducer, useReducer } from 'react';
 
+// Where the current bpm came from, so the mobile tap screen can report
+// it: 'taps' is a running average, 'adjusted' means a stepper changed it.
+export type TapperSource = 'none' | 'taps' | 'adjusted';
+
 interface TapperState {
   tapCount: number;
   sum: number;
   bpm?: number;
   text: string;
   lastTap?: number;
+  source: TapperSource;
 }
 
-const defaultTapperState = {
+export type TapperAdjustment = { multiply?: number; add?: number };
+
+const defaultTapperState: TapperState = {
   tapCount: 0,
   sum: 0,
   text: '',
+  source: 'none',
 };
+
+const roundToTenth = (n: number) => Math.round(n * 10) / 10;
 
 const tapperReducer: Reducer<
   TapperState,
-  { type: 'TAP' } | { type: 'RESET' } | { type: 'CHANGE'; newText: string }
+  | { type: 'TAP' }
+  | { type: 'RESET' }
+  | { type: 'CHANGE'; newText: string }
+  | ({ type: 'ADJUST' } & TapperAdjustment)
 > = (prev, action) => {
   switch (action.type) {
     case 'TAP': {
       const now = Date.now();
-      const distance = prev.lastTap && now - prev.lastTap;
+      const distance =
+        prev.lastTap === undefined ? undefined : now - prev.lastTap;
 
-      if (distance && distance > 2000) {
+      // The first tap of a run, or a pause long enough to count as a new
+      // one: start over and wait for the next tap before showing a bpm.
+      if (distance === undefined || distance > 2000) {
         return {
           ...defaultTapperState,
           tapCount: 1,
@@ -31,19 +47,22 @@ const tapperReducer: Reducer<
         };
       }
 
-      const newBpmDatapoint = distance && 60000 / distance;
-      const newTotalSum = newBpmDatapoint && prev.sum + newBpmDatapoint;
-      const tapCount = prev.tapCount + 1;
-      const bpm = newTotalSum
-        ? Math.round((newTotalSum / prev.tapCount) * 10) / 10
-        : undefined;
+      // Two events in the same millisecond can't be two beats; treat the
+      // second as a duplicate rather than dividing by zero.
+      if (distance === 0) {
+        return prev;
+      }
+
+      const sum = prev.sum + 60000 / distance;
+      const bpm = roundToTenth(sum / prev.tapCount);
 
       return {
-        tapCount: tapCount,
-        sum: newTotalSum ?? 0,
+        tapCount: prev.tapCount + 1,
+        sum,
         bpm,
-        text: bpm?.toString() || '',
+        text: bpm.toString(),
         lastTap: now,
+        source: 'taps',
       };
     }
     case 'RESET':
@@ -64,21 +83,42 @@ const tapperReducer: Reducer<
         text: action.newText,
       };
     }
+    case 'ADJUST': {
+      if (!prev.bpm) {
+        return prev;
+      }
+
+      const bpm = roundToTenth(
+        prev.bpm * (action.multiply ?? 1) + (action.add ?? 0)
+      );
+
+      // Clearing lastTap means the next tap starts a fresh run instead of
+      // averaging a new gap into a value the user has since changed.
+      return {
+        ...prev,
+        bpm,
+        text: bpm.toString(),
+        lastTap: undefined,
+        source: 'adjusted',
+      };
+    }
   }
 };
 
 const useTapper = () => {
-  const [{ text }, dispatch] = useReducer(tapperReducer, {
-    tapCount: 0,
-    sum: 0,
-  } as TapperState);
+  const [{ text, bpm, tapCount, source }, dispatch] = useReducer(
+    tapperReducer,
+    defaultTapperState
+  );
 
   const tap = () => dispatch({ type: 'TAP' });
   const reset = () => dispatch({ type: 'RESET' });
   const setBpm = (newText: string) =>
     dispatch({ type: 'CHANGE', newText: newText });
+  const adjust = (adjustment: TapperAdjustment) =>
+    dispatch({ type: 'ADJUST', ...adjustment });
 
-  return { tap, reset, setBpm, text };
+  return { tap, reset, setBpm, adjust, text, bpm, tapCount, source };
 };
 
 export default useTapper;

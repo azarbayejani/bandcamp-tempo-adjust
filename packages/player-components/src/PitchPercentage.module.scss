@@ -2,8 +2,25 @@
 // percentage readout changes width.
 .percentage {
   font-variant-numeric: tabular-nums;
-  min-width: 3.2em;
   text-align: right;
+}
+
+.display {
+  min-width: 3.2em;
+}
+
+// The mobile fader row: the same type size and 40px line as the BPM
+// value so the two readouts share a baseline, in a 66px box that
+// mirrors the lockup on the left.
+.inline {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex: 0 0 66px;
+  height: 40px;
+  box-sizing: border-box;
+  font-size: 20px;
+  font-weight: 400;
 }
 
 // The fader has moved but the audio hasn't caught up yet.

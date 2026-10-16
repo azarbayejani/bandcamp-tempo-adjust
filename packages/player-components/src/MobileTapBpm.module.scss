@@ -1,0 +1,77 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.row {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+}
+
+// The TAP button is the primary target, so it gets the page text color
+// as a full border and a brief inverted flash on each press.
+.tap {
+  flex-direction: column;
+  gap: 2px;
+  height: 72px;
+  border-color: var(--page-text-color, #222);
+  transition: background 80ms;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+
+  &.dark {
+    border-color: var(--page-text-color, #fff);
+  }
+
+  &.flash,
+  &.flash.dark {
+    background: var(--page-text-color, #222);
+    color: var(--dep-page-background-color, #fff);
+  }
+}
+
+.tapLabel {
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.sourceLabel {
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0;
+  opacity: 0.75;
+}
+
+.step {
+  height: 40px;
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+}
+
+.action {
+  height: 44px;
+  font-size: 14px;
+}
+
+// Save is the committing action, so it is filled like a selected
+// segment once there is something to save.
+.save {
+  font-weight: 600;
+
+  &:not(:disabled) {
+    background: #222;
+    border-color: #222;
+    color: #fff;
+
+    &.dark {
+      background: #fff;
+      border-color: #fff;
+      color: #222;
+    }
+  }
+}

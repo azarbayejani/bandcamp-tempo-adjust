@@ -5,9 +5,13 @@
   width: 100%;
 }
 
+// Top-aligned rather than centered: the BPM lockup is taller than its
+// 40px value box (the unit sits beneath it), and the fader and the
+// percentage are both 40px tall, so aligning to the top puts the
+// fader's hairline through the center of the value line.
 .faderRow {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 12px;
   width: 100%;
 
