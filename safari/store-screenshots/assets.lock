@@ -5,7 +5,7 @@
       "exports/screenshots/iphone-6.9/01-hero.png": {
         "sourceChecksum": "sha256:49d6961848be67678950aac5cd339f330c9bebb483415fd6e40097cd16dca8a1",
         "outputPath": "exports/screenshots/iphone-6.9/01-hero.png",
-        "exportedAt": "2026-10-16T06:03:43.821Z",
+        "exportedAt": "2026-10-16T07:04:41.092Z",
         "exportChecksum": "sha256:543e3b446c40612bfbf7698ff3af44f244c2cfd9ef377483c75bb98de4aa1d3c"
       },
       "exports/screenshots/iphone-6.7/01-hero.png": {
@@ -23,7 +23,7 @@
       "exports/screenshots/iphone-6.3/01-hero.png": {
         "sourceChecksum": "sha256:49d6961848be67678950aac5cd339f330c9bebb483415fd6e40097cd16dca8a1",
         "outputPath": "exports/screenshots/iphone-6.3/01-hero.png",
-        "exportedAt": "2026-10-16T06:03:43.822Z",
+        "exportedAt": "2026-10-16T07:04:41.093Z",
         "exportChecksum": "sha256:313f9fdaa40c074c6619d2dbcbb226b3259700aa7cd25d5e1a67f21321351d4f"
       }
     },
@@ -31,7 +31,7 @@
       "exports/screenshots/iphone-6.9/02-bpm.png": {
         "sourceChecksum": "sha256:0ee5061df8cf8345f1145e0f5fe4f25f8e925a4df0925cb1343108c4d0c10851",
         "outputPath": "exports/screenshots/iphone-6.9/02-bpm.png",
-        "exportedAt": "2026-10-16T06:03:43.822Z",
+        "exportedAt": "2026-10-16T07:04:41.093Z",
         "exportChecksum": "sha256:543e3b446c40612bfbf7698ff3af44f244c2cfd9ef377483c75bb98de4aa1d3c"
       },
       "exports/screenshots/iphone-6.7/02-bpm.png": {
@@ -49,7 +49,7 @@
       "exports/screenshots/iphone-6.3/02-bpm.png": {
         "sourceChecksum": "sha256:0ee5061df8cf8345f1145e0f5fe4f25f8e925a4df0925cb1343108c4d0c10851",
         "outputPath": "exports/screenshots/iphone-6.3/02-bpm.png",
-        "exportedAt": "2026-10-16T06:03:43.822Z",
+        "exportedAt": "2026-10-16T07:04:41.093Z",
         "exportChecksum": "sha256:313f9fdaa40c074c6619d2dbcbb226b3259700aa7cd25d5e1a67f21321351d4f"
       }
     },
@@ -57,7 +57,7 @@
       "exports/screenshots/iphone-6.9/03-range.png": {
         "sourceChecksum": "sha256:91eca24adf11a030b71a82b9b84de9ff65d184aae1d3069b78d7998185277637",
         "outputPath": "exports/screenshots/iphone-6.9/03-range.png",
-        "exportedAt": "2026-10-16T06:12:59.936Z",
+        "exportedAt": "2026-10-16T07:04:41.093Z",
         "exportChecksum": "sha256:543e3b446c40612bfbf7698ff3af44f244c2cfd9ef377483c75bb98de4aa1d3c"
       },
       "exports/screenshots/iphone-6.7/03-range.png": {
@@ -75,7 +75,7 @@
       "exports/screenshots/iphone-6.3/03-range.png": {
         "sourceChecksum": "sha256:91eca24adf11a030b71a82b9b84de9ff65d184aae1d3069b78d7998185277637",
         "outputPath": "exports/screenshots/iphone-6.3/03-range.png",
-        "exportedAt": "2026-10-16T06:12:59.937Z",
+        "exportedAt": "2026-10-16T07:04:41.093Z",
         "exportChecksum": "sha256:313f9fdaa40c074c6619d2dbcbb226b3259700aa7cd25d5e1a67f21321351d4f"
       }
     },
@@ -83,7 +83,7 @@
       "exports/screenshots/iphone-6.9/04-master-tempo.png": {
         "sourceChecksum": "sha256:4e6e1c72a717233857db950cdebc259aa0f967a924b54392215aeb916a97830f",
         "outputPath": "exports/screenshots/iphone-6.9/04-master-tempo.png",
-        "exportedAt": "2026-10-16T06:03:43.822Z",
+        "exportedAt": "2026-10-16T07:04:41.093Z",
         "exportChecksum": "sha256:543e3b446c40612bfbf7698ff3af44f244c2cfd9ef377483c75bb98de4aa1d3c"
       },
       "exports/screenshots/iphone-6.7/04-master-tempo.png": {
@@ -101,7 +101,7 @@
       "exports/screenshots/iphone-6.3/04-master-tempo.png": {
         "sourceChecksum": "sha256:4e6e1c72a717233857db950cdebc259aa0f967a924b54392215aeb916a97830f",
         "outputPath": "exports/screenshots/iphone-6.3/04-master-tempo.png",
-        "exportedAt": "2026-10-16T06:03:43.822Z",
+        "exportedAt": "2026-10-16T07:04:41.093Z",
         "exportChecksum": "sha256:313f9fdaa40c074c6619d2dbcbb226b3259700aa7cd25d5e1a67f21321351d4f"
       }
     },
@@ -109,7 +109,7 @@
       "exports/screenshots/iphone-6.9/05-tap.png": {
         "sourceChecksum": "sha256:122ac6be41c04e1fc26b44a9456b6eca6ab644833649f1eb9c4575b74eb83038",
         "outputPath": "exports/screenshots/iphone-6.9/05-tap.png",
-        "exportedAt": "2026-10-16T06:12:59.937Z",
+        "exportedAt": "2026-10-16T07:04:41.093Z",
         "exportChecksum": "sha256:543e3b446c40612bfbf7698ff3af44f244c2cfd9ef377483c75bb98de4aa1d3c"
       },
       "exports/screenshots/iphone-6.7/05-tap.png": {
@@ -127,7 +127,7 @@
       "exports/screenshots/iphone-6.3/05-tap.png": {
         "sourceChecksum": "sha256:122ac6be41c04e1fc26b44a9456b6eca6ab644833649f1eb9c4575b74eb83038",
         "outputPath": "exports/screenshots/iphone-6.3/05-tap.png",
-        "exportedAt": "2026-10-16T06:12:59.937Z",
+        "exportedAt": "2026-10-16T07:04:41.093Z",
         "exportChecksum": "sha256:313f9fdaa40c074c6619d2dbcbb226b3259700aa7cd25d5e1a67f21321351d4f"
       }
     },
@@ -135,7 +135,7 @@
       "exports/screenshots/iphone-6.9/06-discogs.png": {
         "sourceChecksum": "sha256:cc4c47fc0ba951c8e8620e0a8e7c1d7de12d2a24f6a97ea3a43c7207bb867f93",
         "outputPath": "exports/screenshots/iphone-6.9/06-discogs.png",
-        "exportedAt": "2026-10-16T06:12:59.937Z",
+        "exportedAt": "2026-10-16T07:04:41.093Z",
         "exportChecksum": "sha256:543e3b446c40612bfbf7698ff3af44f244c2cfd9ef377483c75bb98de4aa1d3c"
       },
       "exports/screenshots/iphone-6.7/06-discogs.png": {
@@ -153,7 +153,7 @@
       "exports/screenshots/iphone-6.3/06-discogs.png": {
         "sourceChecksum": "sha256:cc4c47fc0ba951c8e8620e0a8e7c1d7de12d2a24f6a97ea3a43c7207bb867f93",
         "outputPath": "exports/screenshots/iphone-6.3/06-discogs.png",
-        "exportedAt": "2026-10-16T06:12:59.937Z",
+        "exportedAt": "2026-10-16T07:04:41.093Z",
         "exportChecksum": "sha256:313f9fdaa40c074c6619d2dbcbb226b3259700aa7cd25d5e1a67f21321351d4f"
       }
     },
@@ -180,6 +180,34 @@
         "sourceChecksum": "sha256:06166c5a725b5380b747446101e4cc1effdb16207db3d1dbac43bccc69d51c4e",
         "outputPath": "exports/screenshots/iphone-6.3/07-cta.png",
         "exportedAt": "2026-10-16T06:12:59.937Z",
+        "exportChecksum": "sha256:313f9fdaa40c074c6619d2dbcbb226b3259700aa7cd25d5e1a67f21321351d4f"
+      }
+    },
+    "screenshots/07-purchases": {
+      "exports/screenshots/iphone-6.9/07-purchases.png": {
+        "sourceChecksum": "sha256:0d93225a9215d6ec88811fed7374682f5de8c7d26f6c74dfcd372bf75b9f6538",
+        "outputPath": "exports/screenshots/iphone-6.9/07-purchases.png",
+        "exportedAt": "2026-10-16T07:11:57.161Z",
+        "exportChecksum": "sha256:543e3b446c40612bfbf7698ff3af44f244c2cfd9ef377483c75bb98de4aa1d3c"
+      },
+      "exports/screenshots/iphone-6.3/07-purchases.png": {
+        "sourceChecksum": "sha256:0d93225a9215d6ec88811fed7374682f5de8c7d26f6c74dfcd372bf75b9f6538",
+        "outputPath": "exports/screenshots/iphone-6.3/07-purchases.png",
+        "exportedAt": "2026-10-16T07:11:57.161Z",
+        "exportChecksum": "sha256:313f9fdaa40c074c6619d2dbcbb226b3259700aa7cd25d5e1a67f21321351d4f"
+      }
+    },
+    "screenshots/08-cta": {
+      "exports/screenshots/iphone-6.9/08-cta.png": {
+        "sourceChecksum": "sha256:06166c5a725b5380b747446101e4cc1effdb16207db3d1dbac43bccc69d51c4e",
+        "outputPath": "exports/screenshots/iphone-6.9/08-cta.png",
+        "exportedAt": "2026-10-16T07:04:41.093Z",
+        "exportChecksum": "sha256:543e3b446c40612bfbf7698ff3af44f244c2cfd9ef377483c75bb98de4aa1d3c"
+      },
+      "exports/screenshots/iphone-6.3/08-cta.png": {
+        "sourceChecksum": "sha256:06166c5a725b5380b747446101e4cc1effdb16207db3d1dbac43bccc69d51c4e",
+        "outputPath": "exports/screenshots/iphone-6.3/08-cta.png",
+        "exportedAt": "2026-10-16T07:04:41.093Z",
         "exportChecksum": "sha256:313f9fdaa40c074c6619d2dbcbb226b3259700aa7cd25d5e1a67f21321351d4f"
       }
     }

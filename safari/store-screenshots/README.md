@@ -4,7 +4,7 @@ A workspace package (`safari/store-screenshots/`) holding the templates, the sel
 fonts, the Safari captures and the open-assets config. Run the scripts here or
 via the root wrappers.
 
-Seven iPhone screenshots for the Safari app, authored as HTML in `templates/` at 440×956 and
+Eight iPhone screenshots for the Safari app, authored as HTML in `templates/` at 440×956 and
 rendered by [open-assets](https://github.com/parra-Inc/open-assets) (`assets.json` in this
 folder) at the two Dynamic Island sizes App Store Connect lists: 1206×2622 for
 the medium display, which is the one it requires, and 1320×2868 for the large
@@ -27,7 +27,8 @@ pnpm screenshots:render   # writes safari/store-screenshots/exports/screenshots/
 | `04-master-tempo` | Master Tempo on |
 | `05-tap` | Tap BPM screen, eight taps in |
 | `06-discogs` | Discogs release page with a video open, fader at +4.3% |
-| `07-cta` | the app's own setup screen from the iOS Simulator |
+| `07-purchases` | the purchase exporter on the Bandcamp purchases page, cut off above the first order |
+| `08-cta` | the app's own setup screen from the iOS Simulator |
 
 `shared.css` holds the palette, type, the pitch-scale strip and the phone
 mockup; the captures carry Safari's own toolbar. The frame is Apple's
@@ -82,6 +83,11 @@ Which capture each template source comes from:
 | `master-tempo.png` | `bc-master-tempo.png` |
 | `tap.png` | `bc-tap.png` |
 | `discogs.png` | `dg-nudged.png` |
+
+`purchase-export.png` is a plain simulator screenshot of Safari on
+bandcamp.com/<you>/purchases, taken by hand because it needs a signed-in
+account. It shows the exporter before "Load purchases" with a real order
+below it; the template places the phone so the screen ends above that order.
 
 `ios-setup.png` is a plain simulator screenshot of the app. With the extension
 enabled it shows the "You're all set" screen; turn the extension off in

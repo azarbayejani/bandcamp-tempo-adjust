@@ -58,8 +58,13 @@
           "label": "Discogs too"
         },
         {
-          "src": "templates/07-cta.html",
-          "name": "07-cta",
+          "src": "templates/07-purchases.html",
+          "name": "07-purchases",
+          "label": "Export your purchases"
+        },
+        {
+          "src": "templates/08-cta.html",
+          "name": "08-cta",
           "label": "Get it"
         }
       ],
