@@ -2,6 +2,7 @@ import { type ReactNode, useMemo, useState } from 'react';
 
 import { useQuery } from '@tanstack/react-query';
 import Select from 'react-select';
+import { extensionName } from '@/utils/extensionName';
 import { DONATE_URL, TIP_JAR_URL } from '@/utils/tipJar';
 import { downloadFile } from './downloadFile';
 import { fetchCurrencies } from './services/fetchCurrencies';
@@ -27,6 +28,17 @@ interface PurchasesPageProps {
  * whole exporter.
  */
 const FALLBACK_CURRENCIES = ['USD', 'EUR', 'GBP', 'JPY', 'AUD', 'CAD', 'CHF'];
+
+function Header() {
+  return (
+    <div className="BandcampTempoAdjust__purchases_row BandcampTempoAdjust__purchases_row--header">
+      <div className="BandcampTempoAdjust__purchases_eyebrow">
+        {extensionName()}
+      </div>
+      <h2 className="BandcampTempoAdjust__purchases_title">Purchase Export</h2>
+    </div>
+  );
+}
 
 function ErrorRow({
   severity,
@@ -72,11 +84,8 @@ function PurchaseTotals({
 
   return (
     <>
-      <div
-        className="BandcampTempoAdjust__purchases_row"
-        style={{ justifyContent: 'space-between', alignItems: 'center' }}
-      >
-        <div style={{ width: 320 }}>
+      <div className="BandcampTempoAdjust__purchases_row BandcampTempoAdjust__purchases_row--totals">
+        <div className="BandcampTempoAdjust__purchases_totals">
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <strong>Total: </strong>
             <strong>
@@ -92,25 +101,27 @@ function PurchaseTotals({
             <span>{stats.purchaseCount} purchases</span>
           </div>
         </div>
-        {generating ? (
-          <span>Exporting...</span>
-        ) : (
-          <button
-            className="BandcampTempoAdjust__button BandcampTempoAdjust__button--purchases"
-            onClick={() => {
-              setGenerating(true);
-              const filename = `bandcamp-purchases-${purchasesFilter}-${formatDate(
-                new Date()
-              )}`;
+        <div className="BandcampTempoAdjust__purchases_export">
+          {generating ? (
+            <span>Exporting...</span>
+          ) : (
+            <button
+              className="BandcampTempoAdjust__button BandcampTempoAdjust__button--purchases"
+              onClick={() => {
+                setGenerating(true);
+                const filename = `bandcamp-purchases-${purchasesFilter}-${formatDate(
+                  new Date()
+                )}`;
 
-              downloadFile(stats.filteredPurchases, filename);
+                downloadFile(stats.filteredPurchases, filename);
 
-              setGenerating(false);
-            }}
-          >
-            Export CSV
-          </button>
-        )}
+                setGenerating(false);
+              }}
+            >
+              Export CSV
+            </button>
+          )}
+        </div>
       </div>
       <div className="BandcampTempoAdjust__purchases_row">
         <div>
@@ -196,6 +207,7 @@ export default function PurchasesPage({ username, crumb }: PurchasesPageProps) {
   if (currenciesQuery.isLoading) {
     return (
       <div className="BandcampTempoAdjust__purchases_container">
+        <Header />
         <div className="BandcampTempoAdjust__purchases_row">Loading...</div>
       </div>
     );
@@ -207,57 +219,47 @@ export default function PurchasesPage({ username, crumb }: PurchasesPageProps) {
 
   return (
     <div className="BandcampTempoAdjust__purchases_container">
-      <div
-        className="BandcampTempoAdjust__purchases_row"
-        style={{ justifyContent: 'space-between' }}
-      >
-        <div
-          style={{
-            justifyContent: 'space-between',
-            display: 'flex',
-            alignItems: 'center',
-            gap: 16,
-          }}
-        >
-          <label htmlFor="currency">Currency:</label>
-          <Select
-            inputId="currency"
-            options={currencyCodes.map((currencyCode) => ({
-              value: currencyCode,
-              label: currencyCode,
-            }))}
-            defaultValue={{ value: 'USD', label: 'USD' }}
-            isClearable={false}
-            onChange={(event) => {
-              if (event) {
-                setCurrency(event.value);
-              }
-            }}
-          />
-          <label htmlFor="year">Year:</label>
-          <Select
-            inputId="year"
-            onChange={(event) => {
-              if (event) {
-                setPurchasesFilter(event.value);
-              }
-            }}
-            options={[
-              { value: 'ALL', label: 'All time' },
-              ...years.map((year) => ({
-                value: year,
-                label: year,
-              })),
-            ]}
-            defaultValue={{ value: 'ALL', label: 'All time' }}
-          />
+      <Header />
+      <div className="BandcampTempoAdjust__purchases_row BandcampTempoAdjust__purchases_row--controls">
+        <div className="BandcampTempoAdjust__purchases_filters">
+          <div className="BandcampTempoAdjust__purchases_field">
+            <label htmlFor="currency">Currency:</label>
+            <Select
+              inputId="currency"
+              options={currencyCodes.map((currencyCode) => ({
+                value: currencyCode,
+                label: currencyCode,
+              }))}
+              defaultValue={{ value: 'USD', label: 'USD' }}
+              isClearable={false}
+              onChange={(event) => {
+                if (event) {
+                  setCurrency(event.value);
+                }
+              }}
+            />
+          </div>
+          <div className="BandcampTempoAdjust__purchases_field">
+            <label htmlFor="year">Year:</label>
+            <Select
+              inputId="year"
+              onChange={(event) => {
+                if (event) {
+                  setPurchasesFilter(event.value);
+                }
+              }}
+              options={[
+                { value: 'ALL', label: 'All time' },
+                ...years.map((year) => ({
+                  value: year,
+                  label: year,
+                })),
+              ]}
+              defaultValue={{ value: 'ALL', label: 'All time' }}
+            />
+          </div>
         </div>
-        <div
-          style={{
-            width: 300,
-            textAlign: 'right',
-          }}
-        >
+        <div className="BandcampTempoAdjust__purchases_note">
           <small>
             <strong>Note:</strong> Calculated totals are only an approximation
             due to currency conversions. Currency exchange rates for each
@@ -274,7 +276,7 @@ export default function PurchasesPage({ username, crumb }: PurchasesPageProps) {
         </ErrorRow>
       )}
       {!startedFirstFetch && (
-        <div className="BandcampTempoAdjust__purchases_row">
+        <div className="BandcampTempoAdjust__purchases_row BandcampTempoAdjust__purchases_row--action">
           <button
             className="BandcampTempoAdjust__button BandcampTempoAdjust__button--purchases"
             onClick={() => {

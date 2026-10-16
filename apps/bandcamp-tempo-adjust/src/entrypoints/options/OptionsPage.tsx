@@ -6,6 +6,7 @@ import {
 } from '@tempo-adjust/permissions/background';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 
+import { extensionName } from '@/utils/extensionName';
 import { DONATE_URL, TIP_JAR_URL } from '@/utils/tipJar';
 
 import * as css from './OptionsPage.module.css';
@@ -45,14 +46,12 @@ const Options: React.FC = () => {
   });
   const queryClient = useQueryClient();
 
-  const extensionName = import.meta.env.SAFARI
-    ? 'Tempo Adjust'
-    : 'Bandcamp Tempo Adjust';
+  const name = extensionName();
 
   // index.html's static title can't follow the build's extension name.
   useEffect(() => {
-    document.title = extensionName;
-  }, [extensionName]);
+    document.title = name;
+  }, [name]);
 
   const handleRequestPermissions = async () => {
     const permissionsResponse = await requestAllPermissions();
@@ -107,7 +106,7 @@ const Options: React.FC = () => {
     : bandcampPermissions;
 
   const lightLogoImage = (
-    <img className={css.logo} src={logo} alt={`${extensionName} logo`} />
+    <img className={css.logo} src={logo} alt={`${name} logo`} />
   );
   const logoImage = import.meta.env.SAFARI ? (
     <picture>
@@ -123,7 +122,7 @@ const Options: React.FC = () => {
       <div className={css.options}>
         {logoImage}
         <p style={{ textAlign: 'center', padding: '0 20px' }}>
-          {extensionName} needs access to {sites} to work.
+          {name} needs access to {sites} to work.
         </p>
         <button className={css.button} onClick={handleRequestPermissions}>
           Allow
@@ -133,8 +132,8 @@ const Options: React.FC = () => {
             What does this access?
           </summary>
           <p className={css.detailsIntro}>
-            {extensionName} doesn&apos;t collect any data. Here&apos;s what it
-            uses each site for:
+            {name} doesn&apos;t collect any data. Here&apos;s what it uses each
+            site for:
           </p>
           <dl className={css.permissionList}>
             {permissions.map(({ domains, reason }) => (
@@ -152,7 +151,7 @@ const Options: React.FC = () => {
       <div className={`${css.options} ${css.optionsWithFooter}`}>
         {logoImage}
         <div className={css.center}>
-          <h1>Thanks for installing {extensionName}!</h1>
+          <h1>Thanks for installing {name}!</h1>
         </div>
         <div className={css.center} style={{ padding: '0 20px' }}>
           Open any release on{' '}

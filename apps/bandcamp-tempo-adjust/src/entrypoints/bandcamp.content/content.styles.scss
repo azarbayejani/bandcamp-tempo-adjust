@@ -120,7 +120,23 @@
         border-top: none;
       }
 
+      // The box is injected into Bandcamp's page, so the header names the
+      // extension: users otherwise assume Bandcamp built it.
+      &--header {
+        flex-direction: column;
+        gap: 3px;
+        padding: 14px 16px;
+      }
+
       &--controls {
+        justify-content: space-between;
+        align-items: center;
+        // Narrow screens stack everything so the dropdowns aren't squeezed.
+        flex-wrap: wrap;
+      }
+
+      &--totals {
+        justify-content: space-between;
         align-items: center;
       }
 
@@ -132,6 +148,103 @@
       &--warning {
         background-color: #fcf6e5;
         color: #7a5c0f;
+      }
+    }
+
+    &_eyebrow {
+      font-size: 11px;
+      font-weight: bold;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #6b6b6b;
+    }
+
+    &_title {
+      margin: 0;
+      font-size: 18px;
+      font-weight: bold;
+      line-height: 1.2;
+    }
+
+    &_filters {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    &_field {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    &_note {
+      width: 300px;
+      text-align: right;
+    }
+
+    &_totals {
+      width: 320px;
+    }
+
+    // iOS Safari zooms the page when a focused input's text is smaller than
+    // 16px. react-select's input inherits Bandcamp's smaller font, so keep
+    // the whole field at 16px on touch devices.
+    @media (pointer: coarse) {
+      &_field {
+        font-size: 16px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      &_filters,
+      &_field {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+      }
+
+      &_filters,
+      &_note {
+        width: 100%;
+      }
+
+      &_note {
+        text-align: left;
+      }
+
+      &_row--totals {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 16px;
+        padding-bottom: 0;
+      }
+
+      &_totals {
+        width: 100%;
+      }
+
+      // Export CSV becomes its own full-width band under the totals, with
+      // a divider above it like Bandcamp's "Resend receipt".
+      &_export {
+        margin: 0 -16px;
+        padding: 16px;
+        border-top: 1px solid #e8e8e8;
+        text-align: center;
+      }
+
+      // Match Bandcamp's own mobile purchase actions ("Resend receipt"): a
+      // bold underlined link centred in its row.
+      &_row--action {
+        justify-content: center;
+      }
+
+      &_row--action,
+      &_row--totals {
+        .BandcampTempoAdjust__button--purchases {
+          font-weight: bold;
+          text-decoration: underline;
+        }
       }
     }
   }

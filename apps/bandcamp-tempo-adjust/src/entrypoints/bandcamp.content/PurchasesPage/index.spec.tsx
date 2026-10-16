@@ -1,7 +1,7 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import type { Purchase } from './services/GetItemsAPI';
 import PurchasesPage from '.';
@@ -68,6 +68,30 @@ beforeEach(() => {
 });
 
 describe('PurchasesPage', () => {
+  it('names the extension in the header', async () => {
+    renderPage();
+
+    expect(
+      await screen.findByText('Bandcamp Tempo Adjust')
+    ).toBeInTheDocument();
+  });
+
+  describe('on Safari', () => {
+    beforeEach(() => {
+      vi.stubEnv('SAFARI', 'true');
+    });
+
+    afterEach(() => {
+      vi.unstubAllEnvs();
+    });
+
+    it('uses the Safari app name in the header', async () => {
+      renderPage();
+
+      expect(await screen.findByText('Tempo Adjust')).toBeInTheDocument();
+    });
+  });
+
   it('loads purchases and shows converted totals', async () => {
     renderPage();
     await loadPurchases();
