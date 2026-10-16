@@ -1,6 +1,7 @@
 packages:
   - "apps/**"
   - "packages/**"
+  - "safari/store-screenshots"
   - "!**/test/**"
 
 catalog:

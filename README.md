@@ -80,3 +80,25 @@ pnpm zip
 ```
 
 Now, the content of the `.output` folder in `apps/bandcamp-tempo-adjust` and `apps/discogs-tempo-adjust` will be the extension ready to be submitted to the Chrome and Firefox web stores.
+
+## License
+
+Everything in this repository is under the MIT License (see `LICENSE`),
+including the Safari app in `safari/` and the screenshot templates in
+`safari/store-screenshots/`.
+
+The license covers code, not branding. The Tempo Adjust name (including
+Bandcamp Tempo Adjust and Discogs Tempo Adjust), the app and extension icons
+(`safari/Tempo Adjust/AppIcon.icon`, the toolbar icons rendered from it, and
+the icons in each app's `public/` folder), and the App Store screenshots in
+`safari/store-screenshots/` identify this software and its author. Don't use
+them to publish, list or promote other software, including your own build of
+this code. If you ship a build, give it your own name and icon.
+
+Some images in this repository belong to others and are included under
+their own terms. The screenshot at the top of this README, the captures in
+`safari/store-screenshots/`, and the recorded pages in each app's `e2e/har/`
+folder show pages from bandcamp.com and discogs.com, and artwork belonging
+to the artists and labels shown. The Barlow typeface in
+`safari/store-screenshots/public/fonts` is distributed under the SIL Open
+Font License 1.1; see `OFL.txt` there.

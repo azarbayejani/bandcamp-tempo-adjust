@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "name": "Tempo Adjust",
+  "publicDir": "public",
+  "command": "pnpm exec open-assets render",
+  "tags": [
+    {
+      "id": "screenshots",
+      "label": "Screenshots"
+    },
+    {
+      "id": "ios",
+      "label": "Ios"
+    }
+  ],
+  "collections": [
+    {
+      "id": "screenshots",
+      "label": "App Store screenshots",
+      "tags": [
+        "screenshots",
+        "ios"
+      ],
+      "sourceSize": {
+        "width": 440,
+        "height": 956
+      },
+      "borderRadius": 4,
+      "templates": [
+        {
+          "src": "templates/01-hero.html",
+          "name": "01-hero",
+          "label": "A pitch fader for Bandcamp"
+        },
+        {
+          "src": "templates/02-bpm.html",
+          "name": "02-bpm",
+          "label": "Know the BPM"
+        },
+        {
+          "src": "templates/03-range.html",
+          "name": "03-range",
+          "label": "Tempo ranges"
+        },
+        {
+          "src": "templates/04-master-tempo.html",
+          "name": "04-master-tempo",
+          "label": "Master tempo"
+        },
+        {
+          "src": "templates/05-tap.html",
+          "name": "05-tap",
+          "label": "Tap BPM"
+        },
+        {
+          "src": "templates/06-discogs.html",
+          "name": "06-discogs",
+          "label": "Discogs too"
+        },
+        {
+          "src": "templates/07-cta.html",
+          "name": "07-cta",
+          "label": "Get it"
+        }
+      ],
+      "export": [
+        {
+          "name": "iphone-6.9",
+          "label": "iPhone 6.9\"",
+          "size": {
+            "width": 1320,
+            "height": 2868
+          }
+        },
+        {
+          "name": "iphone-6.3",
+          "label": "iPhone 6.3\"",
+          "size": {
+            "width": 1206,
+            "height": 2622
+          }
+        }
+      ],
+      "customExport": {
+        "defaultWidth": 1320,
+        "defaultHeight": 2868
+      }
+    }
+  ]
+}

@@ -15,6 +15,7 @@
 		AB6899AA2DDD7BCB00C9A704 /* Tempo_AdjustTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6899A92DDD7BCB00C9A704 /* Tempo_AdjustTests.swift */; };
 		AB6899B42DDD7BCB00C9A704 /* Tempo_AdjustUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6899B32DDD7BCB00C9A704 /* Tempo_AdjustUITests.swift */; };
 		AB6899B62DDD7BCB00C9A704 /* Tempo_AdjustUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6899B52DDD7BCB00C9A704 /* Tempo_AdjustUITestsLaunchTests.swift */; };
+		AB7A0002SCREENSHOT000002 /* ScreenshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB7A0001SCREENSHOT000001 /* ScreenshotTests.swift */; };
 		AB6899BC2DDD7BCB00C9A704 /* Tempo Adjust Extension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = AB6899BB2DDD7BCB00C9A704 /* Tempo Adjust Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		AB6899C12DDD7BCB00C9A704 /* SafariWebExtensionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6899C02DDD7BCB00C9A704 /* SafariWebExtensionHandler.swift */; };
 		AB839F222F5FE1F900E8F48E /* TipJarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB839F212F5FE1F900E8F48E /* TipJarView.swift */; };
@@ -73,6 +74,7 @@
 		AB6899AF2DDD7BCB00C9A704 /* Tempo AdjustUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Tempo AdjustUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB6899B32DDD7BCB00C9A704 /* Tempo_AdjustUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tempo_AdjustUITests.swift; sourceTree = "<group>"; };
 		AB6899B52DDD7BCB00C9A704 /* Tempo_AdjustUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tempo_AdjustUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		AB7A0001SCREENSHOT000001 /* ScreenshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenshotTests.swift; sourceTree = "<group>"; };
 		AB6899BB2DDD7BCB00C9A704 /* Tempo Adjust Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Tempo Adjust Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB6899C02DDD7BCB00C9A704 /* SafariWebExtensionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariWebExtensionHandler.swift; sourceTree = "<group>"; };
 		AB6899C22DDD7BCB00C9A704 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -175,6 +177,7 @@
 			children = (
 				AB6899B32DDD7BCB00C9A704 /* Tempo_AdjustUITests.swift */,
 				AB6899B52DDD7BCB00C9A704 /* Tempo_AdjustUITestsLaunchTests.swift */,
+				AB7A0001SCREENSHOT000001 /* ScreenshotTests.swift */,
 			);
 			path = "Tempo AdjustUITests";
 			sourceTree = "<group>";
@@ -415,6 +418,7 @@
 			files = (
 				AB6899B62DDD7BCB00C9A704 /* Tempo_AdjustUITestsLaunchTests.swift in Sources */,
 				AB6899B42DDD7BCB00C9A704 /* Tempo_AdjustUITests.swift in Sources */,
+				AB7A0002SCREENSHOT000002 /* ScreenshotTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -758,7 +762,10 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.miseryconfusion.tempoadjust.UITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = "Tempo Adjust";
 			};
 			name = Debug;
@@ -772,7 +779,10 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.miseryconfusion.tempoadjust.UITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = "Tempo Adjust";
 			};
 			name = Release;

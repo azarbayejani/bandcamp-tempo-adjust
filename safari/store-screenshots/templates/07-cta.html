@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Get it</title>
+  <link rel="stylesheet" href="shared.css" />
+  <style>
+    .get {
+      margin-top: 30px;
+      display: flex; align-items: center; gap: 14px;
+    }
+    .icon { width: 64px; height: 64px; border-radius: 15px; box-shadow: 0 6px 16px rgba(0,0,0,0.25); }
+    .name { font: 800 26px/1 'Barlow Condensed'; }
+    .where { margin-top: 4px; font: 500 14px/1.2 'Barlow'; color: var(--mute-on-light); }
+    .phone { filter: drop-shadow(0 -18px 25px rgba(0,0,0,0.25)); }
+  </style>
+</head>
+<body class="light">
+    <div class="scale" style="--pos:0" aria-hidden="true"><div class="ticks"></div><div class="zero"></div><span class="label" style="top:calc(438px + (-16) * var(--unit))">−16</span><span class="label" style="top:calc(438px + (-8) * var(--unit))">−8</span><span class="label" style="top:calc(438px + (0) * var(--unit))">0</span><span class="label" style="top:calc(438px + (8) * var(--unit))">+8</span><span class="label" style="top:calc(438px + (16) * var(--unit))">+16</span><div class="marker"></div></div>
+    <div class="copy">
+      <h1><mark>Free</mark> and open source.</h1>
+      <p>Turn it on once in Settings and every Bandcamp page gets the fader. Tips are welcome, never required.</p>
+      <div class="get">
+        <img class="icon" src="../public/screenshots/icon.png" alt="" />
+        <div>
+          <div class="name">Tempo Adjust</div>
+          <div class="where">Safari on iPhone, iPad and Mac</div>
+        </div>
+      </div>
+    </div>
+    <div class="phone" style="top:385px">
+      <div class="screen">
+        <div class="page"><img src="../public/screenshots/ios-setup.png" alt="" /></div>
+      </div>
+    </div>
+</body>
+</html>
