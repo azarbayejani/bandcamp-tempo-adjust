@@ -22,6 +22,7 @@
     "screenshots:capture:iphone": "pnpm --filter store-screenshots capture:iphone",
     "screenshots:capture:mac": "pnpm --filter store-screenshots capture:mac",
     "build:safari-app": "xcodebuild -project 'safari/Tempo Adjust.xcodeproj' -scheme 'Tempo Adjust' -destination 'generic/platform=macOS' build",
+    "reset:safari-app": "safari/scripts/reset-install.sh",
     "build:chrome": "pnpm --filter './apps/**' build",
     "build:firefox": "pnpm --filter './apps/**' build -b firefox --mv3",
     "test": "vitest",

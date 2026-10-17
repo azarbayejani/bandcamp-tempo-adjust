@@ -86,6 +86,23 @@ pnpm dev:discogs
 
 wxt's dev mode doesn't work with Firefox, so you need to manually rebuild and install the extension for Firefox using `pnpm build`
 
+### Safari
+
+Open `safari/Tempo Adjust.xcodeproj` in Xcode and run the `Tempo Adjust`
+scheme; its build phase runs `pnpm build:safari` and copies the extension into
+the app. Safari, not Xcode, remembers that the extension was installed (whether
+it's enabled, which sites it's allowed on, its storage, and the version that
+drives `runtime.onInstalled`), and the app keeps its own state in its
+containers, so a clean build doesn't give you a first launch. To get one:
+
+```
+pnpm reset:safari-app            # this Mac; quits Safari and the app first
+pnpm reset:safari-app ios        # the booted simulator (or pass a UDID)
+```
+
+Pass `-n` first to see what it would remove. On the Mac it needs a terminal
+with Full Disk Access, because Safari's container is protected.
+
 ## Building for release
 
 Run the command
