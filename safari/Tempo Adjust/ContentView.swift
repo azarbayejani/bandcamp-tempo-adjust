@@ -379,6 +379,10 @@ struct ContentView: View {
             }
             .padding(.horizontal, 30)
             .padding(.vertical, 20)
+            // Cap the column so the steps don't stretch across an iPad or an
+            // unfolded iPhone; the outer frame keeps it centered. Every phone
+            // is narrower than the cap, so phones lay out as before.
+            .frame(maxWidth: 480)
             .frame(maxWidth: .infinity)
         }
     }
