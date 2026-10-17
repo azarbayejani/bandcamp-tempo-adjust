@@ -3,24 +3,24 @@
 A workspace package (`safari/store-screenshots/`) holding the screenshot
 templates, the self-hosted fonts, the Safari captures they show and the
 [open-assets](https://github.com/parra-Inc/open-assets) config that renders
-them. There is an `iphone` collection and a `mac` collection in
+them. There are `iphone`, `ipad` and `mac` collections in
 `assets.json`; each has a template folder under `templates/`, captures under
 `public/screenshots/` and renders under `exports/`, all by the same name.
 Run the scripts here or through the root wrappers:
 
 ```sh
 pnpm screenshots:dev      # live preview at http://localhost:3200
-pnpm screenshots:render   # writes exports/{iphone,mac}/<size>/<template>.png
+pnpm screenshots:render   # writes exports/<collection>/<size>/<template>.png
 ```
 
 ## The composition
 
 Every screenshot is a headline with one word on orange tape, a pitch-scale
 strip down the left edge with its marker at the capture's fader position,
-and the capture itself in a device: a phone, or on the Mac a Safari window
-rising from the bottom edge. `templates/shared.css` holds the palette, type,
-the scale and the phone mockup; `templates/mac/mac.css` resizes the canvas
-and copy for the landscape. Fonts are self-hosted in `public/fonts` so
+and the capture itself in a device: a phone, an iPad, or on the Mac a Safari
+window rising from the bottom edge. `templates/shared.css` holds the
+palette, type, the scale and the phone mockup; `templates/ipad/ipad.css`
+and `templates/mac/mac.css` resize the canvas and copy for their shapes. Fonts are self-hosted in `public/fonts` so
 renders never depend on the network. Each template's comment says what its
 capture shows and how it was set up.
 
@@ -36,6 +36,16 @@ capture sits under it pixel for pixel: the Dynamic Island comes from the
 bezel and the status bar from the capture. To swap colours or models, copy
 another portrait PNG over `bezel.png`; every current iPhone bezel shares the
 same geometry.
+
+The iPad templates are landscape, authored at 1376×1032 (the 13-inch iPad
+Pro in points) and rendered at 2752×2064, the one iPad size App Store
+Connect requires. They are the Mac composition with an iPad in place of
+the window: the captures are the desktop site at Safari's 150% page zoom,
+like the Mac ones, so the panel reads at listing size. The purchases slide
+stands its portrait capture upright on the same canvas. The frames are
+Apple's iPad Pro (M5) 13" Space Black bezels (`bezel-landscape.png` and
+`bezel-portrait.png` beside the captures), whose windows are the captures'
+native size, so they sit under the frame pixel for pixel like the iPhone.
 
 The Mac templates are authored at 1440×900 and rendered at 2880×1800, the
 size App Store Connect lists for Mac (it scales that down for the smaller
@@ -93,6 +103,19 @@ screen above that order. The app's own screen, `ios-setup.png`, shows
 Settings before running to get the setup steps instead. `icon.png` is
 `safari/Tempo Adjust/Resources/Icon.png`.
 
+### iPad
+
+The iPad captures are simulator screenshots of Safari on the iPad Pro
+13-inch (M5) simulator, taken by hand (Cmd-S in Simulator) after the same
+`simctl status_bar` override `capture-iphone.sh` uses, and saved under
+their template names in `public/screenshots/ipad`. The UI test does not
+run here, since it drives the mobile Bandcamp page and the iPad gets the
+desktop one. Each template's comment says what its capture shows and how
+the page was set up. `purchase-export.png` is cropped just above the first
+order, whose paid-by line carries the account's email and PayPal ID; files
+named `Screenshot *.png` under `public/screenshots` are gitignored so an
+uncropped original kept beside it cannot be committed.
+
 ### Mac
 
 Each Mac capture is the window alone with its macOS shadow on a transparent
@@ -125,7 +148,7 @@ run the script once per capture.
 ## Licensing
 
 The templates are MIT like the rest of the repository; the screenshots and
-icon are branding, the fonts are OFL, and the bezel is Apple's, used under
+icon are branding, the fonts are OFL, and the bezels are Apple's, used under
 its
 [marketing guidelines](https://developer.apple.com/app-store/marketing/guidelines/#section-products).
 See the License section of the root `README.md`.

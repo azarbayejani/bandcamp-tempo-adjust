@@ -1,0 +1,98 @@
+/* iPad App Store screenshots: 1376×1032 source (the 13-inch iPad Pro in
+   points on its side, rendered at 2752×2064). The Mac composition:
+   headline top-left, an iPad rising from the bottom edge in place of the
+   Safari window. Safari on iPad asks for the desktop site, and the
+   Bandcamp captures use its 150% page zoom like the Mac ones, so the
+   visible strip of screen is the player, the tempo panel and the art. The
+   purchases slide is portrait and lives in templates/ipad-portrait. */
+
+body {
+  width: 1376px;
+  height: 1032px;
+}
+
+/* The pitch scale runs the full height; zero sits at mid-canvas, 486px
+   down the strip (label offsets in the templates are relative to it). */
+.scale {
+  top: 30px;
+  height: 972px;
+  --unit: calc(972px / 32);
+}
+.scale .marker { top: calc(486px + var(--pos) * var(--unit)); }
+.scale .zero { top: 486px; }
+
+/* ---- Copy block, the Mac set's sizes on a 1376-wide canvas. ---- */
+.copy {
+  top: 64px;
+  right: auto;
+  width: 760px;
+}
+.copy h1 { font-size: 84px; }
+.copy p {
+  margin-top: 22px;
+  max-width: 560px;
+  font-size: 26px;
+}
+
+/* ---- iPad mockup. The frame is Apple's iPad Pro (M5) 13" product bezel
+   in Space Black (public/screenshots/ipad/bezel-landscape.png, from Apple
+   Design Resources): a 3000×2300 PNG whose screen is a transparent
+   2752×2064 window at (124, 118), the native size of the simulator
+   captures, so the capture sits under it pixel for pixel like the iPhone
+   one in shared.css. --screen-w is the screen's width in canvas px as a
+   plain number (1211 here, 0.44 of native), so the scale divides out
+   unitless; the template sets top, and left for the upright one. ---- */
+.ipad {
+  --screen-w: 1211;
+  --bezel-scale: calc(var(--screen-w) / 2752);
+  --bezel-w: 3000px;
+  --bezel-h: 2300px;
+  --window-x: 124px;
+  --window-y: 118px;
+  --window-h: 2064px;
+  --bezel-image: url('../../public/screenshots/ipad/bezel-landscape.png');
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(var(--bezel-w) * var(--bezel-scale));
+  height: calc(var(--bezel-h) * var(--bezel-scale));
+  /* drop-shadow follows the bezel's alpha; box-shadow would draw a rectangle */
+  filter: drop-shadow(0 -24px 40px rgba(0, 0, 0, 0.5));
+}
+body.light .ipad { filter: drop-shadow(0 -24px 40px rgba(0, 0, 0, 0.3)); }
+.ipad::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  background: var(--bezel-image) 0 0 / 100% 100% no-repeat;
+}
+.ipad .screen {
+  position: absolute;
+  left: calc(var(--window-x) * var(--bezel-scale));
+  top: calc(var(--window-y) * var(--bezel-scale));
+  width: calc(var(--screen-w) * 1px);
+  height: calc(var(--window-h) * var(--bezel-scale));
+  /* a touch under the window's ~65px-at-native corner so the capture
+     always runs beneath its anti-aliased edge */
+  border-radius: calc(60px * var(--bezel-scale));
+  overflow: hidden;
+  background: var(--white);
+}
+.ipad .page { width: calc(var(--screen-w) * 1px); height: auto; }
+.ipad .page img { display: block; width: calc(var(--screen-w) * 1px); }
+
+/* ---- The same iPad upright (bezel-portrait.png, 2300×3000 with its
+   2064×2752 window at (118, 124)), for a slide whose page is a tall
+   card. The template sets --screen-w, left and top. ---- */
+.ipad.portrait {
+  --bezel-scale: calc(var(--screen-w) / 2064);
+  --bezel-w: 2300px;
+  --bezel-h: 3000px;
+  --window-x: 118px;
+  --window-y: 124px;
+  --window-h: 2752px;
+  --bezel-image: url('../../public/screenshots/ipad/bezel-portrait.png');
+  left: auto;
+  transform: none;
+}

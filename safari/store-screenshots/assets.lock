@@ -402,6 +402,62 @@
         "exportedAt": "2026-10-17T01:18:50.854Z",
         "exportChecksum": "sha256:b034a0e27e4f0355d4bf50e9fb16ab1a1f4814b07828ffb7782cc59e54f6b762"
       }
+    },
+    "ipad/01-hero": {
+      "exports/ipad/13/01-hero.png": {
+        "sourceChecksum": "sha256:2b1426065e6f4cef8353547dd742fcfec345946f51389f5c8bcc3794e4205b7b",
+        "outputPath": "exports/ipad/13/01-hero.png",
+        "exportedAt": "2026-10-17T03:52:40.223Z",
+        "exportChecksum": "sha256:94270b30833ca2228655ec508adb95df58f4648b81f2da767a6f50c929087efa"
+      }
+    },
+    "ipad/02-master-tempo": {
+      "exports/ipad/13/02-master-tempo.png": {
+        "sourceChecksum": "sha256:9b748fc0fead7ebc1620354e9e3b60cb502842cbe33be72f5a638dc4b23bc1a1",
+        "outputPath": "exports/ipad/13/02-master-tempo.png",
+        "exportedAt": "2026-10-17T03:52:40.223Z",
+        "exportChecksum": "sha256:94270b30833ca2228655ec508adb95df58f4648b81f2da767a6f50c929087efa"
+      }
+    },
+    "ipad/03-discogs": {
+      "exports/ipad/13/03-discogs.png": {
+        "sourceChecksum": "sha256:92d2b3fa944ff42230695942a0fa092b1079d07fe7cb84b5dac80e069ef6f67a",
+        "outputPath": "exports/ipad/13/03-discogs.png",
+        "exportedAt": "2026-10-17T03:52:40.223Z",
+        "exportChecksum": "sha256:94270b30833ca2228655ec508adb95df58f4648b81f2da767a6f50c929087efa"
+      }
+    },
+    "ipad/04-purchases": {
+      "exports/ipad/13/04-purchases.png": {
+        "sourceChecksum": "sha256:c3ff43724ec4df48e111b53129f32f502623ea82a5135f5ffa744b2c1070b80a",
+        "outputPath": "exports/ipad/13/04-purchases.png",
+        "exportedAt": "2026-10-17T03:52:40.223Z",
+        "exportChecksum": "sha256:94270b30833ca2228655ec508adb95df58f4648b81f2da767a6f50c929087efa"
+      }
+    },
+    "ipad-landscape/01-hero": {
+      "exports/ipad-landscape/13/01-hero.png": {
+        "sourceChecksum": "sha256:c340c767c5f6c28f071e9761259bebdd9a2bc3ee73761b5b933f8f5645d80bfd",
+        "outputPath": "exports/ipad-landscape/13/01-hero.png",
+        "exportedAt": "2026-10-17T03:06:57.962Z",
+        "exportChecksum": "sha256:94270b30833ca2228655ec508adb95df58f4648b81f2da767a6f50c929087efa"
+      }
+    },
+    "ipad-landscape/02-master-tempo": {
+      "exports/ipad-landscape/13/02-master-tempo.png": {
+        "sourceChecksum": "sha256:eef8ad4166bd70252ced566b7886e28d35eb27895023511e7aab34291bca5791",
+        "outputPath": "exports/ipad-landscape/13/02-master-tempo.png",
+        "exportedAt": "2026-10-17T03:06:57.963Z",
+        "exportChecksum": "sha256:94270b30833ca2228655ec508adb95df58f4648b81f2da767a6f50c929087efa"
+      }
+    },
+    "ipad-portrait/04-purchases": {
+      "exports/ipad-portrait/13.png": {
+        "sourceChecksum": "sha256:1d3e65da3c11d81e7c5da033ea9e7ba2ccf2177c7070f6ff990b7b9801600ff1",
+        "outputPath": "exports/ipad-portrait/13.png",
+        "exportedAt": "2026-10-17T03:12:54.186Z",
+        "exportChecksum": "sha256:7e3a8bb0a854d3b432525433b706bd17824b568a2cbddf23a8c98227784e16b6"
+      }
     }
   }
 }

@@ -15,6 +15,10 @@
     {
       "id": "mac",
       "label": "Mac"
+    },
+    {
+      "id": "ipad",
+      "label": "iPad"
     }
   ],
   "collections": [
@@ -93,6 +97,55 @@
       "customExport": {
         "defaultWidth": 1320,
         "defaultHeight": 2868
+      }
+    },
+    {
+      "id": "ipad",
+      "label": "iPad App Store screenshots",
+      "tags": [
+        "screenshots",
+        "ipad"
+      ],
+      "sourceSize": {
+        "width": 1376,
+        "height": 1032
+      },
+      "borderRadius": 4,
+      "templates": [
+        {
+          "src": "templates/ipad/01-hero.html",
+          "name": "01-hero",
+          "label": "Hear tracks at your tempo"
+        },
+        {
+          "src": "templates/ipad/02-master-tempo.html",
+          "name": "02-master-tempo",
+          "label": "Move the tempo. Keep the key."
+        },
+        {
+          "src": "templates/ipad/03-discogs.html",
+          "name": "03-discogs",
+          "label": "Discogs too"
+        },
+        {
+          "src": "templates/ipad/04-purchases.html",
+          "name": "04-purchases",
+          "label": "See what you've spent"
+        }
+      ],
+      "export": [
+        {
+          "name": "13",
+          "label": "iPad 13\" landscape",
+          "size": {
+            "width": 2752,
+            "height": 2064
+          }
+        }
+      ],
+      "customExport": {
+        "defaultWidth": 2752,
+        "defaultHeight": 2064
       }
     },
     {

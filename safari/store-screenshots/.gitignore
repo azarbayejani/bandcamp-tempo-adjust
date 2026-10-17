@@ -1,2 +1,7 @@
 # open-assets render output
 exports/
+
+# Raw simulator screenshots kept beside the captures for recropping. The
+# purchases one still carries the account's email and PayPal ID, so only
+# the cropped copies are tracked.
+public/screenshots/*/Screenshot *.png
