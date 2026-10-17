@@ -5,7 +5,7 @@
 // the single source for every store. Don't edit by hand: when package.json
 // changes, the next Xcode build rewrites this line and fails once so you
 // rebuild and commit it.
-MARKETING_VERSION = 0.9.6
+MARKETING_VERSION = 2026.10.0
 
 // Build number. Bump it by hand for every upload to App Store Connect; it
 // must increase even when MARKETING_VERSION stays the same.

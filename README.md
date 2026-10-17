@@ -81,6 +81,30 @@ pnpm zip
 
 Now, the content of the `.output` folder in `apps/bandcamp-tempo-adjust` and `apps/discogs-tempo-adjust` will be the extension ready to be submitted to the Chrome and Firefox web stores.
 
+### Versioning
+
+Bandcamp Tempo Adjust uses calendar versions in the form `YYYY.M.N`:
+
+- `YYYY` is the year of the release
+- `M` is the month of the release, without a leading zero
+- `N` counts releases within that month, starting at `0`
+
+So the first release in October 2026 is `2026.10.0`, a second one that month is
+`2026.10.1`, and the first release in November is `2026.11.0`. The version says
+when a build shipped rather than how big the change was; there is no notion of
+a major or breaking release.
+
+The version lives once, in `"version"` in `apps/bandcamp-tempo-adjust/package.json`.
+The Chrome and Firefox manifests take it from there at build time, and the
+Safari app's Xcode build copies it into `safari/Config/Version.xcconfig`,
+failing once when the two differ so you can rebuild and commit the updated
+file. Store versions can only go up, so never lower it once a build has been
+submitted anywhere.
+
+Discogs Tempo Adjust still uses its old `0.x.y` numbering, in
+`apps/discogs-tempo-adjust/package.json`. It will move to the same calendar
+scheme with a future release.
+
 ## License
 
 Everything in this repository is under the MIT License (see `LICENSE`),

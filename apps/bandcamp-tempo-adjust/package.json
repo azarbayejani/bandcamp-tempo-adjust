@@ -1,6 +1,6 @@
 {
   "name": "bandcamp-tempo-adjust",
-  "version": "0.9.6",
+  "version": "2026.10.0",
   "description": "A browser extension to detect and adjust track tempo on Bandcamp",
   "license": "MIT",
   "repository": {
