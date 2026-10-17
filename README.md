@@ -37,6 +37,21 @@ https://github.com/user-attachments/assets/7412e241-3d17-474c-9137-3f8c51e4d5c3
 🔗 [Firefox Add-On](https://addons.mozilla.org/en-US/firefox/addon/discogs-tempo-adjust/)
 
 
+## Support
+
+Found a bug or have a feature request? Open an issue at
+https://github.com/azarbayejani/bandcamp-tempo-adjust/issues, or email
+dev@miseryconfusion.com if you'd rather not use GitHub.
+
+If Tempo Adjust doesn't appear on Bandcamp or Discogs in Safari, check that the
+extension is enabled and allowed on those sites:
+
+- **iPhone and iPad:** open Settings, go to Apps > Safari > Extensions (just
+  Safari > Extensions on iOS 17), tap Tempo Adjust and turn it on. Then open
+  Extension Settings and allow it on bandcamp.com and discogs.com.
+- **Mac:** open Safari > Settings > Extensions, check Tempo Adjust, and choose
+  Always Allow when asked about bandcamp.com and discogs.com.
+
 ## Donation
 
 If this project has helped you, please consider donating:
