@@ -7,7 +7,8 @@
   "scripts": {
     "dev": "open-assets dev",
     "render": "open-assets render",
-    "capture": "./capture.sh"
+    "capture:iphone": "./capture-iphone.sh",
+    "capture:mac": "./capture-mac.sh"
   },
   "devDependencies": {
     "@open-assets/open-assets": "^0.5.1"

@@ -2,7 +2,7 @@
 # Recaptures the screenshots' source images from the iOS Simulator, then
 # renders the App Store screenshots from them.
 #
-#   ./capture.sh [simulator udid]     # defaults to the booted iPhone
+#   ./capture-iphone.sh [simulator udid]     # defaults to the booted iPhone
 #
 # Needs the one-time simulator setup from README.md (extension enabled in
 # Settings and allowed on Bandcamp and Discogs).
@@ -57,14 +57,14 @@ grep -E "Test Case .* passed" "$log"
 # Which capture each template source comes from.
 for pair in hero:bc-hero bpm:bc-detect range:bc-wide-down \
             master-tempo:bc-master-tempo tap:bc-tap discogs:dg-nudged; do
-  cp -f "$captures/${pair##*:}.png" "$here/public/screenshots/${pair%%:*}.png"
+  cp -f "$captures/${pair##*:}.png" "$here/public/screenshots/iphone/${pair%%:*}.png"
 done
 
 # The app's own screen, straight from the simulator.
 echo "Capturing the app"
 xcrun simctl launch "$udid" "$app" >/dev/null
 sleep 4
-xcrun simctl io "$udid" screenshot "$here/public/screenshots/ios-setup.png" >/dev/null 2>&1
+xcrun simctl io "$udid" screenshot "$here/public/screenshots/iphone/ios-setup.png" >/dev/null 2>&1
 
 echo "Rendering"
 (cd "$here" && pnpm exec open-assets render | tail -n 1)

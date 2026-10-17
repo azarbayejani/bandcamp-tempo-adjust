@@ -9,17 +9,21 @@
       "label": "Screenshots"
     },
     {
-      "id": "ios",
-      "label": "Ios"
+      "id": "iphone",
+      "label": "iPhone"
+    },
+    {
+      "id": "mac",
+      "label": "Mac"
     }
   ],
   "collections": [
     {
-      "id": "screenshots",
-      "label": "App Store screenshots",
+      "id": "iphone",
+      "label": "iPhone App Store screenshots",
       "tags": [
         "screenshots",
-        "ios"
+        "iphone"
       ],
       "sourceSize": {
         "width": 440,
@@ -28,49 +32,49 @@
       "borderRadius": 4,
       "templates": [
         {
-          "src": "templates/01-hero.html",
+          "src": "templates/iphone/01-hero.html",
           "name": "01-hero",
-          "label": "A pitch fader for Bandcamp"
+          "label": "Hear tracks at your tempo"
         },
         {
-          "src": "templates/02-bpm.html",
+          "src": "templates/iphone/02-bpm.html",
           "name": "02-bpm",
           "label": "Know the BPM"
         },
         {
-          "src": "templates/03-range.html",
+          "src": "templates/iphone/03-range.html",
           "name": "03-range",
           "label": "Tempo ranges"
         },
         {
-          "src": "templates/04-master-tempo.html",
+          "src": "templates/iphone/04-master-tempo.html",
           "name": "04-master-tempo",
           "label": "Master tempo"
         },
         {
-          "src": "templates/05-tap.html",
+          "src": "templates/iphone/05-tap.html",
           "name": "05-tap",
           "label": "Tap BPM"
         },
         {
-          "src": "templates/06-discogs.html",
+          "src": "templates/iphone/06-discogs.html",
           "name": "06-discogs",
           "label": "Discogs too"
         },
         {
-          "src": "templates/07-purchases.html",
+          "src": "templates/iphone/07-purchases.html",
           "name": "07-purchases",
           "label": "Export your purchases"
         },
         {
-          "src": "templates/08-cta.html",
+          "src": "templates/iphone/08-cta.html",
           "name": "08-cta",
           "label": "Get it"
         }
       ],
       "export": [
         {
-          "name": "iphone-6.9",
+          "name": "6.9",
           "label": "iPhone 6.9\"",
           "size": {
             "width": 1320,
@@ -78,7 +82,7 @@
           }
         },
         {
-          "name": "iphone-6.3",
+          "name": "6.3",
           "label": "iPhone 6.3\"",
           "size": {
             "width": 1206,
@@ -89,6 +93,55 @@
       "customExport": {
         "defaultWidth": 1320,
         "defaultHeight": 2868
+      }
+    },
+    {
+      "id": "mac",
+      "label": "Mac App Store screenshots",
+      "tags": [
+        "screenshots",
+        "mac"
+      ],
+      "sourceSize": {
+        "width": 1440,
+        "height": 900
+      },
+      "borderRadius": 4,
+      "templates": [
+        {
+          "src": "templates/mac/01-hero.html",
+          "name": "01-hero",
+          "label": "Hear tracks at your tempo"
+        },
+        {
+          "src": "templates/mac/02-discogs.html",
+          "name": "02-discogs",
+          "label": "Discogs too"
+        },
+        {
+          "src": "templates/mac/03-purchases.html",
+          "name": "03-purchases",
+          "label": "See what you've spent"
+        },
+        {
+          "src": "templates/mac/04-master-tempo.html",
+          "name": "04-master-tempo",
+          "label": "Move the tempo. Keep the key."
+        }
+      ],
+      "export": [
+        {
+          "name": "2880x1800",
+          "label": "Mac 2880×1800",
+          "size": {
+            "width": 2880,
+            "height": 1800
+          }
+        }
+      ],
+      "customExport": {
+        "defaultWidth": 2880,
+        "defaultHeight": 1800
       }
     }
   ]

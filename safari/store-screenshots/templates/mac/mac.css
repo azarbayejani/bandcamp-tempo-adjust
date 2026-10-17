@@ -1,0 +1,40 @@
+/* Mac App Store screenshots: 1440×900 source (16:10, rendered at 2880×1800).
+   The phone composition turned landscape: headline top-left, a Safari
+   window capture rising from the bottom edge in place of the phone. */
+
+body {
+  width: 1440px;
+  height: 900px;
+}
+
+/* The pitch scale runs the full height here too; zero sits at mid-canvas. */
+.scale {
+  top: 30px;
+  height: 840px;
+  --unit: calc(840px / 32);
+}
+.scale .marker { top: calc(420px + var(--pos) * var(--unit)); }
+.scale .zero { top: 420px; }
+
+/* The window capture as taken by hand: a Safari window with its own
+   macOS shadow on a transparent margin, so it floats on the canvas.
+   Width in canvas px; the capture is 2x so 0.5 is 1:1 with the screen. */
+.window {
+  position: absolute;
+  display: block;
+}
+
+/* ---- Copy block, sized for a 1440-wide canvas. The listing shows Mac
+   screenshots small, so the headline is big: two lines in the top-left,
+   the window rising from under it. ---- */
+.copy {
+  top: 64px;
+  right: auto;
+  width: 720px;
+}
+.copy h1 { font-size: 84px; }
+.copy p {
+  margin-top: 22px;
+  max-width: 520px;
+  font-size: 26px;
+}

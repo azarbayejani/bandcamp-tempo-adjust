@@ -133,7 +133,7 @@ mark {
 }
 
 /* ---- Phone mockup. The frame is Apple's iPhone 18 Pro product bezel
-   (public/screenshots/bezel.png, from Apple Design Resources): a 1350×2760
+   (public/screenshots/iphone/bezel.png, from Apple Design Resources): a 1350×2760
    PNG whose screen is a transparent 1206×2622 window at (72, 69), the native
    size of the simulator captures. It is scaled so the screen is 300px wide
    and layered over the capture; the Dynamic Island is part of the bezel and
@@ -154,7 +154,7 @@ body.light .phone { filter: drop-shadow(0 24px 25px rgba(0, 0, 0, 0.3)); }
   position: absolute;
   inset: 0;
   z-index: 5;
-  background: url('../public/screenshots/bezel.png') 0 0 / 100% 100% no-repeat;
+  background: url('../public/screenshots/iphone/bezel.png') 0 0 / 100% 100% no-repeat;
 }
 .screen {
   position: absolute;
