@@ -9,4 +9,4 @@ MARKETING_VERSION = 2026.10.0
 
 // Build number. Bump it by hand for every upload to App Store Connect; it
 // must increase even when MARKETING_VERSION stays the same.
-CURRENT_PROJECT_VERSION = 1
+CURRENT_PROJECT_VERSION = 2
