@@ -197,20 +197,6 @@
         "exportChecksum": "sha256:313f9fdaa40c074c6619d2dbcbb226b3259700aa7cd25d5e1a67f21321351d4f"
       }
     },
-    "screenshots/08-cta": {
-      "exports/screenshots/iphone-6.9/08-cta.png": {
-        "sourceChecksum": "sha256:06166c5a725b5380b747446101e4cc1effdb16207db3d1dbac43bccc69d51c4e",
-        "outputPath": "exports/screenshots/iphone-6.9/08-cta.png",
-        "exportedAt": "2026-10-16T07:04:41.093Z",
-        "exportChecksum": "sha256:543e3b446c40612bfbf7698ff3af44f244c2cfd9ef377483c75bb98de4aa1d3c"
-      },
-      "exports/screenshots/iphone-6.3/08-cta.png": {
-        "sourceChecksum": "sha256:06166c5a725b5380b747446101e4cc1effdb16207db3d1dbac43bccc69d51c4e",
-        "outputPath": "exports/screenshots/iphone-6.3/08-cta.png",
-        "exportedAt": "2026-10-16T07:04:41.093Z",
-        "exportChecksum": "sha256:313f9fdaa40c074c6619d2dbcbb226b3259700aa7cd25d5e1a67f21321351d4f"
-      }
-    },
     "mac/01-hero": {
       "exports/mac/retina.png": {
         "sourceChecksum": "sha256:f3589904a3b6e851d105b37275e7ea31e77079f29408f63223a8177beadd376e",
@@ -353,20 +339,6 @@
       "exports/iphone/6.3/07-purchases.png": {
         "sourceChecksum": "sha256:224d3959ea5b6fa0475c0c9ad4553846508f78c00e0e26964b715e25a3c8b616",
         "outputPath": "exports/iphone/6.3/07-purchases.png",
-        "exportedAt": "2026-10-17T01:18:50.349Z",
-        "exportChecksum": "sha256:313f9fdaa40c074c6619d2dbcbb226b3259700aa7cd25d5e1a67f21321351d4f"
-      }
-    },
-    "iphone/08-cta": {
-      "exports/iphone/6.9/08-cta.png": {
-        "sourceChecksum": "sha256:9f6478bd901c6a9a71425a6bb28baa207058621cab1bd0cfc19edbf52d309ddf",
-        "outputPath": "exports/iphone/6.9/08-cta.png",
-        "exportedAt": "2026-10-17T01:18:50.349Z",
-        "exportChecksum": "sha256:543e3b446c40612bfbf7698ff3af44f244c2cfd9ef377483c75bb98de4aa1d3c"
-      },
-      "exports/iphone/6.3/08-cta.png": {
-        "sourceChecksum": "sha256:9f6478bd901c6a9a71425a6bb28baa207058621cab1bd0cfc19edbf52d309ddf",
-        "outputPath": "exports/iphone/6.3/08-cta.png",
         "exportedAt": "2026-10-17T01:18:50.349Z",
         "exportChecksum": "sha256:313f9fdaa40c074c6619d2dbcbb226b3259700aa7cd25d5e1a67f21321351d4f"
       }
