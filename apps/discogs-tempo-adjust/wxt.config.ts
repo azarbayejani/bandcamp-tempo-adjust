@@ -10,6 +10,9 @@ export default defineConfig({
         id: '{6fc0284b-f220-4709-acad-d8b95f55637f}',
         data_collection_permissions: { required: ['none'] },
       },
+      // Marks each AMO upload as Firefox for Android compatible; AMO floors
+      // the Android minimum at 120, above anything the extension needs.
+      gecko_android: {},
     },
   },
   modules: [

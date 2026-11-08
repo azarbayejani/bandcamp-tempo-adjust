@@ -26,6 +26,9 @@ export default defineConfig({
         id: '{e7517334-00b5-4560-a933-4c4cffbeaa05}',
         data_collection_permissions: { required: ['none'] },
       },
+      // Marks each AMO upload as Firefox for Android compatible; AMO floors
+      // the Android minimum at 120, above anything the extension needs.
+      gecko_android: {},
     },
     action:
       browser === 'safari' ? { icon_variants: safariActionIconVariants } : {},
