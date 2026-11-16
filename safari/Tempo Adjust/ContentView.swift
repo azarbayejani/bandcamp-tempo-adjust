@@ -7,11 +7,13 @@ import SwiftUI
 import Combine
 import SafariServices
 
-private let extensionBundleIdentifier = "com.miseryconfusion.tempoadjust.Extension"
+// Debug builds are a separate "dev" app with its own bundle ID and App Group
+// (see Config/Shared.xcconfig), so both come from the bundle, not constants.
+private let extensionBundleIdentifier = "\(Bundle.main.bundleIdentifier!).Extension"
 
 // Written by SafariWebExtensionHandler when the extension reports whether it
 // has every permission it needs; keep in sync with that file.
-private let appGroupIdentifier = "group.com.miseryconfusion.tempoadjust"
+private let appGroupIdentifier = Bundle.main.object(forInfoDictionaryKey: "TempoAdjustAppGroup") as! String
 private let hasAllPermissionsKey = "hasAllPermissions"
 
 struct ContentView: View {

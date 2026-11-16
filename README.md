@@ -103,6 +103,12 @@ pnpm reset:safari-app ios        # the booted simulator (or pass a UDID)
 Pass `-n` first to see what it would remove. On the Mac it needs a terminal
 with Full Disk Access, because Safari's container is protected.
 
+Debug builds are a separate app, "Tempo Adjust (Dev)", with its own bundle ID,
+App Group, URL scheme and a banded icon (`safari/Config/Shared.xcconfig`), so
+running from Xcode installs beside the App Store version instead of replacing
+it. The reset above targets that dev app; add `--store` to reset the store
+app instead.
+
 ## Building for release
 
 Run the command

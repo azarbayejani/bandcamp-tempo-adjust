@@ -1,0 +1,264 @@
+{
+  "fill-specializations": [
+    {
+      "value": {
+        "solid": "srgb:0.83922,0.84706,0.85882,1.00000"
+      }
+    },
+    {
+      "appearance": "dark",
+      "value": {
+        "solid": "srgb:0.05490,0.05882,0.06667,1.00000"
+      }
+    }
+  ],
+  "groups": [
+    {
+      "layers": [
+        {
+          "fill": {
+            "solid": "srgb:0.07843,0.08235,0.09412,1.00000"
+          },
+          "glass": false,
+          "image-name": "dev-text.svg",
+          "name": "dev-text",
+          "position": {
+            "scale": 1,
+            "translation-in-points": [
+              -9,
+              -800
+            ]
+          }
+        },
+        {
+          "fill": {
+            "solid": "srgb:1.00000,0.83922,0.03922,0.70000"
+          },
+          "glass": false,
+          "image-name": "dev-band.svg",
+          "name": "dev-band",
+          "position": {
+            "scale": 1,
+            "translation-in-points": [
+              -9,
+              -800
+            ]
+          }
+        },
+        {
+          "fill-specializations": [
+            {
+              "value": {
+                "solid": "srgb:1.00000,1.00000,1.00000,1.00000"
+              }
+            },
+            {
+              "appearance": "dark",
+              "value": {
+                "solid": "srgb:0.82353,0.83137,0.84706,1.00000"
+              }
+            }
+          ],
+          "glass": true,
+          "image-name": "hand.svg",
+          "name": "hand"
+        },
+        {
+          "fill-specializations": [
+            {
+              "value": {
+                "solid": "srgb:0.07843,0.08235,0.09412,1.00000"
+              }
+            },
+            {
+              "appearance": "dark",
+              "value": {
+                "solid": "srgb:0.05490,0.05882,0.06667,1.00000"
+              }
+            }
+          ],
+          "glass": false,
+          "hidden": false,
+          "image-name": "hand-outline.svg",
+          "name": "hand-outline",
+          "opacity": 1
+        }
+      ],
+      "name": "Hand",
+      "shadow": {
+        "kind": "neutral",
+        "opacity": 0.5
+      },
+      "specular": true,
+      "translucency": {
+        "enabled": true,
+        "value": 0.1
+      }
+    },
+    {
+      "layers": [
+        {
+          "fill-specializations": [
+            {
+              "value": {
+                "solid": "srgb:0.07843,0.08235,0.09412,1.00000"
+              }
+            },
+            {
+              "appearance": "dark",
+              "value": {
+                "solid": "srgb:0.22745,0.23922,0.26275,1.00000"
+              }
+            }
+          ],
+          "glass": false,
+          "image-name": "cap-groove.svg",
+          "name": "cap-groove"
+        },
+        {
+          "fill-specializations": [
+            {
+              "value": {
+                "solid": "srgb:1.00000,0.47843,0.10196,1.00000"
+              }
+            },
+            {
+              "appearance": "dark",
+              "value": {
+                "solid": "srgb:1.00000,0.47843,0.10196,1.00000"
+              }
+            }
+          ],
+          "glass": true,
+          "image-name": "cap.svg",
+          "name": "cap"
+        },
+        {
+          "fill-specializations": [
+            {
+              "value": {
+                "solid": "srgb:0.07843,0.08235,0.09412,1.00000"
+              }
+            },
+            {
+              "appearance": "dark",
+              "value": {
+                "solid": "srgb:0.22745,0.23922,0.26275,1.00000"
+              }
+            },
+            {
+              "appearance": "tinted",
+              "value": {
+                "solid": "srgb:0.54118,0.55686,0.58431,1.00000"
+              }
+            }
+          ],
+          "glass": false,
+          "image-name": "track.svg",
+          "name": "track"
+        }
+      ],
+      "name": "Fader",
+      "shadow": {
+        "kind": "neutral",
+        "opacity": 0.5
+      },
+      "specular": true,
+      "translucency": {
+        "enabled": true,
+        "value": 0.15
+      }
+    },
+    {
+      "layers": [
+        {
+          "fill-specializations": [
+            {
+              "value": {
+                "solid": "srgb:0.07843,0.08235,0.09412,1.00000"
+              }
+            },
+            {
+              "appearance": "dark",
+              "value": {
+                "solid": "srgb:0.22745,0.23922,0.26275,1.00000"
+              }
+            }
+          ],
+          "glass": false,
+          "image-name": "spindle.svg",
+          "name": "spindle"
+        },
+        {
+          "fill-specializations": [
+            {
+              "value": {
+                "solid": "srgb:1.00000,0.47843,0.10196,1.00000"
+              }
+            },
+            {
+              "appearance": "dark",
+              "value": {
+                "solid": "srgb:1.00000,0.47843,0.10196,1.00000"
+              }
+            }
+          ],
+          "glass": true,
+          "image-name": "label.svg",
+          "name": "label"
+        }
+      ],
+      "name": "Label",
+      "shadow": {
+        "kind": "neutral",
+        "opacity": 0.5
+      },
+      "specular": true,
+      "translucency": {
+        "enabled": true,
+        "value": 0.4
+      }
+    },
+    {
+      "layers": [
+        {
+          "fill-specializations": [
+            {
+              "value": {
+                "solid": "srgb:0.07843,0.08235,0.09412,1.00000"
+              }
+            },
+            {
+              "appearance": "dark",
+              "value": {
+                "solid": "srgb:0.22745,0.23922,0.26275,1.00000"
+              }
+            },
+            {
+              "appearance": "tinted",
+              "value": {
+                "solid": "srgb:0.54118,0.55686,0.58431,1.00000"
+              }
+            }
+          ],
+          "glass": false,
+          "image-name": "record.svg",
+          "name": "record"
+        }
+      ],
+      "name": "Record",
+      "shadow": {
+        "kind": "neutral",
+        "opacity": 0.5
+      },
+      "specular": true,
+      "translucency": {
+        "enabled": true,
+        "value": 0.15
+      }
+    }
+  ],
+  "supported-platforms": {
+    "squares": "shared"
+  }
+}

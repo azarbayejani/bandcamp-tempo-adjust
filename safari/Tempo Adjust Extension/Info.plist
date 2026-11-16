@@ -9,5 +9,9 @@
 		<key>NSExtensionPrincipalClass</key>
 		<string>$(PRODUCT_MODULE_NAME).SafariWebExtensionHandler</string>
 	</dict>
+	<key>TempoAdjustAppGroup</key>
+	<string>$(APP_GROUP_ID)</string>
+	<key>TempoAdjustURLScheme</key>
+	<string>$(APP_URL_SCHEME)</string>
 </dict>
 </plist>

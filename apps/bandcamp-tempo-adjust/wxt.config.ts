@@ -16,7 +16,13 @@ const safariActionIconVariants = [
 
 export default defineConfig({
   manifest: ({ browser }) => ({
-    name: browser === 'safari' ? 'Tempo Adjust' : 'Bandcamp Tempo Adjust',
+    // Xcode's Debug builds pass "Tempo Adjust (Dev)" (see
+    // safari/scripts/build-web-extension.sh) so Safari's extension list tells
+    // the dev build from the App Store one.
+    name:
+      browser === 'safari'
+        ? process.env.SAFARI_EXTENSION_NAME || 'Tempo Adjust'
+        : 'Bandcamp Tempo Adjust',
     description:
       browser === 'safari'
         ? 'A browser extension to detect and adjust track tempo on Bandcamp and Discogs'

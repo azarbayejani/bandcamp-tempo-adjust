@@ -8,6 +8,35 @@
 IPHONEOS_DEPLOYMENT_TARGET = 17.0
 MACOSX_DEPLOYMENT_TARGET = 14.0
 
+// App identity. Debug builds are a separate "dev" app (own bundle ID, App
+// Group, URL scheme, name and icon) so a build run from Xcode installs beside
+// the App Store version instead of replacing it. Release is the store app.
+// To build Debug with the store identity, pass APP_VARIANT=store to
+// xcodebuild (the screenshot capture does).
+APP_VARIANT = store
+APP_VARIANT[config=Debug] = dev
+
+APP_BUNDLE_ID_store = com.miseryconfusion.tempoadjust
+APP_BUNDLE_ID_dev = com.miseryconfusion.tempoadjust.dev
+APP_BUNDLE_ID = $(APP_BUNDLE_ID_$(APP_VARIANT))
+
+APP_DISPLAY_NAME_store = Tempo Adjust
+APP_DISPLAY_NAME_dev = Tempo Adjust (Dev)
+APP_DISPLAY_NAME = $(APP_DISPLAY_NAME_$(APP_VARIANT))
+
+APP_ICON_NAME_store = AppIcon
+APP_ICON_NAME_dev = AppIcon-Dev
+APP_ICON_NAME = $(APP_ICON_NAME_$(APP_VARIANT))
+
+// The extension's tip buttons open this scheme; it differs per variant so
+// they reach the app they were built with.
+APP_URL_SCHEME_store = tempoadjust
+APP_URL_SCHEME_dev = tempoadjust-dev
+APP_URL_SCHEME = $(APP_URL_SCHEME_$(APP_VARIANT))
+
+// Shared by the app and its extension (entitlements and Info.plist).
+APP_GROUP_ID = group.$(APP_BUNDLE_ID)
+
 // Each developer creates Config/Local.xcconfig (gitignored) with their own
 // DEVELOPMENT_TEAM, e.g.:
 //
