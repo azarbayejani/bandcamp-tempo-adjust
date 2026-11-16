@@ -10,8 +10,13 @@
 # Usage:
 #   reset-install.sh [-n] [--store] mac           # this Mac's Safari and app (default)
 #   reset-install.sh [-n] [--store] ios [udid]    # a simulator; defaults to the booted one
+#   reset-install.sh [-n] stale                   # only unregister stale copies (see below)
 #
 # -n prints what would be removed without removing it.
+#
+# The mac reset ends by unregistering stale copies of the app, and "stale"
+# does only that, touching no data. Use it when an extension vanishes from
+# Safari's Extensions list or the app's "Open Safari Settings" button fails.
 #
 # Debug builds are a separate dev app (see Config/Shared.xcconfig), and that
 # is the one reset by default, leaving an installed App Store copy alone.
@@ -37,7 +42,7 @@ while [[ "${1:-}" == -* ]]; do
   case "$1" in
     -n) dry_run=true ;;
     --store) APP_ID="$STORE_ID"; SKIP_ID="$DEV_ID" ;;
-    *) echo "usage: $0 [-n] [--store] mac | ios [udid]" >&2; exit 2 ;;
+    *) echo "usage: $0 [-n] [--store] mac | ios [udid] | stale" >&2; exit 2 ;;
   esac
   shift
 done
@@ -68,6 +73,72 @@ reset_ios() {
 is_running() {
   # Errors (and so counts as not running) if no app has this bundle ID.
   [[ "$(osascript -e "application id \"$1\" is running" 2>/dev/null)" == "true" ]]
+}
+
+# Archives and command-line builds leave their products registered with
+# LaunchServices and PlugInKit after the files are gone or superseded. Safari
+# then finds several extensions with one bundle ID, and when it picks a dead
+# one it drops the extension from its list ("Couldn't find LSApplicationRecord"
+# in its log). Unregister every copy of the dev and store apps except the live
+# ones: an installed app, and Xcode's own build products.
+unregister_stale() {
+  local lsregister="/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister"
+  local live_appexes=() found=false id path
+
+  while IFS=$'\t' read -r id path; do
+    if [[ -e "$path" ]]; then
+      case "$path" in
+        /Applications/* | "$HOME"/Applications/* | \
+          "$HOME"/Library/Developer/Xcode/DerivedData/*/Build/Products/*)
+          [[ "$path" == *.appex ]] && live_appexes+=("$path")
+          continue
+          ;;
+      esac
+    fi
+    found=true
+    if $dry_run; then
+      echo "would unregister: $path"
+      continue
+    fi
+    echo "unregistering: $path"
+    # Both fail harmlessly for a path that is already gone from disk or that
+    # went away with its parent app's record.
+    if [[ "$path" == *.appex ]]; then
+      pluginkit -r "$path" 2>/dev/null || true
+    fi
+    "$lsregister" -u "$path" >/dev/null 2>&1 || true
+  done < <(
+    # One record per bundle, fields in no fixed order, separated by dashes.
+    "$lsregister" -dump 2>/dev/null | awk -v store="$STORE_ID" -v dev="$DEV_ID" '
+      function flush() {
+        if (path != "" && (id == store || id == dev ||
+            id == store ".Extension" || id == dev ".Extension"))
+          print id "\t" path
+        path = ""; id = ""
+      }
+      /^-{20,}$/ { flush(); next }
+      /^path: / { sub(/^path: +/, ""); sub(/ \(0x[0-9a-f]+\)$/, ""); path = $0 }
+      /^identifier: / { id = $2 }
+      END { flush() }
+    '
+  )
+
+  if ! $found; then
+    echo "No stale registrations of Tempo Adjust."
+    return
+  fi
+  if $dry_run; then
+    return
+  fi
+  # Safari may already have dropped an extension because of a stale copy;
+  # registering the live one again makes it look again.
+  if [[ ${#live_appexes[@]} -gt 0 ]]; then
+    for path in "${live_appexes[@]}"; do
+      pluginkit -a "$path" 2>/dev/null || true
+    done
+  fi
+  echo "Done. An extension Safari had dropped comes back disabled; enable it"
+  echo "again in Safari's Extensions settings."
 }
 
 reset_mac() {
@@ -145,6 +216,9 @@ PY
     remove "${containers[@]}"
   fi
 
+  # 4. Stale registrations of the app and its extension.
+  unregister_stale
+
   if $dry_run; then
     return
   fi
@@ -162,5 +236,6 @@ PY
 case "$target" in
   mac) reset_mac ;;
   ios) reset_ios "${2:-}" ;;
-  *) echo "usage: $0 [-n] [--store] mac | ios [udid]" >&2; exit 2 ;;
+  stale) unregister_stale ;;
+  *) echo "usage: $0 [-n] [--store] mac | ios [udid] | stale" >&2; exit 2 ;;
 esac
