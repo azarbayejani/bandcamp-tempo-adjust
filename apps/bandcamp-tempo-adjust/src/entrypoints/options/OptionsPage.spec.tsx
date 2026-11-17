@@ -70,6 +70,7 @@ describe('OptionsPage', () => {
     // jsdom keeps the title between tests, so an earlier render would
     // otherwise satisfy the title assertions.
     document.title = '';
+    fakeBrowser.storage.resetState();
     vi.mocked(hasAllPermissions).mockReset().mockResolvedValue(true);
     vi.mocked(requestAllPermissions).mockReset().mockResolvedValue(true);
     // fakeBrowser throws for the APIs it doesn't implement.
@@ -144,6 +145,72 @@ describe('OptionsPage', () => {
     expect(clickIsHandledByPage(donate)).toBe(false);
     expect(fakeBrowser.runtime.getPlatformInfo).not.toHaveBeenCalled();
     expect(fakeBrowser.runtime.sendNativeMessage).not.toHaveBeenCalled();
+  });
+
+  describe('settings', () => {
+    const lowDataMode = () =>
+      screen.findByRole('checkbox', { name: 'Low data mode' });
+
+    it('leaves low data mode off by default', async () => {
+      renderOptions();
+
+      expect(await lowDataMode()).not.toBeChecked();
+      expect(await lowDataMode()).toHaveAccessibleDescription(
+        /only the track that's playing/
+      );
+    });
+
+    it('leaves low data mode off by default on phones too', async () => {
+      vi.spyOn(navigator, 'userAgent', 'get').mockReturnValue(
+        'Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) Mobile/15E148'
+      );
+      renderOptions();
+
+      expect(await lowDataMode()).not.toBeChecked();
+    });
+
+    it('opens on the settings section when linked to it', async () => {
+      window.location.hash = '#settings';
+      renderOptions();
+
+      expect(
+        await screen.findByRole('heading', { name: 'Settings' })
+      ).toHaveFocus();
+      window.location.hash = '';
+    });
+
+    it('shows the stored choice', async () => {
+      await fakeBrowser.storage.local.set({
+        settings: { lowDataMode: true },
+      });
+      renderOptions();
+
+      expect(await lowDataMode()).toBeChecked();
+    });
+
+    it('follows a choice made elsewhere while the page is open', async () => {
+      renderOptions();
+      expect(await lowDataMode()).not.toBeChecked();
+
+      await fakeBrowser.storage.local.set({
+        settings: { lowDataMode: true },
+      });
+
+      await waitFor(async () => expect(await lowDataMode()).toBeChecked());
+    });
+
+    it('saves a change', async () => {
+      renderOptions();
+
+      await userEvent.click(await lowDataMode());
+
+      await waitFor(async () =>
+        expect(await fakeBrowser.storage.local.get('settings')).toEqual({
+          settings: { lowDataMode: true },
+        })
+      );
+      expect(await lowDataMode()).toBeChecked();
+    });
   });
 
   describe('without permissions', () => {

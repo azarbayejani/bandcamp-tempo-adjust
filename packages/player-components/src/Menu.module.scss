@@ -29,7 +29,8 @@
 .menuItem {
   display: block;
   width: 100%;
-  padding: 10px 16px;
+  // Tall enough (with the 14px line) to be a comfortable tap target.
+  padding: 14px 16px;
   background: none;
   border: none;
   font: inherit;

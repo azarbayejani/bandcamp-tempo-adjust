@@ -3,6 +3,8 @@
   flex-direction: column;
   gap: 12px;
   width: 100%;
+  // Only focused by script (see the component), never interactive.
+  outline: none;
 }
 
 // Top-aligned rather than centered: the BPM lockup is taller than its
