@@ -1,0 +1,284 @@
+/* Instagram exports built from the iPhone screenshots. Loads shared.css for
+   the fonts, palette, tape mark and phone mockup, then recomposes them for
+   social: every slide is dark with an orange glow and film grain, the phone
+   is tilted and runs off the bottom edge with a spotlight on the part of the
+   page the extension adds, and the slide's own setting runs up the right edge as huge outlined type,
+   mirroring the pitch scale on the left. A brand kicker sits above the
+   headline because, unlike a store listing, a post has to say what this is.
+
+   Slides carry a .feed class on <body>: 540×675 → 1080×1350, the 4:5 feed
+   and carousel size. */
+
+@import url('shared.css');
+
+body {
+  width: 540px;
+  background:
+    radial-gradient(130% 80% at 76% 92%, rgba(244, 123, 32, 0.95) 0%, rgba(244, 123, 32, 0.4) 34%, rgba(244, 123, 32, 0) 68%),
+    var(--ink);
+  color: var(--white);
+}
+body.feed { height: 675px; }
+
+/* Film grain: an SVG noise tile blended over everything at low opacity. */
+body::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 9;
+  pointer-events: none;
+  opacity: 0.16;
+  mix-blend-mode: overlay;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.95' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ---- Pitch scale, resized to the canvas. The labels and marker read their
+   centre from --mid instead of shared.css's fixed 438px. ---- */
+.scale {
+  left: 14px;
+  top: var(--scale-top);
+  height: var(--scale-height);
+  --unit: calc(var(--scale-height) / 32);
+  --mid: calc(var(--scale-height) / 2);
+  z-index: 2;
+  opacity: 0.5;
+}
+.scale .marker { top: calc(var(--mid) + var(--pos) * var(--unit)); }
+.scale .zero { top: var(--mid); }
+body.feed { --scale-top: 30px; --scale-height: 615px; }
+
+/* ---- Brand kicker and headline ---- */
+.kicker {
+  position: absolute;
+  left: var(--gutter);
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font: 700 11px/1 'Barlow';
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--mute-on-dark);
+}
+.kicker img {
+  width: 20px;
+  height: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.12);
+}
+.kicker b { color: var(--white); font-weight: 700; }
+body.feed .kicker { top: 34px; }
+
+.copy {
+  right: 24px;
+  z-index: 5;
+}
+body.feed .copy { top: 64px; }
+h1 { font-size: 54px; }
+.copy p {
+  margin-top: 12px;
+  max-width: 370px;
+  font-size: 16px;
+}
+
+/* Platform chips under the lineup slide's copy. */
+.chips {
+  list-style: none;
+  margin: 14px 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.chips li {
+  padding: 6px 10px 5px;
+  border: 1.5px solid rgba(255, 255, 255, 0.4);
+  border-radius: 999px;
+  font: 500 11.5px/1 'Barlow';
+  letter-spacing: 0.02em;
+  color: var(--mute-on-dark);
+}
+.chips b { font-weight: 700; color: var(--white); }
+
+/* ---- Ghost value: the slide's setting as outlined type up the right edge. ---- */
+.ghost {
+  position: absolute;
+  right: 2px;
+  bottom: -12px;
+  z-index: 1;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font: 800 112px/1 'Barlow Condensed';
+  letter-spacing: -0.01em;
+  color: transparent;
+  -webkit-text-stroke: 2px rgba(255, 255, 255, 0.34);
+  white-space: nowrap;
+  user-select: none;
+}
+
+/* ---- Phone: a little larger than the store slides, tilted, and anchored so
+   the canvas cuts it off at the bottom. ---- */
+.phone {
+  z-index: 3;
+  left: auto;
+  transform: rotate(-6deg);
+  transform-origin: 50% 0;
+  filter: drop-shadow(0 30px 36px rgba(0, 0, 0, 0.65));
+}
+body.feed .phone { --bezel-scale: calc(320 / 1206); right: 96px; top: 242px; }
+.screen {
+  width: calc(1206px * var(--bezel-scale));
+  border-radius: calc(190px * var(--bezel-scale) - 4px);
+}
+.page, .page img { width: calc(1206px * var(--bezel-scale)); }
+.page { height: calc(2622px * var(--bezel-scale)); }
+
+/* ---- Spotlight: picks the extension's panel out of the page where it
+   sits. .spot-dim covers the screen with a dark wash that has a hole cut
+   where the panel is, .spot draws the orange keyline round that hole and
+   hangs a tag off its top edge, and the purchases slide adds .spot-blur, a
+   blurred copy of the page under the wash, so the real order below the
+   exporter's card cannot be read. The hole is a clip-path on a plain
+   overlay: backdrop-filter would be simpler, but Chrome drops its clip when
+   the polygon uses calc() and stops blurring under a rotated ancestor. The
+   rectangle is in the capture's native pixels, one class per slide on
+   .screen. ---- */
+.screen {
+  --l: calc(var(--x) * var(--bezel-scale));
+  --t: calc(var(--y) * var(--bezel-scale));
+  --r: calc((var(--x) + var(--w)) * var(--bezel-scale));
+  --b: calc((var(--y) + var(--h)) * var(--bezel-scale));
+}
+.screen.hero         { --x: 40px; --y: 1715px; --w: 1130px; --h: 475px; }  /* fader, BPM, ranges, Master Tempo under the player */
+.screen.bpm          { --x: 30px; --y: 1700px; --w: 1146px; --h: 420px; }  /* tracklist rows with detected BPMs */
+.screen.tap          { --x: 40px; --y: 930px;  --w: 1130px; --h: 380px; }  /* TAP box and the ÷2 −0.1 +0.1 ×2 nudges */
+.screen.discogs      { --x: 10px; --y: 1966px; --w: 1186px; --h: 284px; }  /* the panel under the Discogs videos */
+.screen.purchases    { --x: 10px; --y: 615px;  --w: 1186px; --h: 1105px; } /* the Purchase Export card */
+.spot-blur, .spot-dim {
+  clip-path: polygon(evenodd,
+    0 0, 100% 0, 100% 100%, 0 100%, 0 0,
+    var(--l) var(--t), var(--l) var(--b), var(--r) var(--b), var(--r) var(--t), var(--l) var(--t));
+}
+.spot-blur { z-index: 1; filter: blur(5px); }
+.spot-dim {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: rgba(0, 0, 0, 0.5);
+}
+.spot {
+  position: absolute;
+  left: var(--l);
+  top: var(--t);
+  width: calc(var(--w) * var(--bezel-scale));
+  height: calc(var(--h) * var(--bezel-scale));
+  z-index: 3;
+  box-shadow: 0 0 0 2px var(--orange);
+}
+.spot span {
+  position: absolute;
+  left: -2px;
+  bottom: calc(100% + 2px);
+  padding: 4px 7px 3px;
+  background: var(--orange);
+  color: var(--ink);
+  font: 700 9px/1 'Barlow';
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border-radius: 4px 4px 0 0;
+  white-space: nowrap;
+}
+
+/* Labels off the phone's right edge (the hero): one per row of the panel,
+   each with an orange leader back to the bezel. They live inside .phone,
+   outside .screen, so they tilt with the device like stickers. */
+.labels {
+  position: absolute;
+  left: 100%;
+  top: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.labels li {
+  position: absolute;
+  left: 0;
+  transform: translateY(-50%);
+  padding-left: 26px;
+  font: 700 12px/1 'Barlow';
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  color: var(--white);
+}
+.labels li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 20px;
+  height: 2px;
+  margin-top: -1px;
+  background: var(--orange);
+}
+.labels li::after {
+  content: '';
+  position: absolute;
+  left: -1px;
+  top: 50%;
+  width: 6px;
+  height: 6px;
+  margin: -3px 0 0 -3px;
+  border-radius: 50%;
+  background: var(--orange);
+}
+
+/* ---- The lineup slide: a Safari window on the Mac (the capture carries
+   its own macOS shadow), the iPad in front of it and the iPhone in front
+   of that, bottom-aligned like a product-family shot. The templates set
+   each one's position; the phone is upright here. ---- */
+.window {
+  position: absolute;
+  z-index: 2;
+  height: auto;
+}
+.pad {
+  --bezel-scale: calc(var(--screen-w) / 2752);
+  position: absolute;
+  z-index: 3;
+  width: calc(3000px * var(--bezel-scale));
+  height: calc(2300px * var(--bezel-scale));
+  filter: drop-shadow(0 18px 24px rgba(0, 0, 0, 0.6));
+}
+/* Apple's iPad Pro 13" bezel: a 3000×2300 PNG with a 2752×2064 window at
+   (124, 118), the captures' native size; see templates/ipad/ipad.css. */
+.pad::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  background: url('../public/screenshots/ipad/bezel-landscape.png') 0 0 / 100% 100% no-repeat;
+}
+.pad .screen {
+  left: calc(124px * var(--bezel-scale));
+  top: calc(118px * var(--bezel-scale));
+  width: calc(var(--screen-w) * 1px);
+  height: calc(2064px * var(--bezel-scale));
+  border-radius: calc(60px * var(--bezel-scale));
+}
+.pad .screen img { display: block; width: calc(var(--screen-w) * 1px); }
+/* The lineup slide opens the deck, so its kicker is the product's
+   introduction and runs a step larger than on the slides after it. */
+body.lineup .kicker { font-size: 15px; }
+body.lineup .kicker img {
+  width: 28px;
+  height: 28px;
+  border-radius: 7px;
+}
+/* The taller kicker pushes the copy down by the height it gained. */
+body.feed.lineup .copy { top: 70px; }
+body.lineup .phone {
+  z-index: 4;
+  right: auto;
+  transform: none;
+  filter: drop-shadow(0 14px 18px rgba(0, 0, 0, 0.6));
+}

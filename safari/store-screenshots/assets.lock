@@ -430,6 +430,86 @@
         "exportedAt": "2026-10-17T03:12:54.186Z",
         "exportChecksum": "sha256:7e3a8bb0a854d3b432525433b706bd17824b568a2cbddf23a8c98227784e16b6"
       }
+    },
+    "instagram-2026-11-16-launch/01-lineup": {
+      "exports/instagram-2026-11-16-launch/4x5/01-lineup.png": {
+        "sourceChecksum": "sha256:7227eb1759e15adea4c8961a1e471b3cb940543377cf1bc1b5e5b117119b1f31",
+        "outputPath": "exports/instagram-2026-11-16-launch/4x5/01-lineup.png",
+        "exportedAt": "2026-11-17T05:59:50.982Z",
+        "exportChecksum": "sha256:43927794e09ee2c067078caf77a8139c415363c935e828d45478c1fb1401d361"
+      }
+    },
+    "instagram-2026-11-16-launch/02-hero": {
+      "exports/instagram-2026-11-16-launch/4x5/02-hero.png": {
+        "sourceChecksum": "sha256:ceec29898f05ffa8676f53a2715623a6d13405027ebc92b10b3c12e4993f8489",
+        "outputPath": "exports/instagram-2026-11-16-launch/4x5/02-hero.png",
+        "exportedAt": "2026-11-17T05:59:50.983Z",
+        "exportChecksum": "sha256:43927794e09ee2c067078caf77a8139c415363c935e828d45478c1fb1401d361"
+      }
+    },
+    "instagram-2026-11-16-launch/03-bpm": {
+      "exports/instagram-2026-11-16-launch/4x5/03-bpm.png": {
+        "sourceChecksum": "sha256:8569c33d5ebf3c56119709f2d22c60174da048c41a5ecc97d99be3c75b61dfe5",
+        "outputPath": "exports/instagram-2026-11-16-launch/4x5/03-bpm.png",
+        "exportedAt": "2026-11-17T05:59:50.983Z",
+        "exportChecksum": "sha256:43927794e09ee2c067078caf77a8139c415363c935e828d45478c1fb1401d361"
+      }
+    },
+    "instagram-2026-11-16-launch/04-tap": {
+      "exports/instagram-2026-11-16-launch/4x5/04-tap.png": {
+        "sourceChecksum": "sha256:c9837d66b1c3c89c7d25b63d3831296610d253df8499fe42a8491f5a11e13abb",
+        "outputPath": "exports/instagram-2026-11-16-launch/4x5/04-tap.png",
+        "exportedAt": "2026-11-17T05:59:50.983Z",
+        "exportChecksum": "sha256:43927794e09ee2c067078caf77a8139c415363c935e828d45478c1fb1401d361"
+      }
+    },
+    "instagram-2026-11-16-launch/05-discogs": {
+      "exports/instagram-2026-11-16-launch/4x5/05-discogs.png": {
+        "sourceChecksum": "sha256:db3fe269a5b3d0ac9594d7a9355651f52e6e30c8b6a7c4801420cf7f88a83826",
+        "outputPath": "exports/instagram-2026-11-16-launch/4x5/05-discogs.png",
+        "exportedAt": "2026-11-17T05:59:50.983Z",
+        "exportChecksum": "sha256:43927794e09ee2c067078caf77a8139c415363c935e828d45478c1fb1401d361"
+      }
+    },
+    "instagram-2026-11-16-launch/06-purchases": {
+      "exports/instagram-2026-11-16-launch/4x5/06-purchases.png": {
+        "sourceChecksum": "sha256:1a4145fe3649972813f2e46c35bebed71a35810dd5cf197efcae57fa899854cb",
+        "outputPath": "exports/instagram-2026-11-16-launch/4x5/06-purchases.png",
+        "exportedAt": "2026-11-17T05:59:50.983Z",
+        "exportChecksum": "sha256:43927794e09ee2c067078caf77a8139c415363c935e828d45478c1fb1401d361"
+      }
+    },
+    "web/hero-light": {
+      "exports/web/2x/hero-light.png": {
+        "sourceChecksum": "sha256:1fdbbda34d46f413b2161541645281efadd705b9ab935b20d57b8ff740e133d8",
+        "outputPath": "exports/web/2x/hero-light.png",
+        "exportedAt": "2026-11-17T05:59:53.430Z",
+        "exportChecksum": "sha256:c4a44cfd131625588c79699f747116e7ad3ff292ae88c87905d120f9df7df84d"
+      }
+    },
+    "web/hero-dark": {
+      "exports/web/2x/hero-dark.png": {
+        "sourceChecksum": "sha256:1f5d721303b2af913464991cea9dc86647056117c1f024056a01d2ead2a562c7",
+        "outputPath": "exports/web/2x/hero-dark.png",
+        "exportedAt": "2026-11-17T05:59:53.430Z",
+        "exportChecksum": "sha256:c4a44cfd131625588c79699f747116e7ad3ff292ae88c87905d120f9df7df84d"
+      }
+    },
+    "web/discogs-light": {
+      "exports/web/2x/discogs-light.png": {
+        "sourceChecksum": "sha256:b9b397535c1e2b09c26bfa5a3b58e96eef083e10e76c5c9f5f8c6bdc49798f41",
+        "outputPath": "exports/web/2x/discogs-light.png",
+        "exportedAt": "2026-11-17T05:59:53.430Z",
+        "exportChecksum": "sha256:c4a44cfd131625588c79699f747116e7ad3ff292ae88c87905d120f9df7df84d"
+      }
+    },
+    "web/discogs-dark": {
+      "exports/web/2x/discogs-dark.png": {
+        "sourceChecksum": "sha256:d21065f999c44e43dae2c47a15537e95b751d242d4ecd5d729a923d79523de1a",
+        "outputPath": "exports/web/2x/discogs-dark.png",
+        "exportedAt": "2026-11-17T05:59:53.430Z",
+        "exportChecksum": "sha256:c4a44cfd131625588c79699f747116e7ad3ff292ae88c87905d120f9df7df84d"
+      }
     }
   }
 }

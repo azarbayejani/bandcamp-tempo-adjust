@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Website Discogs lineup (light)</title>
+  <link rel="stylesheet" href="web.css" />
+</head>
+<body class="web lineup discogs light">
+    <!-- The hero's arrangement on the Discogs release page: the Mac window at the left shows the page itself, its cover thumbnail, title, release details and tracklist, so it reads as Discogs; the iPad and iPhone stand at the right where that page keeps its Videos column. The window's own panel sits in its right column behind the iPad, so the iPad and phone carry it: the iPad is a step smaller than the hero's and shows its whole page, details and panel both, with the phone clear of it at the right edge. Both stand a little higher than the hero's devices so the iPad covers the top of the window's video. The window is a step larger than the hero's so Discogs's black footer falls below the canvas. -->
+    <!-- discogs.png is the Mac capture: a release page in a ~1190pt Safari window with the fader at +6.9%, with its macOS shadow on a transparent margin. -->
+    <img class="window" src="../../public/screenshots/mac/discogs.png" alt="" style="left:0; top:14px; width:620px" />
+    <!-- discogs-landscape.png is the same release page in Safari on the 13-inch iPad Pro, fader at 0; web.css clips its screen above Discogs's footer. -->
+    <div class="pad" style="--screen-w:270; left:230px; top:91px"><div class="screen"><img src="../../public/screenshots/ipad/discogs-landscape.png" alt="" /></div></div>
+    <div class="phone" style="--bezel-scale:calc(104 / 1206); left:516px; top:79px">
+      <div class="screen">
+        <!-- discogs.png is the test's dg-panel: the release page scrolled to its videos, fader at +4.3%. -->
+        <div class="page"><img src="../../public/screenshots/iphone/discogs.png" alt="" /></div>
+      </div>
+    </div>
+</body>
+</html>
