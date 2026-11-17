@@ -4,6 +4,7 @@ import MobileTempoPanel from './MobileTempoPanel';
 
 export { PitchAdjust, BpmDetection, MobileTempoPanel };
 export { default as useRangeCommit } from './useRangeCommit';
+export { default as isWebKit } from './isWebKit';
 export {
   tempoRanges,
   useTempoRange,

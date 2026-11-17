@@ -50,6 +50,24 @@ describe('PitchAdjust', () => {
     vi.unstubAllEnvs();
   });
 
+  it('holds the audio playback rate until release when a non-Safari build runs on WebKit', () => {
+    // Orion: a Chrome/Firefox build on the WebKit engine
+    vi.spyOn(navigator, 'vendor', 'get').mockReturnValue(
+      'Apple Computer, Inc.'
+    );
+    useAudio.getState().setPlaybackRate(1);
+    render(<PitchAdjust />);
+    const slider = screen.getByRole('slider');
+
+    fireEvent.input(slider, { target: { value: '1.05' } });
+
+    expect(useAudio.getState().audioPlaybackRate).toBe(1);
+
+    fireEvent(slider, new Event('change', { bubbles: true }));
+
+    expect(useAudio.getState().audioPlaybackRate).toBe(1.05);
+  });
+
   it('advances the tempo ranges when I click on them', async () => {
     render(<PitchAdjust />);
 

@@ -1,6 +1,9 @@
 import { useShallow } from 'zustand/shallow';
 
-import type { PlaybackRateChange } from '@tempo-adjust/player-components';
+import {
+  isWebKit,
+  type PlaybackRateChange,
+} from '@tempo-adjust/player-components';
 
 import useAudio, { type AudioState } from './AudioStore';
 
@@ -21,13 +24,14 @@ const selector = ({
 
 // WebKit briefly drops the audio out on every playbackRate change
 // (https://bugs.webkit.org/show_bug.cgi?id=163433), so Safari holds the
-// audio at its current rate until the fader is released.
+// audio at its current rate until the fader is released. So do the other
+// builds when they find themselves on WebKit, as they do in Orion.
 const changePlaybackRate = ({
   playbackRate,
   committed,
 }: PlaybackRateChange) => {
   const { setPlaybackRate, previewPlaybackRate } = useAudio.getState();
-  if (committed || !import.meta.env.SAFARI) {
+  if (committed || !(import.meta.env.SAFARI || isWebKit())) {
     setPlaybackRate(playbackRate);
   } else {
     previewPlaybackRate(playbackRate);
