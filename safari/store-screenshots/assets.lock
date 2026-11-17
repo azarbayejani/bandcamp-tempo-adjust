@@ -478,6 +478,38 @@
         "exportedAt": "2026-11-17T05:59:50.983Z",
         "exportChecksum": "sha256:43927794e09ee2c067078caf77a8139c415363c935e828d45478c1fb1401d361"
       }
+    },
+    "web/hero-light": {
+      "exports/web/2x/hero-light.png": {
+        "sourceChecksum": "sha256:1fdbbda34d46f413b2161541645281efadd705b9ab935b20d57b8ff740e133d8",
+        "outputPath": "exports/web/2x/hero-light.png",
+        "exportedAt": "2026-11-17T05:59:53.430Z",
+        "exportChecksum": "sha256:c4a44cfd131625588c79699f747116e7ad3ff292ae88c87905d120f9df7df84d"
+      }
+    },
+    "web/hero-dark": {
+      "exports/web/2x/hero-dark.png": {
+        "sourceChecksum": "sha256:1f5d721303b2af913464991cea9dc86647056117c1f024056a01d2ead2a562c7",
+        "outputPath": "exports/web/2x/hero-dark.png",
+        "exportedAt": "2026-11-17T05:59:53.430Z",
+        "exportChecksum": "sha256:c4a44cfd131625588c79699f747116e7ad3ff292ae88c87905d120f9df7df84d"
+      }
+    },
+    "web/discogs-light": {
+      "exports/web/2x/discogs-light.png": {
+        "sourceChecksum": "sha256:b9b397535c1e2b09c26bfa5a3b58e96eef083e10e76c5c9f5f8c6bdc49798f41",
+        "outputPath": "exports/web/2x/discogs-light.png",
+        "exportedAt": "2026-11-17T05:59:53.430Z",
+        "exportChecksum": "sha256:c4a44cfd131625588c79699f747116e7ad3ff292ae88c87905d120f9df7df84d"
+      }
+    },
+    "web/discogs-dark": {
+      "exports/web/2x/discogs-dark.png": {
+        "sourceChecksum": "sha256:d21065f999c44e43dae2c47a15537e95b751d242d4ecd5d729a923d79523de1a",
+        "outputPath": "exports/web/2x/discogs-dark.png",
+        "exportedAt": "2026-11-17T05:59:53.430Z",
+        "exportChecksum": "sha256:c4a44cfd131625588c79699f747116e7ad3ff292ae88c87905d120f9df7df84d"
+      }
     }
   }
 }

@@ -23,6 +23,10 @@
     {
       "id": "instagram",
       "label": "Instagram"
+    },
+    {
+      "id": "web",
+      "label": "Website"
     }
   ],
   "collections": [
@@ -252,6 +256,54 @@
       "customExport": {
         "defaultWidth": 1080,
         "defaultHeight": 1350
+      }
+    },
+    {
+      "id": "web",
+      "label": "Website lineups",
+      "tags": [
+        "web"
+      ],
+      "sourceSize": {
+        "width": 650,
+        "height": 380
+      },
+      "borderRadius": 4,
+      "templates": [
+        {
+          "src": "templates/web/hero-light.html",
+          "name": "hero-light",
+          "label": "Bandcamp lineup, light"
+        },
+        {
+          "src": "templates/web/hero-dark.html",
+          "name": "hero-dark",
+          "label": "Bandcamp lineup, dark"
+        },
+        {
+          "src": "templates/web/discogs-light.html",
+          "name": "discogs-light",
+          "label": "Discogs lineup, light"
+        },
+        {
+          "src": "templates/web/discogs-dark.html",
+          "name": "discogs-dark",
+          "label": "Discogs lineup, dark"
+        }
+      ],
+      "export": [
+        {
+          "name": "2x",
+          "label": "Website 1300×760",
+          "size": {
+            "width": 1300,
+            "height": 760
+          }
+        }
+      ],
+      "customExport": {
+        "defaultWidth": 1300,
+        "defaultHeight": 760
       }
     }
   ]

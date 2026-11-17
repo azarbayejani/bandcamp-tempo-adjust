@@ -3,7 +3,7 @@
 A workspace package (`safari/store-screenshots/`) holding the screenshot
 templates, the self-hosted fonts, the Safari captures they show and the
 [open-assets](https://github.com/parra-Inc/open-assets) config that renders
-them. There are `iphone`, `ipad`, `mac` and Instagram collections in
+them. There are `iphone`, `ipad`, `mac`, Instagram and website collections in
 `assets.json`; each has a template folder under `templates/`, captures under
 `public/screenshots/` and renders under `exports/`, all by the same name.
 Run the scripts here or through the root wrappers:
@@ -88,6 +88,24 @@ canvas; each rectangle is in the capture's native pixels, one class per
 slide in `instagram.css`. The purchases slide also blurs the page outside
 its spotlight, because the capture has a real order under the exporter's
 card.
+
+## Website
+
+The `web` collection renders the two lineup images on the Tempo Adjust page
+of miseryconfusion.com: the lineup slide's three devices on one page, with
+no copy, since the page has its own. `templates/web/web.css` loads
+`instagram.css` for the device mockups and sets a 650×380 canvas, the
+page's column width, rendered at 2x (1300×760). `hero` is the Bandcamp
+album page, the lineup slide mirrored so the Mac window stands at the left
+with its tempo panel in the clear and the iPad and iPhone in front of its
+album art; `discogs` is the Discogs release page in the same arrangement: the window
+shows the page itself, since its panel sits in the right column behind the
+iPad, and the iPad and iPhone carry the panel.
+Each comes in a `-light` template on the icon's platter grey and a `-dark`
+one on the Instagram slides' black with the orange glow, and the page
+serves them through a `<picture>` element keyed on `prefers-color-scheme`.
+Copy the renders over `images/tempo-adjust-{hero,discogs}-{light,dark}.png`
+in the website repository.
 
 ## Capturing
 
