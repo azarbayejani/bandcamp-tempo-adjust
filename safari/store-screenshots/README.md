@@ -3,7 +3,7 @@
 A workspace package (`safari/store-screenshots/`) holding the screenshot
 templates, the self-hosted fonts, the Safari captures they show and the
 [open-assets](https://github.com/parra-Inc/open-assets) config that renders
-them. There are `iphone`, `ipad` and `mac` collections in
+them. There are `iphone`, `ipad`, `mac` and Instagram collections in
 `assets.json`; each has a template folder under `templates/`, captures under
 `public/screenshots/` and renders under `exports/`, all by the same name.
 Run the scripts here or through the root wrappers:
@@ -56,6 +56,38 @@ panel is. There is no Mac BPM slide for the same reason: on Bandcamp the
 tracklist sits under the merch listings, far from the player, and its BPMs
 are small parenthetical text, so the hero's subhead and its detected BPM
 carry the feature instead.
+
+## Instagram
+
+The `instagram-2026-11-16-launch` collection (4:5, 1080×1350, for posts and carousels)
+rebuilds the slides for social. It uses the existing captures, bezels,
+fonts and copy, so nothing new is captured; `templates/instagram.css`
+loads `shared.css` and recomposes it, and `templates/instagram-2026-11-16-launch/`
+holds the six slides with a `feed` class on `<body>`. A
+store screenshot is seen at listing size and a post at thumbnail size, so
+the social version is louder: every slide is dark with an orange glow and
+film grain, a kicker with the app icon names the product (a post needs that
+and a listing does not), and the slide's own setting runs up the right edge
+as outlined type.
+
+The deck opens differently from the store sets. `01-lineup` is the
+product-family shot: the Mac hero window, the iPad and the iPhone, all on
+the same album page, bottom-aligned with the phone in front, under
+"Now available for desktop, iPad and mobile" and a row of platform chips
+(the Mac capture carries its own macOS shadow; there is no MacBook bezel in
+the repository). `02-hero` answers where the fader appears and what is in it: the
+phone is small enough for the page to run through the tempo panel, a
+spotlight dims the rest of the screen around it with an "Added by Tempo
+Adjust" tag, and three labels hang off the phone's edge at the panel's
+rows (the fader, the ranges, Master Tempo), so the store's range and
+Master Tempo slides fold into this one.
+Every feature slide after it uses the same spotlight on whatever its page
+gains from the extension (the tracklist's detected BPMs, the Tap screen,
+the Discogs panel, the Purchase Export card), with the phone tilted and sized so that region sits on the
+canvas; each rectangle is in the capture's native pixels, one class per
+slide in `instagram.css`. The purchases slide also blurs the page outside
+its spotlight, because the capture has a real order under the exporter's
+card.
 
 ## Capturing
 

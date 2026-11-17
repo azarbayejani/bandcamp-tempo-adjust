@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>BPM detection</title>
+  <link rel="stylesheet" href="../instagram.css" />
+</head>
+<body class="feed">
+    <div class="scale" style="--pos:0" aria-hidden="true"><div class="ticks"></div><div class="zero"></div><span class="label" style="top:calc(var(--mid) + (-16) * var(--unit))">−16</span><span class="label" style="top:calc(var(--mid) + (-8) * var(--unit))">−8</span><span class="label" style="top:calc(var(--mid) + (0) * var(--unit))">0</span><span class="label" style="top:calc(var(--mid) + (8) * var(--unit))">+8</span><span class="label" style="top:calc(var(--mid) + (16) * var(--unit))">+16</span><div class="marker"></div></div>
+    <div class="kicker"><img src="../../public/screenshots/iphone/icon.png" alt="" /><span><b>Tempo Adjust</b> · for Bandcamp &amp; Discogs</span></div>
+    <div class="copy">
+      <h1>Know the <mark>BPM</mark> before you buy.</h1>
+      <p>One tap analyzes the playing track and writes its tempo into the tracklist.</p>
+    </div>
+    <div class="phone" style="--bezel-scale:calc(220 / 1206); right:132px; top:236px">
+      <div class="screen bpm">
+        <!-- bpm.png is the test's bc-detect: an unanalyzed track's Detect BPM button over a tracklist with detected BPMs. -->
+        <div class="page"><img src="../../public/screenshots/iphone/bpm.png" alt="" /></div>
+        <!-- The spotlight's rectangle is set on .screen's class in instagram.css. -->
+        <div class="spot-dim"></div>
+        <div class="spot"><span>Detected by Tempo Adjust</span></div>
+      </div>
+    </div>
+</body>
+</html>

@@ -19,6 +19,10 @@
     {
       "id": "ipad",
       "label": "iPad"
+    },
+    {
+      "id": "instagram",
+      "label": "Instagram"
     }
   ],
   "collections": [
@@ -190,6 +194,64 @@
       "customExport": {
         "defaultWidth": 2880,
         "defaultHeight": 1800
+      }
+    },
+    {
+      "id": "instagram-2026-11-16-launch",
+      "label": "Instagram launch post, 2026-11-16 (4:5)",
+      "tags": [
+        "instagram"
+      ],
+      "sourceSize": {
+        "width": 540,
+        "height": 675
+      },
+      "borderRadius": 4,
+      "templates": [
+        {
+          "src": "templates/instagram-2026-11-16-launch/01-lineup.html",
+          "name": "01-lineup",
+          "label": "Now on desktop, iPad and mobile"
+        },
+        {
+          "src": "templates/instagram-2026-11-16-launch/02-hero.html",
+          "name": "02-hero",
+          "label": "Hear tracks at your tempo"
+        },
+        {
+          "src": "templates/instagram-2026-11-16-launch/03-bpm.html",
+          "name": "03-bpm",
+          "label": "Know the BPM"
+        },
+        {
+          "src": "templates/instagram-2026-11-16-launch/04-tap.html",
+          "name": "04-tap",
+          "label": "Tap BPM"
+        },
+        {
+          "src": "templates/instagram-2026-11-16-launch/05-discogs.html",
+          "name": "05-discogs",
+          "label": "Discogs too"
+        },
+        {
+          "src": "templates/instagram-2026-11-16-launch/06-purchases.html",
+          "name": "06-purchases",
+          "label": "Export your purchases"
+        }
+      ],
+      "export": [
+        {
+          "name": "4x5",
+          "label": "Instagram feed 1080×1350",
+          "size": {
+            "width": 1080,
+            "height": 1350
+          }
+        }
+      ],
+      "customExport": {
+        "defaultWidth": 1080,
+        "defaultHeight": 1350
       }
     }
   ]

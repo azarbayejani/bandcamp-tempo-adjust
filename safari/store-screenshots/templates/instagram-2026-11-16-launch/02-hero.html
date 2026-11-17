@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Hero</title>
+  <link rel="stylesheet" href="../instagram.css" />
+  <style>
+    /* The period stays on the tape rather than wrapping alone. */
+    .nowrap { white-space: nowrap; }
+  </style>
+</head>
+<body class="feed">
+    <div class="scale" style="--pos:3.7" aria-hidden="true"><div class="ticks"></div><div class="zero"></div><span class="label" style="top:calc(var(--mid) + (-16) * var(--unit))">−16</span><span class="label" style="top:calc(var(--mid) + (-8) * var(--unit))">−8</span><span class="label" style="top:calc(var(--mid) + (0) * var(--unit))">0</span><span class="label" style="top:calc(var(--mid) + (8) * var(--unit))">+8</span><span class="label" style="top:calc(var(--mid) + (16) * var(--unit))">+16</span><div class="marker"></div></div>
+    <div class="kicker"><img src="../../public/screenshots/iphone/icon.png" alt="" /><span><b>Tempo Adjust</b> · for Bandcamp &amp; Discogs</span></div>
+    <div class="copy">
+      <h1>Hear tracks at<br /><span class="nowrap"><mark>your tempo</mark>.</span></h1>
+      <p>A pitch fader under every Bandcamp player, right inside your browser.</p>
+    </div>
+    <div class="phone" style="--bezel-scale:calc(210 / 1206); left:56px; top:236px">
+      <div class="screen hero">
+        <!-- hero.png is the test's bc-hero: a Bandcamp album page with the fader at +3.2%. The phone is small enough that the page runs through the tempo panel, which the spotlight picks out where it sits under the player; the labels hang off the phone at the panel's rows. -->
+        <div class="page"><img src="../../public/screenshots/iphone/hero.png" alt="" /></div>
+        <!-- The spotlight's rectangle is set on .screen's class in instagram.css. -->
+        <div class="spot-dim"></div>
+        <div class="spot"><span>Added by Tempo Adjust</span></div>
+      </div>
+      <!-- Labels beside the phone, each at a row of the capture (native y) so they tilt with it. -->
+      <ul class="labels" aria-hidden="true">
+        <li style="top:calc((69px + 1813px) * var(--bezel-scale))">Pitch fader</li>
+        <li style="top:calc((69px + 1992px) * var(--bezel-scale))">Ranges: ±6, ±10, ±16, wide</li>
+        <li style="top:calc((69px + 2114px) * var(--bezel-scale))">Master Tempo keeps the key</li>
+      </ul>
+    </div>
+</body>
+</html>
