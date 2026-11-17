@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import BpmLoadError from './BpmLoadError';
 import BpmValue from './BpmValue';
 import Button from './Button';
-import Menu from './Menu';
+import Menu, { type MenuItem } from './Menu';
 import MobileTapBpm from './MobileTapBpm';
 import PitchFader from './PitchFader';
 import PitchPercentage from './PitchPercentage';
@@ -19,7 +19,8 @@ import * as css from './MobileTempoPanel.module.scss';
 //   <bpm> <fader> <percentage>
 //   <detect bpm, until a bpm exists>
 //   <tempo range selectors>
-//   <master tempo> <reset> <menu: re-analyze / tap bpm, once a bpm exists or failed>
+//   <master tempo> <reset> <menu: re-analyze / tap bpm once a bpm exists
+//                                 or failed, then settings>
 //
 // While tapping a BPM, the fader row stays put (its lockup shows the
 // candidate) and everything beneath it becomes the tap screen.
@@ -33,6 +34,8 @@ const MobileTempoPanel: React.FC<{
   onClickDetectBpm: () => void;
   onClickReloadBpm: () => void;
   onClickSaveBpm: (bpm: number) => void;
+  // Adds a Settings entry to the menu when provided.
+  onClickSettings?: () => void;
   onChangePlaybackRate: (change: PlaybackRateChange) => void;
   onChangePreservesPitch: () => void;
 }> = ({
@@ -45,6 +48,7 @@ const MobileTempoPanel: React.FC<{
   onClickDetectBpm,
   onClickReloadBpm,
   onClickSaveBpm,
+  onClickSettings,
   onChangePlaybackRate,
   onChangePreservesPitch,
 }) => {
@@ -55,13 +59,41 @@ const MobileTempoPanel: React.FC<{
   });
   const [candidateBpm, setCandidateBpm] = useState<number>();
 
+  // Detect BPM is disabled while analyzing and removed once a BPM exists.
+  // If it was pressed from the keyboard, focus would fall to the page
+  // body; park it on the panel so Tab carries on from here.
+  const panelRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const active = document.activeElement;
+    if (
+      loading &&
+      active instanceof HTMLButtonElement &&
+      active.disabled &&
+      panelRef.current?.contains(active)
+    ) {
+      panelRef.current.focus();
+    }
+  }, [loading]);
+
   const startTapping = () => {
     setCandidateBpm(undefined);
     startEditing();
   };
 
+  const menuItems: MenuItem[] = [
+    ...(bpm || error
+      ? [
+          { label: 'Re-analyze', onClick: onClickReloadBpm, disabled: loading },
+          { label: 'Tap BPM', onClick: startTapping },
+        ]
+      : []),
+    ...(onClickSettings
+      ? [{ label: 'Settings', onClick: onClickSettings }]
+      : []),
+  ];
+
   return (
-    <div className={css.panel}>
+    <div ref={panelRef} className={css.panel} tabIndex={-1}>
       {/* A failed detection only affects the BPM readout; the fader must
           stay usable, and the menu below offers a way to retry. */}
       {error && !editing && <BpmLoadError />}
@@ -122,19 +154,12 @@ const MobileTempoPanel: React.FC<{
                 onChangePlaybackRate({ playbackRate: 1, committed: true })
               }
             />
-            {bpm || error ? (
+            {menuItems.length > 0 && (
               <Menu
-                label="BPM options"
-                items={[
-                  {
-                    label: 'Re-analyze',
-                    onClick: onClickReloadBpm,
-                    disabled: loading,
-                  },
-                  { label: 'Tap BPM', onClick: startTapping },
-                ]}
+                label={bpm || error ? 'BPM options' : 'More options'}
+                items={menuItems}
               />
-            ) : null}
+            )}
           </div>
         </>
       )}

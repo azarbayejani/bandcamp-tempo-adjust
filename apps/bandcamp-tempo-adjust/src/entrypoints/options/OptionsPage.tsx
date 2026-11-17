@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import browser from 'webextension-polyfill';
 import {
   requestAllPermissions,
@@ -7,6 +7,7 @@ import {
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { extensionName } from '@/utils/extensionName';
+import { getStoredSettings, saveSettings } from '@/utils/settings';
 import { DONATE_URL, TIP_JAR_URL } from '@/utils/tipJar';
 
 import * as css from './OptionsPage.module.css';
@@ -98,6 +99,44 @@ const Options: React.FC = () => {
     window.location.href = TIP_JAR_URL;
   };
 
+  const { data: settings } = useQuery(['settings'], {
+    queryFn: getStoredSettings,
+  });
+
+  // Another options tab can change the settings while this one is open.
+  useEffect(() => {
+    const listener = () => {
+      queryClient.invalidateQueries(['settings']);
+    };
+    browser.storage.onChanged.addListener(listener);
+
+    return () => {
+      browser.storage.onChanged.removeListener(listener);
+    };
+  }, [queryClient]);
+
+  const handleChangeLowDataMode = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const lowDataMode = event.target.checked;
+    // Updated in the cache before the write lands: a controlled checkbox
+    // snaps back to its old value if the state doesn't change synchronously.
+    queryClient.setQueryData(['settings'], { ...settings, lowDataMode });
+    saveSettings({ lowDataMode });
+  };
+
+  // "Settings" in the Bandcamp menu opens this page at #settings. The
+  // section sits below the welcome copy, off-screen on a phone, so bring
+  // it into view once it has rendered.
+  const settingsHeadingRef = useRef<HTMLHeadingElement>(null);
+  const showSettings = Boolean(settings) && (isLoading || hasPermissions);
+  useEffect(() => {
+    if (showSettings && window.location.hash === '#settings') {
+      settingsHeadingRef.current?.scrollIntoView?.({ block: 'start' });
+      settingsHeadingRef.current?.focus({ preventScroll: true });
+    }
+  }, [showSettings]);
+
   const sites = import.meta.env.SAFARI
     ? 'Bandcamp, Discogs and YouTube'
     : 'Bandcamp';
@@ -158,6 +197,44 @@ const Options: React.FC = () => {
           {import.meta.env.SAFARI ? 'Bandcamp or Discogs' : 'Bandcamp'} to
           adjust its tempo.
         </div>
+        <hr className={css.divider} />
+        {settings && (
+          <section className={css.settings} aria-labelledby="settings-heading">
+            <h2
+              ref={settingsHeadingRef}
+              id="settings-heading"
+              className={css.settingsHeading}
+              tabIndex={-1}
+            >
+              Settings
+            </h2>
+            <label className={css.setting}>
+              <input
+                type="checkbox"
+                className={css.settingCheckbox}
+                checked={settings.lowDataMode ?? false}
+                onChange={handleChangeLowDataMode}
+                // Named explicitly: the wrapping label would otherwise fold
+                // the description into the checkbox's name.
+                aria-labelledby="low-data-mode-label"
+                aria-describedby="low-data-mode-description"
+              />
+              <span>
+                <span id="low-data-mode-label" className={css.settingLabel}>
+                  Low data mode
+                </span>
+                <span
+                  id="low-data-mode-description"
+                  className={css.settingDescription}
+                >
+                  Detect BPM analyzes only the track that&apos;s playing,
+                  instead of every track on the release. Uses less data and
+                  battery.
+                </span>
+              </span>
+            </label>
+          </section>
+        )}
         <hr className={css.divider} />
         <div className={css.center} style={{ padding: '0 20px' }}>
           Please consider{' '}

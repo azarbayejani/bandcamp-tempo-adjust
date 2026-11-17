@@ -35,11 +35,14 @@ export default defineBackground({
 
     interface OpenOptionsMessage {
       action: 'openOptions';
+      // Opens the page scrolled to this section rather than at the top.
+      section?: 'settings';
     }
     browser.runtime.onMessage.addListener(
       (message: OpenOptionsMessage, _sender) => {
         if (message.action === 'openOptions') {
-          browser.tabs.create({ url: optionsPageUrl.toString() });
+          const hash = message.section === 'settings' ? '#settings' : '';
+          browser.tabs.create({ url: `${optionsPageUrl}${hash}` });
         }
       }
     );

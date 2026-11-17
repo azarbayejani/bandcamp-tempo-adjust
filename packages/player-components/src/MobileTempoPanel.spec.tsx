@@ -52,6 +52,37 @@ describe('MobileTempoPanel', () => {
     expect(onClickDetectBpm).toHaveBeenCalled();
   });
 
+  describe('with a settings handler', () => {
+    it('offers settings before a bpm exists', async () => {
+      const onClickSettings = vi.fn();
+      renderPanel({ onClickSettings });
+
+      await userEvent.click(
+        screen.getByRole('button', { name: 'More options' })
+      );
+
+      expect(
+        screen.getAllByRole('menuitem').map((item) => item.textContent)
+      ).toEqual(['Settings']);
+
+      await userEvent.click(screen.getByRole('menuitem', { name: 'Settings' }));
+
+      expect(onClickSettings).toHaveBeenCalled();
+    });
+
+    it('lists settings after the bpm actions once a bpm exists', async () => {
+      renderPanel({ bpm: 120, onClickSettings: vi.fn() });
+
+      await userEvent.click(
+        screen.getByRole('button', { name: 'BPM options' })
+      );
+
+      expect(
+        screen.getAllByRole('menuitem').map((item) => item.textContent)
+      ).toEqual(['Re-analyze', 'Tap BPM', 'Settings']);
+    });
+  });
+
   describe('when bpm detection failed', () => {
     it('keeps the fader usable and shows the error', () => {
       renderPanel({ error: true });

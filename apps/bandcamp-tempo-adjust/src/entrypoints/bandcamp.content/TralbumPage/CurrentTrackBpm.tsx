@@ -5,7 +5,7 @@ import { useAudioControls } from '../useAudioControls';
 import { useCurrentTrackInfo } from './useCurrentTrackInfo';
 
 export default function CurrentTrackBpm() {
-  const { loadBpms, reloadCurrentBpm, setTrackBpm } = useBpm();
+  const { detectBpm, reloadCurrentBpm, setTrackBpm } = useBpm();
   const { playbackRate, playbackRatePending } = useAudioControls();
   const { currTrackUrl, trackInfo } = useCurrentTrackInfo();
 
@@ -20,7 +20,7 @@ export default function CurrentTrackBpm() {
       error={trackInfo.error}
       playbackRate={playbackRate}
       playbackRatePending={playbackRatePending}
-      onClickLoadBpms={loadBpms}
+      onClickLoadBpms={() => detectBpm()}
       onClickReloadBpm={reloadCurrentBpm}
       onClickSaveBpm={(bpm) => setTrackBpm({ url: currTrackUrl, bpm })}
     />

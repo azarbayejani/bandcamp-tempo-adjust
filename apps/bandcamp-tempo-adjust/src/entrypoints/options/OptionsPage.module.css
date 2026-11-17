@@ -72,6 +72,45 @@ body {
   margin: 18px 20px;
 }
 
+.settings {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0 20px;
+}
+
+.settingsHeading {
+  margin: 0 0 12px;
+  font-size: 1rem;
+  /* Focused by script when the page opens at #settings; it isn't
+     interactive, so it gets no ring. */
+  outline: none;
+}
+
+.setting {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.settingCheckbox {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  margin: 1px 0 0;
+}
+
+.settingLabel {
+  display: block;
+}
+
+.settingDescription {
+  display: block;
+  margin-top: 4px;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
 .button {
   display: inline-flex;
   text-decoration: none;

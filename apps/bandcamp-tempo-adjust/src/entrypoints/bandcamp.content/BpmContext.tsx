@@ -4,12 +4,16 @@ import browser from 'webextension-polyfill';
 import { analyzeAudio } from '../../utils/analyzeAudio';
 import type { TrackInfoByUrl as TrackInfoStore } from '~/types';
 import { hasAllPermissions } from '../../utils/hasAllPermissions';
+import { isPhone } from '../../utils/isPhone';
+import { getStoredSettings } from '../../utils/settings';
 import useAudio from './AudioStore';
 
 type AudioStateContext = {
   reloadCurrentBpm: () => void;
-  loadCurrentBpm: () => void;
-  loadBpms: () => void;
+  // Detects every track on the release, or just the playing track in
+  // low data mode.
+  detectBpm: () => Promise<void>;
+  openSettings: () => void;
   setTrackBpm: (options: { bpm: number; url: string }) => void;
   trackInfoState: PageState;
 };
@@ -18,6 +22,8 @@ type BpmProviderProps = {
   children: React.ReactNode;
   initialTrackInfoStore: TrackInfoStore;
 };
+
+const PHONE_CONCURRENCY = 2;
 
 const AudioContext = createContext<AudioStateContext | undefined>(undefined);
 
@@ -102,36 +108,44 @@ function BpmProvider({ children, initialTrackInfoStore }: BpmProviderProps) {
   });
   const currTrackUrl = useAudio(({ currTrackUrl }) => currTrackUrl);
 
-  const loadBpms = React.useCallback(async () => {
-    const hasAllPermissionsResponse = await hasAllPermissions();
-    if (!hasAllPermissionsResponse) {
-      browser.runtime.sendMessage({ action: 'openOptions' });
-      return;
-    }
-
-    Object.values(trackInfoState.trackInfoStore).forEach(
-      (track) =>
-        !track.bpm && dispatch({ type: 'BPM_LOAD_START', url: track.url })
+  const loadAllBpms = () => {
+    const tracksWithoutBpm = Object.values(
+      trackInfoState.trackInfoStore
+    ).filter((track) => !track.bpm);
+    tracksWithoutBpm.forEach((track) =>
+      dispatch({ type: 'BPM_LOAD_START', url: track.url })
     );
 
-    Object.values(trackInfoState.trackInfoStore).forEach((track) => {
-      const onError = (reason: string) => {
+    // The playing track goes first, since it is the one on screen.
+    const queue = [...tracksWithoutBpm].sort(
+      (a, b) => Number(b.url === currTrackUrl) - Number(a.url === currTrackUrl)
+    );
+    const analyzeNext = async (): Promise<void> => {
+      const track = queue.shift();
+      if (!track) {
+        return;
+      }
+      try {
+        const resolvedBpm = await analyzeAudio(track.audioPath);
+        dispatch({
+          type: 'BPM_LOAD_SUCCESS',
+          url: track.url,
+          bpm: resolvedBpm,
+        });
+      } catch (reason) {
         dispatch({ type: 'BPM_LOAD_ERROR', url: track.url });
         console.error('Error loading bpm', track.url, reason);
-      };
-      if (!track.bpm) {
-        analyzeAudio(track.audioPath)
-          .then((resolvedBpm) => {
-            dispatch({
-              type: 'BPM_LOAD_SUCCESS',
-              url: track.url,
-              bpm: resolvedBpm,
-            });
-          })
-          .catch(onError);
       }
-    });
-  }, [trackInfoState.trackInfoStore]);
+      return analyzeNext();
+    };
+    // Fetching and decoding a whole album at once can stall the page or
+    // get the tab killed on a phone, so phones work through it two tracks
+    // at a time. Desktops start everything together.
+    const workers = isPhone() ? PHONE_CONCURRENCY : queue.length;
+    for (let i = 0; i < workers; i++) {
+      analyzeNext();
+    }
+  };
 
   const loadBpm = (url: string) => {
     const track = trackInfoState.trackInfoStore[url];
@@ -155,6 +169,16 @@ function BpmProvider({ children, initialTrackInfoStore }: BpmProviderProps) {
       .catch(onError);
   };
 
+  // The options page opens on its welcome copy; `section` makes it open
+  // scrolled to that section instead.
+  const openOptions = (section?: 'settings') => {
+    browser.runtime.sendMessage({
+      action: 'openOptions',
+      ...(section && { section }),
+    });
+  };
+  const openSettings = () => openOptions('settings');
+
   const value: AudioStateContext = {
     trackInfoState,
     reloadCurrentBpm: () => {
@@ -163,18 +187,21 @@ function BpmProvider({ children, initialTrackInfoStore }: BpmProviderProps) {
         loadBpm(url);
       }
     },
-    loadCurrentBpm: async () => {
-      const url = currTrackUrl;
-      if (!url) {
-        return;
-      }
+    detectBpm: async () => {
       if (!(await hasAllPermissions())) {
-        browser.runtime.sendMessage({ action: 'openOptions' });
+        openOptions();
         return;
       }
-      loadBpm(url);
+      // Read at click time so a change made on the options page applies
+      // without reloading the Bandcamp tab.
+      const { lowDataMode } = await getStoredSettings();
+      if (!lowDataMode) {
+        loadAllBpms();
+      } else if (currTrackUrl) {
+        loadBpm(currTrackUrl);
+      }
     },
-    loadBpms,
+    openSettings,
     setTrackBpm: ({ bpm, url }) => {
       if (!bpm || !url) {
         return;
