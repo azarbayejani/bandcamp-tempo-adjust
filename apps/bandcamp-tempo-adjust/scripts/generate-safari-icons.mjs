@@ -13,9 +13,15 @@
 // app-icon only. The dark ones use each layer's dark-appearance colour from
 // icon.json. Icon.png is rendered by Icon Composer's ictool, so this needs
 // Xcode.
+//
+// The same four toolbar files are also written to public-safari-dev/ with the
+// DEV band of AppIcon-Dev.icon across the top of the record. wxt.config.ts
+// layers that folder over public-safari/ for Xcode's Debug builds
+// (SAFARI_APP_VARIANT=dev), so the dev app's toolbar button is told apart
+// from the App Store one.
 
 import { execFileSync } from 'node:child_process';
-import { readFileSync, writeFileSync } from 'node:fs';
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { Resvg } from '@resvg/resvg-js';
@@ -24,8 +30,10 @@ const scriptDir = dirname(fileURLToPath(import.meta.url));
 const appDir = join(scriptDir, '..');
 const iconDir = join(appDir, '../../safari/Tempo Adjust/AppIcon.icon');
 
-const readLayer = (name) =>
-  readFileSync(join(iconDir, 'Assets', `${name}.svg`), 'utf8');
+const devIconDir = join(iconDir, '../AppIcon-Dev.icon');
+
+const readLayer = (name, dir = iconDir) =>
+  readFileSync(join(dir, 'Assets', `${name}.svg`), 'utf8');
 const svgBody = (svg) =>
   svg.replace(/^[\s\S]*?<svg[^>]*>/, '').replace(/<\/svg>\s*$/, '');
 
@@ -96,7 +104,53 @@ const viewBox = `${(left + right - side) / 2} ${
   (top + bottom - side) / 2
 } ${side} ${side}`;
 
-function renderToolbarIcon(size, dark) {
+// The dev band: the app icon's yellow strip and DEV lettering, cut to the top
+// of the record the way the app icon's shape cuts its own. It sits clear of
+// the label and the hand, and is the same in light and dark.
+const BAND_DEPTH = 0.5 * r;
+const DEV_TEXT_HEIGHT = 0.21 * r;
+const DEV_TEXT_CENTER_Y = cy - r + 0.32 * r;
+const devIconJson = JSON.parse(
+  readFileSync(join(devIconDir, 'icon.json'), 'utf8')
+);
+const devLayerColor = (name) => {
+  const solid = devIconJson.groups
+    .flatMap((group) => group.layers)
+    .find((layer) => layer.name === name)?.fill?.solid;
+  if (!solid) throw new Error(`No fill for ${name} in AppIcon-Dev icon.json`);
+  // Drop the alpha: the band is translucent glass in the app icon, but here
+  // it has to read at toolbar size.
+  const hex = solid
+    .replace(/^srgb:/, '')
+    .split(',')
+    .slice(0, 3)
+    .map((c) =>
+      Math.round(Number(c) * 255)
+        .toString(16)
+        .padStart(2, '0')
+    )
+    .join('');
+  return `#${hex}`;
+};
+const devText = svgBody(readLayer('dev-text', devIconDir)).replace(
+  /\bfill="#[0-9A-Fa-f]{6}"/g,
+  `fill="${devLayerColor('dev-text')}"`
+);
+const devTextBox = new Resvg(
+  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">${devText}</svg>`
+).getBBox();
+const devTextScale = DEV_TEXT_HEIGHT / devTextBox.height;
+const devBand =
+  `<clipPath id="record"><circle cx="${cx}" cy="${cy}" r="${r}"/></clipPath>` +
+  `<rect x="${cx - r}" y="${cy - r}" width="${2 * r}" height="${BAND_DEPTH}" ` +
+  `fill="${devLayerColor('dev-band')}" clip-path="url(#record)"/>` +
+  `<g transform="translate(${
+    cx - devTextScale * (devTextBox.x + devTextBox.width / 2)
+  } ${
+    DEV_TEXT_CENTER_Y - devTextScale * (devTextBox.y + devTextBox.height / 2)
+  }) scale(${devTextScale})">${devText}</g>`;
+
+function renderToolbarIcon(size, dark, dev) {
   // The light icon is also what Safari shows on a dark toolbar when it doesn't
   // support icon_variants, so give its black record a grey rim to keep the edge
   // visible there. The dark icon's graphite record doesn't need one.
@@ -108,6 +162,7 @@ function renderToolbarIcon(size, dark) {
           /<circle\b/,
           `<circle stroke="#48484A" stroke-width="${rim * 2}"`
         )) +
+    (dev ? devBand : '') +
     layerBody('label', dark) +
     layerBody('spindle', dark) +
     `<g transform="${handTransform}">${layerBody(
@@ -125,15 +180,16 @@ const write = (path, png) => {
   console.log(`wrote ${path}`);
 };
 
-for (const size of [128, 34]) {
-  write(
-    join(appDir, `public-safari/icon-${size}.png`),
-    renderToolbarIcon(size, false)
-  );
-  write(
-    join(appDir, `public-safari/toolbar-dark-${size}.png`),
-    renderToolbarIcon(size, true)
-  );
+for (const dev of [false, true]) {
+  const dir = join(appDir, dev ? 'public-safari-dev' : 'public-safari');
+  mkdirSync(dir, { recursive: true });
+  for (const size of [128, 34]) {
+    write(join(dir, `icon-${size}.png`), renderToolbarIcon(size, false, dev));
+    write(
+      join(dir, `toolbar-dark-${size}.png`),
+      renderToolbarIcon(size, true, dev)
+    );
+  }
 }
 
 const developerDir = execFileSync('xcode-select', ['-p'], {

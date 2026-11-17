@@ -83,6 +83,14 @@ else
 fi
 
 # --- Build ------------------------------------------------------------------
+# The app's identity comes from Config/Shared.xcconfig: Debug builds are the
+# separate dev app. Pass the parts the web extension bakes in: its name in
+# Safari's extension list, the URL scheme its tip buttons open, and which
+# toolbar icons it ships (the dev ones carry the app icon's DEV band).
+export SAFARI_APP_VARIANT="${APP_VARIANT:-store}"
+export SAFARI_EXTENSION_NAME="${APP_DISPLAY_NAME:-Tempo Adjust}"
+export WXT_TIP_JAR_SCHEME="${APP_URL_SCHEME:-tempoadjust}"
+
 echo "Building web extension with $(command -v node) ($(node --version))"
 cd "$REPO_ROOT"
 "${PNPM[@]}" --filter bandcamp-tempo-adjust build:safari

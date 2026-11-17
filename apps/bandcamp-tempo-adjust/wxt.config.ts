@@ -1,4 +1,4 @@
-import { existsSync, readdirSync } from 'node:fs';
+import { readdirSync } from 'node:fs';
 import { join } from 'node:path';
 import { defineConfig } from 'wxt';
 
@@ -16,7 +16,13 @@ const safariActionIconVariants = [
 
 export default defineConfig({
   manifest: ({ browser }) => ({
-    name: browser === 'safari' ? 'Tempo Adjust' : 'Bandcamp Tempo Adjust',
+    // Xcode's Debug builds pass "Tempo Adjust (Dev)" (see
+    // safari/scripts/build-web-extension.sh) so Safari's extension list tells
+    // the dev build from the App Store one.
+    name:
+      browser === 'safari'
+        ? process.env.SAFARI_EXTENSION_NAME || 'Tempo Adjust'
+        : 'Bandcamp Tempo Adjust',
     description:
       browser === 'safari'
         ? 'A browser extension to detect and adjust track tempo on Bandcamp and Discogs'
@@ -40,18 +46,26 @@ export default defineConfig({
     // The App Store build ships its own icon art (keeping the Bandcamp mark out
     // of App Review), so files in public-safari/ replace same-named public/ files
     // and Safari-only files (the dark toolbar icons) are added alongside them.
+    // Xcode's Debug builds (SAFARI_APP_VARIANT=dev) then layer
+    // public-safari-dev/ on top, which holds the same icons with the dev band.
     'build:publicAssets': (wxt, files) => {
       if (wxt.config.browser !== 'safari') return;
-      const safariDir = join(wxt.config.root, 'public-safari');
-      for (const file of files) {
-        if (!('absoluteSrc' in file)) continue;
-        const override = join(safariDir, file.relativeDest);
-        if (existsSync(override)) file.absoluteSrc = override;
+      const overlayDirs = ['public-safari'];
+      if (process.env.SAFARI_APP_VARIANT === 'dev') {
+        overlayDirs.push('public-safari-dev');
       }
-      const existing = new Set(files.map((file) => file.relativeDest));
-      for (const name of readdirSync(safariDir)) {
-        if (existing.has(name)) continue;
-        files.push({ absoluteSrc: join(safariDir, name), relativeDest: name });
+      for (const dirName of overlayDirs) {
+        const overlayDir = join(wxt.config.root, dirName);
+        const byDest = new Map(files.map((file) => [file.relativeDest, file]));
+        for (const name of readdirSync(overlayDir)) {
+          const absoluteSrc = join(overlayDir, name);
+          const file = byDest.get(name);
+          if (!file) {
+            files.push({ absoluteSrc, relativeDest: name });
+          } else if ('absoluteSrc' in file) {
+            file.absoluteSrc = absoluteSrc;
+          }
+        }
       }
     },
   },

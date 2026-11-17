@@ -8,10 +8,14 @@
 # a rebuild never touches.
 #
 # Usage:
-#   reset-install.sh [-n] mac           # this Mac's Safari and app (default)
-#   reset-install.sh [-n] ios [udid]    # a simulator; defaults to the booted one
+#   reset-install.sh [-n] [--store] mac           # this Mac's Safari and app (default)
+#   reset-install.sh [-n] [--store] ios [udid]    # a simulator; defaults to the booted one
 #
 # -n prints what would be removed without removing it.
+#
+# Debug builds are a separate dev app (see Config/Shared.xcconfig), and that
+# is the one reset by default, leaving an installed App Store copy alone.
+# --store resets the store app (a Release build) instead.
 #
 # Safari's container is protected by TCC, so the terminal running this needs
 # Full Disk Access (or run it from Xcode's or Terminal's own prompt); otherwise
@@ -19,16 +23,25 @@
 
 set -euo pipefail
 
-APP_ID="com.miseryconfusion.tempoadjust"
-GROUP_ID="group.$APP_ID"
+STORE_ID="com.miseryconfusion.tempoadjust"
+DEV_ID="$STORE_ID.dev"
 
 # pnpm passes a "--" through to the script rather than eating it.
 [[ "${1:-}" == "--" ]] && shift
 dry_run=false
-if [[ "${1:-}" == "-n" ]]; then
-  dry_run=true
+APP_ID="$DEV_ID"
+# The dev ID extends the store ID, so the store reset's prefix matches have
+# to skip it; nothing extends the dev ID.
+SKIP_ID=""
+while [[ "${1:-}" == -* ]]; do
+  case "$1" in
+    -n) dry_run=true ;;
+    --store) APP_ID="$STORE_ID"; SKIP_ID="$DEV_ID" ;;
+    *) echo "usage: $0 [-n] [--store] mac | ios [udid]" >&2; exit 2 ;;
+  esac
   shift
-fi
+done
+GROUP_ID="group.$APP_ID"
 target="${1:-mac}"
 
 remove() {
@@ -52,6 +65,11 @@ reset_ios() {
   fi
 }
 
+is_running() {
+  # Errors (and so counts as not running) if no app has this bundle ID.
+  [[ "$(osascript -e "application id \"$1\" is running" 2>/dev/null)" == "true" ]]
+}
+
 reset_mac() {
   local safari_data="$HOME/Library/Containers/com.apple.Safari/Data/Library"
 
@@ -64,11 +82,12 @@ reset_mac() {
   # Safari rewrites its extension registry on quit and the app's prefs are
   # cached by cfprefsd, so both must be gone before anything is deleted.
   if ! $dry_run; then
-    for app in Safari "Tempo Adjust"; do
-      if pgrep -xq "$app"; then
+    # By bundle ID: the dev and store apps share the name "Tempo Adjust".
+    for app in com.apple.Safari "$APP_ID"; do
+      if is_running "$app"; then
         echo "Quitting $app"
-        osascript -e "tell application \"$app\" to quit"
-        for _ in $(seq 1 50); do pgrep -xq "$app" || break; sleep 0.2; done
+        osascript -e "tell application id \"$app\" to quit"
+        for _ in $(seq 1 50); do is_running "$app" || break; sleep 0.2; done
       fi
     done
   fi
@@ -80,7 +99,7 @@ reset_mac() {
   local dirs=()
   while IFS= read -r -d '' dir; do dirs+=("$dir"); done < <(
     find "$safari_data/WebKit/WebExtensions" -mindepth 2 -maxdepth 2 \
-      -name "$APP_ID*" -print0 2>/dev/null
+      -name "$APP_ID*" ! -name "${SKIP_ID:-/}*" -print0 2>/dev/null
   )
   if [[ ${#dirs[@]} -gt 0 ]]; then
     remove "${dirs[@]}"
@@ -96,12 +115,14 @@ reset_mac() {
   done
   for p in "${plists[@]}"; do
     [[ -f "$p" ]] || continue
-    /usr/bin/python3 - "$p" "$APP_ID" "$dry_run" <<'PY'
+    /usr/bin/python3 - "$p" "$APP_ID" "$dry_run" "$SKIP_ID" <<'PY'
 import plistlib, sys
-path, app_id, dry_run = sys.argv[1], sys.argv[2], sys.argv[3] == "true"
+path, app_id, dry_run, skip_id = sys.argv[1], sys.argv[2], sys.argv[3] == "true", sys.argv[4]
 with open(path, "rb") as f:
     registry = plistlib.load(f)
 keys = [k for k in registry if k == app_id or k.startswith(app_id + " ") or k.startswith(app_id + ".")]
+if skip_id:
+    keys = [k for k in keys if not k.startswith(skip_id)]
 for k in keys:
     print(("would remove: " if dry_run else "removing: ") + f"{k} from {path}")
     del registry[k]
@@ -141,5 +162,5 @@ PY
 case "$target" in
   mac) reset_mac ;;
   ios) reset_ios "${2:-}" ;;
-  *) echo "usage: $0 [-n] mac | ios [udid]" >&2; exit 2 ;;
+  *) echo "usage: $0 [-n] [--store] mac | ios [udid]" >&2; exit 2 ;;
 esac

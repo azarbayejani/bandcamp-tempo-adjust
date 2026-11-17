@@ -12,6 +12,7 @@
 		AB61A2882F5A47DF0093D0C2 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = AB6899912DDD7BC900C9A704 /* Icon.png */; };
 		AB68999D2DDD7BCB00C9A704 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AB68999C2DDD7BCB00C9A704 /* Assets.xcassets */; };
 		AB6899F12DDD7BCB00C9A704 /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = AB6899F02DDD7BCB00C9A704 /* AppIcon.icon */; };
+		AB6899F32DDD7BCB00C9A704 /* AppIcon-Dev.icon in Resources */ = {isa = PBXBuildFile; fileRef = AB6899F22DDD7BCB00C9A704 /* AppIcon-Dev.icon */; };
 		AB6899AA2DDD7BCB00C9A704 /* Tempo_AdjustTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6899A92DDD7BCB00C9A704 /* Tempo_AdjustTests.swift */; };
 		AB6899B42DDD7BCB00C9A704 /* Tempo_AdjustUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6899B32DDD7BCB00C9A704 /* Tempo_AdjustUITests.swift */; };
 		AB6899B62DDD7BCB00C9A704 /* Tempo_AdjustUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6899B52DDD7BCB00C9A704 /* Tempo_AdjustUITestsLaunchTests.swift */; };
@@ -67,6 +68,7 @@
 		AB6899912DDD7BC900C9A704 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		AB68999C2DDD7BCB00C9A704 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AB6899F02DDD7BCB00C9A704 /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIcon.icon; sourceTree = "<group>"; };
+		AB6899F22DDD7BCB00C9A704 /* AppIcon-Dev.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = "AppIcon-Dev.icon"; sourceTree = "<group>"; };
 		AB68999E2DDD7BCB00C9A704 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AB6899A02DDD7BCB00C9A704 /* Tempo Adjust.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Tempo Adjust.entitlements"; sourceTree = "<group>"; };
 		AB6899A52DDD7BCB00C9A704 /* Tempo AdjustTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Tempo AdjustTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -146,6 +148,7 @@
 			children = (
 				AB68999C2DDD7BCB00C9A704 /* Assets.xcassets */,
 				AB6899F02DDD7BCB00C9A704 /* AppIcon.icon */,
+				AB6899F22DDD7BCB00C9A704 /* AppIcon-Dev.icon */,
 				AB68999E2DDD7BCB00C9A704 /* Info.plist */,
 				AB6899A02DDD7BCB00C9A704 /* Tempo Adjust.entitlements */,
 				AB68998D2DDD7BC900C9A704 /* Resources */,
@@ -343,6 +346,7 @@
 				AB61A2882F5A47DF0093D0C2 /* Icon.png in Resources */,
 				AB68999D2DDD7BCB00C9A704 /* Assets.xcassets in Resources */,
 				AB6899F12DDD7BCB00C9A704 /* AppIcon.icon in Resources */,
+				AB6899F32DDD7BCB00C9A704 /* AppIcon-Dev.icon in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -585,7 +589,7 @@
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Tempo Adjust Extension/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "Tempo Adjust Extension";
+				INFOPLIST_KEY_CFBundleDisplayName = "$(APP_DISPLAY_NAME) Extension";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -596,7 +600,7 @@
 					"-framework",
 					SafariServices,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.miseryconfusion.tempoadjust.Extension;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_BUNDLE_ID).Extension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
 				SKIP_INSTALL = YES;
@@ -620,7 +624,7 @@
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Tempo Adjust Extension/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "Tempo Adjust Extension";
+				INFOPLIST_KEY_CFBundleDisplayName = "$(APP_DISPLAY_NAME) Extension";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -631,7 +635,7 @@
 					"-framework",
 					SafariServices,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.miseryconfusion.tempoadjust.Extension;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_BUNDLE_ID).Extension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
 				SKIP_INSTALL = YES;
@@ -646,7 +650,7 @@
 		AB6899CB2DDD7BCB00C9A704 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "$(APP_ICON_NAME)";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Tempo Adjust/Tempo Adjust.entitlements";
 				CODE_SIGN_STYLE = Automatic;
@@ -658,7 +662,7 @@
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Tempo Adjust/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "Tempo Adjust";
+				INFOPLIST_KEY_CFBundleDisplayName = "$(APP_DISPLAY_NAME)";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_NSMainStoryboardFile = "";
@@ -672,7 +676,7 @@
 					"-framework",
 					SafariServices,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.miseryconfusion.tempoadjust;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_BUNDLE_ID)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
@@ -686,7 +690,7 @@
 		AB6899CC2DDD7BCB00C9A704 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "$(APP_ICON_NAME)";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Tempo Adjust/Tempo Adjust.entitlements";
 				CODE_SIGN_STYLE = Automatic;
@@ -698,7 +702,7 @@
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Tempo Adjust/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "Tempo Adjust";
+				INFOPLIST_KEY_CFBundleDisplayName = "$(APP_DISPLAY_NAME)";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_NSMainStoryboardFile = "";
@@ -712,7 +716,7 @@
 					"-framework",
 					SafariServices,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.miseryconfusion.tempoadjust;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_BUNDLE_ID)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
@@ -730,7 +734,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEAD_CODE_STRIPPING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.miseryconfusion.tempoadjust.Tests;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_BUNDLE_ID).Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
@@ -745,7 +749,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEAD_CODE_STRIPPING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.miseryconfusion.tempoadjust.Tests;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_BUNDLE_ID).Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
@@ -759,7 +763,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEAD_CODE_STRIPPING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.miseryconfusion.tempoadjust.UITests;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_BUNDLE_ID).UITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
@@ -776,7 +780,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEAD_CODE_STRIPPING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.miseryconfusion.tempoadjust.UITests;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_BUNDLE_ID).UITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";

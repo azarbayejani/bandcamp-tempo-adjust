@@ -12,7 +12,10 @@ import AppKit
 #endif
 
 // Shared with the app through the App Group; keep in sync with ContentView.swift.
-private let appGroupIdentifier = "group.com.miseryconfusion.tempoadjust"
+// The group and URL scheme differ between the dev (Debug) and store builds
+// (see Config/Shared.xcconfig), so both come from this bundle's Info.plist.
+private let appGroupIdentifier = Bundle.main.object(forInfoDictionaryKey: "TempoAdjustAppGroup") as! String
+private let appURLScheme = Bundle.main.object(forInfoDictionaryKey: "TempoAdjustURLScheme") as! String
 private let hasAllPermissionsKey = "hasAllPermissions"
 
 class SafariWebExtensionHandler: NSObject, NSExtensionRequestHandling {
@@ -52,7 +55,7 @@ class SafariWebExtensionHandler: NSObject, NSExtensionRequestHandling {
         #if os(macOS)
         if let body = message as? [String: Any],
            body["name"] as? String == "openTipJar",
-           let tipJarURL = URL(string: "tempoadjust://tip") {
+           let tipJarURL = URL(string: "\(appURLScheme)://tip") {
             reply["opened"] = NSWorkspace.shared.open(tipJarURL)
         }
         #endif

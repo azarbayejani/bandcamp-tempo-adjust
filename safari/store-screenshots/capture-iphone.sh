@@ -39,12 +39,15 @@ safari=$(xcrun simctl get_app_container "$udid" com.apple.mobilesafari data)
 find "$safari/Library/WebKit/com.apple.mobilesafari/WebExtensions" \
   -path '*tempoadjust*' -name 'LocalStorage.db*' -delete
 
+# APP_VARIANT=store: the tests build Debug, which would otherwise be the dev
+# app ("Tempo Adjust (Dev)", banded icon) rather than what the store ships.
 echo "Running the capture UI tests (log: $log)"
 mkdir -p "$captures"
 rm -f "$captures"/*.png
 if ! TEST_RUNNER_SCREENSHOT_DIR="$captures" xcodebuild test \
   -project "$project" -scheme Screenshots -destination "id=$udid" \
   -parallel-testing-enabled NO \
+  APP_VARIANT=store \
   -only-testing:'Tempo AdjustUITests/ScreenshotTests/testBandcampCaptures' \
   -only-testing:'Tempo AdjustUITests/ScreenshotTests/testDiscogsCaptures' \
   >"$log" 2>&1; then
